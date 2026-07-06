@@ -21,7 +21,7 @@ python3 -m http.server 8000
 
 ## Personalización rápida
 
-- **WhatsApp**: cambia el número en el enlace `wa.me` dentro de `index.html` (sección Contacto).
-- **Email de contacto**: edita el texto `hola@novacore.com` en la sección Contacto.
+- **WhatsApp**: número configurado en el enlace `wa.me` dentro de `index.html` (sección Contacto).
+- **Email de contacto**: `jmproductions863@gmail.com`, editable en la sección Contacto.
 - **Formulario**: el envío está preparado en `assets/js/script.js` (bloque `contactForm`);
   añade ahí tu backend, Formspree o EmailJS para recibir los mensajes de verdad.
