@@ -269,13 +269,11 @@
         </div>
 
         <!--
-          Formulario de contacto.
-          Preparado para conectarse a un backend o servicio externo (Formspree, EmailJS, etc.).
-          De momento gestiona el envío por JS y muestra un mensaje de confirmación.
-          Para activarlo de verdad: añade la URL de tu backend en el atributo "action"
-          y cambia el "method" según corresponda.
+          Formulario de contacto, conectado a Formspree (assets/js/script.js
+          envía el POST por fetch). Cada envío llega por email a la cuenta
+          de Formspree asociada a este endpoint.
         -->
-        <form class="form reveal" id="contactForm" action="#" method="POST" novalidate>
+        <form class="form reveal" id="contactForm" action="https://formspree.io/f/mykqvjdz" method="POST" novalidate>
           <div class="form__row">
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />

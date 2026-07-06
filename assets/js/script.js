@@ -43,15 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
   revealEls.forEach((el) => observer.observe(el));
 
   // ---- Formulario de contacto ----
-  // Nota: este bloque valida y muestra feedback en pantalla.
-  // Para conectarlo a un envío real, sustituye el bloque marcado
-  // más abajo por una llamada fetch() a tu backend, o usa un
-  // servicio como Formspree / EmailJS añadiendo su "action" en el HTML.
+  // Envía los datos a Formspree (https://formspree.io/f/mykqvjdz), que reenvía
+  // cada solicitud por email. Para cambiar de destino, sustituye ese endpoint.
   const form = document.getElementById("contactForm");
   const feedback = document.getElementById("formFeedback");
 
   if (form) {
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       if (!form.checkValidity()) {
@@ -60,17 +58,32 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ---- AQUÍ se conectaría el envío real (backend / Formspree / EmailJS) ----
-      // Ejemplo:
-      // fetch("https://tu-backend.com/api/contacto", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(Object.fromEntries(new FormData(form))),
-      // });
+      const submitButton = form.querySelector("button[type='submit']");
+      submitButton.disabled = true;
+      feedback.textContent = "Enviando...";
+      feedback.style.color = "var(--text-muted)";
 
-      feedback.textContent = "¡Gracias! Hemos recibido tu solicitud, te contactaremos muy pronto.";
-      feedback.style.color = "var(--accent)";
-      form.reset();
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+
+        if (response.ok) {
+          feedback.textContent = "¡Gracias! Hemos recibido tu solicitud, te contactaremos muy pronto.";
+          feedback.style.color = "var(--accent)";
+          form.reset();
+        } else {
+          feedback.textContent = "No hemos podido enviar tu solicitud. Escríbenos por WhatsApp o inténtalo de nuevo.";
+          feedback.style.color = "#ff6b6b";
+        }
+      } catch (error) {
+        feedback.textContent = "No hemos podido enviar tu solicitud. Escríbenos por WhatsApp o inténtalo de nuevo.";
+        feedback.style.color = "#ff6b6b";
+      } finally {
+        submitButton.disabled = false;
+      }
     });
   }
 });
