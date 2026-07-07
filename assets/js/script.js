@@ -43,13 +43,15 @@ document.addEventListener("DOMContentLoaded", () => {
   revealEls.forEach((el) => observer.observe(el));
 
   // ---- Formulario de contacto ----
-  // Envía los datos a Formspree (https://formspree.io/f/mykqvjdz), que reenvía
-  // cada solicitud por email. Para cambiar de destino, sustituye ese endpoint.
+  // Abre el cliente de email del propio visitante con un "mailto:" ya
+  // redactado hacia CONTACT_EMAIL. No depende de ningún servicio externo:
+  // el email lo envía la propia cuenta del visitante, así que siempre llega.
+  const CONTACT_EMAIL = "jmproductions863@gmail.com";
   const form = document.getElementById("contactForm");
   const feedback = document.getElementById("formFeedback");
 
   if (form) {
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
 
       if (!form.checkValidity()) {
@@ -58,32 +60,25 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const submitButton = form.querySelector("button[type='submit']");
-      submitButton.disabled = true;
-      feedback.textContent = "Enviando...";
-      feedback.style.color = "var(--text-muted)";
+      const data = Object.fromEntries(new FormData(form));
+      const subject = `Nueva solicitud de auditoría — ${data.empresa}`;
+      const body =
+        `Nombre: ${data.nombre}\n` +
+        `Empresa: ${data.empresa}\n` +
+        `Teléfono / WhatsApp: ${data.telefono}\n` +
+        `Email: ${data.email}\n\n` +
+        `Mensaje:\n${data.mensaje}`;
 
-      try {
-        const response = await fetch(form.action, {
-          method: "POST",
-          body: new FormData(form),
-          headers: { Accept: "application/json" },
-        });
+      const mailtoUrl =
+        `mailto:${CONTACT_EMAIL}` +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
 
-        if (response.ok) {
-          feedback.textContent = "¡Gracias! Hemos recibido tu solicitud, te contactaremos muy pronto.";
-          feedback.style.color = "var(--accent)";
-          form.reset();
-        } else {
-          feedback.textContent = "No hemos podido enviar tu solicitud. Escríbenos por WhatsApp o inténtalo de nuevo.";
-          feedback.style.color = "#ff6b6b";
-        }
-      } catch (error) {
-        feedback.textContent = "No hemos podido enviar tu solicitud. Escríbenos por WhatsApp o inténtalo de nuevo.";
-        feedback.style.color = "#ff6b6b";
-      } finally {
-        submitButton.disabled = false;
-      }
+      window.location.href = mailtoUrl;
+
+      feedback.textContent = "Se ha abierto tu programa de correo con el mensaje listo. Solo tienes que darle a enviar.";
+      feedback.style.color = "var(--accent)";
+      form.reset();
     });
   }
 });
