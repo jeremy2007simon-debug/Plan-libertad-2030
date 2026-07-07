@@ -269,11 +269,11 @@
         </div>
 
         <!--
-          Formulario de contacto, conectado a Formspree (assets/js/script.js
-          envía el POST por fetch). Cada envío llega por email a la cuenta
-          de Formspree asociada a este endpoint.
+          Formulario de contacto. Al enviarlo, assets/js/script.js abre el
+          cliente de email del visitante con un mailto: ya redactado hacia
+          el correo de contacto, sin depender de ningún servicio externo.
         -->
-        <form class="form reveal" id="contactForm" action="https://formspree.io/f/mykqvjdz" method="POST" novalidate>
+        <form class="form reveal" id="contactForm" novalidate>
           <div class="form__row">
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
