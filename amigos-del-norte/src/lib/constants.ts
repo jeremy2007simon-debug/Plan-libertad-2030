@@ -34,48 +34,77 @@ export const RESTAURANT = {
     encodeURIComponent("Restaurante Amigos del Norte Las Chafiras"),
 } as const;
 
+// Ejemplos y precios reales tomados de la carta digital del restaurante
+// (restauranteamigosdelnorte.tucartadigital.com). Actualizar aquí si cambian.
 export const SPECIALTIES = [
   {
     slug: "carnes-a-la-brasa",
     title: "Carnes a la brasa",
     description: "Cortes seleccionados, preparados al momento sobre brasa.",
     icon: "flame",
+    examples: [
+      { name: "Chuletón de novillo", price: "45,50 €" },
+      { name: "Secreto ibérico", price: "19,95 €" },
+      { name: "Parrillada mixta", price: "28,50 €" },
+    ],
   },
   {
     slug: "comida-canaria",
     title: "Comida canaria",
     description: "Platos tradicionales de las islas, con producto local.",
     icon: "leaf",
+    examples: [
+      { name: "Queso de cabra", price: "6,95 €" },
+      { name: "Garbanzas", price: "7,10 €" },
+      { name: "Papas arrugadas", price: "Consultar" },
+    ],
   },
   {
     slug: "pescados",
     title: "Pescados",
     description: "Pescado fresco preparado con recetas de siempre.",
     icon: "fish",
+    examples: [
+      { name: "Chocos a la plancha", price: "12,75 €" },
+      { name: "Fogonero a la plancha", price: "10,75 €" },
+    ],
   },
   {
     slug: "pollos-asados",
     title: "Pollos asados",
     description: "Asados lentamente hasta conseguir el punto justo.",
     icon: "drumstick",
+    examples: [
+      { name: "1/2 pollo con ensalada", price: "7,95 €" },
+      { name: "Pollo asado", price: "11,00 €" },
+    ],
   },
   {
     slug: "menu-infantil",
     title: "Menú infantil",
     description: "Pensado para que los más pequeños también disfruten.",
     icon: "smile",
+    examples: [
+      { name: "Bistec de cerdo", price: "7,50 €" },
+      { name: "Escalope de ternera", price: "9,00 €" },
+    ],
   },
   {
     slug: "comida-para-llevar",
     title: "Comida para llevar",
     description: "La misma calidad de sala, lista para llevar a casa.",
     icon: "bag",
+    examples: [
+      { name: "Pollo asado", price: "9,50 €" },
+      { name: "1/2 pollo", price: "4,75 €" },
+    ],
   },
   {
     slug: "celebraciones",
     title: "Celebraciones",
     description: "Espacio y atención cuidada para tus momentos especiales.",
     icon: "sparkles",
+    examples: [],
   },
 ] as const;
 
