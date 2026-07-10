@@ -1,4 +1,4 @@
-import { RESTAURANT } from "@/lib/constants";
+import { CURATED_REVIEWS, RESTAURANT } from "@/lib/constants";
 import { getGoogleReviews } from "@/lib/reviews";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
@@ -21,7 +21,11 @@ function Stars({ rating }: { rating: number }) {
 
 export async function Opiniones() {
   const data = await getGoogleReviews();
-  const reviews = data?.reviews ?? [];
+  const googleReviews = data?.reviews ?? [];
+  const hasGoogle = googleReviews.length > 0;
+  const hasCurated = !hasGoogle && CURATED_REVIEWS.length > 0;
+  const curatedAvg =
+    CURATED_REVIEWS.reduce((sum, r) => sum + r.rating, 0) / CURATED_REVIEWS.length;
 
   return (
     <section id="opiniones" className="relative py-28 md:py-36">
@@ -34,10 +38,10 @@ export async function Opiniones() {
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mt-6 font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-light text-ink text-balance">
-              Lo que dicen en Google
+              {hasGoogle ? "Lo que dicen en Google" : "Lo que dicen nuestros clientes"}
             </h2>
           </Reveal>
-          {data ? (
+          {hasGoogle && data ? (
             <Reveal delay={0.2}>
               <p className="mt-5 flex items-center justify-center gap-2 text-ink-dim">
                 <span className="font-display text-2xl text-ink">
@@ -45,6 +49,16 @@ export async function Opiniones() {
                 </span>
                 <Stars rating={data.rating} />
                 <span>· {data.totalReviews} reseñas en Google</span>
+              </p>
+            </Reveal>
+          ) : hasCurated ? (
+            <Reveal delay={0.2}>
+              <p className="mt-5 flex items-center justify-center gap-2 text-ink-dim">
+                <span className="font-display text-2xl text-ink">
+                  {curatedAvg.toFixed(1)}
+                </span>
+                <Stars rating={curatedAvg} />
+                <span>· Opiniones reales en TripAdvisor</span>
               </p>
             </Reveal>
           ) : (
@@ -56,9 +70,9 @@ export async function Opiniones() {
           )}
         </div>
 
-        {reviews.length > 0 ? (
+        {hasGoogle ? (
           <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {reviews.slice(0, 3).map((review, i) => (
+            {googleReviews.slice(0, 3).map((review, i) => (
               <Reveal key={review.authorName + i} delay={i * 0.08}>
                 <div className="flex h-full flex-col gap-4 rounded-[2px] border border-surface-border bg-surface p-7">
                   <Stars rating={review.rating} />
@@ -91,6 +105,40 @@ export async function Opiniones() {
               </Reveal>
             ))}
           </div>
+        ) : hasCurated ? (
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {CURATED_REVIEWS.map((review, i) => (
+              <Reveal key={review.author + i} delay={i * 0.08}>
+                <div className="flex h-full flex-col gap-4 rounded-[2px] border border-surface-border bg-surface p-7">
+                  <Stars rating={review.rating} />
+                  <div>
+                    <p className="text-sm font-semibold text-ink">{review.title}</p>
+                    <p className="mt-2 line-clamp-6 text-sm leading-relaxed text-ink-dim">
+                      {review.text}
+                    </p>
+                  </div>
+                  <div className="mt-auto flex items-center gap-3 pt-2">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/5 text-xs text-ink-dim">
+                      {review.author.charAt(0)}
+                    </span>
+                    <div>
+                      <p className="text-sm text-ink">{review.author}</p>
+                      <p className="text-xs text-ink-dim-2">
+                        {review.date}
+                        {review.location ? ` · ${review.location}` : ""}
+                      </p>
+                    </div>
+                  </div>
+                  {review.collaboration && (
+                    <p className="text-[11px] leading-snug text-ink-dim-2 italic">
+                      Opinión obtenida en colaboración con el restaurante (aviso de
+                      TripAdvisor)
+                    </p>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
         ) : (
           <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
             {PLACEHOLDER_SLOTS.map((slot) => (
@@ -117,12 +165,16 @@ export async function Opiniones() {
         <Reveal delay={0.4}>
           <div className="mt-10 text-center">
             <a
-              href={RESTAURANT.googleReviewsSearchHref}
+              href={
+                hasGoogle
+                  ? RESTAURANT.googleReviewsSearchHref
+                  : RESTAURANT.tripadvisorSearchHref
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-gold"
             >
-              Ver reseñas en Google
+              {hasGoogle ? "Ver reseñas en Google" : "Ver más reseñas en TripAdvisor"}
               <Icon name="arrowUpRight" className="size-4" />
             </a>
           </div>
