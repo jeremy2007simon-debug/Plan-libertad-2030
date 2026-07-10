@@ -15,8 +15,22 @@ export const RESTAURANT = {
     line2: "San Miguel de Abona, Tenerife",
     full: "Las Chafiras, San Miguel de Abona, Santa Cruz de Tenerife",
   },
-  // Sin horario confirmado por el cliente: no se inventa, se deja pendiente.
-  hours: null as string | null,
+  hours: "Todos los días, 12:00 – 18:00" as string | null,
+  // Mismo horario en formato Schema.org (openingHoursSpecification), usado
+  // en StructuredData.tsx. Actualizar junto con `hours` si cambia.
+  hoursSpec: {
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    opens: "12:00",
+    closes: "18:00",
+  },
   social: {
     // TODO: añadir los enlaces reales de Instagram y Facebook del restaurante.
     instagram: null as string | null,

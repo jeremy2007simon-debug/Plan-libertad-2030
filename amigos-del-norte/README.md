@@ -73,15 +73,14 @@ un enlace directo de WhatsApp y el teléfono como vía inmediata.
 
 ## Pendiente de completar con datos reales del restaurante
 
-- **Horario**: no se ha facilitado, se muestra "consulta llamando" en su
-  lugar (`src/lib/constants.ts` → `RESTAURANT.hours`).
 - **Instagram / Facebook**: enlaces vacíos con `TODO` en el footer —
   añadir en `RESTAURANT.social`.
 - **WhatsApp**: se usa el teléfono facilitado (922 73 56 19, fijo). Un
   `wa.me` solo funciona si ese número tiene WhatsApp Business activo —
   confirmarlo o sustituirlo por el móvil correcto en `RESTAURANT.whatsappHref`.
-- **Reseñas de Google**: sección preparada con marcadores de posición, sin
-  testimonios inventados — conectar la Google Places API cuando se quiera.
+- **Reseñas**: sección con reseñas reales curadas de TripAdvisor
+  (`src/lib/constants.ts` → `CURATED_REVIEWS`). Si se activa la Google
+  Places API (`src/lib/reviews.ts`), esta pasa a tener prioridad.
 - **Fotografía real**: ver sección anterior.
 - **Política de privacidad**: es una plantilla genérica, debe revisarla un
   profesional legal antes de publicar.
