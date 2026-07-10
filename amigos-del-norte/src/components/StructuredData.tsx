@@ -1,8 +1,8 @@
 import { RESTAURANT } from "@/lib/constants";
 
 // Datos estructurados Schema.org (Restaurant) con la información real
-// facilitada. No incluye horario ni valoraciones porque no se han
-// confirmado — añádelos aquí en cuanto estén disponibles.
+// facilitada. No incluye valoraciones porque no se han confirmado —
+// añádelas aquí en cuanto estén disponibles.
 export function StructuredData() {
   const data = {
     "@context": "https://schema.org",
@@ -17,6 +17,12 @@ export function StructuredData() {
     },
     servesCuisine: ["Canaria", "Carnes a la brasa", "Pescados"],
     areaServed: "Tenerife Sur",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: RESTAURANT.hoursSpec.dayOfWeek,
+      opens: RESTAURANT.hoursSpec.opens,
+      closes: RESTAURANT.hoursSpec.closes,
+    },
   };
 
   return (
