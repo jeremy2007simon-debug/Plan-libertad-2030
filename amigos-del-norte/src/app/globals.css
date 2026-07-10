@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0a0908;
+  --bg-elevated: #131110;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-border: rgba(255, 255, 255, 0.09);
+  --hair: rgba(255, 255, 255, 0.09);
+  --ink: #f4f0e6;
+  --ink-dim: #a89f8f;
+  --ink-dim-2: #6b6459;
+  --gold: #c9a24b;
+  --gold-soft: rgba(201, 162, 75, 0.4);
+  --gold-glow: rgba(201, 162, 75, 0.28);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-border: var(--surface-border);
+  --color-hair: var(--hair);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-dim-2: var(--ink-dim-2);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-manrope);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--gold);
+  color: #0a0908;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
