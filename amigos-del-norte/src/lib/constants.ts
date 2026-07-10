@@ -32,7 +32,54 @@ export const RESTAURANT = {
   googleReviewsSearchHref:
     "https://www.google.com/search?q=" +
     encodeURIComponent("Restaurante Amigos del Norte Las Chafiras"),
+  tripadvisorSearchHref:
+    "https://www.tripadvisor.es/Search?q=" +
+    encodeURIComponent("Restaurante Amigos del Norte Las Chafiras"),
 } as const;
+
+// Reseñas reales de clientes, transcritas tal cual desde TripAdvisor
+// (capturas de pantalla facilitadas por el restaurante) — texto y autoría
+// verbatim, sin corregir erratas, para no alterar lo que escribió cada
+// cliente. Se usan como respaldo mientras no haya API de Google Places
+// activa (ver src/lib/reviews.ts); si esa API se activa, tiene prioridad.
+export const CURATED_REVIEWS = [
+  {
+    author: "Manuel B.",
+    location: null as string | null,
+    rating: 5,
+    title: "Buenisima la comida",
+    text: "Para cenar es un buen sitio el baño limpio la comida 10 de 10 os recomiendo la chuleta de cerdo sin duda una de las mejores carnes que he probado",
+    date: "enero de 2025",
+    collaboration: false,
+  },
+  {
+    author: "Maria isabel",
+    location: "Tenerife, España" as string | null,
+    rating: 5,
+    title: "parrillada de diez",
+    text: "me encanta llevo 20 años comindo con ellos la parrillada y los pollos lo mejor el atendimento de diez",
+    date: "agosto de 2021",
+    collaboration: true,
+  },
+  {
+    author: "Cindy Mhadison",
+    location: "Ciudad Real, España" as string | null,
+    rating: 5,
+    title: "AGRADECIMIENTO",
+    text: "Quiero dar las gracias al restaurante Amigos del Norte por lo bien que me siento cada vez que visito vuestras intalaciones, muy buen servicio y excelente toda la comida, todo esto sin olvidar los cuidados que siguen teniendo a día de hoy en desinfectar las mesas que han sido desocupadas, sigan así amigos.",
+    date: "septiembre de 2020",
+    collaboration: true,
+  },
+  {
+    author: "Sonia",
+    location: null as string | null,
+    rating: 4,
+    title: "Buena comida a buen precio",
+    text: "Si quieres almorzar o cenar en un guachinche en el sur de la isla con un grupo grande es la mejor opción, es bueno y barato.",
+    date: "agosto de 2020",
+    collaboration: false,
+  },
+] as const;
 
 // Ejemplos y precios reales tomados de la carta digital del restaurante
 // (restauranteamigosdelnorte.tucartadigital.com). Actualizar aquí si cambian.
