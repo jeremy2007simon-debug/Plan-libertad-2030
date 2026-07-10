@@ -1,4 +1,4 @@
-import { PlaceholderImage } from "./ui/PlaceholderImage";
+import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
 import { Icon } from "./ui/Icon";
 
@@ -9,12 +9,15 @@ export function Hero() {
       className="relative flex min-h-[100svh] items-end overflow-hidden"
     >
       <div className="absolute inset-0">
-        {/* Sustituir por la fotografía real del restaurante (next/image, fill, priority) */}
-        <PlaceholderImage
-          label="Fotografía del restaurante"
-          ratio="auto"
-          tone="deep"
-          className="h-full w-full rounded-none"
+        {/* Foto de stock provisional (Unsplash, licencia libre de uso
+            comercial) — no es una foto real del restaurante. Sustituir por
+            fotografía propia en cuanto esté disponible: ver public/images/CREDITOS.md */}
+        <Image
+          src="/images/hero-provisional.jpg"
+          alt=""
+          fill
+          priority
+          className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/55 to-bg/10" />
         <div className="absolute inset-0 bg-gradient-to-r from-bg/70 via-transparent to-transparent" />

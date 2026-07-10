@@ -1,4 +1,4 @@
-import { PlaceholderImage } from "./ui/PlaceholderImage";
+import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 
@@ -13,7 +13,17 @@ export function Historia() {
     <section id="historia" className="relative py-28 md:py-36">
       <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2 md:items-center md:px-10 md:gap-20">
         <Reveal>
-          <PlaceholderImage label="Nuestra cocina" ratio="4/5" />
+          {/* Foto de stock provisional (Unsplash, licencia libre de uso
+              comercial) — no es una foto real del restaurante. Sustituir por
+              fotografía propia en cuanto esté disponible: ver public/images/CREDITOS.md */}
+          <div className="relative overflow-hidden rounded-[2px]" style={{ aspectRatio: "4/5" }}>
+            <Image
+              src="/images/historia-provisional.jpg"
+              alt=""
+              fill
+              className="object-cover"
+            />
+          </div>
         </Reveal>
 
         <div>
