@@ -4,6 +4,9 @@ Web premium del Restaurante Amigos del Norte (Las Chafiras, San Miguel de
 Abona, Tenerife). Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 +
 Framer Motion.
 
+Desplegada en Vercel como proyecto independiente, con "Root Directory"
+apuntando a esta carpeta (`amigos-del-norte`).
+
 ## Desarrollo
 
 ```bash
