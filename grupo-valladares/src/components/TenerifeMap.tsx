@@ -1,62 +1,51 @@
 import { STORES } from "@/lib/constants";
 
-// Silueta de Tenerife trazada a partir del contorno real de la isla
-// (costa recortada, no suavizada) — orientación estándar de mapa: Anaga
-// afilada al noreste (arriba-derecha), Teno al noroeste (izquierda), costa
-// sur amplia y jugosa en la parte inferior.
+// Silueta de Tenerife trazada punto a punto sobre la referencia real de la
+// isla (contorno recortado, mismo encuadre casi cuadrado que el original):
+// Anaga afilada arriba a la derecha, istmo estrecho hacia Santa Cruz, costa
+// este con el saliente de Candelaria, vientre sur ancho y recortado, punta
+// de Teno a la izquierda y costa norte larga y sinuosa de vuelta a Anaga.
 const ISLAND_POINTS: [number, number][] = [
-  // Anaga: punta noreste
-  [695, 148],
-  // Anaga: flanco sur, bajando hacia el istmo (jagged)
-  [660, 176], [634, 164], [614, 196], [588, 188], [572, 216],
-  [548, 206], [528, 236], [512, 224],
-  // istmo de Santa Cruz
-  [500, 258], [508, 288], [486, 308], [496, 334],
-  // costa este, bajando (Candelaria)
-  [476, 364], [492, 390], [470, 414], [482, 444],
-  [456, 464], [468, 494], [442, 514], [452, 544],
-  // costa sureste, aproximándose al sur
-  [422, 570], [432, 600], [400, 614], [412, 644],
-  // costa sur, el vientre ancho de la isla (San Miguel / Las Chafiras / Los Cristianos)
-  [372, 634], [356, 660], [320, 644], [300, 660],
-  [270, 634], [250, 650], [220, 620], [200, 630],
-  // costa suroeste (Adeje / Guía de Isora)
-  [180, 600], [160, 570], [170, 540], [146, 520],
-  [156, 490], [130, 470], [140, 440], [116, 420],
-  [122, 390], [96, 375], [106, 350],
-  // Teno: punta noroeste
-  [75, 335],
-  // costa norte, subiendo desde Teno (Garachico / Icod / La Orotava / La Laguna) — larga y jugosa
-  [100, 306], [90, 280], [116, 266], [106, 236],
-  [130, 226], [126, 196], [156, 190], [150, 166],
-  [180, 166], [186, 146], [216, 150], [226, 130],
-  [256, 140], [270, 120], [300, 135], [320, 115],
-  [350, 130], [376, 115], [406, 130], [430, 115],
-  [460, 130], [486, 118], [516, 135], [540, 122],
-  [566, 140], [590, 128], [616, 145], [640, 135],
-  [666, 150],
+  [686, 140], [655, 172], [624, 156], [601, 187], [569, 172], [546, 203],
+  [515, 187], [491, 218], [468, 211],
+  [507, 289], [515, 320], [491, 343], [499, 367],
+  [476, 390], [491, 421], [468, 445], [484, 476], [460, 499], [476, 523],
+  [452, 546], [468, 577],
+  [445, 601], [460, 632], [429, 647], [445, 679],
+  [406, 671], [390, 694], [359, 679], [343, 694], [320, 679], [296, 686],
+  [273, 663], [250, 679], [226, 663], [211, 671],
+  [195, 647], [172, 624], [179, 601], [156, 577], [164, 554], [140, 530],
+  [148, 507], [125, 484], [133, 460], [109, 437], [117, 413],
+  [78, 343],
+  [101, 312], [94, 289], [117, 281], [109, 250], [133, 242], [125, 211],
+  [148, 203], [148, 179],
+  [179, 179], [187, 156], [218, 164], [226, 133], [257, 148], [265, 117],
+  [296, 133], [304, 109], [335, 125], [343, 101], [374, 117], [382, 94],
+  [413, 109], [421, 86], [452, 101], [460, 78], [491, 94], [499, 70],
+  [530, 86], [538, 78], [562, 94], [569, 86], [593, 101], [601, 94],
+  [624, 109], [632, 101], [655, 117], [663, 125],
 ];
 
 const ISLAND_PATH = `M ${ISLAND_POINTS.map(([x, y]) => `${x} ${y}`).join(" L ")} Z`;
 
 // Posición aproximada de cada tienda dentro del viewBox de la isla.
 const PIN_COORDS: Record<string, [number, number]> = {
-  "santa-cruz": [515, 285],
-  "los-majuelos": [488, 335],
-  "las-chafiras": [335, 630],
-  adeje: [195, 555],
-  "la-orotava": [335, 145],
-  "icod-de-los-vinos": [175, 205],
+  "santa-cruz": [498, 300],
+  "los-majuelos": [472, 355],
+  "las-chafiras": [318, 672],
+  adeje: [192, 600],
+  "la-orotava": [335, 122],
+  "icod-de-los-vinos": [172, 195],
 };
 
 export function TenerifeMap() {
   return (
-    <div className="bg-grid relative aspect-video w-full overflow-hidden rounded-2xl border border-surface-border bg-bg-elevated-2 lg:sticky lg:top-28">
+    <div className="bg-grid relative aspect-square w-full overflow-hidden rounded-2xl border border-surface-border bg-bg-elevated-2 lg:sticky lg:top-28">
       <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-blue/20 blur-[110px]" />
       <div className="absolute -right-16 -bottom-16 h-64 w-64 rounded-full bg-blue/10 blur-[100px]" />
 
       <svg
-        viewBox="40 90 700 610"
+        viewBox="55 55 655 665"
         className="absolute inset-0 h-full w-full"
         preserveAspectRatio="xMidYMid meet"
       >
@@ -71,8 +60,8 @@ export function TenerifeMap() {
           d={ISLAND_PATH}
           fill="url(#islandFill)"
           stroke="var(--blue-dim)"
-          strokeOpacity="0.7"
-          strokeWidth="3"
+          strokeOpacity="0.75"
+          strokeWidth="4"
           strokeLinejoin="round"
         />
 
@@ -87,13 +76,13 @@ export function TenerifeMap() {
                 <animate attributeName="r" values="9;16;9" dur="2.4s" repeatCount="indefinite" begin={`${i * 0.3}s`} />
                 <animate attributeName="fill-opacity" values="0.3;0;0.3" dur="2.4s" repeatCount="indefinite" begin={`${i * 0.3}s`} />
               </circle>
-              <circle cx={x} cy={y} r="5.5" fill="var(--blue-dim)" stroke="var(--bg-elevated-2)" strokeWidth="2" />
+              <circle cx={x} cy={y} r="6" fill="var(--blue-dim)" stroke="var(--bg-elevated-2)" strokeWidth="2.5" />
               <text
                 x={x}
                 y={labelAbove ? y - 18 : y + 28}
                 textAnchor="middle"
                 className="fill-ink-dim font-mono uppercase"
-                style={{ fontSize: "15px", letterSpacing: "0.05em" }}
+                style={{ fontSize: "16px", letterSpacing: "0.05em" }}
               >
                 {String(i + 1).padStart(2, "0")} · {store.name.split(" (")[0]}
               </text>
