@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #06070a;
-  --bg-elevated: #0b0d13;
-  --bg-elevated-2: #10131b;
-  --surface: rgba(255, 255, 255, 0.045);
-  --surface-strong: rgba(255, 255, 255, 0.075);
-  --surface-border: rgba(255, 255, 255, 0.1);
-  --hair: rgba(255, 255, 255, 0.08);
+  --bg: #050a18;
+  --bg-elevated: #0a1226;
+  --bg-elevated-2: #0f1c38;
+  --surface: rgba(120, 155, 255, 0.06);
+  --surface-strong: rgba(120, 155, 255, 0.1);
+  --surface-border: rgba(140, 170, 255, 0.14);
+  --hair: rgba(140, 170, 255, 0.12);
 
   --ink: #f5f6f8;
   --ink-dim: #96a0b0;

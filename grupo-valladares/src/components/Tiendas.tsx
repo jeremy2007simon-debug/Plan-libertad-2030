@@ -3,52 +3,7 @@ import { STORES } from "@/lib/constants";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { Container } from "./ui/Container";
-
-const PIN_POSITIONS = [
-  { top: "40%", left: "44%" },
-  { top: "18%", left: "62%" },
-  { top: "58%", left: "70%" },
-  { top: "72%", left: "38%" },
-  { top: "26%", left: "24%" },
-  { top: "12%", left: "40%" },
-];
-
-function MapPlaceholder() {
-  return (
-    <div className="bg-grid relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-surface-border bg-bg-elevated-2 lg:aspect-auto lg:h-full">
-      <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black,transparent)]" />
-      <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-blue/15 blur-[110px]" />
-
-      {STORES.map((store, i) => {
-        const pos = PIN_POSITIONS[i % PIN_POSITIONS.length];
-        return (
-          <div
-            key={store.slug}
-            className="absolute flex -translate-x-1/2 -translate-y-full flex-col items-center"
-            style={{ top: pos.top, left: pos.left }}
-          >
-            <span className="rounded-full border border-surface-border bg-bg/90 px-2.5 py-1 font-mono text-[.62rem] tracking-[0.08em] text-ink-dim whitespace-nowrap uppercase backdrop-blur-md">
-              {store.name.split(" (")[0]}
-            </span>
-            <span className="relative mt-1.5 flex size-3 items-center justify-center">
-              <span className="absolute size-3 animate-ping rounded-full bg-blue/60" />
-              <span className="relative size-2.5 rounded-full bg-blue shadow-[0_0_12px_var(--blue-glow)]" />
-            </span>
-          </div>
-        );
-      })}
-
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 border-t border-hair bg-bg/70 px-5 py-3 backdrop-blur-md">
-        <span className="font-mono text-[.68rem] tracking-[0.1em] text-ink-dim-2 uppercase">
-          Mapa — vista previa
-        </span>
-        <span className="font-mono text-[.68rem] text-ink-dim-2">
-          {STORES.length} tiendas
-        </span>
-      </div>
-    </div>
-  );
-}
+import { TenerifeMap } from "./TenerifeMap";
 
 export function Tiendas() {
   return (
@@ -67,7 +22,7 @@ export function Tiendas() {
 
         <div className="mt-16 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
           <Reveal delay={0.1}>
-            <MapPlaceholder />
+            <TenerifeMap />
           </Reveal>
 
           <div className="flex flex-col gap-4">
@@ -75,9 +30,14 @@ export function Tiendas() {
               <Reveal key={store.slug} delay={0.15 + i * 0.08}>
                 <div className="group rounded-2xl border border-surface-border bg-bg-elevated p-6 transition-colors duration-500 hover:border-blue-dim/35">
                   <div className="flex items-start justify-between gap-4">
-                    <h3 className="font-display text-lg font-medium tracking-tight text-ink">
-                      {store.name}
-                    </h3>
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[.68rem] text-ink-dim-2">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <h3 className="font-display text-lg font-medium tracking-tight text-ink">
+                        {store.name}
+                      </h3>
+                    </div>
                     <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-surface-border bg-surface text-blue-dim">
                       <MapPin className="size-4" strokeWidth={1.5} />
                     </span>
