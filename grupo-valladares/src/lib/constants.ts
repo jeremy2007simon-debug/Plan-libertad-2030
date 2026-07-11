@@ -1,26 +1,33 @@
 // Propuesta conceptual para Grupo Valladares.
 //
-// Esta web es un ejercicio de diseño para mostrar cómo podría modernizarse
-// la presencia digital de la empresa — no se ha incorporado ningún dato
-// corporativo real (años de actividad, plantilla, certificaciones, marcas
-// distribuidas...). Todo lo marcado entre [corchetes] es un marcador a
-// sustituir por el dato real antes de publicar.
+// Datos de contacto y tiendas facilitados por la empresa. Lo que queda sin
+// confirmar (razón social fiscal, certificaciones, marcas distribuidas...)
+// sigue marcado entre [corchetes] hasta que se aporte el dato definitivo.
 
 export const COMPANY = {
   name: "Grupo Valladares",
   legalNote: "[Razón social pendiente de confirmar]",
-  phone: "[Teléfono pendiente]",
-  phoneHref: "tel:+34000000000",
-  whatsappHref: "https://wa.me/34000000000",
-  email: "[Email pendiente]",
-  emailHref: "mailto:info@grupovalladares.example",
-  hours: "[Horario pendiente de confirmar]",
+  phone: "922 231 555",
+  phoneHref: "tel:+34922231555",
+  // Número de teléfono fijo (central de Santa Cruz) — confirmar si tiene
+  // WhatsApp Business habilitado antes de publicar, o sustituir por un móvil.
+  whatsappHref: "https://wa.me/34922231555",
+  email: "atencionalcliente@grupovalladares.com",
+  emailHref: "mailto:atencionalcliente@grupovalladares.com",
   social: {
     instagram: null as string | null,
     linkedin: null as string | null,
     facebook: null as string | null,
   },
 } as const;
+
+export const SCHEDULE = [
+  { label: "Lunes a viernes", value: "07:00 – 18:00" },
+  { label: "Sábados", value: "09:00 – 13:00" },
+  { label: "Domingos", value: "Cerrado" },
+] as const;
+
+export const STORE_HOURS = "Lunes a viernes: 07:00–18:00 · Sábados: 09:00–13:00";
 
 export type ServiceCategory = {
   slug: string;
@@ -55,32 +62,58 @@ export type StoreLocation = {
   mapsHref: string;
 };
 
-// Ubicaciones de ejemplo — estructura preparada para 1..n tiendas reales.
-// Sustituir nombre, dirección, teléfono y horario por los datos definitivos.
+function mapsDirections(address: string): string {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+}
+
 export const STORES: StoreLocation[] = [
   {
-    slug: "central",
-    name: "Tienda Central",
-    address: "[Dirección pendiente]",
-    phone: "[Teléfono pendiente]",
-    hours: "[Horario pendiente]",
-    mapsHref: "https://www.google.com/maps",
+    slug: "santa-cruz",
+    name: "Santa Cruz de Tenerife (Central)",
+    address: "Calle 302, Nave 15, Polígono Industrial Costa Sur, 38009 Santa Cruz de Tenerife",
+    phone: "922 231 555",
+    hours: STORE_HOURS,
+    mapsHref: mapsDirections("Calle 302, Nave 15, Polígono Industrial Costa Sur, 38009 Santa Cruz de Tenerife"),
   },
   {
-    slug: "norte",
-    name: "Tienda Norte",
-    address: "[Dirección pendiente]",
-    phone: "[Teléfono pendiente]",
-    hours: "[Horario pendiente]",
-    mapsHref: "https://www.google.com/maps",
+    slug: "los-majuelos",
+    name: "Los Majuelos (La Laguna)",
+    address: "Calle Las Macetas 22, Polígono Industrial Los Majuelos, 38108 La Laguna",
+    phone: "922 823 066",
+    hours: STORE_HOURS,
+    mapsHref: mapsDirections("Calle Las Macetas 22, Polígono Industrial Los Majuelos, 38108 La Laguna"),
   },
   {
-    slug: "sur",
-    name: "Tienda Sur",
-    address: "[Dirección pendiente]",
-    phone: "[Teléfono pendiente]",
-    hours: "[Horario pendiente]",
-    mapsHref: "https://www.google.com/maps",
+    slug: "las-chafiras",
+    name: "Las Chafiras",
+    address: "Avenida Modesto Hernández González 31, Polígono Industrial Las Chafiras, 38639 San Miguel de Abona",
+    phone: "922 736 166",
+    hours: STORE_HOURS,
+    mapsHref: mapsDirections("Avenida Modesto Hernández González 31, Polígono Industrial Las Chafiras, 38639 San Miguel de Abona"),
+  },
+  {
+    slug: "adeje",
+    name: "Adeje",
+    address: "Calle Bentinerfe 57, Polígono Barranco Las Torres, 38670 Adeje",
+    phone: "922 758 667",
+    hours: STORE_HOURS,
+    mapsHref: mapsDirections("Calle Bentinerfe 57, Polígono Barranco Las Torres, 38670 Adeje"),
+  },
+  {
+    slug: "la-orotava",
+    name: "La Orotava",
+    address: "Calle Los Molinos de Gofio 35, Polígono Industrial San Jerónimo, 38312 La Orotava",
+    phone: "922 326 324",
+    hours: STORE_HOURS,
+    mapsHref: mapsDirections("Calle Los Molinos de Gofio 35, Polígono Industrial San Jerónimo, 38312 La Orotava"),
+  },
+  {
+    slug: "icod-de-los-vinos",
+    name: "Icod de los Vinos",
+    address: "Calle El Timple 10, Polígono Industrial Las Almenas, 38430 Icod de los Vinos",
+    phone: "922 326 324",
+    hours: STORE_HOURS,
+    mapsHref: mapsDirections("Calle El Timple 10, Polígono Industrial Las Almenas, 38430 Icod de los Vinos"),
   },
 ];
 

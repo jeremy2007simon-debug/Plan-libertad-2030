@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Facebook } from "lucide-react";
-import { COMPANY, STORES } from "@/lib/constants";
+import { COMPANY, STORES, SCHEDULE } from "@/lib/constants";
 import { Container } from "./ui/Container";
 
 export function Footer() {
@@ -61,7 +61,14 @@ export function Footer() {
             <p className="font-mono text-xs tracking-[0.18em] text-ink-dim-2 uppercase">
               Horario
             </p>
-            <p className="mt-4 text-sm text-ink-dim">{COMPANY.hours}</p>
+            <dl className="mt-4 flex flex-col gap-1.5 text-sm text-ink-dim">
+              {SCHEDULE.map((row) => (
+                <div key={row.label} className="flex items-baseline justify-between gap-4">
+                  <dt>{row.label}</dt>
+                  <dd className="text-ink-dim-2">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
 
             <div className="mt-6 flex gap-4">
               <a

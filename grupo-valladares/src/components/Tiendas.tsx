@@ -5,9 +5,12 @@ import { SectionLabel } from "./ui/SectionLabel";
 import { Container } from "./ui/Container";
 
 const PIN_POSITIONS = [
-  { top: "38%", left: "46%" },
-  { top: "22%", left: "68%" },
-  { top: "64%", left: "30%" },
+  { top: "40%", left: "44%" },
+  { top: "18%", left: "62%" },
+  { top: "58%", left: "70%" },
+  { top: "72%", left: "38%" },
+  { top: "26%", left: "24%" },
+  { top: "12%", left: "40%" },
 ];
 
 function MapPlaceholder() {
@@ -25,7 +28,7 @@ function MapPlaceholder() {
             style={{ top: pos.top, left: pos.left }}
           >
             <span className="rounded-full border border-surface-border bg-bg/90 px-2.5 py-1 font-mono text-[.62rem] tracking-[0.08em] text-ink-dim whitespace-nowrap uppercase backdrop-blur-md">
-              {store.name}
+              {store.name.split(" (")[0]}
             </span>
             <span className="relative mt-1.5 flex size-3 items-center justify-center">
               <span className="absolute size-3 animate-ping rounded-full bg-blue/60" />
