@@ -1,54 +1,37 @@
 import { STORES } from "@/lib/constants";
 
-// Silueta estilizada de Tenerife (no cartografía exacta) — suficiente para
-// que el usuario reconozca la isla y ubique cada tienda de un vistazo.
+// Silueta esquemática de Tenerife (trazado poligonal, no cartografía
+// exacta) — conserva los rasgos que hacen reconocible a la isla: la
+// península de Anaga afilada al noreste, Teno más roma al noroeste, y una
+// costa sur amplia y curva sin un pico pronunciado.
 const ISLAND_POINTS: [number, number][] = [
-  [40, 150],
-  [40, 150],
-  [95, 90],
-  [190, 55],
-  [300, 48],
-  [410, 62],
-  [500, 90],
-  [560, 115],
-  [615, 145],
-  [615, 145],
-  [560, 200],
-  [510, 255],
-  [440, 300],
-  [340, 338],
-  [230, 315],
-  [130, 270],
-  [75, 210],
+  [55, 145], // Teno (punta noroeste, roma)
+  [95, 200], // flanco sur de Teno
+  [150, 255], // costa suroeste
+  [230, 295], // costa sur (Adeje / Los Cristianos)
+  [330, 315], // costa sur, punto más amplio (San Miguel / Las Chafiras)
+  [430, 300], // costa sureste (Güímar)
+  [490, 260], // costa este (Candelaria)
+  [510, 200], // costa este, aproximándose a Anaga
+  [520, 150], // base sur de Anaga (istmo)
+  [640, 95], // Anaga (punta noreste, afilada)
+  [500, 105], // base norte de Anaga (istmo, cierra la península)
+  [430, 80], // costa norte (Santa Cruz / La Laguna)
+  [330, 55], // costa norte-centro (La Orotava / Puerto de la Cruz)
+  [220, 60], // costa norte (Los Realejos)
+  [130, 85], // costa noroeste (Garachico / Buenavista)
 ];
 
-function smoothClosedPath(points: [number, number][]): string {
-  const n = points.length;
-  let d = `M ${points[0][0]} ${points[0][1]} `;
-  for (let i = 0; i < n; i++) {
-    const p0 = points[(i - 1 + n) % n];
-    const p1 = points[i];
-    const p2 = points[(i + 1) % n];
-    const p3 = points[(i + 2) % n];
-    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
-    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
-    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
-    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
-    d += `C ${c1x} ${c1y}, ${c2x} ${c2y}, ${p2[0]} ${p2[1]} `;
-  }
-  return `${d}Z`;
-}
-
-const ISLAND_PATH = smoothClosedPath(ISLAND_POINTS);
+const ISLAND_PATH = `M ${ISLAND_POINTS.map(([x, y]) => `${x} ${y}`).join(" L ")} Z`;
 
 // Posición aproximada de cada tienda dentro del viewBox de la isla.
 const PIN_COORDS: Record<string, [number, number]> = {
-  "santa-cruz": [552, 138],
-  "los-majuelos": [508, 178],
-  "las-chafiras": [300, 300],
-  adeje: [168, 258],
-  "la-orotava": [300, 74],
-  "icod-de-los-vinos": [150, 94],
+  "santa-cruz": [505, 135],
+  "los-majuelos": [468, 168],
+  "las-chafiras": [310, 290],
+  adeje: [190, 270],
+  "la-orotava": [330, 82],
+  "icod-de-los-vinos": [175, 100],
 };
 
 export function TenerifeMap() {
@@ -73,8 +56,9 @@ export function TenerifeMap() {
           d={ISLAND_PATH}
           fill="url(#islandFill)"
           stroke="var(--blue-dim)"
-          strokeOpacity="0.55"
-          strokeWidth="1.5"
+          strokeOpacity="0.6"
+          strokeWidth="2"
+          strokeLinejoin="round"
         />
 
         {STORES.map((store, i) => {
