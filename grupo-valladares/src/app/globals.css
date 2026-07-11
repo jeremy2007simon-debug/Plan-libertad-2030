@@ -19,8 +19,8 @@
   --blue-soft: rgba(37, 99, 255, 0.45);
   --blue-glow: rgba(37, 99, 255, 0.32);
 
-  --red: #ff3b3b;
-  --red-soft: rgba(255, 59, 59, 0.55);
+  --yellow: #ffc531;
+  --yellow-soft: rgba(255, 197, 49, 0.55);
 }
 
 @theme inline {
@@ -38,7 +38,7 @@
   --color-blue-bright: var(--blue-bright);
   --color-blue-dim: var(--blue-dim);
   --color-blue-soft: var(--blue-soft);
-  --color-red: var(--red);
+  --color-yellow: var(--yellow);
   --font-display: var(--font-geist);
   --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);

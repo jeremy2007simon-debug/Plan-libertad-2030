@@ -219,7 +219,7 @@ export function Presupuesto() {
 
                 <div className="sm:col-span-2">
                   {status === "error" && (
-                    <p className="mb-4 text-sm text-red">
+                    <p className="mb-4 text-sm text-red-400">
                       No hemos podido enviar tu solicitud. Prueba de nuevo o
                       llámanos al {COMPANY.phone}.
                     </p>

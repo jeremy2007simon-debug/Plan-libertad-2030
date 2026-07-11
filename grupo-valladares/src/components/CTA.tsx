@@ -11,8 +11,8 @@ export function CTA() {
           <div className="absolute top-1/2 left-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue/25 blur-[130px]" />
 
           <Reveal className="mx-auto flex flex-col items-center">
-            <span className="relative size-2 rounded-full bg-red">
-              <span className="absolute inset-0 rounded-full bg-red blur-[6px]" />
+            <span className="relative size-2 rounded-full bg-yellow">
+              <span className="absolute inset-0 rounded-full bg-yellow blur-[6px]" />
             </span>
             <h2 className="mt-8 max-w-2xl font-display text-[clamp(2rem,4.4vw,3.6rem)] leading-[1.08] font-semibold tracking-tight text-ink text-balance">
               ¿No encuentras la pieza que necesitas?
