@@ -30,8 +30,8 @@ npm run lint    # ESLint
 ## Estructura
 
 ```
-db/
-  schema.sql                # esquema de referencia de la tabla `reservations`
+supabase/
+  migrations/001_reservations.sql  # esquema de la tabla `reservations`
 src/
   app/
     page.tsx                # ensambla todas las secciones
@@ -44,8 +44,9 @@ src/
   lib/
     constants.ts              # datos del restaurante (RESTAURANT, SPECIALTIES, AGGREGATE_REVIEWS...)
     site.ts                   # URL pública del sitio (NEXT_PUBLIC_SITE_URL)
+    supabase.ts               # cliente de Supabase (server-only, service role)
     reservations/              # capa de reservas, ver más abajo
-      store.ts                 # "base de datos" (hoy: en memoria)
+      store.ts                 # "base de datos" (Supabase si está configurado, si no memoria)
       notify.ts                # notificación por correo (hoy: sin proveedor configurado)
       index.ts                 # orquestador createReservation()
     reviews.ts                # integración con Google Places (opcional)
@@ -74,33 +75,51 @@ El formulario de reservas (`src/components/Reservas.tsx`) llama a
 Hoy el pipeline es:
 
 ```
-Formulario → API → Base de datos (memoria) → Notificación por correo → Panel del restaurante (no implementado)
+Formulario → API → Base de datos (Supabase, o memoria si no está configurado)
+  → Notificación por correo → Panel del restaurante (no implementado)
 ```
 
-Cada solicitud se guarda (en memoria, ver `store.ts`) y se intenta
-notificar por correo (`notify.ts`, sin efecto hasta configurar
+Cada solicitud se guarda (`store.ts`) y se intenta notificar por correo
+(`notify.ts`, sin efecto hasta configurar
 `RESERVATION_NOTIFICATION_EMAIL`); el visitante ve una confirmación en
-pantalla. El esquema de referencia de la tabla `reservations` está en
-`db/schema.sql`, listo para conectar una base de datos real.
+pantalla.
 
-Puntos de conexión futuros, sin tocar el formulario:
+### Conectar Supabase
 
-- **Base de datos real** (Postgres/Supabase/etc.): sustituir
-  `store.ts` por consultas reales (`DATABASE_URL` en `.env.local`).
+1. Crea un proyecto en [supabase.com](https://supabase.com) (o reutiliza
+   uno existente).
+2. Abre el **SQL Editor** del proyecto y ejecuta el contenido de
+   `supabase/migrations/001_reservations.sql` — crea la tabla
+   `reservations`.
+3. En **Project Settings → API**, copia el **Project URL** y la clave
+   **service_role**.
+4. Rellena `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` en `.env.local`
+   (desarrollo) y en las variables de entorno del proyecto en Vercel
+   (producción) — ver `.env.example`. La `service_role` key es secreta:
+   no la subas al repositorio ni la compartas por chat, solo pégala
+   directamente en `.env.local` / Vercel.
+
+Sin esas dos variables configuradas, `store.ts` sigue guardando en
+memoria del proceso automáticamente — la web nunca se rompe por falta de
+Supabase, simplemente las reservas no persisten entre reinicios.
+
+### Otros puntos de conexión futuros, sin tocar el formulario
+
 - **Notificación por correo**: elegir proveedor (Resend, SMTP...) y
   completar `notify.ts` (`RESERVATION_NOTIFICATION_EMAIL` en
   `.env.example`).
 - **NovaCore Reserve**: sustituir el cuerpo de `createReservation()` en
   `index.ts` por la llamada a su API (`NOVACORE_RESERVE_URL` /
   `NOVACORE_RESERVE_API_KEY`). Con NovaCore Reserve conectado, este
-  pipeline entero podría delegar directamente en su API.
+  pipeline entero podría delegar directamente en su API en vez de
+  guardar en Supabase.
 - **Bot IA por WhatsApp** y **confirmaciones/recordatorios
   automáticos**: se dispararían desde NovaCore Reserve en cuanto se crea
   la reserva, sin tocar esta web.
 - **Panel privado del restaurante**: no implementado todavía. Cuando se
   desarrolle, viviría en una ruta protegida (p. ej. `src/app/panel/`, con
-  autenticación) y leería las reservas desde la base de datos real (o
-  desde NovaCore Reserve) en vez de duplicar almacenamiento.
+  autenticación) y leería las reservas directamente de la tabla
+  `reservations` en Supabase (o de NovaCore Reserve).
 
 ## Reseñas
 
@@ -126,8 +145,10 @@ de Google.
   Bebidas) están creadas y preparadas, a la espera de la carta oficial
   completa (`SPECIALTIES` en `src/lib/constants.ts`).
 - **Fotografía y vídeo real**: ver "Identidad visual" arriba.
-- **Reservas**: ver arquitectura arriba — nada conectado todavía a un
-  proveedor real.
+- **Reservas**: la base de datos (Supabase) está lista para conectarse
+  siguiendo los pasos de arriba, pero sin `SUPABASE_URL` /
+  `SUPABASE_SERVICE_ROLE_KEY` configuradas todavía. La notificación por
+  correo y NovaCore Reserve siguen sin proveedor conectado.
 - **Dominio real**: sin `NEXT_PUBLIC_SITE_URL` configurada, metadata,
   sitemap y robots usan `http://localhost:3000` (ver `src/lib/site.ts`).
   Define la variable en Vercel en cuanto haya un dominio real.

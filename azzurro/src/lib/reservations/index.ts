@@ -44,8 +44,16 @@ import { sendReservationNotification } from "./notify";
 export async function createReservation(
   reservation: Reservation
 ): Promise<ReservationResult> {
-  const record = await saveReservation(reservation);
-  await sendReservationNotification(record);
+  try {
+    const record = await saveReservation(reservation);
+    await sendReservationNotification(record);
 
-  return { ok: true, id: record.id };
+    return { ok: true, id: record.id };
+  } catch (error) {
+    console.error("[reservas] No se pudo crear la reserva:", error);
+    return {
+      ok: false,
+      error: "No se pudo guardar la reserva. Inténtalo de nuevo.",
+    };
+  }
 }

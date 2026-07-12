@@ -1,24 +1,16 @@
 import type { Reservation, ReservationRecord } from "@/types/reservation";
+import { getSupabaseClient } from "@/lib/supabase";
 
 // -----------------------------------------------------------------------
 // Capa de almacenamiento ("base de datos") de reservas.
 //
-// Hoy: guarda las reservas en memoria del proceso — se pierden al
-// reiniciar el servidor. Suficiente para esta propuesta de diseño, no
-// para producción. El esquema de referencia de la tabla real está en
-// db/schema.sql (tabla `reservations`).
+// Con SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY configuradas (ver
+// .env.example), guarda en la tabla `reservations` de Supabase — esquema
+// en supabase/migrations/001_reservations.sql.
 //
-// Mañana, para conectar una base de datos real (Postgres/Supabase/etc.):
-//
-//   1. Define DATABASE_URL en .env.local (ver .env.example).
-//   2. Sustituye el cuerpo de saveReservation() por un INSERT real, p. ej.
-//
-//      const [row] = await db
-//        .insertInto("reservations")
-//        .values({ ...reservation, status: "pending" })
-//        .returningAll()
-//        .execute();
-//      return row;
+// Sin esas variables, cae a un almacenamiento en memoria del proceso (se
+// pierde al reiniciar el servidor) para que la web siga funcionando en
+// local sin depender de Supabase.
 //
 // Si en su lugar se conecta NovaCore Reserve, esta capa podría dejar de
 // ser necesaria: createReservation() (en ./index.ts) llamaría
@@ -27,18 +19,74 @@ import type { Reservation, ReservationRecord } from "@/types/reservation";
 
 const memoryStore: ReservationRecord[] = [];
 
+type ReservationRow = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  date: string;
+  time: string;
+  people: number;
+  comments: string | null;
+  status: ReservationRecord["status"];
+  created_at: string;
+};
+
+function rowToRecord(row: ReservationRow): ReservationRecord {
+  return {
+    name: row.name,
+    phone: row.phone,
+    email: row.email,
+    guests: row.people,
+    date: row.date,
+    time: row.time,
+    notes: row.comments ?? undefined,
+    id: row.id,
+    status: row.status,
+    createdAt: row.created_at,
+  };
+}
+
 export async function saveReservation(
   reservation: Reservation
 ): Promise<ReservationRecord> {
+  const supabase = getSupabaseClient();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("reservations")
+      .insert({
+        name: reservation.name,
+        phone: reservation.phone,
+        email: reservation.email,
+        date: reservation.date,
+        time: reservation.time,
+        people: reservation.guests,
+        comments: reservation.notes ?? null,
+      })
+      .select()
+      .single();
+
+    if (error || !data) {
+      console.error("[reservas] Error al guardar en Supabase:", error);
+      throw new Error("No se pudo guardar la reserva en la base de datos.");
+    }
+
+    console.log("[reservas] Nueva reserva guardada (Supabase):", data.id);
+    return rowToRecord(data as ReservationRow);
+  }
+
   const record: ReservationRecord = {
     ...reservation,
     id: `local-${Date.now()}`,
     status: "pending",
     createdAt: new Date().toISOString(),
   };
-
   memoryStore.push(record);
-  console.log("[reservas] Nueva reserva guardada (memoria):", record);
+  console.log(
+    "[reservas] Supabase no configurado — reserva guardada en memoria:",
+    record
+  );
 
   return record;
 }

@@ -15,7 +15,7 @@ export type ReservationStatus =
   | "completed";
 
 // Forma de una reserva ya guardada — corresponde a una fila de la tabla
-// `reservations` (ver db/schema.sql).
+// `reservations` (ver supabase/migrations/001_reservations.sql).
 export type ReservationRecord = Reservation & {
   id: string;
   status: ReservationStatus;
