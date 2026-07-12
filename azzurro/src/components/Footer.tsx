@@ -22,8 +22,13 @@ export function Footer() {
               Contacto
             </p>
             <ul className="mt-4 flex flex-col gap-2.5 text-sm">
-              <li className="text-ink-dim">
-                {RESTAURANT.phone ?? "Teléfono pendiente de confirmar"}
+              <li>
+                <a
+                  href={RESTAURANT.phoneHref}
+                  className="text-ink-dim transition-colors hover:text-gold"
+                >
+                  {RESTAURANT.phone}
+                </a>
               </li>
               <li>
                 <a
@@ -41,7 +46,9 @@ export function Footer() {
               Ubicación
             </p>
             <p className="mt-4 text-sm text-ink-dim">
-              {RESTAURANT.address.line1}
+              {RESTAURANT.address.locality}
+              <br />
+              {RESTAURANT.address.municipality}, Tenerife
             </p>
           </div>
 
@@ -50,16 +57,23 @@ export function Footer() {
               Síguenos
             </p>
             <div className="mt-4 flex gap-4">
-              {/* TODO: añadir los enlaces reales de Instagram y Facebook */}
+              {/* Instagram: sin cuenta oficial confirmada — oculto hasta
+                  poder verificarla. */}
+              {RESTAURANT.social.instagram && (
+                <a
+                  href={RESTAURANT.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="text-ink-dim transition-colors hover:text-gold"
+                >
+                  <Icon name="instagram" className="size-5" />
+                </a>
+              )}
               <a
-                href={RESTAURANT.social.instagram ?? "#"}
-                aria-label="Instagram"
-                className="text-ink-dim transition-colors hover:text-gold"
-              >
-                <Icon name="instagram" className="size-5" />
-              </a>
-              <a
-                href={RESTAURANT.social.facebook ?? "#"}
+                href={RESTAURANT.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook"
                 className="text-ink-dim transition-colors hover:text-gold"
               >

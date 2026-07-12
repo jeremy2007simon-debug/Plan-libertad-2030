@@ -2,7 +2,6 @@ import { RESTAURANT } from "@/lib/constants";
 import { Reveal } from "./ui/Reveal";
 import { SectionIntro } from "./ui/SectionIntro";
 import { Container } from "./ui/Container";
-import { GlassCard } from "./ui/GlassCard";
 import { Icon } from "./ui/Icon";
 
 export function Ubicacion() {
@@ -19,7 +18,7 @@ export function Ubicacion() {
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-8 text-balance font-display text-[clamp(2rem,4.2vw,3.2rem)] font-light text-ink">
-                Te esperamos pronto
+                Te esperamos en Las Chafiras
               </h2>
             </Reveal>
 
@@ -32,7 +31,13 @@ export function Ubicacion() {
                       Dirección
                     </dt>
                     <dd className="mt-1 text-ink-dim">
-                      {RESTAURANT.address.line1}
+                      {RESTAURANT.address.complement}
+                      <br />
+                      {RESTAURANT.address.street}
+                      <br />
+                      {RESTAURANT.address.postalCode} {RESTAURANT.address.locality}
+                      <br />
+                      {RESTAURANT.address.municipality}, Tenerife
                     </dd>
                   </div>
                 </div>
@@ -43,8 +48,16 @@ export function Ubicacion() {
                     <dt className="text-xs tracking-[0.2em] uppercase text-ink-dim">
                       Teléfono
                     </dt>
-                    <dd className="mt-1 text-ink-dim">
-                      {RESTAURANT.phone ?? "Pendiente de confirmar"}
+                    <dd className="mt-1">
+                      <a
+                        href={RESTAURANT.phoneHref}
+                        className="text-ink-dim transition-colors hover:text-gold"
+                      >
+                        {RESTAURANT.phone}
+                      </a>
+                      <span className="mt-0.5 block text-xs text-ink-dim-2">
+                        {RESTAURANT.phoneIntl}
+                      </span>
                     </dd>
                   </div>
                 </div>
@@ -56,39 +69,45 @@ export function Ubicacion() {
                       Horario
                     </dt>
                     <dd className="mt-1 text-ink-dim">
-                      {RESTAURANT.hours ?? "Pendiente de confirmar"}
+                      {RESTAURANT.hours.weekday.label}: {RESTAURANT.hours.weekday.value}
+                      <br />
+                      {RESTAURANT.hours.sunday.label}: {RESTAURANT.hours.sunday.value}
                     </dd>
+                    {RESTAURANT.hours.provisional && (
+                      <p className="mt-1.5 text-xs italic text-ink-dim-2">
+                        {RESTAURANT.hours.note}
+                      </p>
+                    )}
                   </div>
                 </div>
               </dl>
             </Reveal>
+
+            <Reveal delay={0.3}>
+              <a
+                href={RESTAURANT.mapsDirectionsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-10 inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-4 text-sm font-medium tracking-wide text-ink transition-all duration-500 hover:-translate-y-0.5 hover:border-gold/50 hover:text-gold"
+              >
+                Cómo llegar
+                <Icon name="arrowUpRight" className="size-4" />
+              </a>
+            </Reveal>
           </div>
 
           <Reveal delay={0.15}>
-            {RESTAURANT.mapsDirectionsHref ? (
-              <div className="overflow-hidden rounded-sm border border-surface-border">
-                <iframe
-                  title={`Mapa — ${RESTAURANT.name}`}
-                  src={RESTAURANT.mapsEmbedSrc ?? undefined}
-                  width="100%"
-                  height="440"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="grayscale-[0.4] contrast-[1.05] invert-[0.92] hue-rotate-180"
-                />
-              </div>
-            ) : (
-              <GlassCard
-                className="flex h-[360px] flex-col items-center justify-center gap-4 p-10 text-center md:h-[440px]"
-                glow="none"
-              >
-                <Icon name="pin" className="size-8 text-gold/50" />
-                <p className="text-sm text-ink-dim">
-                  El mapa se activará en cuanto se confirme la dirección del
-                  local.
-                </p>
-              </GlassCard>
-            )}
+            <div className="overflow-hidden rounded-sm border border-surface-border">
+              <iframe
+                title={`Mapa — ${RESTAURANT.name}`}
+                src={RESTAURANT.mapsEmbedSrc}
+                width="100%"
+                height="440"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="grayscale-[0.4] contrast-[1.05] invert-[0.92] hue-rotate-180"
+              />
+            </div>
           </Reveal>
         </div>
       </Container>

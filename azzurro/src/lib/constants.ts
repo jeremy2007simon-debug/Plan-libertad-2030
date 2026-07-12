@@ -1,85 +1,143 @@
-// Propuesta de diseño para Azzurro — no hay datos reales del restaurante
-// todavía. Todo lo marcado como "pendiente" es un marcador de posición a
-// sustituir por la información real antes de publicar esta web. No se ha
-// inventado ninguna dirección, teléfono, horario, premio ni año de
-// apertura: donde falta el dato, se muestra un texto neutro en su lugar.
+// Datos de Azzurro. Los campos marcados como reales proceden de
+// información pública verificada (dirección, teléfono, Facebook). Donde
+// las fuentes no coinciden o no hay una cuenta oficial confirmada
+// (horario, Instagram), se usa un dato provisional claramente señalado o
+// se mantiene oculto — nunca se ha inventado un dato.
 
 export const RESTAURANT = {
-  name: "Azzurro",
+  name: "Restaurante Azzurro",
   shortName: "Azzurro",
   tagline: "Restaurante italiano",
 
-  // TODO: sustituir por el teléfono real. Mientras tanto no se muestra
-  // ningún número inventado.
-  phone: null as string | null,
-  phoneHref: null as string | null,
+  phone: "922 70 30 73",
+  phoneIntl: "+34 922 70 30 73",
+  phoneHref: "tel:+34922703073",
   whatsappHref: null as string | null,
 
-  // TODO: sustituir por la dirección real.
   address: {
-    line1: "Dirección pendiente de confirmar",
-    line2: null as string | null,
-    full: null as string | null,
+    complement: "C.C. El Paso, Local 2",
+    street: "Avenida Claudio Delgado Díaz, 2",
+    postalCode: "38639",
+    locality: "Las Chafiras",
+    municipality: "San Miguel de Abona",
+    region: "Santa Cruz de Tenerife",
+    country: "España",
+    full: "Avenida Claudio Delgado Díaz, 2, Local 2 (C.C. El Paso), 38639 Las Chafiras, San Miguel de Abona, Santa Cruz de Tenerife",
   },
 
-  // TODO: sustituir por el horario real.
-  hours: null as string | null,
+  // El horario encontrado en distintas fuentes públicas no coincide.
+  // PENDIENTE DE CONFIRMACIÓN CON EL RESTAURANTE — usar este horario solo
+  // como provisional hasta recibir confirmación directa del local.
+  hours: {
+    provisional: true,
+    weekday: { label: "Lunes a sábado", value: "12:00 – 23:30" },
+    sunday: { label: "Domingo", value: "12:00 – 20:00" },
+    note: "Horario provisional, pendiente de confirmación con el restaurante.",
+  },
 
   social: {
+    // No se ha encontrado una cuenta de Instagram oficial confirmada —
+    // se mantiene oculta en la web hasta poder verificarla.
     instagram: null as string | null,
-    facebook: null as string | null,
+    facebook: "https://www.facebook.com/azzurrolaschafiras/",
   },
 
-  // Sin dirección confirmada no se genera ningún enlace de mapa: se
-  // muestra un panel a la espera de activarse.
-  mapsEmbedSrc: null as string | null,
-  mapsDirectionsHref: null as string | null,
-  googleReviewsSearchHref: null as string | null,
+  mapsEmbedSrc:
+    "https://www.google.com/maps?q=" +
+    encodeURIComponent(
+      "Azzurro, Avenida Claudio Delgado Díaz 2, 38639 Las Chafiras, San Miguel de Abona, Tenerife"
+    ) +
+    "&output=embed",
+  mapsDirectionsHref:
+    "https://www.google.com/maps/dir/?api=1&destination=" +
+    encodeURIComponent(
+      "Azzurro, Avenida Claudio Delgado Díaz 2, 38639 Las Chafiras, San Miguel de Abona, Tenerife"
+    ),
+  tripadvisorSearchHref:
+    "https://www.tripadvisor.es/Search?q=" +
+    encodeURIComponent("Restaurante Azzurro Las Chafiras"),
 } as const;
 
-// Sin testimonios inventados: esta sección queda preparada para las
-// reseñas reales (ver src/lib/reviews.ts) y muestra un estado de espera
-// mientras no haya ninguna fuente conectada.
-export const CURATED_REVIEWS = [] as const;
+// Sin testimonios inventados: solo se muestra la valoración agregada
+// verificada en Tripadvisor (nota y número de opiniones), nunca citas
+// individuales que no se hayan podido confirmar.
+export const AGGREGATE_REVIEWS = {
+  source: "Tripadvisor",
+  rating: 3.8,
+  totalReviews: 53,
+} as const;
 
-// Categorías de la carta. Sin platos ni precios inventados — cada
-// categoría se describe en una frase breve, a la espera de la carta real.
+// Carta — "Entrantes" son platos y precios reales verificados. El resto
+// de categorías quedan preparadas (sin platos) a la espera de la carta
+// oficial completa. No se inventan platos ni precios.
 export const SPECIALTIES = [
   {
-    slug: "pizza",
-    title: "Pizza",
-    description: "Masa de fermentación lenta, horneada al momento.",
-    icon: "pizza",
+    slug: "entrantes",
+    title: "Entrantes",
+    description: "Para abrir la mesa, pensados para compartir.",
+    icon: "starter",
+    examples: [
+      { name: "Ensalada de Solomillo estilo Thai", price: "20,70 €" },
+      { name: "Rollito de Pato", price: "12,30 €" },
+      { name: "Saquito de Marisco", price: "12,30 €" },
+      { name: "Gyoza a la Plancha", price: "6,44 €" },
+    ],
   },
   {
     slug: "pasta",
     title: "Pasta",
     description: "Fresca, artesanal, hecha cada día en casa.",
     icon: "pasta",
+    examples: [],
+  },
+  {
+    slug: "pizza",
+    title: "Pizza",
+    description: "Masa de fermentación lenta, horneada al momento.",
+    icon: "pizza",
+    examples: [],
   },
   {
     slug: "carnes",
     title: "Carnes",
     description: "Cortes seleccionados, cocinados con precisión.",
     icon: "flame",
+    examples: [],
   },
   {
     slug: "pescados",
     title: "Pescados",
     description: "Producto fresco, tratado con respeto.",
     icon: "fish",
+    examples: [],
+  },
+  {
+    slug: "arroces",
+    title: "Arroces",
+    description: "De cocción lenta, para el centro de la mesa.",
+    icon: "rice",
+    examples: [],
   },
   {
     slug: "postres",
     title: "Postres",
     description: "El cierre justo para una sobremesa larga.",
     icon: "dessert",
+    examples: [],
   },
   {
     slug: "vinos",
     title: "Vinos",
     description: "Una bodega pensada para acompañar cada plato.",
     icon: "wine",
+    examples: [],
+  },
+  {
+    slug: "bebidas",
+    title: "Bebidas",
+    description: "La carta líquida de la casa.",
+    icon: "drink",
+    examples: [],
   },
 ] as const;
 

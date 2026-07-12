@@ -30,8 +30,10 @@ export default function PrivacidadPage() {
             Responsable del tratamiento
           </h2>
           <p className="mt-3">
-            {RESTAURANT.name}. Dirección y datos de contacto pendientes de
-            confirmar.
+            {RESTAURANT.name}, {RESTAURANT.address.street},{" "}
+            {RESTAURANT.address.complement}, {RESTAURANT.address.postalCode}{" "}
+            {RESTAURANT.address.locality}, {RESTAURANT.address.municipality}{" "}
+            (Tenerife). Teléfono: {RESTAURANT.phone}.
           </p>
         </section>
 
@@ -62,8 +64,7 @@ export default function PrivacidadPage() {
           <h2 className="font-display text-xl text-ink">Tus derechos</h2>
           <p className="mt-3">
             Puedes ejercer tus derechos de acceso, rectificación, supresión
-            y oposición contactando con el restaurante en cuanto los datos
-            de contacto estén confirmados.
+            y oposición llamando al {RESTAURANT.phone}.
           </p>
         </section>
       </div>

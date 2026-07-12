@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bodoni_Moda, Inter } from "next/font/google";
 import { RESTAURANT } from "@/lib/constants";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const bodoni = Bodoni_Moda({
@@ -14,22 +15,27 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const siteUrl = "https://azzurro.example.com";
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${RESTAURANT.name} · Restaurante italiano`,
+    default: `${RESTAURANT.name} · Las Chafiras, Tenerife`,
     template: `%s · ${RESTAURANT.name}`,
   },
   description:
-    "Propuesta de experiencia digital para Azzurro, restaurante italiano. Ambiente, tiempo y sobremesa, pensados para reservar una mesa.",
+    "Restaurante italiano en Las Chafiras, San Miguel de Abona (Tenerife Sur). Descubre la carta y reserva tu mesa.",
+  keywords: [
+    "restaurante italiano Tenerife",
+    "restaurante Las Chafiras",
+    "restaurante San Miguel de Abona",
+    "Azzurro Tenerife",
+  ],
   openGraph: {
     type: "website",
     locale: "es_ES",
     siteName: RESTAURANT.name,
-    title: `${RESTAURANT.name} · Restaurante italiano`,
-    description: "Una propuesta de experiencia gastronómica elegante y moderna.",
+    title: `${RESTAURANT.name} · Las Chafiras, Tenerife`,
+    description:
+      "Restaurante italiano en Las Chafiras, San Miguel de Abona (Tenerife Sur). Descubre la carta y reserva tu mesa.",
   },
   robots: { index: true, follow: true },
 };

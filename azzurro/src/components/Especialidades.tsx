@@ -20,7 +20,7 @@ export function Especialidades() {
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mt-8 text-balance font-display text-[clamp(2rem,4.2vw,3.2rem)] font-light text-ink">
-              Lo esencial de la casa
+              Nuestras especialidades
             </h2>
           </Reveal>
         </div>
@@ -40,6 +40,22 @@ export function Especialidades() {
                     {item.description}
                   </p>
                 </div>
+
+                {item.examples.length > 0 && (
+                  <ul className="mt-auto flex flex-col gap-1.5 border-t border-hair pt-4 text-sm">
+                    {item.examples.map((dish) => (
+                      <li
+                        key={dish.name}
+                        className="flex items-baseline justify-between gap-3 text-ink-dim"
+                      >
+                        <span>{dish.name}</span>
+                        <span className="shrink-0 tabular-nums text-gold/80">
+                          {dish.price}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </GlassCard>
             </Reveal>
           ))}
@@ -47,7 +63,8 @@ export function Especialidades() {
 
         <Reveal delay={0.3}>
           <p className="mt-10 text-center text-xs text-ink-dim-2">
-            Carta en preparación — precios y platos disponibles próximamente.
+            Entrantes: selección real de la carta. El resto de categorías se
+            irá completando con la carta oficial.
           </p>
         </Reveal>
       </Container>

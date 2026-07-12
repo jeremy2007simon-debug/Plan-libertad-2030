@@ -1,12 +1,10 @@
-import { RESTAURANT } from "@/lib/constants";
+import { AGGREGATE_REVIEWS, RESTAURANT } from "@/lib/constants";
 import { getGoogleReviews } from "@/lib/reviews";
 import { Reveal } from "./ui/Reveal";
 import { SectionIntro } from "./ui/SectionIntro";
 import { Container } from "./ui/Container";
 import { GlassCard } from "./ui/GlassCard";
 import { Icon } from "./ui/Icon";
-
-const PLACEHOLDER_SLOTS = [1, 2, 3];
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -36,27 +34,9 @@ export async function Opiniones() {
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mt-8 text-balance font-display text-[clamp(2rem,4.2vw,3.2rem)] font-light text-ink">
-              {hasReviews ? "Lo que dicen en Google" : "Lo que dirán nuestros clientes"}
+              {hasReviews ? "Lo que dicen en Google" : "Lo que dicen nuestros clientes"}
             </h2>
           </Reveal>
-          {hasReviews && data ? (
-            <Reveal delay={0.2}>
-              <p className="mt-5 flex items-center justify-center gap-2 text-ink-dim">
-                <span className="font-display text-2xl text-ink">
-                  {data.rating.toFixed(1)}
-                </span>
-                <Stars rating={data.rating} />
-                <span>· {data.totalReviews} reseñas en Google</span>
-              </p>
-            </Reveal>
-          ) : (
-            <Reveal delay={0.2}>
-              <p className="mt-5 text-ink-dim">
-                Esta sección está preparada para mostrar reseñas reales de
-                Google en cuanto el restaurante esté dado de alta.
-              </p>
-            </Reveal>
-          )}
         </div>
 
         {hasReviews ? (
@@ -96,41 +76,27 @@ export async function Opiniones() {
             ))}
           </div>
         ) : (
-          <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {PLACEHOLDER_SLOTS.map((slot) => (
-              <Reveal key={slot} delay={slot * 0.08}>
-                <GlassCard className="flex h-full flex-col gap-4 p-7" glow="none">
-                  <div className="flex gap-1 text-gold/30">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <span key={i} className="text-lg">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <div className="h-3 w-3/4 animate-pulse rounded-full bg-white/[0.06]" />
-                  <div className="h-3 w-1/2 animate-pulse rounded-full bg-white/[0.06]" />
-                  <p className="mt-auto text-xs uppercase tracking-wide text-ink-dim-2">
-                    Reseña de Google — próximamente
-                  </p>
-                </GlassCard>
-              </Reveal>
-            ))}
-          </div>
-        )}
-
-        {!hasReviews && RESTAURANT.googleReviewsSearchHref && (
-          <Reveal delay={0.4}>
-            <div className="mt-10 text-center">
+          <Reveal delay={0.15}>
+            <GlassCard className="mx-auto mt-16 flex max-w-md flex-col items-center gap-4 p-10 text-center">
+              <Icon name="quote" className="size-5 text-gold/50" />
+              <p className="font-display text-5xl font-light text-ink">
+                {AGGREGATE_REVIEWS.rating.toFixed(1)}
+              </p>
+              <Stars rating={AGGREGATE_REVIEWS.rating} />
+              <p className="text-sm text-ink-dim">
+                {AGGREGATE_REVIEWS.totalReviews} opiniones en{" "}
+                {AGGREGATE_REVIEWS.source}
+              </p>
               <a
-                href={RESTAURANT.googleReviewsSearchHref}
+                href={RESTAURANT.tripadvisorSearchHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-gold"
+                className="mt-2 inline-flex items-center gap-2 text-sm font-medium tracking-wide text-gold"
               >
-                Ver reseñas en Google
+                Ver opiniones
                 <Icon name="arrowUpRight" className="size-4" />
               </a>
-            </div>
+            </GlassCard>
           </Reveal>
         )}
       </Container>
