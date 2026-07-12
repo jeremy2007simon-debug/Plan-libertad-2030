@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #060606;
+  --bg-elevated: #0c0c0d;
+  --graphite: #17181a;
+  --graphite-soft: #1f2022;
+
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-strong: rgba(255, 255, 255, 0.06);
+  --surface-border: rgba(255, 255, 255, 0.085);
+  --hair: rgba(255, 255, 255, 0.08);
+
+  --ink: #f6f5f2;
+  --ink-dim: #a29e97;
+  --ink-dim-2: #63605a;
+
+  --gold: #b68a4e;
+  --gold-bright: #d9b26f;
+  --gold-soft: rgba(182, 138, 78, 0.35);
+  --gold-glow: rgba(182, 138, 78, 0.22);
+
+  --wine: #6b1f2a;
+  --wine-soft: rgba(107, 31, 42, 0.4);
+  --wine-glow: rgba(107, 31, 42, 0.28);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-graphite: var(--graphite);
+  --color-graphite-soft: var(--graphite-soft);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-surface-border: var(--surface-border);
+  --color-hair: var(--hair);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-dim-2: var(--ink-dim-2);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-gold-soft: var(--gold-soft);
+  --color-wine: var(--wine);
+  --color-wine-soft: var(--wine-soft);
+  --font-display: var(--font-bodoni);
+  --font-sans: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--gold);
+  color: #060606;
+}
+
+/* Sutil textura de grano — usada en fondos y placeholders para que el
+   negro no quede plano en pantallas grandes. */
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.glass-panel {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.015)
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--surface-border);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
