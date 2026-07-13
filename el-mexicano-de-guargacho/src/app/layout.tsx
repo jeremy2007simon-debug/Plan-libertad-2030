@@ -14,7 +14,7 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-const siteUrl = "https://elmexicanodeguargacho.example.com";
+const siteUrl = "https://elmexicanodeguargacho.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -23,12 +23,12 @@ export const metadata: Metadata = {
     template: `%s · ${RESTAURANT.name}`,
   },
   description:
-    "Restaurante mexicano en Guargacho, San Miguel de Abona (Tenerife Sur), desde 1999. Tacos, fajitas, burritos y margaritas en un ambiente auténtico. Reserva tu mesa.",
+    "Restaurante mexicano en Guargacho, San Miguel de Abona (Tenerife Sur), desde 1999. Tacos, enchiladas, burritos y entrantes auténticos en un ambiente premium. Reserva tu mesa.",
   keywords: [
     "restaurante mexicano Tenerife",
     "restaurante mexicano Guargacho",
     "tacos Tenerife",
-    "fajitas Tenerife",
+    "enchiladas Tenerife",
     "restaurante San Miguel de Abona",
   ],
   openGraph: {

@@ -30,6 +30,7 @@ export function Reservas() {
         body: JSON.stringify({
           name: data.nombre,
           phone: data.telefono,
+          email: data.email || undefined,
           guests: Number(data.personas),
           date: data.fecha,
           time: data.hora,
@@ -117,6 +118,19 @@ export function Reservas() {
                     type="text"
                     required
                     placeholder="Tu nombre"
+                    className={inputClass}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2 sm:col-span-2">
+                  <label htmlFor="email" className={labelClass}>
+                    Email (opcional)
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="tu@email.com"
                     className={inputClass}
                   />
                 </div>

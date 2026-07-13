@@ -1,24 +1,38 @@
-import type { Reservation, ReservationResult } from "@/types/reservation";
+import type {
+  Reservation,
+  ReservationResult,
+  StoredReservation,
+} from "@/types/reservation";
 
 // -----------------------------------------------------------------------
 // Capa de reservas.
 //
-// Hoy: valida y registra la reserva en el log del servidor.
-// Mañana: este es el único punto que hay que tocar para conectar un
-// proveedor real, sin cambiar el formulario ni la API route que lo llama.
+// Hoy: valida y registra la reserva en el log del servidor. Este es el
+// único punto que hay que tocar para conectar servicios reales, sin
+// cambiar el formulario (Reservas.tsx) ni la API route que lo llama.
 //
-//   - NovaCore Reserve: sustituir el cuerpo de createReservation() por una
-//     llamada a su API (guardar NOVACORE_RESERVE_API_KEY / _URL en .env).
-//   - Bot de WhatsApp con IA: NovaCore Reserve puede disparar la
-//     confirmación y los recordatorios por WhatsApp tras crear la reserva.
-//   - Panel privado del restaurante: leería las reservas desde el mismo
-//     proveedor en vez de duplicar el almacenamiento aquí.
+// Rutas de integración futuras, no excluyentes entre sí:
+//
+//   - API (NovaCore Reserve): sustituir el cuerpo de createReservation()
+//     por una llamada a su API (guardar NOVACORE_RESERVE_API_KEY / _URL
+//     en .env). NovaCore puede a su vez disparar confirmación y
+//     recordatorios por WhatsApp.
+//   - Base de datos: tabla `reservations` con columnas
+//     id, name, phone, email, date, time, people, comments, status,
+//     created_at — y estados pending / confirmed / cancelled / completed
+//     (ver ReservationStatus / StoredReservation en types/reservation.ts).
+//     Insertar aquí la fila en lugar de (o además de) llamar a NovaCore.
+//   - Email: enviar confirmación al cliente (si dejó `email`) y aviso al
+//     restaurante tras crear la reserva.
+//   - Panel privado del restaurante: leería las reservas desde la misma
+//     base de datos o desde NovaCore, sin duplicar almacenamiento aquí.
 // -----------------------------------------------------------------------
 
 export async function createReservation(
   reservation: Reservation
 ): Promise<ReservationResult> {
-  // TODO(NovaCore Reserve): reemplazar por la integración real, p. ej.
+  // TODO(NovaCore Reserve / Base de datos / Email): reemplazar por la
+  // integración real. Ejemplo con NovaCore Reserve:
   //
   // const res = await fetch(process.env.NOVACORE_RESERVE_URL!, {
   //   method: "POST",
@@ -31,8 +45,26 @@ export async function createReservation(
   // if (!res.ok) return { ok: false, error: "No se pudo crear la reserva." };
   // const { id } = await res.json();
   // return { ok: true, id };
+  //
+  // Ejemplo de fila para una base de datos propia (tabla `reservations`):
+  //
+  // const row: StoredReservation = {
+  //   ...reservation,
+  //   id: crypto.randomUUID(),
+  //   status: "pending",
+  //   createdAt: new Date().toISOString(),
+  // };
+  // await db.insertInto("reservations").values(row).execute();
+  // if (reservation.email) await sendConfirmationEmail(reservation.email, row);
 
-  console.log("[reservas] Nueva solicitud de reserva:", reservation);
+  const stored: StoredReservation = {
+    ...reservation,
+    id: `local-${Date.now()}`,
+    status: "pending",
+    createdAt: new Date().toISOString(),
+  };
 
-  return { ok: true, id: `local-${Date.now()}` };
+  console.log("[reservas] Nueva solicitud de reserva:", stored);
+
+  return { ok: true, id: stored.id };
 }

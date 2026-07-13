@@ -22,6 +22,7 @@ export async function POST(request: Request) {
   const result = await createReservation({
     name: String(body.name).slice(0, 120),
     phone: String(body.phone).slice(0, 40),
+    email: body.email ? String(body.email).slice(0, 200) : undefined,
     guests: Number(body.guests),
     date: String(body.date),
     time: String(body.time),

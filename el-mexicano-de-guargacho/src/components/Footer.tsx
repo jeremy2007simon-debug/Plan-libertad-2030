@@ -57,21 +57,30 @@ export function Footer() {
               Síguenos
             </p>
             <div className="mt-4 flex gap-4">
-              {/* TODO: confirmar y añadir el Instagram real del restaurante */}
-              <a
-                href={RESTAURANT.social.instagram ?? "#"}
-                aria-label="Instagram"
-                className="text-ink-dim transition-colors hover:text-gold"
-              >
-                <Icon name="instagram" className="size-5" />
-              </a>
-              <a
-                href={RESTAURANT.social.facebook ?? "#"}
-                aria-label="Facebook"
-                className="text-ink-dim transition-colors hover:text-gold"
-              >
-                <Icon name="facebook" className="size-5" />
-              </a>
+              {/* Instagram oculto: no hay cuenta oficial confirmada todavía.
+                  Mostrar en cuanto RESTAURANT.social.instagram tenga URL. */}
+              {RESTAURANT.social.instagram && (
+                <a
+                  href={RESTAURANT.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="text-ink-dim transition-colors hover:text-gold"
+                >
+                  <Icon name="instagram" className="size-5" />
+                </a>
+              )}
+              {RESTAURANT.social.facebook && (
+                <a
+                  href={RESTAURANT.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="text-ink-dim transition-colors hover:text-gold"
+                >
+                  <Icon name="facebook" className="size-5" />
+                </a>
+              )}
             </div>
           </div>
         </div>

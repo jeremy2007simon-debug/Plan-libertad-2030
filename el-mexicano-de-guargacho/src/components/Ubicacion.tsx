@@ -48,6 +48,9 @@ export function Ubicacion() {
                       >
                         {RESTAURANT.phone}
                       </a>
+                      <span className="block text-sm text-ink-dim-2">
+                        Desde el extranjero: {RESTAURANT.phoneIntl}
+                      </span>
                     </dd>
                   </div>
                 </div>

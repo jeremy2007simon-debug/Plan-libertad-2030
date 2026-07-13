@@ -64,44 +64,72 @@ de fotografía real del local. Para sustituir una:
 
 ## Reservas — arquitectura pensada para crecer
 
-El formulario de reservas (`src/components/Reservas.tsx`) llama a
-`POST /api/reservations`, que a su vez delega en
+El formulario de reservas (`src/components/Reservas.tsx`, incluye email
+opcional además de nombre/teléfono/personas/fecha/hora/comentarios) llama
+a `POST /api/reservations`, que a su vez delega en
 `src/lib/reservations.ts`. Ese archivo es el único punto que hay que tocar
-para conectar servicios reales, sin cambiar el formulario:
+para conectar servicios reales, sin cambiar el formulario. Rutas de
+integración previstas (no excluyentes entre sí):
 
-- **NovaCore Reserve**: sustituir el cuerpo de `createReservation()` por la
-  llamada a su API (variables `NOVACORE_RESERVE_URL` /
-  `NOVACORE_RESERVE_API_KEY` en `.env.local`, ver `.env.example`).
-- **Bot de WhatsApp con IA**: puede dispararse desde NovaCore Reserve tras
-  crear la reserva, sin tocar esta web.
-- **Confirmación automática y recordatorios**: idem, orquestados por
-  NovaCore Reserve una vez integrado.
-- **Panel privado del restaurante**: leería las reservas desde el mismo
-  proveedor en lugar de duplicar almacenamiento en esta web.
+- **API (NovaCore Reserve)**: sustituir el cuerpo de `createReservation()`
+  por la llamada a su API (variables `NOVACORE_RESERVE_URL` /
+  `NOVACORE_RESERVE_API_KEY` en `.env.local`, ver `.env.example`). NovaCore
+  puede a su vez disparar confirmación y recordatorios por WhatsApp.
+- **Base de datos**: tabla `reservations` con columnas `id`, `name`,
+  `phone`, `email`, `date`, `time`, `people`, `comments`, `status`,
+  `created_at`, y estados `pending` / `confirmed` / `cancelled` /
+  `completed` — tipada ya en `src/types/reservation.ts`
+  (`ReservationStatus`, `StoredReservation`; `guests` en el código
+  corresponde a la columna `people`).
+- **Email**: confirmación al cliente (si dejó su email) y aviso al
+  restaurante tras crear la reserva.
+- **Panel privado del restaurante**: leería las reservas desde la base de
+  datos o desde NovaCore, sin duplicar almacenamiento en esta web.
 
 Hoy, mientras no hay integración, cada solicitud se registra en el log del
-servidor y el visitante ve una confirmación en pantalla. También se ofrece
-un enlace directo de WhatsApp y el teléfono como vía inmediata.
+servidor (con `id`, `status: "pending"` y `createdAt`) y el visitante ve
+una confirmación en pantalla. También se ofrece un enlace directo de
+WhatsApp y el teléfono como vía inmediata.
 
-## Pendiente de completar con datos reales del restaurante
+## Reseñas (Google Places)
 
-- **Instagram**: enlace vacío con `TODO` en el footer — añadir en
-  `RESTAURANT.social.instagram` en cuanto se confirme.
-- **Horario**: recopilado de fuentes públicas (Google Business,
-  directorios) — confirmar con el restaurante y actualizar
-  `RESTAURANT.hours` / `RESTAURANT.hoursSpec` en `src/lib/constants.ts`.
+`src/lib/reviews.ts` ya usa `GOOGLE_PLACES_API_KEY` / `GOOGLE_PLACE_ID`
+(ver `.env.example`). Sin esas variables, "Opiniones" muestra "Reseñas
+disponibles próximamente" — no se inventa ningún texto de cliente.
+`CURATED_REVIEWS` (`src/lib/constants.ts`) está vacío a propósito; si el
+restaurante facilita capturas reales, se pueden transcribir ahí como
+respaldo mientras no haya API activa.
+
+## Pendiente de confirmar con el restaurante
+
+- **Horario** — ⚠️ procede de fuentes públicas, **no confirmado
+  directamente por el restaurante**. Validar antes de publicar y
+  actualizar `RESTAURANT.hours` / `RESTAURANT.hoursSpec` en
+  `src/lib/constants.ts` (y quitar el aviso de "pendiente de
+  confirmación" en los comentarios de ese archivo).
+- **Facebook**: se enlaza la página pública localizada — confirmar que la
+  URL es la definitiva antes del despliegue.
+- **Instagram**: no se ha encontrado una cuenta oficial — el botón está
+  oculto en el footer (`Footer.tsx`) hasta añadir
+  `RESTAURANT.social.instagram`.
 - **WhatsApp**: se usa el teléfono publicado (922 73 13 13, fijo). Un
   `wa.me` solo funciona si ese número tiene WhatsApp Business activo —
-  confirmarlo o sustituirlo por el móvil correcto en `RESTAURANT.whatsappHref`.
-- **Reseñas**: no hay reseñas curadas todavía (`CURATED_REVIEWS` vacío a
-  propósito, para no inventar texto de clientes). Si se activa la Google
-  Places API (`src/lib/reviews.ts`), la sección "Opiniones" las mostrará
-  automáticamente; si el restaurante facilita capturas reales, se pueden
-  transcribir en `CURATED_REVIEWS` como respaldo.
-- **Fotografía y vídeo real**: ver sección anterior.
-- **Especialidades**: tarjetas visuales sin precios ni platos concretos —
-  añadir la carta real y, si se desea, enlazar una carta digital en
-  `Especialidades.tsx`.
+  confirmarlo o sustituirlo por el móvil correcto en
+  `RESTAURANT.whatsappHref`.
+- **Carta**: `Especialidades.tsx` ya muestra platos y precios reales
+  (Entrantes, Enchiladas, Postres) organizados en 8 categorías; Carnes,
+  Especialidades y Bebidas siguen sin platos concretos verificados —
+  añadir en `SPECIALTIES` (`src/lib/constants.ts`) en cuanto se confirmen.
+- **Fotografía y vídeo real**: hero e Historia siguen con foto de stock
+  (ver `public/images/CREDITOS.md`); Galería sigue con `PlaceholderImage`.
+  No existe vídeo oficial — el fondo del hero está preparado para
+  sustituirse por `<video>` en cuanto haya material.
+- **Logo**: el wordmark tipográfico se mantiene; el favicon
+  (`src/app/icon.tsx`) es un monograma provisional a sustituir cuando el
+  restaurante facilite su identidad visual.
+- **Dominio**: `siteUrl` en `layout.tsx` / `sitemap.ts` / `robots.ts` usa
+  `elmexicanodeguargacho.com` como placeholder — actualizar al dominio
+  real antes de desplegar.
 - **Política de privacidad**: es una plantilla genérica, debe revisarla un
   profesional legal antes de publicar.
 
