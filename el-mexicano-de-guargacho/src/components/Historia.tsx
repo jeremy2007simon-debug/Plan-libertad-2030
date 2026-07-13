@@ -2,6 +2,12 @@ import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 
+// Foto de stock provisional servida directamente desde Unsplash (licencia
+// libre de uso comercial) — no es una foto real del restaurante. Ver
+// public/images/CREDITOS.md para el crédito y el criterio de sustitución.
+const HISTORIA_IMAGE_URL =
+  "https://images.unsplash.com/photo-1508615263227-c5d58c1e5821?fm=jpg&q=80&w=1400&fit=crop";
+
 const PILLARS = [
   { title: "Tradición", text: "Desde 1999, la misma cocina de siempre." },
   { title: "Sabor auténtico", text: "Recetas mexicanas, sin atajos." },
@@ -13,12 +19,9 @@ export function Historia() {
     <section id="historia" className="relative py-28 md:py-36">
       <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2 md:items-center md:px-10 md:gap-20">
         <Reveal>
-          {/* Foto de stock provisional (Unsplash, licencia libre de uso
-              comercial) — no es una foto real del restaurante. Sustituir por
-              fotografía propia en cuanto esté disponible: ver public/images/CREDITOS.md */}
           <div className="relative overflow-hidden rounded-[2px]" style={{ aspectRatio: "4/5" }}>
             <Image
-              src="/images/historia-provisional.jpg"
+              src={HISTORIA_IMAGE_URL}
               alt=""
               fill
               className="object-cover"

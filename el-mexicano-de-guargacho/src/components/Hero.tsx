@@ -2,10 +2,16 @@ import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
 import { Icon } from "./ui/Icon";
 
+// Foto de stock provisional servida directamente desde Unsplash (licencia
+// libre de uso comercial) — no es una foto real del restaurante. Ver
+// public/images/CREDITOS.md para el crédito y el criterio de sustitución.
+const HERO_IMAGE_URL =
+  "https://images.unsplash.com/photo-1783451730116-7e9c994850a4?fm=jpg&q=80&w=2400&fit=crop";
+
 // Fondo del hero preparado para vídeo cinematográfico: en cuanto haya
 // material de vídeo real, sustituye este <Image> por un <video autoPlay
-// muted loop playsInline poster="/images/hero-provisional.jpg"> apuntando
-// a /videos/hero.mp4 — el resto de la sección (overlays, texto, badge) no
+// muted loop playsInline poster={HERO_IMAGE_URL}> apuntando a
+// /videos/hero.mp4 — el resto de la sección (overlays, texto, badge) no
 // necesita cambios.
 export function Hero() {
   return (
@@ -14,12 +20,8 @@ export function Hero() {
       className="relative flex min-h-[100svh] items-end overflow-hidden"
     >
       <div className="absolute inset-0">
-        {/* Foto de stock provisional (Unsplash, licencia libre de uso
-            comercial) — no es una foto real del restaurante. Sustituir por
-            vídeo o fotografía propia en cuanto esté disponible: ver
-            public/images/CREDITOS.md */}
         <Image
-          src="/images/hero-provisional.jpg"
+          src={HERO_IMAGE_URL}
           alt=""
           fill
           priority
