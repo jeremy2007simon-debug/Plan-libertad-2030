@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b0a09;
+  --bg-elevated: #161310;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --hair: rgba(255, 255, 255, 0.08);
+  --ink: #f1ece0;
+  --ink-dim: #a89e8c;
+  --ink-dim-2: #6d6355;
+  --gold: #c9a24b;
+  --gold-soft: rgba(201, 162, 75, 0.4);
+  --gold-glow: rgba(201, 162, 75, 0.28);
+  --wine: #7a2431;
+  --wine-soft: rgba(122, 36, 49, 0.4);
+  --wine-glow: rgba(122, 36, 49, 0.32);
+  --olive: #565c42;
+  --olive-soft: rgba(86, 92, 66, 0.35);
+  --olive-glow: rgba(86, 92, 66, 0.2);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-border: var(--surface-border);
+  --color-hair: var(--hair);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-dim-2: var(--ink-dim-2);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-wine: var(--wine);
+  --color-wine-soft: var(--wine-soft);
+  --color-olive: var(--olive);
+  --color-olive-soft: var(--olive-soft);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-manrope);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--gold);
+  color: #0b0a09;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
