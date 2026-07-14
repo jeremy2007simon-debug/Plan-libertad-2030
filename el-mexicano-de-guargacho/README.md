@@ -96,11 +96,18 @@ WhatsApp y el teléfono como vía inmediata.
 ## Reseñas (Google Places)
 
 `src/lib/reviews.ts` ya usa `GOOGLE_PLACES_API_KEY` / `GOOGLE_PLACE_ID`
-(ver `.env.example`). Sin esas variables, "Opiniones" muestra "Reseñas
-disponibles próximamente" — no se inventa ningún texto de cliente.
-`CURATED_REVIEWS` (`src/lib/constants.ts`) está vacío a propósito; si el
-restaurante facilita capturas reales, se pueden transcribir ahí como
-respaldo mientras no haya API activa.
+(ver `.env.example`). `Opiniones.tsx` (`src/components/Opiniones.tsx`) es
+el componente que se renderiza por defecto: llama a `getGoogleReviews()`
+y, si no hay integración activa, muestra una sección premium con solo la
+valoración agregada pública (`REVIEWS_SUMMARY` en `src/lib/constants.ts`
+— dato real, no reseñas individuales inventadas), un indicador
+"Conectando reseñas verificadas…" y un botón "Ver opiniones". En cuanto
+`GOOGLE_PLACES_API_KEY` esté configurada y `getGoogleReviews()` devuelva
+datos, `Opiniones.tsx` delega automáticamente en
+`src/components/GoogleReviews.tsx` (mismo `id="opiniones"`, sin más
+cambios) para mostrar las reseñas reales de Google. Actualizar
+`REVIEWS_SUMMARY` si la valoración o el número de opiniones cambian
+mientras tanto.
 
 ## Pendiente de confirmar con el restaurante
 

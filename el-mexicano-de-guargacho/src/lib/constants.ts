@@ -67,21 +67,17 @@ export const RESTAURANT = {
     encodeURIComponent("El Mexicano de Guargacho Tenerife"),
 } as const;
 
-// Sin reseñas curadas todavía: esta sección se apoya en Google Places
-// (ver src/lib/reviews.ts) en cuanto se active GOOGLE_PLACES_API_KEY. No se
-// inventan reseñas — mientras no haya API activa, Opiniones.tsx muestra un
-// estado "próximamente". Si el restaurante facilita capturas reales
-// (Google, TripAdvisor), transcribirlas aquí verbatim, como se hizo en el
-// proyecto hermano (Amigos del Norte).
-export const CURATED_REVIEWS: {
-  author: string;
-  location: string | null;
-  rating: number;
-  title: string;
-  text: string;
-  date: string;
-  collaboration: boolean;
-}[] = [];
+// Resumen de reseñas — dato público y verificable (perfil de Google
+// Business del restaurante), no inventado. Se muestra mientras no haya
+// integración activa de Google Places; Opiniones.tsx delega
+// automáticamente en GoogleReviews.tsx en cuanto GOOGLE_PLACES_API_KEY
+// esté configurada (ver src/lib/reviews.ts). No se transcriben reseñas
+// individuales de ejemplo — solo esta cifra agregada, actualizable en
+// cuanto el restaurante confirme el dato exacto.
+export const REVIEWS_SUMMARY = {
+  rating: 4.3,
+  countLabel: "Más de 170 opiniones verificadas",
+} as const;
 
 // Especialidades de la carta real (categorías e importes verificados).
 // Cada tarjeta muestra como máximo 3 platos de ejemplo — el resto queda
