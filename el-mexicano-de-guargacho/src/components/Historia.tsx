@@ -6,7 +6,7 @@ import { SectionLabel } from "./ui/SectionLabel";
 // libre de uso comercial) — no es una foto real del restaurante. Ver
 // public/images/CREDITOS.md para el crédito y el criterio de sustitución.
 const HISTORIA_IMAGE_URL =
-  "https://images.unsplash.com/photo-1508615263227-c5d58c1e5821?fm=jpg&q=80&w=1400&fit=crop";
+  "https://images.unsplash.com/photo-1680992071073-cb1696ba8d3e?fm=jpg&q=80&w=1400&fit=crop";
 
 const PILLARS = [
   { title: "Tradición", text: "Desde 1999, la misma cocina de siempre." },
@@ -24,8 +24,10 @@ export function Historia() {
               src={HISTORIA_IMAGE_URL}
               alt=""
               fill
-              className="object-cover"
+              className="object-cover object-[30%_center]"
             />
+            <div className="absolute inset-0 bg-bg/25" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-bg/10" />
           </div>
         </Reveal>
 
@@ -54,7 +56,7 @@ export function Historia() {
             {PILLARS.map((pillar, i) => (
               <Reveal key={pillar.title} delay={0.3 + i * 0.08}>
                 <div className="border-t border-hair pt-4">
-                  <p className="font-display text-lg italic text-gold">
+                  <p className="font-display text-lg italic text-terracota">
                     {pillar.title}
                   </p>
                   <p className="mt-1.5 text-sm text-ink-dim">{pillar.text}</p>

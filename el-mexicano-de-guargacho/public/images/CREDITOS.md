@@ -10,7 +10,7 @@ la CDN de Unsplash (ver `HERO_IMAGE_URL` en `Hero.tsx` y
 | Usada en | Fuente |
 | --- | --- |
 | `Hero.tsx` (fondo principal, preparado para vídeo) | Angelica Hasbon — https://unsplash.com/photos/four-delicious-tacos-and-dipping-sauce-on-a-dark-table-pxq4ESv_Csk |
-| `Historia.tsx` ("Nuestra historia") | Paul Hermann — https://unsplash.com/photos/gray-metal-tong-and-grilled-meat-with-fire-jeiqzOgwwKU |
+| `Historia.tsx` ("Nuestra historia") | Zoshua Colah — https://unsplash.com/photos/a-bowl-of-guacamole-next-to-a-bowl-of-tortilla-chips-iiMIegrG3Ag |
 
 Para sustituir por fotografía propia: añade el archivo a
 `public/images/`, cambia el `src` de la `<Image>` correspondiente a la

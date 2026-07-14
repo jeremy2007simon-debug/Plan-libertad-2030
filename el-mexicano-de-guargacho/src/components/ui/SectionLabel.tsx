@@ -15,8 +15,8 @@ export function SectionLabel({
         light ? "text-ink/70" : "text-ink-dim"
       } ${center ? "justify-center" : ""}`}
     >
-      <span className="h-px w-6 bg-gold shadow-[0_0_8px_var(--gold-soft)]" />
-      {index && <span className="text-gold tabular-nums">{index}</span>}
+      <span className="h-px w-6 bg-terracota shadow-[0_0_8px_var(--terracota-soft)]" />
+      {index && <span className="text-terracota tabular-nums">{index}</span>}
       {children}
     </p>
   );

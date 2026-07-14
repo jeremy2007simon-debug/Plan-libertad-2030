@@ -8,7 +8,7 @@ export function CTAFinal() {
         className="pointer-events-none absolute top-1/2 left-1/2 h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-3xl"
         style={{
           background:
-            "radial-gradient(circle, var(--gold-glow) 0%, transparent 65%)",
+            "radial-gradient(circle, var(--terracota-glow) 0%, transparent 65%)",
         }}
       />
       <div
@@ -27,14 +27,14 @@ export function CTAFinal() {
             Cada mesa cuenta una historia.
             <br />
             La próxima puede ser{" "}
-            <span className="italic text-gold">la tuya</span>.
+            <span className="italic text-terracota">la tuya</span>.
           </h2>
         </Reveal>
 
         <Reveal delay={0.15}>
           <a
             href="#reservas"
-            className="group mt-12 inline-flex items-center gap-2.5 rounded-full bg-gold px-9 py-4 text-sm font-semibold tracking-wide text-bg shadow-[0_10px_40px_-12px_var(--gold-glow)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_55px_-10px_var(--gold-glow)]"
+            className="group mt-12 inline-flex items-center gap-2.5 rounded-full bg-cta px-9 py-4 text-sm font-semibold tracking-wide text-ink shadow-[0_10px_40px_-12px_var(--cta-glow)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_55px_-10px_var(--cta-glow)]"
           >
             Reservar ahora
             <Icon

@@ -38,7 +38,7 @@ export function Navbar() {
           href="#top"
           className="font-display text-lg tracking-wide text-ink"
         >
-          El <span className="text-gold italic">Mexicano</span>
+          El <span className="text-terracota italic">Mexicano</span>
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex">
@@ -56,7 +56,7 @@ export function Navbar() {
         <div className="hidden md:block">
           <a
             href="#reservas"
-            className="inline-flex items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-bg shadow-[0_8px_30px_-10px_var(--gold-glow)] transition-transform duration-500 hover:-translate-y-0.5"
+            className="inline-flex items-center rounded-full bg-cta px-6 py-2.5 text-sm font-semibold text-ink shadow-[0_8px_30px_-10px_var(--cta-glow)] transition-transform duration-500 hover:-translate-y-0.5"
           >
             Reservar mesa
           </a>
@@ -81,7 +81,7 @@ export function Navbar() {
           >
             <div className="flex h-20 items-center justify-between px-6">
               <span className="font-display text-lg text-ink">
-                El <span className="text-gold italic">Mexicano</span>
+                El <span className="text-terracota italic">Mexicano</span>
               </span>
               <button
                 onClick={() => setOpen(false)}
@@ -105,7 +105,7 @@ export function Navbar() {
               <a
                 href="#reservas"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex items-center rounded-full bg-gold px-8 py-3.5 text-sm font-semibold text-bg"
+                className="mt-4 inline-flex items-center rounded-full bg-cta px-8 py-3.5 text-sm font-semibold text-ink"
               >
                 Reservar mesa
               </a>

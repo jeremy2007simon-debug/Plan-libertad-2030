@@ -20,8 +20,8 @@ export function Button({
     "group inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide transition-all duration-500 ease-out";
   const styles =
     variant === "primary"
-      ? "bg-gold text-bg shadow-[0_10px_40px_-12px_var(--gold-glow)] hover:shadow-[0_16px_55px_-10px_var(--gold-glow)] hover:-translate-y-0.5"
-      : "border border-surface-border text-ink hover:border-gold/50 hover:text-gold hover:-translate-y-0.5";
+      ? "bg-cta text-ink shadow-[0_10px_40px_-12px_var(--cta-glow)] hover:shadow-[0_16px_55px_-10px_var(--cta-glow)] hover:-translate-y-0.5"
+      : "border border-surface-border text-ink hover:border-terracota/50 hover:text-terracota hover:-translate-y-0.5";
 
   return (
     <Link

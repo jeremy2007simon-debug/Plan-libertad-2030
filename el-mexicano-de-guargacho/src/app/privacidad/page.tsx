@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function PrivacidadPage() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-28 md:px-10">
-      <Link href="/" className="text-sm text-gold">
+      <Link href="/" className="text-sm text-terracota">
         ← Volver al inicio
       </Link>
 

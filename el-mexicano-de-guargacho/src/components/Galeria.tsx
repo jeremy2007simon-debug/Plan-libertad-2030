@@ -57,7 +57,7 @@ export function Galeria() {
             <Reveal key={item.label} delay={(i % 6) * 0.05}>
               <button
                 onClick={() => setOpenIndex(i)}
-                className="group relative block w-full overflow-hidden rounded-[2px] text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+                className="group relative block w-full overflow-hidden rounded-[2px] text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracota"
                 aria-label={`Ampliar imagen: ${item.label}`}
               >
                 <div className="transition-transform duration-700 ease-out group-hover:scale-[1.06]">

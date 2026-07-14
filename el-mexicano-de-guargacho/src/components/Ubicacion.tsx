@@ -22,7 +22,7 @@ export function Ubicacion() {
             <Reveal delay={0.2}>
               <dl className="mt-10 flex flex-col gap-7">
                 <div className="flex items-start gap-4">
-                  <Icon name="pin" className="mt-0.5 size-5 shrink-0 text-gold" />
+                  <Icon name="pin" className="mt-0.5 size-5 shrink-0 text-terracota" />
                   <div>
                     <dt className={"text-xs tracking-[0.18em] uppercase text-ink-dim"}>
                       Dirección
@@ -36,7 +36,7 @@ export function Ubicacion() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Icon name="phone" className="mt-0.5 size-5 shrink-0 text-gold" />
+                  <Icon name="phone" className="mt-0.5 size-5 shrink-0 text-terracota" />
                   <div>
                     <dt className="text-xs tracking-[0.18em] uppercase text-ink-dim">
                       Teléfono
@@ -44,7 +44,7 @@ export function Ubicacion() {
                     <dd className="mt-1">
                       <a
                         href={RESTAURANT.phoneHref}
-                        className="text-ink transition-colors hover:text-gold"
+                        className="text-ink transition-colors hover:text-terracota"
                       >
                         {RESTAURANT.phone}
                       </a>
@@ -56,7 +56,7 @@ export function Ubicacion() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Icon name="clock" className="mt-0.5 size-5 shrink-0 text-gold" />
+                  <Icon name="clock" className="mt-0.5 size-5 shrink-0 text-terracota" />
                   <div>
                     <dt className="text-xs tracking-[0.18em] uppercase text-ink-dim">
                       Horario
@@ -75,7 +75,7 @@ export function Ubicacion() {
                 href={RESTAURANT.mapsDirectionsHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-10 inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-4 text-sm font-semibold tracking-wide text-ink transition-all duration-500 hover:-translate-y-0.5 hover:border-gold/50 hover:text-gold"
+                className="mt-10 inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-4 text-sm font-semibold tracking-wide text-ink transition-all duration-500 hover:-translate-y-0.5 hover:border-terracota/50 hover:text-terracota"
               >
                 Cómo llegar
                 <Icon name="arrowUpRight" className="size-4" />

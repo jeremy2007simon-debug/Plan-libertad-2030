@@ -31,7 +31,7 @@ export function Especialidades() {
             return (
               <Reveal key={item.slug} delay={(i % 4) * 0.06}>
                 <div className="group flex h-full flex-col gap-5 bg-bg-elevated p-8 transition-colors duration-500 hover:bg-[#1c1712]">
-                  <span className="flex size-12 items-center justify-center rounded-full border border-surface-border text-gold transition-all duration-500 group-hover:border-gold/50 group-hover:shadow-[0_0_24px_-6px_var(--gold-glow)]">
+                  <span className="flex size-12 items-center justify-center rounded-full border border-surface-border text-terracota transition-all duration-500 group-hover:border-terracota/50 group-hover:shadow-[0_0_24px_-6px_var(--terracota-glow)]">
                     <Icon name={item.icon} className="size-5" />
                   </span>
                   <div>
@@ -51,7 +51,7 @@ export function Especialidades() {
                           className="flex items-baseline justify-between gap-3 text-ink-dim"
                         >
                           <span className="truncate">{dish.name}</span>
-                          <span className="shrink-0 tabular-nums text-gold/80">
+                          <span className="shrink-0 tabular-nums text-terracota/80">
                             {dish.price}
                           </span>
                         </li>

@@ -6,10 +6,12 @@ Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 + Framer Motion.
 Este proyecto reutiliza la arquitectura del proyecto hermano
 (`amigos-del-norte/`): misma estructura, mismos componentes reutilizables
 y misma calidad de código, evolucionada visualmente hacia una experiencia
-gastronómica mexicana premium — sin clichés folclóricos, con paleta
-oscura (negro, grafito, arena, rojo vino, dorado, verde oliva sutil) y
-una sección adicional ("Experiencia") centrada en las emociones de la
-mesa, no en los platos.
+gastronómica mexicana premium — sin clichés folclóricos (nada de
+sombreros, cactus ni banderas), con paleta oscura de identidad mexicana
+(negro carbón, marrón madera, terracota, arena, verde oliva muy sutil, y
+un rojo oscuro elegante reservado a las llamadas a la acción) y una
+sección adicional ("Experiencia") centrada en las emociones de la mesa,
+no en los platos.
 
 Desplegada en Vercel como proyecto independiente, con "Root Directory"
 apuntando a esta carpeta (`el-mexicano-de-guargacho`).

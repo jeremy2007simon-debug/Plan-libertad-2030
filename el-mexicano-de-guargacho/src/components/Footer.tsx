@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4">
           <div>
             <p className="font-display text-xl text-ink">
-              El <span className="text-gold italic">Mexicano</span>
+              El <span className="text-terracota italic">Mexicano</span>
             </p>
             <p className="mt-4 max-w-[22ch] text-sm text-ink-dim">
               Cocina mexicana auténtica desde 1999, en el corazón de
@@ -24,7 +24,7 @@ export function Footer() {
             </p>
             <ul className="mt-4 flex flex-col gap-2.5 text-sm">
               <li>
-                <a href={RESTAURANT.phoneHref} className="text-ink-dim transition-colors hover:text-gold">
+                <a href={RESTAURANT.phoneHref} className="text-ink-dim transition-colors hover:text-terracota">
                   {RESTAURANT.phone}
                 </a>
               </li>
@@ -33,7 +33,7 @@ export function Footer() {
                   href={RESTAURANT.whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-ink-dim transition-colors hover:text-gold"
+                  className="text-ink-dim transition-colors hover:text-terracota"
                 >
                   WhatsApp
                 </a>
@@ -65,7 +65,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="text-ink-dim transition-colors hover:text-gold"
+                  className="text-ink-dim transition-colors hover:text-terracota"
                 >
                   <Icon name="instagram" className="size-5" />
                 </a>
@@ -76,7 +76,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="text-ink-dim transition-colors hover:text-gold"
+                  className="text-ink-dim transition-colors hover:text-terracota"
                 >
                   <Icon name="facebook" className="size-5" />
                 </a>
@@ -90,7 +90,7 @@ export function Footer() {
             © {new Date().getFullYear()} {RESTAURANT.name}. Todos los
             derechos reservados.
           </p>
-          <Link href="/privacidad" className="transition-colors hover:text-gold">
+          <Link href="/privacidad" className="transition-colors hover:text-terracota">
             Política de privacidad
           </Link>
         </div>

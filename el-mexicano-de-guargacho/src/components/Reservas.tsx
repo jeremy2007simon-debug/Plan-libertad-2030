@@ -10,7 +10,7 @@ import { Icon } from "./ui/Icon";
 type Status = "idle" | "loading" | "success" | "error";
 
 const inputClass =
-  "w-full rounded-none border-0 border-b border-surface-border bg-transparent py-3 text-ink placeholder:text-ink-dim-2 focus:border-gold focus:outline-none transition-colors duration-300";
+  "w-full rounded-none border-0 border-b border-surface-border bg-transparent py-3 text-ink placeholder:text-ink-dim-2 focus:border-terracota focus:outline-none transition-colors duration-300";
 const labelClass = "text-xs tracking-[0.18em] uppercase text-ink-dim";
 
 export function Reservas() {
@@ -70,18 +70,18 @@ export function Reservas() {
               <div className="mt-10 flex flex-col gap-4">
                 <a
                   href={RESTAURANT.phoneHref}
-                  className="inline-flex items-center gap-3 text-ink transition-colors hover:text-gold"
+                  className="inline-flex items-center gap-3 text-ink transition-colors hover:text-terracota"
                 >
-                  <Icon name="phone" className="size-4 text-gold" />
+                  <Icon name="phone" className="size-4 text-terracota" />
                   {RESTAURANT.phone}
                 </a>
                 <a
                   href={RESTAURANT.whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-ink transition-colors hover:text-gold"
+                  className="inline-flex items-center gap-3 text-ink transition-colors hover:text-terracota"
                 >
-                  <Icon name="whatsapp" className="size-4 text-gold" />
+                  <Icon name="whatsapp" className="size-4 text-terracota" />
                   Reservar por WhatsApp
                 </a>
               </div>
@@ -90,7 +90,7 @@ export function Reservas() {
 
           <Reveal delay={0.15}>
             {status === "success" ? (
-              <div className="rounded-[2px] border border-gold/25 bg-gold/[0.04] p-10 text-center">
+              <div className="rounded-[2px] border border-terracota/25 bg-terracota/[0.04] p-10 text-center">
                 <p className="font-display text-2xl text-ink">
                   Solicitud recibida
                 </p>
@@ -101,7 +101,7 @@ export function Reservas() {
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="mt-6 text-sm font-semibold tracking-wide text-gold underline underline-offset-4"
+                  className="mt-6 text-sm font-semibold tracking-wide text-terracota underline underline-offset-4"
                 >
                   Hacer otra reserva
                 </button>
@@ -214,7 +214,7 @@ export function Reservas() {
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="group inline-flex items-center gap-2.5 rounded-full bg-gold px-8 py-4 text-sm font-semibold tracking-wide text-bg shadow-[0_10px_40px_-12px_var(--gold-glow)] transition-all duration-500 hover:-translate-y-0.5 disabled:opacity-60"
+                    className="group inline-flex items-center gap-2.5 rounded-full bg-cta px-8 py-4 text-sm font-semibold tracking-wide text-ink shadow-[0_10px_40px_-12px_var(--cta-glow)] transition-all duration-500 hover:-translate-y-0.5 disabled:opacity-60"
                   >
                     {status === "loading" ? "Enviando…" : "Reservar mesa"}
                     {status !== "loading" && (

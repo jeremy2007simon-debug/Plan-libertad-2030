@@ -32,7 +32,7 @@ export function Hero() {
       </div>
 
       <div className="absolute top-24 left-6 z-10 hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[.7rem] tracking-wide text-ink-dim/90 backdrop-blur-md md:left-10 md:flex">
-        <Icon name="play" className="size-3.5 text-gold" />
+        <Icon name="play" className="size-3.5 text-terracota" />
         Vídeo cinematográfico — próximamente
       </div>
 
@@ -40,7 +40,7 @@ export function Hero() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <p className="flex items-center gap-3 text-[.72rem] font-semibold tracking-[0.3em] text-ink-dim uppercase">
-              <span className="h-px w-8 bg-gold" />
+              <span className="h-px w-8 bg-terracota" />
               Guargacho · San Miguel de Abona · Tenerife
             </p>
           </Reveal>
@@ -49,7 +49,7 @@ export function Hero() {
             <h1 className="mt-7 max-w-3xl font-display text-[clamp(2.6rem,6.5vw,5.5rem)] leading-[1.03] font-light text-ink text-balance">
               México no se explica.
               <br />
-              <span className="italic text-gold">Se vive.</span>
+              <span className="italic text-terracota">Se vive.</span>
             </h1>
           </Reveal>
 
@@ -63,7 +63,7 @@ export function Hero() {
             <div className="mt-11 flex flex-wrap items-center gap-4">
               <a
                 href="#reservas"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-gold px-8 py-4 text-sm font-semibold tracking-wide text-bg shadow-[0_10px_40px_-12px_var(--gold-glow)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_55px_-10px_var(--gold-glow)]"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-cta px-8 py-4 text-sm font-semibold tracking-wide text-ink shadow-[0_10px_40px_-12px_var(--cta-glow)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_55px_-10px_var(--cta-glow)]"
               >
                 Reservar mesa
                 <Icon
@@ -73,7 +73,7 @@ export function Hero() {
               </a>
               <a
                 href="#especialidades"
-                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-4 text-sm font-semibold tracking-wide text-ink transition-all duration-500 hover:-translate-y-0.5 hover:border-gold/50 hover:text-gold"
+                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-4 text-sm font-semibold tracking-wide text-ink transition-all duration-500 hover:-translate-y-0.5 hover:border-terracota/50 hover:text-terracota"
               >
                 Ver carta
               </a>
@@ -86,7 +86,7 @@ export function Hero() {
         <span className="text-[.65rem] tracking-[0.25em] uppercase">
           Desliza
         </span>
-        <span className="h-10 w-px animate-pulse bg-gradient-to-b from-gold to-transparent" />
+        <span className="h-10 w-px animate-pulse bg-gradient-to-b from-terracota to-transparent" />
       </div>
     </section>
   );

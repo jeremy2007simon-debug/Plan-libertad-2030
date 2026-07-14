@@ -9,9 +9,9 @@ const PLACEHOLDER_SLOTS = [1, 2, 3];
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-1 text-gold">
+    <div className="flex gap-1 text-terracota">
       {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={i < Math.round(rating) ? "" : "text-gold/25"}>
+        <span key={i} className={i < Math.round(rating) ? "" : "text-terracota/25"}>
           ★
         </span>
       ))}
@@ -144,7 +144,7 @@ export async function Opiniones() {
             {PLACEHOLDER_SLOTS.map((slot) => (
               <Reveal key={slot} delay={slot * 0.08}>
                 <div className="flex h-full flex-col gap-4 rounded-[2px] border border-surface-border bg-surface p-7">
-                  <div className="flex gap-1 text-gold/40">
+                  <div className="flex gap-1 text-terracota/40">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span key={i} className="text-lg">
                         ★
@@ -172,7 +172,7 @@ export async function Opiniones() {
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-gold"
+              className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-terracota"
             >
               {hasGoogle ? "Ver reseñas en Google" : "Ver más reseñas en TripAdvisor"}
               <Icon name="arrowUpRight" className="size-4" />
