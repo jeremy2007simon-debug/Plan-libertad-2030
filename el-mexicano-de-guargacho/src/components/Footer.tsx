@@ -57,8 +57,6 @@ export function Footer() {
               Síguenos
             </p>
             <div className="mt-4 flex gap-4">
-              {/* Instagram oculto: no hay cuenta oficial confirmada todavía.
-                  Mostrar en cuanto RESTAURANT.social.instagram tenga URL. */}
               {RESTAURANT.social.instagram && (
                 <a
                   href={RESTAURANT.social.instagram}

@@ -118,9 +118,8 @@ mientras tanto.
   confirmación" en los comentarios de ese archivo).
 - **Facebook**: se enlaza la página pública localizada — confirmar que la
   URL es la definitiva antes del despliegue.
-- **Instagram**: no se ha encontrado una cuenta oficial — el botón está
-  oculto en el footer (`Footer.tsx`) hasta añadir
-  `RESTAURANT.social.instagram`.
+- **Instagram**: cuenta oficial confirmada, `@el.mexicano.de.guargacho_` —
+  enlazada en el footer (`RESTAURANT.social.instagram`).
 - **WhatsApp**: se usa el teléfono publicado (922 73 13 13, fijo). Un
   `wa.me` solo funciona si ese número tiene WhatsApp Business activo —
   confirmarlo o sustituirlo por el móvil correcto en

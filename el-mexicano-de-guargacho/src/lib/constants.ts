@@ -38,9 +38,10 @@ export const RESTAURANT = {
     { dayOfWeek: ["Sunday"], opens: "13:00", closes: "16:00" },
   ],
   social: {
-    // No se ha encontrado una cuenta de Instagram oficial confirmada —
-    // se mantiene oculta (ver Footer.tsx) hasta tener el enlace real.
-    instagram: null as string | null,
+    // Cuenta de Instagram oficial confirmada (@el.mexicano.de.guargacho_).
+    instagram: "https://www.instagram.com/el.mexicano.de.guargacho_/" as
+      | string
+      | null,
     // Página de Facebook pública localizada — verificar la URL definitiva
     // directamente con el restaurante antes del despliegue.
     facebook:
