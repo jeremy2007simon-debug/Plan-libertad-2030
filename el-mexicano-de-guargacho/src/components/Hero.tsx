@@ -11,7 +11,7 @@ const HERO_IMAGE_URL =
 // Fondo del hero preparado para vídeo cinematográfico: en cuanto haya
 // material de vídeo real, sustituye este <Image> por un <video autoPlay
 // muted loop playsInline poster={HERO_IMAGE_URL}> apuntando a
-// /videos/hero.mp4 — el resto de la sección (overlays, texto, badge) no
+// /videos/hero.mp4 — el resto de la sección (overlays, texto) no
 // necesita cambios.
 export function Hero() {
   return (
@@ -29,11 +29,6 @@ export function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/60 to-bg/15" />
         <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-transparent to-transparent" />
-      </div>
-
-      <div className="absolute top-24 left-6 z-10 hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[.7rem] tracking-wide text-ink-dim/90 backdrop-blur-md md:left-10 md:flex">
-        <Icon name="play" className="size-3.5 text-terracota" />
-        Vídeo cinematográfico — próximamente
       </div>
 
       <div className="relative z-10 w-full px-6 pb-24 pt-40 md:px-10 md:pb-32">
