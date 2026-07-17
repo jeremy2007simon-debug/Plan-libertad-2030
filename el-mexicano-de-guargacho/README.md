@@ -156,10 +156,8 @@ opiniones cambian mientras tanto — la frase que lo envuelve
   URL es la definitiva antes del despliegue.
 - **Instagram**: cuenta oficial confirmada, `@el.mexicano.de.guargacho_` —
   enlazada en el footer (`RESTAURANT.social.instagram`).
-- **TikTok**: no se ha localizado una cuenta oficial — el icono ya está en
-  el footer, pero enlaza provisionalmente a `https://www.tiktok.com/`
-  (`RESTAURANT.social.tiktok`). Sustituir por el perfil real en cuanto
-  exista.
+- **TikTok**: cuenta oficial confirmada, `@mexicanodeguargacho` —
+  enlazada en el footer (`RESTAURANT.social.tiktok`).
 - **WhatsApp**: se usa el teléfono publicado (922 73 13 13, fijo). Un
   `wa.me` solo funciona si ese número tiene WhatsApp Business activo —
   confirmarlo o sustituirlo por el móvil correcto en

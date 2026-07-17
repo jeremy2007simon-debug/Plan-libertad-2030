@@ -42,9 +42,8 @@ export const RESTAURANT = {
       "https://www.facebook.com/p/El-Mexicano-de-Guargacho-100064245032403/" as
         | string
         | null,
-    // Enlace provisional: sustituir por el perfil oficial de TikTok en
-    // cuanto el restaurante lo tenga.
-    tiktok: "https://www.tiktok.com/" as string | null,
+    // Cuenta de TikTok oficial confirmada (@mexicanodeguargacho).
+    tiktok: "https://www.tiktok.com/@mexicanodeguargacho" as string | null,
   },
   mapsEmbedSrc:
     "https://www.google.com/maps?q=" +
