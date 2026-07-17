@@ -25,7 +25,7 @@ export function ModelCard({
   return (
     <Card className="flex h-full flex-col overflow-hidden py-0">
       <div
-        className="flex h-32 items-center justify-center bg-gradient-to-br from-primary/15 via-primary/5 to-transparent text-sm text-muted-foreground"
+        className="flex h-32 items-center justify-center bg-gradient-to-br from-primary/25 via-primary/10 to-transparent text-sm font-medium text-primary/70"
         style={
           imageUrl
             ? {

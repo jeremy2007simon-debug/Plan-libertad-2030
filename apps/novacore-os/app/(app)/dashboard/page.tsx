@@ -16,12 +16,6 @@ import {
 
 export const metadata: Metadata = { title: "Dashboard" }
 
-const currencyFormatter = new Intl.NumberFormat("es-ES", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-})
-
 export default function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -33,25 +27,26 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
             label="Clientes activos"
-            value={String(dashboardStats.activeClients.value)}
+            value={dashboardStats.activeClients.value}
             delta={dashboardStats.activeClients.delta}
             icon={Users}
           />
           <StatCard
             label="MRR"
-            value={currencyFormatter.format(dashboardStats.mrr.value)}
+            value={dashboardStats.mrr.value}
+            format="currency"
             delta={dashboardStats.mrr.delta}
             icon={PackageCheck}
           />
           <StatCard
             label="Proyectos activos"
-            value={String(dashboardStats.activeProjects.value)}
+            value={dashboardStats.activeProjects.value}
             delta={dashboardStats.activeProjects.delta}
             icon={FolderKanban}
           />
           <StatCard
             label="Proyectos entregados"
-            value={String(dashboardStats.deliveredProjects.value)}
+            value={dashboardStats.deliveredProjects.value}
             delta={dashboardStats.deliveredProjects.delta}
             icon={CalendarClock}
           />

@@ -14,12 +14,6 @@ import {
 
 export const metadata: Metadata = { title: "Reportes" }
 
-const currencyFormatter = new Intl.NumberFormat("es-ES", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-})
-
 export default function ReportesPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -32,24 +26,27 @@ export default function ReportesPage() {
           <StatCard
             label="Tasa de entrega"
             value={reportStats.deliveryRate.value}
+            format="percent"
             delta={reportStats.deliveryRate.delta}
             icon={Gauge}
           />
           <StatCard
             label="Ticket medio"
-            value={currencyFormatter.format(reportStats.avgTicket.value)}
+            value={reportStats.avgTicket.value}
+            format="currency"
             delta={reportStats.avgTicket.delta}
             icon={TicketPercent}
           />
           <StatCard
             label="Duración media de proyecto"
-            value={`${reportStats.avgProjectDays.value} días`}
+            value={reportStats.avgProjectDays.value}
+            format="days"
             delta={reportStats.avgProjectDays.delta}
             icon={Clock3}
           />
           <StatCard
             label="Clientes nuevos"
-            value={String(reportStats.newClients.value)}
+            value={reportStats.newClients.value}
             delta={reportStats.newClients.delta}
             icon={UserPlus}
           />

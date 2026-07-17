@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { AppSidebar } from "@/components/layout/app-sidebar"
+import { PageTransition } from "@/components/layout/page-transition"
 import { Topbar } from "@/components/layout/topbar"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { createClient } from "@/lib/supabase/server"
@@ -28,7 +29,7 @@ export default async function AppLayout({
   const userName = profile?.full_name?.trim() || user.email?.split("@")[0] || "Equipo"
 
   return (
-    <SidebarProvider>
+    <SidebarProvider style={{ "--sidebar-width": "15rem" } as React.CSSProperties}>
       <AppSidebar />
       <SidebarInset>
         <Topbar
@@ -36,7 +37,9 @@ export default async function AppLayout({
           userEmail={user.email ?? ""}
           userAvatarUrl={profile?.avatar_url}
         />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex flex-1 flex-col">
+          <PageTransition>{children}</PageTransition>
+        </main>
       </SidebarInset>
     </SidebarProvider>
   )

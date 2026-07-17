@@ -1,5 +1,5 @@
 export const reportStats = {
-  deliveryRate: { value: "92%", delta: "+4 pts vs. trimestre anterior" },
+  deliveryRate: { value: 92, delta: "+4 pts vs. trimestre anterior" },
   avgTicket: { value: 4180, currency: "EUR", delta: "+320 € vs. trimestre anterior" },
   avgProjectDays: { value: 18, delta: "-2 días vs. trimestre anterior" },
   newClients: { value: 6, delta: "Este trimestre" },

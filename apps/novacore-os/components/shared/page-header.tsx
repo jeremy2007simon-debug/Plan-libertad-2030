@@ -27,8 +27,8 @@ export function PageHeader({
   actions?: ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4 border-b border-border/60 px-4 py-5 sm:px-6 md:flex-row md:items-end md:justify-between">
-      <div className="flex flex-col gap-1.5">
+    <div className="flex flex-col gap-4 px-6 py-7 sm:px-8 md:flex-row md:items-end md:justify-between">
+      <div className="flex flex-col gap-2">
         {crumbs && crumbs.length > 0 && (
           <Breadcrumb>
             <BreadcrumbList>
@@ -47,11 +47,11 @@ export function PageHeader({
             </BreadcrumbList>
           </Breadcrumb>
         )}
-        <h1 className="text-2xl font-semibold tracking-tight text-balance">
+        <h1 className="text-3xl font-semibold tracking-tight text-balance">
           {title}
         </h1>
         {description && (
-          <p className="max-w-2xl text-sm text-muted-foreground">
+          <p className="max-w-2xl text-[0.95rem] text-muted-foreground">
             {description}
           </p>
         )}

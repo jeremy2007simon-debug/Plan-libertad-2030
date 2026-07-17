@@ -23,18 +23,31 @@ export function QuarterlyRevenueChart({
 }) {
   return (
     <ChartContainer config={chartConfig} className="h-64 w-full">
-      <BarChart data={data} margin={{ left: 4, right: 4, top: 8 }}>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis dataKey="quarter" tickLine={false} axisLine={false} tickMargin={8} />
+      <BarChart data={data} margin={{ left: 4, right: 4, top: 12 }}>
+        <defs>
+          <linearGradient id="fillQuarterlyRevenue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--color-revenue)" stopOpacity={0.95} />
+            <stop offset="100%" stopColor="var(--color-revenue)" stopOpacity={0.55} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid vertical={false} strokeDasharray="3 6" stroke="var(--border)" />
+        <XAxis dataKey="quarter" tickLine={false} axisLine={false} tickMargin={10} />
         <ChartTooltip
-          cursor={false}
+          cursor={{ fill: "var(--muted)", opacity: 0.5 }}
           content={
             <ChartTooltipContent
               formatter={(value) => `${Number(value).toLocaleString("es-ES")} €`}
             />
           }
         />
-        <Bar dataKey="revenue" fill="var(--color-revenue)" radius={[6, 6, 0, 0]} maxBarSize={64} />
+        <Bar
+          dataKey="revenue"
+          fill="url(#fillQuarterlyRevenue)"
+          radius={[8, 8, 0, 0]}
+          maxBarSize={56}
+          animationDuration={800}
+          animationEasing="ease-out"
+        />
       </BarChart>
     </ChartContainer>
   )

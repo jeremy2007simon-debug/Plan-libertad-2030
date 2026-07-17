@@ -38,13 +38,13 @@ export function CommandMenu() {
   return (
     <>
       <Button
-        variant="outline"
-        className="h-8 w-56 justify-start gap-2 px-2.5 text-muted-foreground"
+        variant="ghost"
+        className="h-9 w-64 justify-start gap-2.5 rounded-full bg-card px-3.5 text-muted-foreground shadow-[var(--shadow-floating)] ring-1 ring-foreground/[0.04] transition-shadow duration-200 hover:bg-card hover:text-foreground hover:shadow-[var(--shadow-card-hover)]"
         onClick={() => setOpen(true)}
       >
         <Search className="size-4" />
         <span className="text-sm">Buscar...</span>
-        <kbd className="ml-auto hidden rounded border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:inline">
+        <kbd className="ml-auto hidden rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground sm:inline">
           ⌘K
         </kbd>
       </Button>

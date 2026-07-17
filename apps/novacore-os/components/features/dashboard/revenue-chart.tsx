@@ -23,22 +23,23 @@ export function RevenueChart({
 }) {
   return (
     <ChartContainer config={chartConfig} className="h-64 w-full">
-      <AreaChart data={data} margin={{ left: 4, right: 4, top: 8 }}>
+      <AreaChart data={data} margin={{ left: 4, right: 4, top: 12 }}>
         <defs>
           <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="var(--color-revenue)" stopOpacity={0.35} />
+            <stop offset="5%" stopColor="var(--color-revenue)" stopOpacity={0.32} />
             <stop offset="95%" stopColor="var(--color-revenue)" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+        <CartesianGrid vertical={false} strokeDasharray="3 6" stroke="var(--border)" />
         <XAxis
           dataKey="month"
           tickLine={false}
           axisLine={false}
-          tickMargin={8}
+          tickMargin={10}
+          className="text-xs"
         />
         <ChartTooltip
-          cursor={false}
+          cursor={{ stroke: "var(--color-revenue)", strokeWidth: 1, strokeDasharray: "4 4" }}
           content={
             <ChartTooltipContent
               formatter={(value) => `${Number(value).toLocaleString("es-ES")} €`}
@@ -50,7 +51,11 @@ export function RevenueChart({
           type="monotone"
           fill="url(#fillRevenue)"
           stroke="var(--color-revenue)"
-          strokeWidth={2}
+          strokeWidth={2.5}
+          dot={false}
+          activeDot={{ r: 5, strokeWidth: 2, stroke: "var(--card)" }}
+          animationDuration={900}
+          animationEasing="ease-out"
         />
       </AreaChart>
     </ChartContainer>

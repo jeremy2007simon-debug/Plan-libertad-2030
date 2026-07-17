@@ -41,12 +41,12 @@ export function UserMenu({
         render={
           <Button
             variant="ghost"
-            className="h-8 gap-2 rounded-full px-1.5"
+            className="h-8 gap-2 rounded-full px-1 hover:bg-muted"
             aria-label="Menú de usuario"
           >
-            <Avatar className="size-6.5">
+            <Avatar className="size-6.5 ring-2 ring-primary/15">
               <AvatarImage src={avatarUrl ?? undefined} alt={name} />
-              <AvatarFallback className="text-[11px]">
+              <AvatarFallback className="bg-gradient-to-br from-primary/25 to-primary/10 text-[11px] font-medium text-primary">
                 {initials(name)}
               </AvatarFallback>
             </Avatar>

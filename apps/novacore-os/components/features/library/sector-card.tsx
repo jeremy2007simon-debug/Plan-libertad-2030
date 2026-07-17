@@ -18,9 +18,9 @@ export function SectorCard({
 }) {
   return (
     <Link href={`/biblioteca/${slug}`}>
-      <Card className="group h-full transition-colors hover:border-primary/40 hover:bg-accent/40">
+      <Card className="group h-full py-5">
         <CardContent className="flex items-start gap-4 px-5">
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 text-primary ring-1 ring-primary/10 transition-transform duration-300 group-hover:scale-105">
             <Icon className="size-5" />
           </div>
           <div className="flex flex-1 flex-col gap-1">
@@ -32,7 +32,7 @@ export function SectorCard({
               {modelCount} {modelCount === 1 ? "modelo" : "modelos"}
             </span>
           </div>
-          <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-primary" />
         </CardContent>
       </Card>
     </Link>

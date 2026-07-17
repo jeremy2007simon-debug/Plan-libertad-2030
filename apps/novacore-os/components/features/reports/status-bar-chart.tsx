@@ -20,13 +20,19 @@ export function StatusBarChart({
 }) {
   return (
     <ChartContainer config={{}} className="h-64 w-full">
-      <BarChart data={data} margin={{ left: 4, right: 4, top: 8 }}>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <Bar dataKey="count" radius={[6, 6, 0, 0]} maxBarSize={56}>
+      <BarChart data={data} margin={{ left: 4, right: 4, top: 12 }}>
+        <CartesianGrid vertical={false} strokeDasharray="3 6" stroke="var(--border)" />
+        <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={10} />
+        <ChartTooltip cursor={{ fill: "var(--muted)", opacity: 0.5 }} content={<ChartTooltipContent />} />
+        <Bar
+          dataKey="count"
+          radius={[8, 8, 0, 0]}
+          maxBarSize={56}
+          animationDuration={800}
+          animationEasing="ease-out"
+        >
           {data.map((entry) => (
-            <Cell key={entry.status} fill={toneColor[entry.tone]} />
+            <Cell key={entry.status} fill={toneColor[entry.tone]} fillOpacity={0.85} />
           ))}
         </Bar>
       </BarChart>
