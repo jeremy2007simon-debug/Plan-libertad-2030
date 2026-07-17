@@ -29,6 +29,7 @@ export default function ReportesPage() {
             format="percent"
             delta={reportStats.deliveryRate.delta}
             icon={Gauge}
+            iconColor="var(--status-good)"
           />
           <StatCard
             label="Ticket medio"
@@ -36,6 +37,7 @@ export default function ReportesPage() {
             format="currency"
             delta={reportStats.avgTicket.delta}
             icon={TicketPercent}
+            iconColor="var(--primary)"
           />
           <StatCard
             label="Duración media de proyecto"
@@ -43,12 +45,14 @@ export default function ReportesPage() {
             format="days"
             delta={reportStats.avgProjectDays.delta}
             icon={Clock3}
+            iconColor="var(--status-warning)"
           />
           <StatCard
             label="Clientes nuevos"
             value={reportStats.newClients.value}
             delta={reportStats.newClients.delta}
             icon={UserPlus}
+            iconColor="var(--chart-1)"
           />
         </div>
 

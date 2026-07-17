@@ -1,6 +1,6 @@
 "use client"
 
-import { LogOut, Settings, User } from "lucide-react"
+import { ChevronDown, LogOut, Settings, User } from "lucide-react"
 import Link from "next/link"
 
 import { signOut } from "@/lib/actions/auth"
@@ -14,6 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { memberRoleLabel } from "@/lib/status"
+import type { MemberRole } from "@/lib/types/database.types"
 
 function initials(name: string) {
   return (
@@ -30,10 +32,12 @@ export function UserMenu({
   name,
   email,
   avatarUrl,
+  role,
 }: {
   name: string
   email: string
   avatarUrl?: string | null
+  role?: MemberRole
 }) {
   return (
     <DropdownMenu>
@@ -41,7 +45,7 @@ export function UserMenu({
         render={
           <Button
             variant="ghost"
-            className="h-8 gap-2 rounded-full px-1 hover:bg-muted"
+            className="h-8 gap-2 rounded-full pr-2.5 pl-1 hover:bg-muted"
             aria-label="Menú de usuario"
           >
             <Avatar className="size-6.5 ring-2 ring-primary/15">
@@ -50,6 +54,17 @@ export function UserMenu({
                 {initials(name)}
               </AvatarFallback>
             </Avatar>
+            <span className="hidden flex-col items-start leading-tight sm:flex">
+              <span className="max-w-28 truncate text-xs font-medium text-foreground">
+                {name}
+              </span>
+              {role && (
+                <span className="text-[11px] text-muted-foreground">
+                  {memberRoleLabel[role]}
+                </span>
+              )}
+            </span>
+            <ChevronDown className="hidden size-3.5 text-muted-foreground sm:block" />
           </Button>
         }
       />

@@ -23,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { EmptyState } from "@/components/shared/empty-state"
+import { EntityAvatar } from "@/components/shared/entity-avatar"
 import { Input } from "@/components/ui/input"
 import { StatusBadge } from "@/components/shared/status-badge"
 import {
@@ -169,7 +170,12 @@ export function ProjectsTable({
             <TableBody>
               {filtered.map((project) => (
                 <TableRow key={project.id}>
-                  <TableCell className="font-medium">{project.name}</TableCell>
+                  <TableCell className="font-medium">
+                    <div className="flex items-center gap-3">
+                      <EntityAvatar name={project.name} />
+                      {project.name}
+                    </div>
+                  </TableCell>
                   <TableCell className="text-muted-foreground">
                     {project.clients?.company_name ?? "—"}
                   </TableCell>

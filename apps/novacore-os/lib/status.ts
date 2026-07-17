@@ -3,11 +3,18 @@ import type {
   BudgetStatus,
   ClientStatus,
   InvoiceStatus,
+  MemberRole,
   ProjectStatus,
   TaskStatus,
 } from "@/lib/types/database.types"
 
 export type StatusTone = "good" | "warning" | "serious" | "critical" | "neutral"
+
+export const memberRoleLabel: Record<MemberRole, string> = {
+  owner: "Propietario",
+  admin: "Administrador",
+  member: "Miembro",
+}
 
 export const clientStatusMap: Record<ClientStatus, { label: string; tone: StatusTone }> = {
   potencial: { label: "Potencial", tone: "neutral" },

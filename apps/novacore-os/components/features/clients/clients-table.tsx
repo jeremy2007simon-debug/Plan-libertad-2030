@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { EmptyState } from "@/components/shared/empty-state"
+import { EntityAvatar } from "@/components/shared/entity-avatar"
 import { Input } from "@/components/ui/input"
 import { StatusBadge } from "@/components/shared/status-badge"
 import {
@@ -125,7 +126,10 @@ export function ClientsTable({ clients }: { clients: Tables<"clients">[] }) {
               {filtered.map((client) => (
                 <TableRow key={client.id}>
                   <TableCell className="font-medium">
-                    {client.company_name}
+                    <div className="flex items-center gap-3">
+                      <EntityAvatar name={client.company_name} />
+                      {client.company_name}
+                    </div>
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     <div className="flex flex-col">

@@ -5,10 +5,27 @@
  */
 
 export const dashboardStats = {
-  activeClients: { value: 24, delta: "+3 este mes" },
-  mrr: { value: 18450, currency: "EUR", delta: "+8.2% vs. mes anterior" },
-  activeProjects: { value: 11, delta: "3 en revisión" },
-  deliveredProjects: { value: 47, delta: "+5 este mes" },
+  activeClients: {
+    value: 24,
+    delta: "+3 este mes",
+    trend: [18, 19, 20, 21, 23, 24],
+  },
+  mrr: {
+    value: 18450,
+    currency: "EUR",
+    delta: "+8.2% vs. mes anterior",
+    trend: [11200, 12850, 12100, 14300, 15900, 18450],
+  },
+  activeProjects: {
+    value: 11,
+    delta: "3 en revisión",
+    trend: [9, 10, 8, 9, 10, 11],
+  },
+  deliveredProjects: {
+    value: 47,
+    delta: "+5 este mes",
+    trend: [30, 34, 37, 40, 43, 47],
+  },
 }
 
 export const monthlyRevenue = [
@@ -56,19 +73,25 @@ export const upcomingMeetings = [
     id: "1",
     title: "Kick-off proyecto web",
     client: "Clínica Dental Sonrisa+",
-    time: "Hoy · 16:30",
+    day: "17",
+    month: "JUL",
+    time: "16:30",
   },
   {
     id: "2",
     title: "Revisión de diseño",
     client: "Amigos del Norte",
-    time: "Mañana · 10:00",
+    day: "18",
+    month: "JUL",
+    time: "10:00",
   },
   {
     id: "3",
     title: "Presentación de presupuesto",
     client: "Hotel Beach Club Marbella",
-    time: "Jue 20 · 12:00",
+    day: "20",
+    month: "JUL",
+    time: "12:00",
   },
 ]
 
