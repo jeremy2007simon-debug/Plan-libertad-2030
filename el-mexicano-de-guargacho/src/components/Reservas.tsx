@@ -6,6 +6,7 @@ import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { Container } from "./ui/Container";
 import { Icon } from "./ui/Icon";
+import { useT } from "./i18n/LanguageProvider";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -14,6 +15,7 @@ const inputClass =
 const labelClass = "text-xs tracking-[0.18em] uppercase text-ink-dim";
 
 export function Reservas() {
+  const t = useT();
   const [status, setStatus] = useState<Status>("idle");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -52,17 +54,16 @@ export function Reservas() {
         <div className="grid gap-16 md:grid-cols-[0.85fr_1.15fr] md:gap-20">
           <div>
             <Reveal>
-              <SectionLabel index="05">Reservas</SectionLabel>
+              <SectionLabel index="05">{t.reservas.label}</SectionLabel>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-6 font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-light text-ink text-balance">
-                Reserva tu mesa
+                {t.reservas.title}
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-6 max-w-sm text-ink-dim leading-relaxed">
-                Cuéntanos cuándo quieres venir y te confirmaremos la reserva.
-                Si lo prefieres, también puedes llamarnos directamente.
+                {t.reservas.paragraph}
               </p>
             </Reveal>
 
@@ -82,7 +83,7 @@ export function Reservas() {
                   className="inline-flex items-center gap-3 text-ink transition-colors hover:text-terracota"
                 >
                   <Icon name="whatsapp" className="size-4 text-terracota" />
-                  Reservar por WhatsApp
+                  {t.reservas.callWhatsapp}
                 </a>
               </div>
             </Reveal>
@@ -92,66 +93,64 @@ export function Reservas() {
             {status === "success" ? (
               <div className="rounded-[2px] border border-terracota/25 bg-terracota/[0.04] p-10 text-center">
                 <p className="font-display text-2xl text-ink">
-                  Solicitud recibida
+                  {t.reservas.successTitle}
                 </p>
                 <p className="mt-3 text-ink-dim">
-                  Gracias, hemos registrado tu solicitud de reserva. Te
-                  confirmaremos la mesa lo antes posible. Si tu reserva es
-                  urgente, llámanos directamente al {RESTAURANT.phone}.
+                  {t.reservas.successBody(RESTAURANT.phone)}
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
                   className="mt-6 text-sm font-semibold tracking-wide text-terracota underline underline-offset-4"
                 >
-                  Hacer otra reserva
+                  {t.reservas.newReservation}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-7 sm:grid-cols-2">
                 <div className="flex flex-col gap-2 sm:col-span-2">
                   <label htmlFor="nombre" className={labelClass}>
-                    Nombre
+                    {t.reservas.form.name}
                   </label>
                   <input
                     id="nombre"
                     name="nombre"
                     type="text"
                     required
-                    placeholder="Tu nombre"
+                    placeholder={t.reservas.form.namePlaceholder}
                     className={inputClass}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2 sm:col-span-2">
                   <label htmlFor="email" className={labelClass}>
-                    Email (opcional)
+                    {t.reservas.form.email}
                   </label>
                   <input
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="tu@email.com"
+                    placeholder={t.reservas.form.emailPlaceholder}
                     className={inputClass}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="telefono" className={labelClass}>
-                    Teléfono
+                    {t.reservas.form.phone}
                   </label>
                   <input
                     id="telefono"
                     name="telefono"
                     type="tel"
                     required
-                    placeholder="600 000 000"
+                    placeholder={t.reservas.form.phonePlaceholder}
                     className={inputClass}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="personas" className={labelClass}>
-                    Número de personas
+                    {t.reservas.form.guests}
                   </label>
                   <input
                     id="personas"
@@ -160,14 +159,14 @@ export function Reservas() {
                     min={1}
                     max={30}
                     required
-                    placeholder="2"
+                    placeholder={t.reservas.form.guestsPlaceholder}
                     className={inputClass}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="fecha" className={labelClass}>
-                    Fecha
+                    {t.reservas.form.date}
                   </label>
                   <input
                     id="fecha"
@@ -180,7 +179,7 @@ export function Reservas() {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="hora" className={labelClass}>
-                    Hora
+                    {t.reservas.form.time}
                   </label>
                   <input
                     id="hora"
@@ -193,13 +192,13 @@ export function Reservas() {
 
                 <div className="flex flex-col gap-2 sm:col-span-2">
                   <label htmlFor="comentarios" className={labelClass}>
-                    Comentarios
+                    {t.reservas.form.notes}
                   </label>
                   <textarea
                     id="comentarios"
                     name="comentarios"
                     rows={3}
-                    placeholder="Alergias, ocasión especial, silla para bebé…"
+                    placeholder={t.reservas.form.notesPlaceholder}
                     className={`${inputClass} resize-none`}
                   />
                 </div>
@@ -207,16 +206,17 @@ export function Reservas() {
                 <div className="sm:col-span-2">
                   {status === "error" && (
                     <p className="mb-4 text-sm text-red-400">
-                      No hemos podido enviar tu solicitud. Prueba de nuevo o
-                      llámanos al {RESTAURANT.phone}.
+                      {t.reservas.errorBody(RESTAURANT.phone)}
                     </p>
                   )}
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="group inline-flex items-center gap-2.5 rounded-full bg-cta px-8 py-4 text-sm font-semibold tracking-wide text-ink shadow-[0_10px_40px_-12px_var(--cta-glow)] transition-all duration-500 hover:-translate-y-0.5 disabled:opacity-60"
+                    className="group inline-flex items-center gap-2.5 rounded-full bg-cta px-8 py-4 text-sm font-semibold tracking-wide text-cream shadow-[0_10px_40px_-12px_var(--cta-glow)] transition-all duration-500 hover:-translate-y-0.5 disabled:opacity-60"
                   >
-                    {status === "loading" ? "Enviando…" : "Reservar mesa"}
+                    {status === "loading"
+                      ? t.reservas.form.submitting
+                      : t.reservas.form.submit}
                     {status !== "loading" && (
                       <Icon
                         name="arrowRight"

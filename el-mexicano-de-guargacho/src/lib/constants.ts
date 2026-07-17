@@ -21,16 +21,10 @@ export const RESTAURANT = {
   // HORARIO — PENDIENTE DE CONFIRMACIÓN.
   // Procede de fuentes públicas (perfil de Google Business y directorios),
   // no ha sido confirmado directamente por el restaurante. No publicar sin
-  // validarlo antes con El Mexicano de Guargacho.
+  // validarlo antes con El Mexicano de Guargacho. El texto mostrado al
+  // visitante vive en src/lib/i18n/{es,en}.ts (ubicacion.hoursText) — debe
+  // mantenerse en sincronía con estos horarios en ambos idiomas.
   // --------------------------------------------------------------------
-  hours:
-    "Lun, mar y jue: 19:00–23:00 · Vie y sáb: 13:00–16:00 y 19:00–23:30 · Dom: 13:00–16:00 · Miércoles: cerrado" as
-      | string
-      | null,
-  // Mismo horario en formato Schema.org (openingHoursSpecification), usado
-  // en StructuredData.tsx. Actualizar junto con `hours` si cambia — y
-  // quitar este comentario de "pendiente de confirmación" en ambos sitios
-  // en cuanto el restaurante lo valide.
   hoursSpec: [
     { dayOfWeek: ["Monday", "Tuesday", "Thursday"], opens: "19:00", closes: "23:00" },
     { dayOfWeek: ["Friday", "Saturday"], opens: "13:00", closes: "16:00" },
@@ -48,6 +42,9 @@ export const RESTAURANT = {
       "https://www.facebook.com/p/El-Mexicano-de-Guargacho-100064245032403/" as
         | string
         | null,
+    // Enlace provisional: sustituir por el perfil oficial de TikTok en
+    // cuanto el restaurante lo tenga.
+    tiktok: "https://www.tiktok.com/" as string | null,
   },
   mapsEmbedSrc:
     "https://www.google.com/maps?q=" +
@@ -72,108 +69,15 @@ export const RESTAURANT = {
 // Business del restaurante), no inventado. Se muestra mientras no haya
 // integración activa de Google Places; Opiniones.tsx delega
 // automáticamente en GoogleReviews.tsx en cuanto GOOGLE_PLACES_API_KEY
-// esté configurada (ver src/lib/reviews.ts). No se transcriben reseñas
-// individuales de ejemplo — solo esta cifra agregada, actualizable en
-// cuanto el restaurante confirme el dato exacto.
+// esté configurada (ver src/lib/reviews.ts). Solo esta cifra agregada,
+// actualizable en cuanto el restaurante confirme el dato exacto — la frase
+// que la envuelve (p. ej. "Más de N opiniones verificadas") vive en
+// src/lib/i18n/{es,en}.ts (opiniones.countLabel) para poder traducirse.
 export const REVIEWS_SUMMARY = {
   rating: 4.3,
-  countLabel: "Más de 170 opiniones verificadas",
+  count: 170,
 } as const;
 
-// Especialidades de la carta real (categorías e importes verificados).
-// Cada tarjeta muestra como máximo 3 platos de ejemplo — el resto queda
-// en `examples` para uso futuro (p. ej. una página de carta completa o
-// datos estructurados de menú), sin saturar la tarjeta visualmente.
-export const SPECIALTIES = [
-  {
-    slug: "entrantes",
-    title: "Entrantes",
-    description: "Para abrir boca y compartir en el centro.",
-    icon: "plate",
-    examples: [
-      { name: "Nachos auténticos", price: "12,50 €" },
-      { name: "Queso fundido con champiñones y cuitlacoche", price: "15 €" },
-      { name: "Flautas de pollo", price: "16 €" },
-      { name: "Cóctel de gambas estilo Acapulco", price: "13 €" },
-      { name: "Sincronizadas", price: "10 €" },
-      { name: "Gringa", price: "16 €" },
-      { name: "Paquete Primerizos", price: "20 €" },
-    ],
-  },
-  {
-    slug: "tacos",
-    title: "Tacos",
-    description: "Maíz, brasa y salsa. La base de todo.",
-    icon: "taco",
-    examples: [
-      { name: "Tres tacos de maíz", price: "12 €" },
-      { name: "Tacos de pescado Baja California", price: "13 €" },
-    ],
-  },
-  {
-    slug: "burritos",
-    title: "Burritos",
-    description: "Generosos, envueltos a mano.",
-    icon: "burrito",
-    examples: [{ name: "Burrito", price: "16 €" }],
-  },
-  {
-    slug: "enchiladas",
-    title: "Enchiladas",
-    description: "Bañadas en salsa, al horno.",
-    icon: "enchilada",
-    examples: [
-      { name: "Verdes", price: "18 €" },
-      { name: "Tradicionales", price: "18 €" },
-      { name: "Mole", price: "18 €" },
-      { name: "Suizas", price: "18 €" },
-      { name: "Chipotle y cacahuete", price: "18 €" },
-      { name: "Cuitlacoche", price: "18 €" },
-    ],
-  },
-  {
-    slug: "carnes",
-    title: "Carnes",
-    description: "A la parrilla, con carácter.",
-    icon: "flame",
-    examples: [],
-  },
-  {
-    slug: "especialidades",
-    title: "Especialidades",
-    description: "Los platos insignia de la casa.",
-    icon: "sparkles",
-    examples: [],
-  },
-  {
-    slug: "postres",
-    title: "Postres",
-    description: "El cierre dulce de la noche.",
-    icon: "dessert",
-    examples: [
-      { name: "Pastel Tres Leches", price: "7,50 €" },
-      { name: "Flan de elote", price: "7 €" },
-      { name: "Tarta de queso con tamarindo y mezcal", price: "7,50 €" },
-      { name: "Crema de mango", price: "7 €" },
-      { name: "Yogur griego con guayaba", price: "6 €" },
-      { name: "Crepas de cajeta", price: "7 €" },
-      { name: "Tarta de chocolate", price: "7,50 €" },
-    ],
-  },
-  {
-    slug: "bebidas",
-    title: "Bebidas",
-    description: "Margaritas, cervezas y algo más.",
-    icon: "cocktail",
-    examples: [],
-  },
-] as const;
-
-export const GALLERY_PLACEHOLDERS = [
-  { label: "Sala principal", ratio: "4/5" },
-  { label: "Tacos al pastor", ratio: "1/1" },
-  { label: "Terraza", ratio: "4/5" },
-  { label: "Fajitas en sartén", ratio: "1/1" },
-  { label: "Margaritas", ratio: "1/1" },
-  { label: "Ambiente de noche", ratio: "4/5" },
-] as const;
+// El contenido de la carta (Especialidades.tsx) y de la galería
+// (Galeria.tsx) vive en src/lib/i18n/{es,en}.ts (especialidades.categories
+// / galeria.items) para poder traducirse junto con el resto de la web.

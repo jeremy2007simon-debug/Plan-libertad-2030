@@ -1,3 +1,5 @@
+"use client";
+
 import type { GoogleReviewsData } from "@/lib/reviews";
 import { RESTAURANT } from "@/lib/constants";
 import { Reveal } from "./ui/Reveal";
@@ -5,24 +7,29 @@ import { SectionLabel } from "./ui/SectionLabel";
 import { Container } from "./ui/Container";
 import { Icon } from "./ui/Icon";
 import { Stars } from "./ui/Stars";
+import { useT } from "./i18n/LanguageProvider";
 
 // Sustituye automáticamente a Opiniones.tsx en cuanto getGoogleReviews()
 // (src/lib/reviews.ts) devuelve datos reales — ver el componente
 // Opiniones.tsx, que decide cuál de los dos renderizar. No requiere
 // ningún otro cambio: misma sección, mismo id="opiniones", mismo índice.
+// Los textos de reseñas y nombres de autor los sirve Google tal cual — no
+// se traducen (son contenido de terceros, no copy de la web).
 export function GoogleReviews({ data }: { data: GoogleReviewsData }) {
+  const t = useT();
+
   return (
     <section id="opiniones" className="relative py-28 md:py-36">
       <Container>
         <div className="mx-auto max-w-xl text-center">
           <Reveal>
             <SectionLabel index="06" center>
-              Opiniones
+              {t.opiniones.label}
             </SectionLabel>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mt-6 font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-light text-ink text-balance">
-              Lo que dicen en Google
+              {t.opiniones.googleTitle}
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
@@ -31,7 +38,7 @@ export function GoogleReviews({ data }: { data: GoogleReviewsData }) {
                 {data.rating.toFixed(1)}
               </span>
               <Stars rating={data.rating} />
-              <span>· {data.totalReviews} reseñas en Google</span>
+              <span>· {t.opiniones.googleCount(data.totalReviews)}</span>
             </p>
           </Reveal>
         </div>
@@ -57,7 +64,7 @@ export function GoogleReviews({ data }: { data: GoogleReviewsData }) {
                       loading="lazy"
                     />
                   ) : (
-                    <span className="flex size-8 items-center justify-center rounded-full bg-white/5 text-xs text-ink-dim">
+                    <span className="flex size-8 items-center justify-center rounded-full bg-bg-elevated text-xs text-ink-dim">
                       {review.authorName.charAt(0)}
                     </span>
                   )}
@@ -79,7 +86,7 @@ export function GoogleReviews({ data }: { data: GoogleReviewsData }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-terracota"
             >
-              Ver reseñas en Google
+              {t.opiniones.viewOnGoogle}
               <Icon name="arrowUpRight" className="size-4" />
             </a>
           </div>

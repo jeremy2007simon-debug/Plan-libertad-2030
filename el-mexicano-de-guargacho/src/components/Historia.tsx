@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
+import { useT } from "./i18n/LanguageProvider";
 
 // Foto de stock provisional servida directamente desde Unsplash (licencia
 // libre de uso comercial) — no es una foto real del restaurante. Ver
@@ -8,13 +11,9 @@ import { SectionLabel } from "./ui/SectionLabel";
 const HISTORIA_IMAGE_URL =
   "https://images.unsplash.com/photo-1680992071073-cb1696ba8d3e?fm=jpg&q=80&w=1400&fit=crop";
 
-const PILLARS = [
-  { title: "Tradición", text: "Desde 1999, la misma cocina de siempre." },
-  { title: "Sabor auténtico", text: "Recetas mexicanas, sin atajos." },
-  { title: "Familia", text: "Se cocina y se sirve como en casa." },
-];
-
 export function Historia() {
+  const t = useT();
+
   return (
     <section id="historia" className="relative py-28 md:py-36">
       <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2 md:items-center md:px-10 md:gap-20">
@@ -33,27 +32,23 @@ export function Historia() {
 
         <div>
           <Reveal>
-            <SectionLabel index="01">Nuestra historia</SectionLabel>
+            <SectionLabel index="01">{t.historia.label}</SectionLabel>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mt-6 font-display text-[clamp(1.9rem,3.4vw,2.9rem)] leading-tight font-light text-ink text-balance">
-              México, servido
+              {t.historia.titleLine1}
               <br />
-              con calma y carácter.
+              {t.historia.titleLine2}
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-6 max-w-md text-ink-dim leading-relaxed">
-              En Guargacho cocinamos como se ha cocinado siempre en México:
-              con fuego lento, producto de verdad y ganas de compartir. Cada
-              mesa se atiende como si fuera la primera vez que abrimos las
-              puertas — con el mismo cuidado, el mismo sabor y el mismo
-              ambiente cercano que nos define desde el primer día.
+              {t.historia.paragraph}
             </p>
           </Reveal>
 
           <div className="mt-11 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {PILLARS.map((pillar, i) => (
+            {t.historia.pillars.map((pillar, i) => (
               <Reveal key={pillar.title} delay={0.3 + i * 0.08}>
                 <div className="border-t border-hair pt-4">
                   <p className="font-display text-lg italic text-terracota">

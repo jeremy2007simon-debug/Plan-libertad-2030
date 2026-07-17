@@ -1,38 +1,42 @@
-import { SPECIALTIES } from "@/lib/constants";
-import { Icon } from "./ui/Icon";
+"use client";
+
+import { Icon, type IconName } from "./ui/Icon";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { Container } from "./ui/Container";
+import { useT } from "./i18n/LanguageProvider";
 
 const MAX_EXAMPLES = 3;
 
 export function Especialidades() {
+  const t = useT();
+
   return (
     <section id="especialidades" className="relative bg-bg-elevated py-28 md:py-36">
       <Container>
         <div className="mx-auto max-w-xl text-center">
           <Reveal>
             <SectionLabel index="02" center>
-              Especialidades
+              {t.especialidades.label}
             </SectionLabel>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mt-6 font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-light text-ink text-balance">
-              Lo que nos define
+              {t.especialidades.title}
             </h2>
           </Reveal>
         </div>
 
         <div className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-[2px] bg-hair lg:grid-cols-4">
-          {SPECIALTIES.map((item, i) => {
-            const shown = item.examples.slice(0, MAX_EXAMPLES);
-            const remaining = item.examples.length - shown.length;
+          {t.especialidades.categories.map((item, i) => {
+            const shown = item.dishes.slice(0, MAX_EXAMPLES);
+            const remaining = item.dishes.length - shown.length;
 
             return (
               <Reveal key={item.slug} delay={(i % 4) * 0.06}>
-                <div className="group flex h-full flex-col gap-5 bg-bg-elevated p-8 transition-colors duration-500 hover:bg-[#1c1712]">
+                <div className="group flex h-full flex-col gap-5 bg-bg-elevated p-8 transition-colors duration-500 hover:bg-[#e7d6ae]">
                   <span className="flex size-12 items-center justify-center rounded-full border border-surface-border text-terracota transition-all duration-500 group-hover:border-terracota/50 group-hover:shadow-[0_0_24px_-6px_var(--terracota-glow)]">
-                    <Icon name={item.icon} className="size-5" />
+                    <Icon name={item.icon as IconName} className="size-5" />
                   </span>
                   <div>
                     <h3 className="font-display text-lg text-ink">
@@ -58,7 +62,7 @@ export function Especialidades() {
                       ))}
                       {remaining > 0 && (
                         <li className="text-xs text-ink-dim-2">
-                          +{remaining} más en la carta
+                          {t.especialidades.moreOnMenu(remaining)}
                         </li>
                       )}
                     </ul>
@@ -71,8 +75,7 @@ export function Especialidades() {
 
         <Reveal delay={0.3}>
           <p className="mt-8 text-center text-xs text-ink-dim-2">
-            Precios orientativos, sujetos a variación. Carta completa
-            disponible en sala.
+            {t.especialidades.disclaimer}
           </p>
         </Reveal>
       </Container>

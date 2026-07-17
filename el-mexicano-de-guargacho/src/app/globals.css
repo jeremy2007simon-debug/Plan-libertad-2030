@@ -1,29 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  /* Negro carbón */
-  --bg: #14110d;
-  /* Marrón madera */
-  --bg-elevated: #2a1d13;
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-border: rgba(255, 255, 255, 0.08);
-  --hair: rgba(255, 255, 255, 0.08);
-  /* Arena */
-  --ink: #f1e6d3;
-  --ink-dim: #b3a084;
-  --ink-dim-2: #7a6a54;
+  /* Arena claro — hacienda mexicana elegante */
+  --bg: #f4e8d2;
+  --bg-elevated: #efe1c2;
+  /* Blanco roto, para tarjetas que deben destacar sobre el arena */
+  --surface: #fbf6ea;
+  --surface-border: rgba(42, 29, 19, 0.1);
+  --hair: rgba(42, 29, 19, 0.12);
+  /* Texto — marrón madera oscuro sobre fondo claro */
+  --ink: #2a1d13;
+  --ink-dim: #5c4a34;
+  --ink-dim-2: #6f5c42;
   /* Terracota: acento principal (iconos, cursiva, hover, bordes) */
-  --terracota: #c1653a;
-  --terracota-soft: rgba(193, 101, 58, 0.4);
-  --terracota-glow: rgba(193, 101, 58, 0.28);
+  --terracota: #b35a30;
+  --terracota-soft: rgba(179, 90, 48, 0.35);
+  --terracota-glow: rgba(179, 90, 48, 0.2);
   /* Rojo oscuro elegante: reservado a llamadas a la acción (botones) */
   --cta: #7a2b20;
   --cta-soft: rgba(122, 43, 32, 0.45);
-  --cta-glow: rgba(122, 43, 32, 0.35);
+  --cta-glow: rgba(122, 43, 32, 0.28);
   /* Verde oliva muy sutil: solo para glows de ambiente */
   --olive: #565c42;
-  --olive-soft: rgba(86, 92, 66, 0.35);
-  --olive-glow: rgba(86, 92, 66, 0.2);
+  --olive-soft: rgba(86, 92, 66, 0.3);
+  --olive-glow: rgba(86, 92, 66, 0.14);
+
+  /* Tonos fijos, independientes de la paleta clara/oscura de la página:
+     el Hero (foto + overlay) y el texto sobre botones bg-cta necesitan
+     seguir leyéndose sobre superficies oscuras siempre. */
+  --carbon: #14110d;
+  --cream: #f8efd9;
+  --cream-dim: rgba(248, 239, 217, 0.78);
+  --cream-dim-2: rgba(248, 239, 217, 0.55);
 }
 
 @theme inline {
@@ -41,6 +49,10 @@
   --color-cta-soft: var(--cta-soft);
   --color-olive: var(--olive);
   --color-olive-soft: var(--olive-soft);
+  --color-carbon: var(--carbon);
+  --color-cream: var(--cream);
+  --color-cream-dim: var(--cream-dim);
+  --color-cream-dim-2: var(--cream-dim-2);
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-manrope);
 }
@@ -58,7 +70,7 @@ body {
 
 ::selection {
   background: var(--terracota);
-  color: #14110d;
+  color: var(--cream);
 }
 
 @media (prefers-reduced-motion: reduce) {
