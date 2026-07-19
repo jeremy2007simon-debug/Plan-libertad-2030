@@ -1,28 +1,14 @@
 /**
- * Datos de ejemplo para el Dashboard. Misma forma que las filas de Supabase
- * que los sustituirán (clients, projects, meetings, tasks) — migrar a
- * queries reales es un cambio de origen de datos, no de UI.
+ * MRR e ingresos mensuales requieren la lógica de Facturación (todavía sin
+ * creación de facturas), así que se quedan en 0 hasta que exista esa pieza.
+ * El resto de datos del Dashboard (clientes, proyectos, reuniones, tareas)
+ * se leen en vivo desde Supabase en app/(app)/dashboard/page.tsx.
  */
 
 export const dashboardStats = {
-  activeClients: {
-    value: 0,
-    delta: "Sin datos todavía",
-    trend: [0, 0, 0, 0, 0, 0],
-  },
   mrr: {
     value: 0,
     currency: "EUR",
-    delta: "Sin datos todavía",
-    trend: [0, 0, 0, 0, 0, 0],
-  },
-  activeProjects: {
-    value: 0,
-    delta: "Sin datos todavía",
-    trend: [0, 0, 0, 0, 0, 0],
-  },
-  deliveredProjects: {
-    value: 0,
     delta: "Sin datos todavía",
     trend: [0, 0, 0, 0, 0, 0],
   },
@@ -44,14 +30,3 @@ export const recentActivity: {
   target: string
   timestamp: string
 }[] = []
-
-export const upcomingMeetings: {
-  id: string
-  title: string
-  client: string
-  day: string
-  month: string
-  time: string
-}[] = []
-
-export const todayTasks: { id: string; title: string; done: boolean }[] = []

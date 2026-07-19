@@ -5,19 +5,19 @@ import { PageHeader } from "@/components/shared/page-header"
 import { StatCard } from "@/components/shared/stat-card"
 import { RevenueChart } from "@/components/features/dashboard/revenue-chart"
 import { DonutChart } from "@/components/features/dashboard/donut-chart"
+import { TodayTasksList } from "@/components/features/dashboard/today-tasks-list"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  dashboardStats,
-  monthlyRevenue,
-  recentActivity,
-  todayTasks,
-  upcomingMeetings,
-} from "@/lib/data/dashboard"
-import { projectsByStatus } from "@/lib/data/reports"
+import { dashboardStats, monthlyRevenue, recentActivity } from "@/lib/data/dashboard"
 import { createClient } from "@/lib/supabase/server"
 
 export const metadata: Metadata = { title: "Dashboard" }
+
+const monthFormatter = new Intl.DateTimeFormat("es-ES", { month: "short" })
+const dayFormatter = new Intl.DateTimeFormat("es-ES", { day: "2-digit" })
+const timeFormatter = new Intl.DateTimeFormat("es-ES", {
+  hour: "2-digit",
+  minute: "2-digit",
+})
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -25,12 +25,75 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const { data: profile } = user
-    ? await supabase.from("profiles").select("full_name").eq("id", user.id).single()
-    : { data: null }
+  const todayIso = new Date().toISOString().slice(0, 10)
+
+  const [
+    { data: profile },
+    { count: activeClientsCount },
+    { data: projectRows },
+    { data: meetingRows },
+    { data: taskRows },
+  ] = await Promise.all([
+    user
+      ? supabase.from("profiles").select("full_name").eq("id", user.id).single()
+      : Promise.resolve({ data: null }),
+    supabase
+      .from("clients")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "activo"),
+    supabase.from("projects").select("status"),
+    supabase
+      .from("meetings")
+      .select("id, title, starts_at, clients(company_name)")
+      .gte("starts_at", new Date().toISOString())
+      .order("starts_at", { ascending: true })
+      .limit(3),
+    supabase
+      .from("tasks")
+      .select("id, title, status, due_date")
+      .lte("due_date", todayIso)
+      .order("due_date", { ascending: true })
+      .limit(8),
+  ])
 
   const firstName =
     profile?.full_name?.trim().split(" ")[0] || user?.email?.split("@")[0] || "de nuevo"
+
+  const projects = projectRows ?? []
+  const statusCounts = {
+    pendiente: projects.filter((p) => p.status === "pendiente").length,
+    en_desarrollo: projects.filter((p) => p.status === "en_desarrollo").length,
+    revision: projects.filter((p) => p.status === "revision").length,
+    entregado: projects.filter((p) => p.status === "entregado").length,
+  }
+  const activeProjectsCount =
+    statusCounts.pendiente + statusCounts.en_desarrollo + statusCounts.revision
+  const deliveredProjectsCount = statusCounts.entregado
+
+  const projectsByStatus = [
+    { status: "Pendiente", count: statusCounts.pendiente, tone: "neutral" as const },
+    { status: "En desarrollo", count: statusCounts.en_desarrollo, tone: "warning" as const },
+    { status: "Revisión", count: statusCounts.revision, tone: "serious" as const },
+    { status: "Entregado", count: statusCounts.entregado, tone: "good" as const },
+  ]
+
+  const upcomingMeetings = (meetingRows ?? []).map((meeting) => {
+    const date = new Date(meeting.starts_at)
+    return {
+      id: meeting.id,
+      title: meeting.title,
+      client: meeting.clients?.company_name ?? "—",
+      day: dayFormatter.format(date),
+      month: monthFormatter.format(date).replace(".", "").toUpperCase(),
+      time: timeFormatter.format(date),
+    }
+  })
+
+  const todayTasks = (taskRows ?? []).map((task) => ({
+    id: task.id,
+    title: task.title,
+    done: task.status === "completada",
+  }))
 
   return (
     <div className="flex flex-1 flex-col">
@@ -42,10 +105,7 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
             label="Clientes activos"
-            value={dashboardStats.activeClients.value}
-            delta={dashboardStats.activeClients.delta}
-            trend={dashboardStats.activeClients.trend}
-            trendDirection="neutral"
+            value={activeClientsCount ?? 0}
             icon={Users}
             iconColor="var(--status-good)"
           />
@@ -61,19 +121,13 @@ export default async function DashboardPage() {
           />
           <StatCard
             label="Proyectos activos"
-            value={dashboardStats.activeProjects.value}
-            delta={dashboardStats.activeProjects.delta}
-            trend={dashboardStats.activeProjects.trend}
-            trendDirection="neutral"
+            value={activeProjectsCount}
             icon={FolderKanban}
             iconColor="var(--status-warning)"
           />
           <StatCard
             label="Proyectos entregados"
-            value={dashboardStats.deliveredProjects.value}
-            delta={dashboardStats.deliveredProjects.delta}
-            trend={dashboardStats.deliveredProjects.trend}
-            trendDirection="neutral"
+            value={deliveredProjectsCount}
             icon={CalendarClock}
             iconColor="var(--chart-1)"
           />
@@ -103,27 +157,7 @@ export default async function DashboardPage() {
               <CardTitle>Tareas de hoy</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
-              {todayTasks.length === 0 ? (
-                <p className="py-6 text-center text-sm text-muted-foreground">
-                  Sin tareas para hoy.
-                </p>
-              ) : (
-                todayTasks.map((task) => (
-                  <label
-                    key={task.id}
-                    className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm hover:bg-muted/60"
-                  >
-                    <Checkbox defaultChecked={task.done} />
-                    <span
-                      className={
-                        task.done ? "text-muted-foreground line-through" : ""
-                      }
-                    >
-                      {task.title}
-                    </span>
-                  </label>
-                ))
-              )}
+              <TodayTasksList tasks={todayTasks} />
             </CardContent>
           </Card>
         </div>
