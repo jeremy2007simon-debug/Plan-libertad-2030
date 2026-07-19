@@ -6,98 +6,52 @@
 
 export const dashboardStats = {
   activeClients: {
-    value: 24,
-    delta: "+3 este mes",
-    trend: [18, 19, 20, 21, 23, 24],
+    value: 0,
+    delta: "Sin datos todavía",
+    trend: [0, 0, 0, 0, 0, 0],
   },
   mrr: {
-    value: 18450,
+    value: 0,
     currency: "EUR",
-    delta: "+8.2% vs. mes anterior",
-    trend: [11200, 12850, 12100, 14300, 15900, 18450],
+    delta: "Sin datos todavía",
+    trend: [0, 0, 0, 0, 0, 0],
   },
   activeProjects: {
-    value: 11,
-    delta: "3 en revisión",
-    trend: [9, 10, 8, 9, 10, 11],
+    value: 0,
+    delta: "Sin datos todavía",
+    trend: [0, 0, 0, 0, 0, 0],
   },
   deliveredProjects: {
-    value: 47,
-    delta: "+5 este mes",
-    trend: [30, 34, 37, 40, 43, 47],
+    value: 0,
+    delta: "Sin datos todavía",
+    trend: [0, 0, 0, 0, 0, 0],
   },
 }
 
 export const monthlyRevenue = [
-  { month: "Feb", revenue: 11200 },
-  { month: "Mar", revenue: 12850 },
-  { month: "Abr", revenue: 12100 },
-  { month: "May", revenue: 14300 },
-  { month: "Jun", revenue: 15900 },
-  { month: "Jul", revenue: 18450 },
+  { month: "Feb", revenue: 0 },
+  { month: "Mar", revenue: 0 },
+  { month: "Abr", revenue: 0 },
+  { month: "May", revenue: 0 },
+  { month: "Jun", revenue: 0 },
+  { month: "Jul", revenue: 0 },
 ]
 
-export const recentActivity = [
-  {
-    id: "1",
-    actor: "Marta Ruiz",
-    action: "movió el proyecto",
-    target: "Web Grupo Valladares a Revisión",
-    timestamp: "Hace 20 min",
-  },
-  {
-    id: "2",
-    actor: "NovaCore",
-    action: "generó una factura para",
-    target: "Restaurante Azzurro",
-    timestamp: "Hace 1 h",
-  },
-  {
-    id: "3",
-    actor: "Diego Torres",
-    action: "creó el cliente",
-    target: "Clínica Dental Sonrisa+",
-    timestamp: "Hace 3 h",
-  },
-  {
-    id: "4",
-    actor: "NovaCore",
-    action: "completó la automatización",
-    target: "Recordatorio de reseñas Google",
-    timestamp: "Ayer",
-  },
-]
+export const recentActivity: {
+  id: string
+  actor: string
+  action: string
+  target: string
+  timestamp: string
+}[] = []
 
-export const upcomingMeetings = [
-  {
-    id: "1",
-    title: "Kick-off proyecto web",
-    client: "Clínica Dental Sonrisa+",
-    day: "17",
-    month: "JUL",
-    time: "16:30",
-  },
-  {
-    id: "2",
-    title: "Revisión de diseño",
-    client: "Amigos del Norte",
-    day: "18",
-    month: "JUL",
-    time: "10:00",
-  },
-  {
-    id: "3",
-    title: "Presentación de presupuesto",
-    client: "Hotel Beach Club Marbella",
-    day: "20",
-    month: "JUL",
-    time: "12:00",
-  },
-]
+export const upcomingMeetings: {
+  id: string
+  title: string
+  client: string
+  day: string
+  month: string
+  time: string
+}[] = []
 
-export const todayTasks = [
-  { id: "1", title: "Enviar propuesta a Grupo Valladares", done: true },
-  { id: "2", title: "Revisar copys de la landing Azzurro", done: false },
-  { id: "3", title: "Configurar dominio de Mexicano Guargacho", done: false },
-  { id: "4", title: "Preparar demo de automatización de reseñas", done: false },
-]
+export const todayTasks: { id: string; title: string; done: boolean }[] = []

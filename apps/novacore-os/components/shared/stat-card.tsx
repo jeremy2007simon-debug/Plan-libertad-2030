@@ -21,7 +21,7 @@ export function StatCard({
   value: number
   format?: NumberFormatKind
   delta?: string
-  trendDirection?: "up" | "down"
+  trendDirection?: "up" | "down" | "neutral"
   trend?: number[]
   icon: LucideIcon
   iconColor?: string
@@ -51,10 +51,14 @@ export function StatCard({
             <span
               className={cn(
                 "flex items-center gap-1 text-xs font-medium",
-                trendDirection === "down" ? "text-status-critical" : "text-status-good"
+                trendDirection === "neutral"
+                  ? "text-muted-foreground"
+                  : trendDirection === "down"
+                    ? "text-status-critical"
+                    : "text-status-good"
               )}
             >
-              <TrendIcon className="size-3.5" />
+              {trendDirection !== "neutral" && <TrendIcon className="size-3.5" />}
               {delta}
             </span>
           )}

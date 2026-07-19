@@ -45,6 +45,7 @@ export default async function DashboardPage() {
             value={dashboardStats.activeClients.value}
             delta={dashboardStats.activeClients.delta}
             trend={dashboardStats.activeClients.trend}
+            trendDirection="neutral"
             icon={Users}
             iconColor="var(--status-good)"
           />
@@ -54,6 +55,7 @@ export default async function DashboardPage() {
             format="currency"
             delta={dashboardStats.mrr.delta}
             trend={dashboardStats.mrr.trend}
+            trendDirection="neutral"
             icon={PackageCheck}
             iconColor="var(--primary)"
           />
@@ -62,7 +64,7 @@ export default async function DashboardPage() {
             value={dashboardStats.activeProjects.value}
             delta={dashboardStats.activeProjects.delta}
             trend={dashboardStats.activeProjects.trend}
-            trendDirection="down"
+            trendDirection="neutral"
             icon={FolderKanban}
             iconColor="var(--status-warning)"
           />
@@ -71,6 +73,7 @@ export default async function DashboardPage() {
             value={dashboardStats.deliveredProjects.value}
             delta={dashboardStats.deliveredProjects.delta}
             trend={dashboardStats.deliveredProjects.trend}
+            trendDirection="neutral"
             icon={CalendarClock}
             iconColor="var(--chart-1)"
           />
@@ -100,21 +103,27 @@ export default async function DashboardPage() {
               <CardTitle>Tareas de hoy</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
-              {todayTasks.map((task) => (
-                <label
-                  key={task.id}
-                  className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm hover:bg-muted/60"
-                >
-                  <Checkbox defaultChecked={task.done} />
-                  <span
-                    className={
-                      task.done ? "text-muted-foreground line-through" : ""
-                    }
+              {todayTasks.length === 0 ? (
+                <p className="py-6 text-center text-sm text-muted-foreground">
+                  Sin tareas para hoy.
+                </p>
+              ) : (
+                todayTasks.map((task) => (
+                  <label
+                    key={task.id}
+                    className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm hover:bg-muted/60"
                   >
-                    {task.title}
-                  </span>
-                </label>
-              ))}
+                    <Checkbox defaultChecked={task.done} />
+                    <span
+                      className={
+                        task.done ? "text-muted-foreground line-through" : ""
+                      }
+                    >
+                      {task.title}
+                    </span>
+                  </label>
+                ))
+              )}
             </CardContent>
           </Card>
         </div>
@@ -125,19 +134,25 @@ export default async function DashboardPage() {
               <CardTitle>Actividad reciente</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col divide-y divide-border/60">
-              {recentActivity.map((item) => (
-                <div key={item.id} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-                  <div className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                  <p className="flex-1 text-sm">
-                    <span className="font-medium">{item.actor}</span>{" "}
-                    <span className="text-muted-foreground">{item.action}</span>{" "}
-                    <span className="font-medium">{item.target}</span>
-                  </p>
-                  <span className="shrink-0 text-xs text-muted-foreground">
-                    {item.timestamp}
-                  </span>
-                </div>
-              ))}
+              {recentActivity.length === 0 ? (
+                <p className="py-6 text-center text-sm text-muted-foreground">
+                  Sin actividad reciente todavía.
+                </p>
+              ) : (
+                recentActivity.map((item) => (
+                  <div key={item.id} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
+                    <div className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                    <p className="flex-1 text-sm">
+                      <span className="font-medium">{item.actor}</span>{" "}
+                      <span className="text-muted-foreground">{item.action}</span>{" "}
+                      <span className="font-medium">{item.target}</span>
+                    </p>
+                    <span className="shrink-0 text-xs text-muted-foreground">
+                      {item.timestamp}
+                    </span>
+                  </div>
+                ))
+              )}
             </CardContent>
           </Card>
 
@@ -146,24 +161,30 @@ export default async function DashboardPage() {
               <CardTitle>Próximas reuniones</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
-              {upcomingMeetings.map((meeting) => (
-                <div key={meeting.id} className="flex items-center gap-3">
-                  <div className="flex size-11 shrink-0 flex-col items-center justify-center rounded-lg bg-muted">
-                    <span className="text-[10px] font-semibold tracking-wide text-primary uppercase">
-                      {meeting.month}
-                    </span>
-                    <span className="text-sm font-semibold tabular-nums">
-                      {meeting.day}
-                    </span>
+              {upcomingMeetings.length === 0 ? (
+                <p className="py-6 text-center text-sm text-muted-foreground">
+                  Sin reuniones próximas.
+                </p>
+              ) : (
+                upcomingMeetings.map((meeting) => (
+                  <div key={meeting.id} className="flex items-center gap-3">
+                    <div className="flex size-11 shrink-0 flex-col items-center justify-center rounded-lg bg-muted">
+                      <span className="text-[10px] font-semibold tracking-wide text-primary uppercase">
+                        {meeting.month}
+                      </span>
+                      <span className="text-sm font-semibold tabular-nums">
+                        {meeting.day}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-sm font-medium">{meeting.title}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {meeting.client} · {meeting.time}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-medium">{meeting.title}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {meeting.client} · {meeting.time}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </CardContent>
           </Card>
         </div>

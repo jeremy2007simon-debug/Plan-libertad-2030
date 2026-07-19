@@ -28,6 +28,7 @@ export default function ReportesPage() {
             value={reportStats.deliveryRate.value}
             format="percent"
             delta={reportStats.deliveryRate.delta}
+            trendDirection="neutral"
             icon={Gauge}
             iconColor="var(--status-good)"
           />
@@ -36,6 +37,7 @@ export default function ReportesPage() {
             value={reportStats.avgTicket.value}
             format="currency"
             delta={reportStats.avgTicket.delta}
+            trendDirection="neutral"
             icon={TicketPercent}
             iconColor="var(--primary)"
           />
@@ -44,6 +46,7 @@ export default function ReportesPage() {
             value={reportStats.avgProjectDays.value}
             format="days"
             delta={reportStats.avgProjectDays.delta}
+            trendDirection="neutral"
             icon={Clock3}
             iconColor="var(--status-warning)"
           />
@@ -51,6 +54,7 @@ export default function ReportesPage() {
             label="Clientes nuevos"
             value={reportStats.newClients.value}
             delta={reportStats.newClients.delta}
+            trendDirection="neutral"
             icon={UserPlus}
             iconColor="var(--chart-1)"
           />

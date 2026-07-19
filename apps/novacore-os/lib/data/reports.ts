@@ -1,20 +1,20 @@
 export const reportStats = {
-  deliveryRate: { value: 92, delta: "+4 pts vs. trimestre anterior" },
-  avgTicket: { value: 4180, currency: "EUR", delta: "+320 € vs. trimestre anterior" },
-  avgProjectDays: { value: 18, delta: "-2 días vs. trimestre anterior" },
-  newClients: { value: 6, delta: "Este trimestre" },
+  deliveryRate: { value: 0, delta: "Sin datos todavía" },
+  avgTicket: { value: 0, currency: "EUR", delta: "Sin datos todavía" },
+  avgProjectDays: { value: 0, delta: "Sin datos todavía" },
+  newClients: { value: 0, delta: "Sin datos todavía" },
 }
 
 export const quarterlyRevenue = [
-  { quarter: "Q3 2025", revenue: 34200 },
-  { quarter: "Q4 2025", revenue: 39850 },
-  { quarter: "Q1 2026", revenue: 41300 },
-  { quarter: "Q2 2026", revenue: 47650 },
+  { quarter: "Q3 2025", revenue: 0 },
+  { quarter: "Q4 2025", revenue: 0 },
+  { quarter: "Q1 2026", revenue: 0 },
+  { quarter: "Q2 2026", revenue: 0 },
 ]
 
 export const projectsByStatus = [
-  { status: "Pendiente", count: 4, tone: "neutral" as const },
-  { status: "En desarrollo", count: 7, tone: "warning" as const },
-  { status: "Revisión", count: 3, tone: "serious" as const },
-  { status: "Entregado", count: 47, tone: "good" as const },
+  { status: "Pendiente", count: 0, tone: "neutral" as const },
+  { status: "En desarrollo", count: 0, tone: "warning" as const },
+  { status: "Revisión", count: 0, tone: "serious" as const },
+  { status: "Entregado", count: 0, tone: "good" as const },
 ]
