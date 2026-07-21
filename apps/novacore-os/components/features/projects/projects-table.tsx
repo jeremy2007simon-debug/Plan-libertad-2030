@@ -100,14 +100,21 @@ export function ProjectsTable({
 
   function confirmDelete() {
     if (!deletingProject) return
+    const projectId = deletingProject.id
     startDeleteTransition(async () => {
-      const result = await deleteProjectRecord(deletingProject.id)
-      if (result.error) {
-        toast.error(result.error)
-      } else {
-        toast.success("Proyecto eliminado.")
+      try {
+        const result = await deleteProjectRecord(projectId)
+        if (result.error) {
+          toast.error(result.error)
+        } else {
+          toast.success("Proyecto eliminado.")
+          router.refresh()
+        }
+      } catch {
+        toast.error("No se pudo eliminar el proyecto. Inténtalo de nuevo.")
+      } finally {
+        setDeletingProject(undefined)
       }
-      setDeletingProject(undefined)
     })
   }
 

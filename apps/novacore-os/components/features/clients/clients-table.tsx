@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import { MoreHorizontal, Plus, Search, Users } from "lucide-react"
 import { toast } from "sonner"
 
@@ -39,6 +40,7 @@ import { clientStatusMap } from "@/lib/status"
 import type { Tables } from "@/lib/types/database.types"
 
 export function ClientsTable({ clients }: { clients: Tables<"clients">[] }) {
+  const router = useRouter()
   const [query, setQuery] = React.useState("")
   const [formOpen, setFormOpen] = React.useState(false)
   const [editingClient, setEditingClient] = React.useState<Tables<"clients"> | undefined>()
@@ -63,14 +65,21 @@ export function ClientsTable({ clients }: { clients: Tables<"clients">[] }) {
 
   function confirmDelete() {
     if (!deletingClient) return
+    const clientId = deletingClient.id
     startDeleteTransition(async () => {
-      const result = await deleteClientRecord(deletingClient.id)
-      if (result.error) {
-        toast.error(result.error)
-      } else {
-        toast.success("Cliente eliminado.")
+      try {
+        const result = await deleteClientRecord(clientId)
+        if (result.error) {
+          toast.error(result.error)
+        } else {
+          toast.success("Cliente eliminado.")
+          router.refresh()
+        }
+      } catch {
+        toast.error("No se pudo eliminar el cliente. Inténtalo de nuevo.")
+      } finally {
+        setDeletingClient(undefined)
       }
-      setDeletingClient(undefined)
     })
   }
 
