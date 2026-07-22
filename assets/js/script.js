@@ -1,12 +1,24 @@
 // =============================================================
 // NOVACORE — LANDING PAGE
-// Interacciones: menú móvil, animaciones al hacer scroll y formulario
+// Interacciones: menú móvil, header al hacer scroll, animaciones
+// escalonadas, glow que sigue al cursor en tarjetas, partículas
+// del hero y formulario de contacto.
 // =============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
   // ---- Año actual en el footer ----
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // ---- Header: fondo sólido al hacer scroll ----
+  const header = document.getElementById("header");
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
 
   // ---- Menú móvil ----
   const navToggle = document.getElementById("navToggle");
@@ -18,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
       navToggle.setAttribute("aria-expanded", String(isOpen));
     });
 
-    // Cierra el menú al pulsar un enlace (útil en móvil)
     nav.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
         nav.classList.remove("is-open");
@@ -27,7 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Animación de aparición al hacer scroll ----
+  // ---- Animación de aparición al hacer scroll, con escalonado ----
+  const revealGroups = new Map();
+  document.querySelectorAll(".reveal").forEach((el) => {
+    const parent = el.parentElement;
+    const siblings = revealGroups.get(parent) || 0;
+    el.style.setProperty("--delay", String(siblings * 80));
+    revealGroups.set(parent, siblings + 1);
+  });
+
   const revealEls = document.querySelectorAll(".reveal");
   const observer = new IntersectionObserver(
     (entries) => {
@@ -41,6 +60,30 @@ document.addEventListener("DOMContentLoaded", () => {
     { threshold: 0.15 }
   );
   revealEls.forEach((el) => observer.observe(el));
+
+  // ---- Glow que sigue al cursor en tarjetas premium ----
+  const glowTargets = document.querySelectorAll(".problem-card, .service-card, .step");
+  glowTargets.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+      card.style.setProperty("--my", `${event.clientY - rect.top}px`);
+    });
+  });
+
+  // ---- Partículas flotantes del Hero ----
+  const particlesHost = document.getElementById("heroParticles");
+  if (particlesHost) {
+    const count = window.innerWidth < 720 ? 10 : 22;
+    for (let i = 0; i < count; i += 1) {
+      const dot = document.createElement("span");
+      dot.style.left = `${Math.random() * 100}%`;
+      dot.style.top = `${40 + Math.random() * 55}%`;
+      dot.style.animationDelay = `${Math.random() * 9}s`;
+      dot.style.animationDuration = `${7 + Math.random() * 6}s`;
+      particlesHost.appendChild(dot);
+    }
+  }
 
   // ---- Formulario de contacto ----
   // Abre el cliente de email del propio visitante con un "mailto:" ya
@@ -77,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = mailtoUrl;
 
       feedback.textContent = "Se ha abierto tu programa de correo con el mensaje listo. Solo tienes que darle a enviar.";
-      feedback.style.color = "var(--accent)";
+      feedback.style.color = "var(--accent-2)";
       form.reset();
     });
   }
