@@ -1,0 +1,109 @@
+"use client"
+
+import { ChevronDown, LogOut, Settings, User } from "lucide-react"
+import Link from "next/link"
+
+import { signOut } from "@/lib/actions/auth"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { memberRoleLabel } from "@/lib/status"
+import type { MemberRole } from "@/lib/types/database.types"
+
+function initials(name: string) {
+  return (
+    name
+      .split(" ")
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join("") || "NC"
+  )
+}
+
+export function UserMenu({
+  name,
+  email,
+  avatarUrl,
+  role,
+}: {
+  name: string
+  email: string
+  avatarUrl?: string | null
+  role?: MemberRole
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant="ghost"
+            className="h-8 gap-2 rounded-full pr-2.5 pl-1 hover:bg-muted"
+            aria-label="Menú de usuario"
+          >
+            <Avatar className="size-6.5 ring-2 ring-primary/15">
+              <AvatarImage src={avatarUrl ?? undefined} alt={name} />
+              <AvatarFallback className="bg-gradient-to-br from-primary/25 to-primary/10 text-[11px] font-medium text-primary">
+                {initials(name)}
+              </AvatarFallback>
+            </Avatar>
+            <span className="hidden flex-col items-start leading-tight sm:flex">
+              <span className="max-w-28 truncate text-xs font-medium text-foreground">
+                {name}
+              </span>
+              {role && (
+                <span className="text-[11px] text-muted-foreground">
+                  {memberRoleLabel[role]}
+                </span>
+              )}
+            </span>
+            <ChevronDown className="hidden size-3.5 text-muted-foreground sm:block" />
+          </Button>
+        }
+      />
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="flex flex-col">
+          <span className="truncate text-sm font-medium">{name}</span>
+          <span className="truncate text-xs font-normal text-muted-foreground">
+            {email}
+          </span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          render={
+            <Link href="/configuracion">
+              <User />
+              Perfil
+            </Link>
+          }
+        />
+        <DropdownMenuItem
+          render={
+            <Link href="/configuracion">
+              <Settings />
+              Configuración
+            </Link>
+          }
+        />
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={(event) => {
+            event.preventDefault()
+            void signOut()
+          }}
+        >
+          <LogOut />
+          Cerrar sesión
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
