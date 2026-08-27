@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { PHOTOS } from "@/data/photography";
+import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { COMPANY, HOME_COORDINATES } from "@/lib/site";
 import type { MediaVideo } from "@/types/content";
 
@@ -24,7 +24,10 @@ import type { MediaVideo } from "@/types/content";
  * que se queda como póster. Hasta entonces, foto real.
  */
 export function Hero({ video }: { video?: MediaVideo }) {
-  const image = PHOTOS["serengeti-sunrise"];
+  // Fotografía del cliente: siluetas de fauna cruzando el horizonte al
+  // atardecer. Su `objectPosition` mantiene el sol y las siluetas dentro del
+  // recorte también en vertical, donde el hero pierde el 70 % del ancho.
+  const image = CLIENT_PHOTOS["tanzania-wildlife-sunset-hero"];
 
   return (
     <section className="relative isolate flex min-h-[92svh] flex-col justify-end overflow-hidden bg-charcoal">

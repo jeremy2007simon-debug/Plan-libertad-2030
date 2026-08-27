@@ -1,5 +1,6 @@
 import type { Safari } from "@/types/content";
 import { PHOTOS } from "./photography";
+import { CLIENT_PHOTOS } from "./client-photography";
 
 /**
  * ⚠️ ITINERARIOS DE DEMOSTRACIÓN — pendientes de validar por el equipo de Arusha.
@@ -37,12 +38,12 @@ export const SAFARIS: Safari[] = [
     travellerProfile: "Couples and first-time safari travellers",
     price: PRICE_ON_REQUEST,
     bestTime: "June – October, and January – March",
-    image: PHOTOS["ngorongoro-zebras"],
+    image: PHOTOS["ngorongoro-crater"],
     gallery: [
-      PHOTOS["ngorongoro-crater"],
-      PHOTOS["serengeti-plains"],
-      PHOTOS["tarangire-elephants"],
-      PHOTOS["serengeti-lion"],
+      CLIENT_PHOTOS["giraffes-open-savannah"],
+      CLIENT_PHOTOS["lion-pair-calling"],
+      PHOTOS["serengeti-sunrise"],
+      CLIENT_PHOTOS["elephant-family-walking"],
     ],
     featured: true,
     draft: true,
@@ -101,7 +102,7 @@ export const SAFARIS: Safari[] = [
         accommodationSlug: null,
         meals: ["Breakfast", "Lunch", "Dinner"],
         estimatedDuration: "Full day",
-        images: [PHOTOS["serengeti-lion"], PHOTOS["balloon-serengeti"]],
+        images: [PHOTOS["serengeti-cheetah"], PHOTOS["balloon-serengeti"]],
       },
       {
         day: 5,
@@ -183,8 +184,12 @@ export const SAFARIS: Safari[] = [
     travellerProfile: "Active travellers and returning safari-goers",
     price: PRICE_ON_REQUEST,
     bestTime: "January – March for calving, July – October for the northern crossings",
-    image: PHOTOS["serengeti-sunset"],
-    gallery: [PHOTOS["serengeti-sunrise"], PHOTOS["wildebeest-migration"], PHOTOS["serengeti-cheetah"]],
+    image: CLIENT_PHOTOS["safari-tent-accommodation"],
+    gallery: [
+      PHOTOS["serengeti-sunrise"],
+      CLIENT_PHOTOS["male-lions-together"],
+      PHOTOS["wildebeest-migration"],
+    ],
     featured: true,
     draft: true,
     itinerary: [],
@@ -219,7 +224,11 @@ export const SAFARIS: Safari[] = [
     price: PRICE_ON_REQUEST,
     bestTime: "June – October, and December – February",
     image: PHOTOS["zanzibar-nungwi"],
-    gallery: [PHOTOS["serengeti-plains"], PHOTOS["zanzibar-dhow-sunset"], PHOTOS["zanzibar-stone-town"]],
+    gallery: [
+      CLIENT_PHOTOS["antelope-herd-grasslands"],
+      PHOTOS["zanzibar-dhow-sunset"],
+      PHOTOS["zanzibar-stone-town"],
+    ],
     featured: true,
     draft: true,
     itinerary: [],
@@ -254,7 +263,11 @@ export const SAFARIS: Safari[] = [
     price: PRICE_ON_REQUEST,
     bestTime: "June – October",
     image: PHOTOS["zanzibar-stone-town"],
-    gallery: [PHOTOS["maasai-boma"], PHOTOS["kilimanjaro-shira"], PHOTOS["ngorongoro-crater"]],
+    gallery: [
+      PHOTOS["maasai-boma"],
+      PHOTOS["kilimanjaro-shira"],
+      CLIENT_PHOTOS["zebra-herd-monochrome"],
+    ],
     featured: true,
     draft: true,
     itinerary: [],
@@ -347,7 +360,7 @@ export const SAFARIS: Safari[] = [
     price: PRICE_ON_REQUEST,
     bestTime: "June – October",
     image: PHOTOS["lake-manyara"],
-    gallery: [PHOTOS["lake-manyara-giraffe"], PHOTOS["masai-giraffe"]],
+    gallery: [PHOTOS["lake-manyara-giraffe"], CLIENT_PHOTOS["flamingo-taking-flight"]],
     draft: true,
     itinerary: [],
     included: [

@@ -1,16 +1,28 @@
 # Fotografía de este sitio
 
-## Estado: TODA la fotografía es provisional
+## Dos orígenes distintos, y no se mezclan
 
-Ninguna imagen de `public/images/tanzania/` es material de Maisha Quest. Son
-fotografías documentales de Wikimedia Commons, bajo licencias Creative Commons,
-usadas mientras no exista fotografía propia.
+**`public/images/maisha-quest/`** — las 22 fotografías entregadas por el
+cliente. `originals/` guarda los archivos tal cual llegaron; `optimized/` los
+derivados WebP con nombre semántico que consume la web. **No hay confirmación
+escrita de derechos de uso comercial**, así que no se les atribuye autor ni
+licencia y no aparecen en `/legal/credits`: acreditar a alguien sin saberlo
+sería inventar. El detalle está en la sección
+«Client-supplied photography — commercial rights pending confirmation» del
+README.
 
-El listado completo con autor, licencia y enlace a la ficha original se genera
-solo desde `src/data/photography.ts` y se publica en `/legal/credits`. Esa
-página cumple la atribución que exigen las licencias CC BY y CC BY-SA.
+**`public/images/tanzania/`** — 22 fotografías documentales de Wikimedia
+Commons, bajo licencias Creative Commons. Cubren los huecos que la entrega del
+cliente no alcanza: Kilimanjaro, Zanzíbar, los parques del sur, el cráter, la
+migración, Arusha y las escenas culturales. Todas llevan `provisional: true`.
 
-## Criterio de selección
+El listado con autor, licencia y enlace a la ficha original se genera solo desde
+`src/data/photography.ts` y se publica en `/legal/credits`. Esa página cumple la
+atribución que exigen las licencias CC BY y CC BY-SA, y filtra por
+`provisional` + `credit`, de modo que la fotografía del cliente nunca se cuela
+en ella.
+
+## Criterio de selección de las fotos de Commons
 
 Cada archivo se eligió porque **su ficha en Commons acredita el país y el
 sujeto**. No es un detalle: es lo que garantiza que no aparezca fauna ajena a

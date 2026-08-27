@@ -3,7 +3,7 @@ import { CompassMark } from "@/components/ui/Compass";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { PHOTOS } from "@/data/photography";
+import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { TRUST_CREDENTIALS, TRUST_PILLARS } from "@/lib/site";
 
 /**
@@ -31,7 +31,7 @@ export function WhyMaisha() {
             <Reveal className="mt-10">
               <div className="relative aspect-4/5 overflow-hidden">
                 <Photo
-                  photo={PHOTOS["masai-giraffe"]}
+                  photo={CLIENT_PHOTOS["giraffe-patterns-monochrome"]}
                   alt=""
                   sizes="(max-width: 1024px) 100vw, 34vw"
                 />

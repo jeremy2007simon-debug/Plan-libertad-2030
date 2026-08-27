@@ -3,7 +3,7 @@ import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { JourneyPlanner } from "@/components/planner/JourneyPlanner";
-import { PHOTOS } from "@/data/photography";
+import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { getDestinations } from "@/lib/content";
 import { COMPANY } from "@/lib/site";
 
@@ -32,7 +32,7 @@ export async function PlannerSection() {
             <Reveal className="mt-10 hidden lg:block">
               <div className="relative aspect-3/4 overflow-hidden">
                 <Photo
-                  photo={PHOTOS["lake-manyara-giraffe"]}
+                  photo={CLIENT_PHOTOS["flamingo-flock-in-motion"]}
                   alt=""
                   sizes="(max-width: 1024px) 0px, 28vw"
                 />

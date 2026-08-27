@@ -1,5 +1,6 @@
 import type { JournalPost } from "@/types/content";
 import { PHOTOS } from "./photography";
+import { CLIENT_PHOTOS } from "./client-photography";
 
 /**
  * Journal — el blog, reestructurado.
@@ -43,7 +44,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     author: null,
     category: "Planning",
     readingMinutes: 6,
-    image: PHOTOS["serengeti-sunrise"],
+    image: CLIENT_PHOTOS["flamingo-low-flight"],
   },
 ];
 

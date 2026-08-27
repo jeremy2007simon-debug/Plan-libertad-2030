@@ -101,14 +101,30 @@ export default async function DestinationPage({
               {destination.gallery && destination.gallery.length > 0 && (
                 <Reveal className="mt-12">
                   <ul className="grid gap-3 sm:grid-cols-2">
-                    {destination.gallery.map((image) => (
-                      <li
-                        key={image.src}
-                        className="relative aspect-4/3 overflow-hidden"
-                      >
-                        <Photo photo={image} sizes="(max-width: 640px) 100vw, 40vw" />
-                      </li>
-                    ))}
+                    {destination.gallery.map((image, index) => {
+                      // Con un número impar de fotos la primera ocupa el ancho
+                      // completo: la retícula nunca cierra con una celda vacía.
+                      const lead = index === 0 && destination.gallery!.length % 2 === 1;
+                      return (
+                        <li
+                          key={image.src}
+                          className={
+                            lead
+                              ? "relative aspect-16/9 overflow-hidden sm:col-span-2"
+                              : "relative aspect-4/3 overflow-hidden"
+                          }
+                        >
+                          <Photo
+                            photo={image}
+                            sizes={
+                              lead
+                                ? "(max-width: 640px) 100vw, 56vw"
+                                : "(max-width: 640px) 100vw, 40vw"
+                            }
+                          />
+                        </li>
+                      );
+                    })}
                   </ul>
                 </Reveal>
               )}

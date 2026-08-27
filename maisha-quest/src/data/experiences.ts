@@ -1,5 +1,6 @@
 import type { Experience } from "@/types/content";
 import { PHOTOS } from "./photography";
+import { CLIENT_PHOTOS } from "./client-photography";
 
 /**
  * Experiencias — las ocho entradas del selector "How do you want to
@@ -19,7 +20,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "Private vehicle, open roof, and a guide who reads the ground.",
     description:
       "The heart of a Tanzanian safari. You travel in your own vehicle with your own guide, which means you set the pace: stay two hours with a leopard if the light is right, or move on. Early starts and late afternoons are when the plains are busiest.",
-    image: PHOTOS["serengeti-lion"],
+    image: CLIENT_PHOTOS["leopard-in-tree"],
     destinationSlugs: ["serengeti", "ngorongoro", "tarangire", "lake-manyara", "ruaha", "nyerere"],
   },
   {
@@ -49,7 +50,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "The same landscape, at three kilometres an hour.",
     description:
       "On foot with an armed ranger and a walking guide, the safari changes scale: tracks, dung, birdsong, the smell of the bush. You see fewer animals and understand far more. Available in Tarangire, Nyerere and Ruaha, and on the Kilimanjaro foothills.",
-    image: PHOTOS["serengeti-plains"],
+    image: CLIENT_PHOTOS["antelope-herd-grasslands"],
     destinationSlugs: ["tarangire", "nyerere", "ruaha", "kilimanjaro"],
   },
   {
@@ -69,7 +70,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "Built around light, position and patience.",
     description:
       "Routes and daily timings planned around golden hour, vehicle positioning for the sun, beanbags rather than tripods, and guides used to working with photographers. Slower days, fewer parks, better frames.",
-    image: PHOTOS["serengeti-cheetah"],
+    image: CLIENT_PHOTOS["giraffe-patterns-monochrome"],
     destinationSlugs: ["serengeti", "ngorongoro", "ruaha"],
   },
   {
@@ -89,7 +90,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "Paced for children, without dulling it for adults.",
     description:
       "Shorter drives, family units rather than separate rooms, guides who know how to hold a seven-year-old's attention, and parks close enough together that nobody spends a whole day in a vehicle. Minimum ages vary by camp — we check them before we propose anything.",
-    image: PHOTOS["tarangire-elephants"],
+    image: CLIENT_PHOTOS["elephant-herd-protecting-calf"],
     destinationSlugs: ["tarangire", "lake-manyara", "ngorongoro", "zanzibar"],
   },
   {
@@ -129,7 +130,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "Plains first, ocean second. The classic pairing.",
     description:
       "The most requested shape of Tanzanian journey: the northern circuit, then a short flight east to the coast. Enough days on each side that neither half feels rushed, and one team handling the join in the middle.",
-    image: PHOTOS["zanzibar-nungwi"],
+    image: PHOTOS["ngorongoro-zebras"],
     destinationSlugs: ["serengeti", "ngorongoro", "zanzibar"],
   },
   {
@@ -149,7 +150,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "Over a thousand species, and guides who know the calls.",
     description:
       "Tanzania's bird list is one of the longest in Africa. Lake Manyara, the Rift Valley lakes and the southern parks in the green season are the strongest ground, and the November–April months bring the migrants in.",
-    image: PHOTOS["lake-manyara"],
+    image: CLIENT_PHOTOS["flamingo-taking-flight"],
     destinationSlugs: ["lake-manyara", "nyerere", "tarangire"],
   },
   {
@@ -159,7 +160,7 @@ export const EXPERIENCES: Experience[] = [
     shortDescription: "A day with the people doing the work.",
     description:
       "Time with rangers, researchers and community conservation projects — understanding what protecting these ecosystems actually involves, rather than watching it from a vehicle.",
-    image: PHOTOS["ngorongoro-zebras"],
+    image: PHOTOS.ruaha,
     destinationSlugs: ["ngorongoro", "serengeti", "ruaha"],
   },
 ];

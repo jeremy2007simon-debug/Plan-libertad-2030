@@ -179,17 +179,30 @@ export default async function SafariPage({
                 <Reveal className="mt-14">
                   <h2 className="text-h2 text-forest">Gallery</h2>
                   <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-                    {safari.gallery.map((image) => (
-                      <li
-                        key={image.src}
-                        className="relative aspect-4/3 overflow-hidden"
-                      >
-                        <Photo
-                          photo={image}
-                          sizes="(max-width: 640px) 100vw, 40vw"
-                        />
-                      </li>
-                    ))}
+                    {safari.gallery.map((image, index) => {
+                      // Igual que en destinos: la primera manda a doble ancho
+                      // cuando el número de fotos es impar.
+                      const lead = index === 0 && safari.gallery!.length % 2 === 1;
+                      return (
+                        <li
+                          key={image.src}
+                          className={
+                            lead
+                              ? "relative aspect-16/9 overflow-hidden sm:col-span-2"
+                              : "relative aspect-4/3 overflow-hidden"
+                          }
+                        >
+                          <Photo
+                            photo={image}
+                            sizes={
+                              lead
+                                ? "(max-width: 640px) 100vw, 52vw"
+                                : "(max-width: 640px) 100vw, 40vw"
+                            }
+                          />
+                        </li>
+                      );
+                    })}
                   </ul>
                 </Reveal>
               )}

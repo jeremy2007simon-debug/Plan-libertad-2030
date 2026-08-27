@@ -36,7 +36,7 @@ export default async function DestinationsPage() {
         title="Nine places, one country"
         lede="Tanzania is not one landscape. These are the places we travel through, what lives in each and when they are at their best."
         // No se usa la del cráter: es la portada de una de las fichas de abajo.
-        image={PHOTOS["masai-giraffe"]}
+        image={PHOTOS["wildebeest-migration"]}
       />
 
       <div className="bg-page py-20 sm:py-24">

@@ -34,6 +34,10 @@ export function Photo({
       priority={priority}
       placeholder="blur"
       blurDataURL={photo.blurDataURL}
+      // El encuadre se define por fotografía: el centro geométrico casi nunca
+      // es el centro de interés, y en recortes verticales un sujeto a un
+      // tercio del cuadro desaparece.
+      style={photo.objectPosition ? { objectPosition: photo.objectPosition } : undefined}
       className={`object-cover ${className}`}
     />
   );
@@ -113,6 +117,7 @@ export function MediaFrame({
       sizes={sizes}
       priority={priority}
       {...(blur ? { placeholder: "blur" as const, blurDataURL: blur } : {})}
+      style={media.objectPosition ? { objectPosition: media.objectPosition } : undefined}
       className={`object-cover ${className}`}
     />
   );

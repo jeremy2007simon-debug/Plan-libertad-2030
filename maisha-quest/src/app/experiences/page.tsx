@@ -4,7 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
-import { PHOTOS } from "@/data/photography";
+import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { EXPERIENCE_CATEGORIES } from "@/data/experiences";
 import { getExperiences } from "@/lib/content";
 
@@ -28,7 +28,7 @@ export default async function ExperiencesPage() {
         eyebrow="Experiences"
         title="One country. Endless ways to feel alive."
         lede="A safari is not only game drives. These are the ways a day in Tanzania can be spent — mix as many as you like into one journey."
-        image={PHOTOS["balloon-serengeti"]}
+        image={CLIENT_PHOTOS["male-lions-together"]}
       />
 
       <div className="bg-page py-20 sm:py-24">

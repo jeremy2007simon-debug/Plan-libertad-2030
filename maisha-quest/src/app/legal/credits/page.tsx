@@ -21,7 +21,11 @@ export const metadata: Metadata = {
  * fotografía propia desaparece de aquí automáticamente.
  */
 export default function CreditsPage() {
-  const credits = allCredits().filter((photo) => photo.provisional);
+  // Solo el material que EXIGE atribución por licencia. La fotografía del
+  // cliente no aparece aquí: no lleva licencia Creative Commons y su autoría
+  // está pendiente de confirmar — publicar un crédito inventado sería peor
+  // que no publicar ninguno.
+  const credits = allCredits().filter((photo) => photo.provisional && photo.credit);
 
   return (
     <>
@@ -64,10 +68,10 @@ export default function CreditsPage() {
                     {photo.alt}
                   </p>
                   <p className="mt-1.5 text-[0.82rem] text-ink-faint">
-                    {photo.credit.author} · {photo.credit.license}
+                    {photo.credit?.author} · {photo.credit?.license}
                   </p>
                   <a
-                    href={photo.credit.source}
+                    href={photo.credit?.source}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-1 inline-block text-[0.8rem] break-words text-ink-soft underline underline-offset-4 hover:text-terracotta"

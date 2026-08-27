@@ -28,6 +28,37 @@ export interface PhotoCredit {
   source: string;
 }
 
+/**
+ * Procedencia de una fotografía entregada por el cliente.
+ *
+ * Existe porque de este material NO sabemos lo mismo que de una foto de
+ * Commons: llega sin autoría declarada y sin confirmación escrita de derechos
+ * de uso comercial. En lugar de asumirlo, cada dato desconocido se declara
+ * como tal y se marca con su bandera de confirmación. Ninguna de estas
+ * banderas se muestra en la interfaz pública — son control interno.
+ *
+ * Mientras `commercialUseConfirmed` sea `false`, el material puede verse en la
+ * preview de revisión pero NO debe considerarse aprobado para producción.
+ */
+export interface ClientPhotoProvenance {
+  /** Nombre del archivo tal y como lo entregó el cliente. Nunca se renombra. */
+  originalFilename: string;
+  /** Autor. `null` mientras el cliente no lo facilite: no se inventa. */
+  photographer: string | null;
+  /** URL de crédito o de la ficha del autor, si la hay. */
+  creditUrl: string | null;
+  /** Licencia declarada. `null` = sin licencia documentada. */
+  license: string | null;
+  /** ¿Hay confirmación ESCRITA de uso comercial? */
+  commercialUseConfirmed: boolean;
+  /** ¿Está confirmado dónde se tomó la fotografía? */
+  locationConfirmed: boolean;
+  /** ¿Está confirmada la especie o el sujeto concreto? */
+  subjectConfirmed: boolean;
+  /** Nota interna: marca de agua visible, restricción concreta, etc. */
+  note?: string;
+}
+
 /** Referencia a un asset. `src === null` => hueco de imagen a la espera de foto real. */
 export interface MediaImage {
   src: Pending<string>;
@@ -38,8 +69,17 @@ export interface MediaImage {
   height?: number;
   /** LQIP en base64: evita el destello de carga sin una petición extra. */
   blurDataURL?: string;
-  /** Crédito para la página de créditos. */
+  /** Atribución Creative Commons. Solo la llevan las fotos provisionales. */
   credit?: PhotoCredit;
+  /** Procedencia, solo en el material entregado por el cliente. */
+  provenance?: ClientPhotoProvenance;
+  /**
+   * `object-position` cuando el encuadre por defecto corta al sujeto. Se
+   * define por fotografía porque el centro geométrico casi nunca coincide con
+   * el centro de interés — un león a un tercio del cuadro desaparece en un
+   * recorte vertical centrado.
+   */
+  objectPosition?: string;
   /** true cuando es foto provisional (stock/Commons), no material propio de Maisha Quest. */
   provisional?: boolean;
 }
@@ -59,7 +99,13 @@ export interface ResolvedImage extends MediaImage {
   width: number;
   height: number;
   blurDataURL: string;
-  credit: PhotoCredit;
+  /**
+   * Toda imagen resuelta declara su origen: `credit` si es provisional de
+   * Commons, `provenance` si la entregó el cliente. Nunca ninguna de las dos
+   * significaría que no sabemos de dónde salió, y eso no debe poder ocurrir.
+   */
+  credit?: PhotoCredit;
+  provenance?: ClientPhotoProvenance;
 }
 
 export interface MediaVideo {

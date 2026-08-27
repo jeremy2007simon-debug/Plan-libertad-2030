@@ -129,19 +129,6 @@ export const PHOTOS = {
       source: "https://commons.wikimedia.org/wiki/File:A_typical_Maasai_boma.jpg",
     },
   },
-  "masai-giraffe": {
-    src: "/images/tanzania/masai-giraffe.webp",
-    alt: "A Masai giraffe among acacia woodland in the Serengeti",
-    width: 1280,
-    height: 853,
-    blurDataURL: "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQBACdASoUAA0APxl0slCspqSisAgBkCMJaACdMoMljEnr/iYx0RYzAAD+sPyAMrG46XGMzttP2R3U0bzcUCYf+MxQccrvieI1oB1oCx5JwdVLrp02c7/6qWGGakwQowNAAA==",
-    provisional: true,
-    credit: {
-      author: "Giles Laurent",
-      license: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:042_Masai_giraffe_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
-    },
-  },
   "ngorongoro-crater": {
     src: "/images/tanzania/ngorongoro-crater.webp",
     alt: "The floor of the Ngorongoro Crater seen from the rim",
@@ -207,32 +194,6 @@ export const PHOTOS = {
       source: "https://commons.wikimedia.org/wiki/File:037_Cheetah_close-up_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
     },
   },
-  "serengeti-leopard": {
-    src: "/images/tanzania/serengeti-leopard.webp",
-    alt: "A leopard resting in a tree in Serengeti National Park",
-    width: 1280,
-    height: 853,
-    blurDataURL: "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAADQAwCdASoUAA0APxl2slEspySisAgBkCMJQBadAqfcDIySZWh+O0AAzhiZPiONINtjpWGh77Kwtg5d29D6hjqNFvgOhTWjjPK0F5hlWtGQXoMpH0xiGYCJd7hfd/EOiwDN42RogP5M2wdooF6U4O7Sr8LtXaHug7ERY8nHDmAAAA==",
-    provisional: true,
-    credit: {
-      author: "Thomas Fuhrmann",
-      license: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:Serengeti_National_Park_06_-_Leopard_-_Panthera_pardus.jpg",
-    },
-  },
-  "serengeti-lion": {
-    src: "/images/tanzania/serengeti-lion.webp",
-    alt: "A male lion resting on the Serengeti grassland",
-    width: 1280,
-    height: 854,
-    blurDataURL: "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoUAA0APxl2slEspySisAgBkCMJaACdABwsPb1o9xhnv5WAAP6McHthFiJL7X1TgEp3OT19+zLZGRSgu8LXfeK40TpLdOoavnixqw9quxi366BKq8g4mdVfgPg2ZJpXnyh6AAAA",
-    provisional: true,
-    credit: {
-      author: "Giles Laurent",
-      license: "CC BY-SA 4.0",
-      source: "https://commons.wikimedia.org/wiki/File:020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
-    },
-  },
   "serengeti-plains": {
     src: "/images/tanzania/serengeti-plains.webp",
     alt: "Acacia trees scattered across the Serengeti plains under a wide sky",
@@ -296,19 +257,6 @@ export const PHOTOS = {
       author: "Maximilian Staub",
       license: "CC BY 4.0",
       source: "https://commons.wikimedia.org/wiki/File:Baobab_Tree_in_Tarangire_National_Park_with_blue_sky.jpg",
-    },
-  },
-  "tarangire-elephants": {
-    src: "/images/tanzania/tarangire-elephants.webp",
-    alt: "A herd of elephants crossing open ground in Tarangire National Park",
-    width: 1280,
-    height: 853,
-    blurDataURL: "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoUAA0APxl0sVCspqSisAgBkCMJYgCdACBjt0JLQA/uw4AA/ngX8UZRc1dUu8W3By97cMzre0ifWO6EBREiambvgiMxnwYMhZnWZN1gqjBFQ7kWLgAAAA==",
-    provisional: true,
-    credit: {
-      author: "Richard Mortel from Riyadh, Saudi Arabia",
-      license: "CC BY 2.0",
-      source: "https://commons.wikimedia.org/wiki/File:Elephants,_Tarangire_National_Park_(10)_(28702336145).jpg",
     },
   },
   "wildebeest-migration": {

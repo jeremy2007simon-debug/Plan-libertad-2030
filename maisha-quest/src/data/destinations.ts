@@ -1,5 +1,6 @@
 import type { Destination } from "@/types/content";
 import { PHOTOS } from "./photography";
+import { CLIENT_PHOTOS } from "./client-photography";
 import { formatCoordinates, projectToMap } from "@/lib/map";
 
 /**
@@ -64,10 +65,10 @@ export const DESTINATIONS: Destination[] = [
     ],
     image: PHOTOS["serengeti-plains"],
     gallery: [
-      PHOTOS["serengeti-lion"],
-      PHOTOS["wildebeest-migration"],
-      PHOTOS["serengeti-cheetah"],
+      CLIENT_PHOTOS["male-lions-together"],
+      CLIENT_PHOTOS["zebra-herd-monochrome"],
       PHOTOS["serengeti-sunrise"],
+      PHOTOS["wildebeest-migration"],
     ],
     mapPosition: at(-2.3333, 34.8333),
   },
@@ -94,8 +95,12 @@ export const DESTINATIONS: Destination[] = [
     ],
     wildlife: ["Elephant", "Lion", "Giraffe", "Zebra", "Eland", "Fringe-eared oryx"],
     experienceSlugs: ["game-drives", "walking-safari", "family-safari"],
-    image: PHOTOS["tarangire-baobab"],
-    gallery: [PHOTOS["tarangire-elephants"], PHOTOS["tarangire-baobab"]],
+    image: CLIENT_PHOTOS["elephant-family-walking"],
+    gallery: [
+      PHOTOS["tarangire-baobab"],
+      CLIENT_PHOTOS["giraffes-open-savannah"],
+      CLIENT_PHOTOS["antelope-herd-grasslands"],
+    ],
     mapPosition: at(-4.0, 36.0),
   },
   {
@@ -109,8 +114,11 @@ export const DESTINATIONS: Destination[] = [
     bestTime: "June – October for game, November – April for birds",
     wildlife: ["Elephant", "Giraffe", "Hippo", "Baboon", "Flamingo", "Pelican"],
     experienceSlugs: ["game-drives", "birdwatching"],
-    image: PHOTOS["lake-manyara"],
-    gallery: [PHOTOS["lake-manyara-giraffe"]],
+    image: CLIENT_PHOTOS["flamingos-tanzania-lake"],
+    gallery: [
+      CLIENT_PHOTOS["flamingo-flock-in-motion"],
+      PHOTOS["lake-manyara-giraffe"],
+    ],
     mapPosition: at(-3.5833, 35.8167),
   },
   {

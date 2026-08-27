@@ -1,4 +1,5 @@
 import type { Collection } from "@/types/content";
+import { CLIENT_PHOTOS } from "./client-photography";
 import { PHOTOS } from "./photography";
 
 /**
@@ -22,9 +23,10 @@ export const COLLECTIONS: Collection[] = [
     typicalDurationDays: [7, 12],
     traits: ["Mobile camping", "Game drives", "Walking & trekking", "Remote routes"],
     accent: "sand",
-    // Deliberadamente distinta de la del hero: repetir foto entre secciones de
-    // la misma página es lo que hace que una web parezca una plantilla.
-    image: PHOTOS["wildebeest-migration"],
+    // Un león cruzando una llanura abierta: amplitud y ruta, que es de lo que
+    // va Explorer. Deliberadamente distinta de la del hero — repetir foto
+    // entre secciones de la misma página es lo que delata una plantilla.
+    image: CLIENT_PHOTOS["lion-open-savannah"],
   },
   {
     id: "escape",
@@ -36,7 +38,11 @@ export const COLLECTIONS: Collection[] = [
     typicalDurationDays: [7, 14],
     traits: ["Lodges & boutique camps", "Couples & honeymoons", "Wellbeing", "Zanzibar"],
     accent: "terracotta",
-    image: PHOTOS["zanzibar-dhow-sunset"],
+    // Un atardecer abierto, no una tienda de campaña: Escape son lodges y
+    // noches largas en el mismo sitio. La única foto de alojamiento del
+    // cliente ilustra "Serengeti Under Canvas", que es donde encaja de verdad,
+    // y así tampoco se repite con esa tarjeta unas líneas más abajo en la home.
+    image: PHOTOS["serengeti-sunset"],
   },
   {
     id: "enrich",
@@ -48,7 +54,9 @@ export const COLLECTIONS: Collection[] = [
     typicalDurationDays: [8, 14],
     traits: ["Culture", "Cuisine", "Communities", "Conservation"],
     accent: "gold",
-    image: PHOTOS["maasai-boma"],
+    // Detalle, no postal: picabueyes sobre el lomo de una jirafa. Enrich es
+    // mirar de cerca, y esta imagen lo dice mejor que un paisaje.
+    image: CLIENT_PHOTOS["giraffe-oxpecker-birds"],
   },
 ];
 

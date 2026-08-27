@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { PHOTOS } from "@/data/photography";
+import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { COMPANY } from "@/lib/site";
 
 /** Cierre cinematográfico: atardecer real del Serengeti y las dos decisiones posibles. */
@@ -11,7 +11,7 @@ export function ClosingCTA() {
     <section className="relative isolate flex min-h-[70svh] items-center overflow-hidden bg-charcoal">
       <div className="absolute inset-0 -z-10">
         <Photo
-          photo={PHOTOS["serengeti-sunset-wide"]}
+          photo={CLIENT_PHOTOS["savannah-acacia-sunset"]}
           alt=""
           sizes="100vw"
           className="scale-105"

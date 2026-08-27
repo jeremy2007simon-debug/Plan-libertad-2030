@@ -3,7 +3,7 @@ import { CompassDivider } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { ImageSlot, Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
-import { PHOTOS } from "@/data/photography";
+import { CLIENT_PHOTOS } from "@/data/client-photography";
 
 /**
  * "Maisha significa vida" — el bloque editorial que explica la marca.
@@ -24,7 +24,7 @@ export function MaishaMeaning() {
             <div className="grid grid-cols-5 gap-4">
               <div className="relative col-span-5 aspect-4/5 overflow-hidden sm:col-span-3">
                 <Photo
-                  photo={PHOTOS["serengeti-plains"]}
+                  photo={CLIENT_PHOTOS["african-elephant-portrait"]}
                   sizes="(max-width: 1024px) 100vw, 34vw"
                 />
               </div>
