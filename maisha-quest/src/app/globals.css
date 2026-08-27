@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Maisha Quest — sistema visual
+   Marfil cálido dominante, verde profundo para navegación y secciones
+   oscuras, terracota reservada a las llamadas a la acción y dorado suave
+   solo como detalle (filetes, iconos de brújula, numeración).
+   ========================================================================== */
+
+:root {
+  /* Paleta de marca */
+  --forest: #26352b;
+  --forest-deep: #1c2721;
+  --ivory: #f4f0e7;
+  --ivory-warm: #faf7f1;
+  --sand: #d5c3a1;
+  --terracotta: #b56545;
+  --terracotta-deep: #9d5136;
+  --gold: #b89a61;
+  --charcoal: #1b1d1a;
+  --white: #ffffff;
+
+  /* Roles semánticos: los componentes usan estos, no los de marca. */
+  --page: var(--ivory);
+  --page-alt: var(--ivory-warm);
+  --ink: #232821;
+  --ink-soft: #5a6157;
+  --ink-faint: #8a9084;
+  --on-dark: var(--ivory);
+  --on-dark-soft: rgba(244, 240, 231, 0.72);
+  --on-dark-faint: rgba(244, 240, 231, 0.5);
+
+  /* Filetes finos en lugar de sombras marcadas. */
+  --rule: rgba(38, 53, 43, 0.16);
+  --rule-strong: rgba(38, 53, 43, 0.3);
+  --rule-on-dark: rgba(244, 240, 231, 0.2);
+
+  /* Curvas y tiempos: lentos, sin rebotes. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-slow: 900ms;
+  --dur-base: 520ms;
+  --dur-fast: 240ms;
+
+  /* Altura de la cabecera; la usan el scroll-margin y los heros. */
+  --header-h: 76px;
+}
+
+@theme inline {
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-ivory: var(--ivory);
+  --color-ivory-warm: var(--ivory-warm);
+  --color-sand: var(--sand);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-deep: var(--terracotta-deep);
+  --color-gold: var(--gold);
+  --color-charcoal: var(--charcoal);
+
+  --color-page: var(--page);
+  --color-page-alt: var(--page-alt);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-on-dark: var(--on-dark);
+  --color-on-dark-soft: var(--on-dark-soft);
+  --color-on-dark-faint: var(--on-dark-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rule-on-dark: var(--rule-on-dark);
+
+  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-manrope);
+
+  /* Escala tipográfica editorial: títulos elegantes, no gigantes. */
+  --text-display: clamp(2.6rem, 5.2vw, 4.4rem);
+  --text-display--line-height: 1.04;
+  --text-h1: clamp(2.2rem, 4vw, 3.4rem);
+  --text-h1--line-height: 1.1;
+  --text-h2: clamp(1.85rem, 3vw, 2.75rem);
+  --text-h2--line-height: 1.14;
+  --text-h3: clamp(1.35rem, 1.9vw, 1.7rem);
+  --text-h3--line-height: 1.24;
+  --text-lede: clamp(1.05rem, 1.35vw, 1.22rem);
+  --text-lede--line-height: 1.62;
+  --text-eyebrow: 0.72rem;
+  --text-eyebrow--line-height: 1.2;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   Todo lo de abajo va dentro de @layer para que las utilidades de Tailwind
+   puedan sobreescribirlo. El CSS sin capa gana a CUALQUIER capa por mucha
+   especificidad que tenga la utilidad, así que un `color` de elemento sin
+   capa dejaría inservible cada `text-*` de la web.
+   -------------------------------------------------------------------------- */
+
+@layer base {
+
+* {
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Ancla las secciones por debajo de la cabecera fija. */
+  scroll-padding-top: calc(var(--header-h) + 8px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Ninguna sección debe provocar scroll horizontal. */
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+blockquote {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--sand);
+  color: var(--forest-deep);
+}
+
+/* Foco visible y coherente en toda la web (requisito de accesibilidad). */
+:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-dark :focus-visible,
+.dark-section :focus-visible {
+  outline-color: var(--sand);
+}
+
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades de composición
+
+   En @layer components: las utilidades de Tailwind se aplican después, así
+   que un `text-[0.65rem]` puntual sigue pudiendo ajustar un `.eyebrow`.
+   -------------------------------------------------------------------------- */
+
+@layer components {
+
+/* Ancho máximo de lectura cómoda (~68 caracteres). */
+.measure {
+  max-width: 62ch;
+}
+
+.measure-narrow {
+  max-width: 48ch;
+}
+
+/* Antetítulo: sans, versalitas espaciadas, con filete de brújula opcional. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Números de itinerario y coordenadas: tabulares para que no bailen. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ocultar la barra de scroll de los carruseles sin perder el scroll táctil. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Velo oscuro controlado sobre fotografía: legible sin tapar la imagen.
+   Más denso abajo, donde va el texto, y casi transparente arriba. */
+.media-scrim {
+  background: linear-gradient(
+    to top,
+    rgba(27, 29, 26, 0.78) 0%,
+    rgba(27, 29, 26, 0.5) 28%,
+    rgba(27, 29, 26, 0.16) 58%,
+    rgba(27, 29, 26, 0.28) 100%
+  );
+}
+
+.media-scrim-soft {
+  background: linear-gradient(
+    to top,
+    rgba(27, 29, 26, 0.88) 0%,
+    rgba(27, 29, 26, 0.55) 32%,
+    rgba(27, 29, 26, 0.12) 68%,
+    rgba(27, 29, 26, 0) 100%
+  );
+}
+
+/* Velo lateral del hero.
+
+   El velo vertical solo no basta: en una fotografía de amanecer el titular
+   cae sobre la zona más luminosa del cielo. Este añade densidad por el lado
+   donde vive el texto y deja limpio el resto del encuadre, que es como se
+   resuelve en cine — no subiendo la opacidad general hasta apagar la foto. */
+.media-scrim-side {
+  background: linear-gradient(
+    to right,
+    rgba(20, 24, 20, 0.72) 0%,
+    rgba(20, 24, 20, 0.52) 28%,
+    rgba(20, 24, 20, 0.18) 55%,
+    rgba(20, 24, 20, 0) 78%
+  );
+}
+
+/* Revelado de bloques al entrar en pantalla.
+
+   El estado oculto SOLO existe bajo `html[data-js]`, que pone el script del
+   layout. Sin JavaScript —o con movimiento reducido, porque entonces el script
+   no marca nada— el contenido se ve tal cual, sin depender de que hidrate
+   nada. */
+[data-reveal] {
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+[data-js] [data-reveal=""] {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Grano muy sutil: rompe los degradados planos sin ensuciar la foto. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+}
+
+/* --------------------------------------------------------------------------
+   Animaciones — lentas, discretas, siempre desactivables
+   -------------------------------------------------------------------------- */
+
+@keyframes mq-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mq-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mq-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mq-compass-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-32deg) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes mq-scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.animate-fade-up {
+  animation: mq-fade-up var(--dur-slow) var(--ease-out) both;
+}
+
+.animate-fade {
+  animation: mq-fade var(--dur-slow) var(--ease-out) both;
+}
+
+.animate-compass-in {
+  animation: mq-compass-in 1.4s var(--ease-out) both;
+}
+
+.animate-scroll-hint {
+  animation: mq-scroll-hint 2.4s var(--ease-out) infinite;
+}
+
+/* Deriva lentísima de la fotografía del hero: da vida sin marear
+   ni provocar reflow (solo transform). */
+@keyframes mq-drift {
+  from {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.13) translate3d(0, -1.2%, 0);
+  }
+}
+
+.animate-drift {
+  animation: mq-drift 26s var(--ease-out) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
