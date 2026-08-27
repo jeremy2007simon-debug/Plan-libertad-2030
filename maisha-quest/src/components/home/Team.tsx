@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/Button";
+import { Carousel } from "@/components/ui/Carousel";
 import { Container } from "@/components/ui/Container";
-import { MediaFrame } from "@/components/ui/Photo";
+import { MediaFrame, PersonSlot } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getTeam } from "@/lib/content";
@@ -32,17 +33,27 @@ export async function Team() {
           </ButtonLink>
         </SectionHeading>
 
-        <Reveal className="mt-14">
+        <Reveal className="mt-14 hidden md:block">
           <ul className="grid gap-8 md:grid-cols-3 md:gap-6">
             {team.map((member) => (
               <li key={member.slug}>
                 <article className="flex h-full flex-col">
-                  <div className="relative aspect-4/5 overflow-hidden">
-                    <MediaFrame
-                      media={member.portrait}
-                      label={`Portrait of ${member.name}`}
-                      sizes="(max-width: 768px) 100vw, 30vw"
-                    />
+                  {/* Con foto, marco vertical 4:5. Sin ella, monograma
+                      cuadrado: la mitad de alto y con aspecto intencionado. */}
+                  <div
+                    className={`relative overflow-hidden ${
+                      member.portrait.src ? "aspect-4/5" : "aspect-square"
+                    }`}
+                  >
+                    {member.portrait.src ? (
+                      <MediaFrame
+                        media={member.portrait}
+                        label={`Portrait of ${member.name}`}
+                        sizes="(max-width: 768px) 100vw, 30vw"
+                      />
+                    ) : (
+                      <PersonSlot name={member.name} />
+                    )}
                   </div>
 
                   <h3 className="font-display mt-6 text-[1.5rem] leading-tight text-forest">
@@ -81,6 +92,45 @@ export async function Team() {
             ))}
           </ul>
         </Reveal>
+
+        {/* Móvil: mismo contenido, en carrusel. Tres fichas completas apiladas
+            sumaban 2.800 px y obligaban a pasar por las tres para llegar a la
+            siguiente sección. */}
+        <div className="mt-10 md:hidden">
+          <Carousel label="The Maisha Quest team" itemClassName="w-[86vw] max-w-[21rem]">
+            {team.map((member) => (
+              <article key={member.slug} className="flex h-full flex-col">
+                <div
+                  className={`relative overflow-hidden ${
+                    member.portrait.src ? "aspect-4/5" : "aspect-square"
+                  }`}
+                >
+                  {member.portrait.src ? (
+                    <MediaFrame
+                      media={member.portrait}
+                      label={`Portrait of ${member.name}`}
+                      sizes="86vw"
+                    />
+                  ) : (
+                    <PersonSlot name={member.name} />
+                  )}
+                </div>
+
+                <h3 className="font-display mt-5 text-[1.5rem] leading-tight text-forest">
+                  {member.name}
+                </h3>
+                <p className="eyebrow mt-2 text-terracotta">{member.role}</p>
+                <p className="mt-4 text-[0.94rem] leading-relaxed text-ink-soft">
+                  {member.bio}
+                </p>
+                <dl className="mt-5 border-t border-rule pt-4 text-[0.85rem]">
+                  <dt className="eyebrow text-ink-faint">Languages</dt>
+                  <dd className="mt-1 text-ink-soft">{member.languages.join(" · ")}</dd>
+                </dl>
+              </article>
+            ))}
+          </Carousel>
+        </div>
       </Container>
     </section>
   );

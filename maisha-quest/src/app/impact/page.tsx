@@ -50,41 +50,56 @@ export default async function ImpactPage() {
                 </p>
               </Reveal>
 
+              {/* Lista editorial numerada, sin huecos de imagen.
+                  Cuatro marcos vacíos apilados hacían que la página que habla
+                  de credibilidad fuese la que más parecía sin terminar. Cada
+                  proyecto muestra su foto en cuanto exista: el marco vuelve
+                  con `project.image.src`. */}
               <Reveal className="mt-14">
-                <ul className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
-                  {projects.map((project) => (
-                    <li key={project.slug}>
-                      <div className="relative aspect-3/2 overflow-hidden">
-                        <MediaFrame
-                          media={project.image}
-                          label={`${project.title} — photograph to follow`}
-                          sizes="(max-width: 640px) 100vw, 32vw"
-                        />
-                      </div>
-                      <p className="eyebrow mt-5 text-terracotta">{project.area}</p>
-                      <h2 className="font-display mt-2 text-[1.35rem] leading-tight text-forest">
-                        {project.title}
-                      </h2>
-                      <p className="mt-2.5 text-[0.93rem] leading-relaxed text-ink-soft">
-                        {project.description}
-                      </p>
-                      {project.location && (
-                        <p className="mt-3 text-[0.82rem] text-ink-faint">
-                          {project.location}
+                <ol className="flex flex-col divide-y divide-rule border-y border-rule">
+                  {projects.map((project, index) => (
+                    <li
+                      key={project.slug}
+                      className="grid gap-x-8 gap-y-3 py-7 sm:grid-cols-[auto_1fr]"
+                    >
+                      <span className="tnum eyebrow pt-1.5 text-gold">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="eyebrow text-terracotta">{project.area}</p>
+                        <h2 className="font-display mt-1.5 text-[1.4rem] leading-tight text-forest">
+                          {project.title}
+                        </h2>
+                        <p className="measure mt-2.5 text-[0.95rem] leading-relaxed text-ink-soft">
+                          {project.description}
                         </p>
-                      )}
-                      {project.outcomes.length > 0 && (
-                        <ul className="mt-4 flex flex-col gap-1.5">
-                          {project.outcomes.map((outcome) => (
-                            <li key={outcome} className="text-[0.9rem] text-forest">
-                              {outcome}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                        {project.location && (
+                          <p className="mt-3 text-[0.82rem] text-ink-faint">
+                            {project.location}
+                          </p>
+                        )}
+                        {project.outcomes.length > 0 && (
+                          <ul className="mt-4 flex flex-col gap-1.5">
+                            {project.outcomes.map((outcome) => (
+                              <li key={outcome} className="text-[0.9rem] text-forest">
+                                {outcome}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {project.image.src && (
+                          <div className="relative mt-5 aspect-3/2 overflow-hidden">
+                            <MediaFrame
+                              media={project.image}
+                              label={project.title}
+                              sizes="(max-width: 640px) 100vw, 32vw"
+                            />
+                          </div>
+                        )}
+                      </div>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </Reveal>
             </div>
 
@@ -94,7 +109,7 @@ export default async function ImpactPage() {
                   <LazyVideo
                     video={video}
                     label="Watch"
-                    posterLabel="Maisha Quest Cares — community film"
+                    posterLabel="Maisha Quest Cares, in the field"
                     tone="dark"
                     className="relative aspect-9/16 w-full bg-forest-deep"
                   />

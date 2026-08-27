@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { MediaVideo } from "@/types/content";
+import { CompassMark } from "./Compass";
 import { MediaFrame } from "./Photo";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
@@ -125,7 +126,7 @@ export function LazyVideo({
             <track kind="captions" src={video.captions} srcLang="en" label="English" default />
           )}
         </video>
-      ) : (
+      ) : video.poster.src ? (
         <MediaFrame
           media={video.poster}
           label={posterLabel}
@@ -133,6 +134,38 @@ export function LazyVideo({
           sizes="(max-width: 768px) 100vw, 40vw"
           className="absolute inset-0"
         />
+      ) : (
+        /* Marco de película a la espera del montaje.
+           Antes esto era el hueco genérico de imagen, que en 9:16 dejaba un
+           rectángulo enorme y mudo. Con el filete interior y la duración
+           anunciada se lee como un fotograma reservado, no como un error. */
+        <div
+          role="img"
+          aria-label={`${posterLabel} — film to follow`}
+          className={`absolute inset-0 flex flex-col items-center justify-center gap-4 ${
+            dark ? "bg-forest-deep text-on-dark-faint" : "bg-sand/25 text-ink-faint"
+          }`}
+        >
+          <span
+            aria-hidden="true"
+            className={`absolute inset-4 border ${
+              dark ? "border-on-dark-faint/25" : "border-rule"
+            }`}
+          />
+          <CompassMark
+            className={`size-8 ${dark ? "text-sand/45" : "text-gold/50"}`}
+            needle={false}
+          />
+          <span className="eyebrow max-w-[20ch] px-6 text-center leading-relaxed">
+            {posterLabel}
+          </span>
+          {video.durationSeconds && (
+            <span className="tnum text-[0.7rem] tracking-[0.14em]">
+              {Math.floor(video.durationSeconds / 60)}:
+              {String(video.durationSeconds % 60).padStart(2, "0")}
+            </span>
+          )}
+        </div>
       )}
 
       {/* Botón de reproducción. Si no hay archivo, informa en lugar de mentir. */}

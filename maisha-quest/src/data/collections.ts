@@ -22,7 +22,9 @@ export const COLLECTIONS: Collection[] = [
     typicalDurationDays: [7, 12],
     traits: ["Mobile camping", "Game drives", "Walking & trekking", "Remote routes"],
     accent: "sand",
-    image: PHOTOS["serengeti-sunrise"],
+    // Deliberadamente distinta de la del hero: repetir foto entre secciones de
+    // la misma página es lo que hace que una web parezca una plantilla.
+    image: PHOTOS["wildebeest-migration"],
   },
   {
     id: "escape",

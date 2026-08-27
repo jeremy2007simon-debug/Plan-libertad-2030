@@ -51,14 +51,18 @@ export default async function SafarisPage() {
             >
               <Container width="wide">
                 <SectionHeading
-                  eyebrow={`${collection.name} Collection`}
-                  title={collection.tagline}
-                  lede={collection.description}
+                  eyebrow="Collection"
+                  title={`${collection.name}`}
+                  lede={collection.tagline}
                 >
                   <ButtonLink href={`/collections/${collection.id}`} variant="quiet">
                     About this collection
                   </ButtonLink>
                 </SectionHeading>
+
+                <p className="measure mt-5 text-[0.96rem] leading-relaxed text-ink-soft">
+                  {collection.description}
+                </p>
 
                 <p className="eyebrow mt-6 text-ink-faint">
                   {inCollection.length} journey{inCollection.length === 1 ? "" : "s"}

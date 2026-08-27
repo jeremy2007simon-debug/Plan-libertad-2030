@@ -68,53 +68,51 @@ export async function Collections() {
                   >
                     <p className="eyebrow flex items-center gap-2.5 text-sand">
                       <CompassPoint className="size-2.5" />
-                      {String(index + 1).padStart(2, "0")} · {collection.name}
+                      {String(index + 1).padStart(2, "0")} · {range}
                     </p>
 
-                    <h3 className="text-h2 mt-4 text-ivory">
+                    {/* El nombre de la colección es el titular. Antes lo era el
+                        lema, que en móvil ocupaba tres líneas de serif y dejaba
+                        "Explorer / Escape / Enrich" —lo que el visitante tiene
+                        que elegir— escondido en el antetítulo. */}
+                    <h3 className="text-h2 mt-3 text-ivory">
                       <Link
                         href={`/collections/${collection.id}`}
                         className="transition-colors duration-300 hover:text-sand"
                       >
-                        {collection.tagline}
+                        {collection.name}
                       </Link>
                     </h3>
+
+                    <p className="text-lede measure mt-3 text-ivory/85">
+                      {collection.tagline}
+                    </p>
 
                     <p className="measure mt-5 text-[0.98rem] leading-relaxed text-on-dark-soft">
                       {collection.description}
                     </p>
 
-                    <dl className="mt-7 grid gap-x-8 gap-y-4 border-t border-rule-on-dark pt-6 sm:grid-cols-2">
-                      <div>
-                        <dt className="eyebrow text-on-dark-faint">Typical length</dt>
-                        <dd className="mt-1.5 text-[0.95rem] text-ivory">{range}</dd>
-                      </div>
-                      <div>
-                        <dt className="eyebrow text-on-dark-faint">Suits</dt>
-                        <dd className="mt-1.5 text-[0.95rem] text-ivory">
-                          {collection.travellerProfile}
-                        </dd>
-                      </div>
+                    <dl className="mt-7 border-t border-rule-on-dark pt-6">
+                      <dt className="eyebrow text-on-dark-faint">Suits</dt>
+                      <dd className="mt-1.5 text-[0.95rem] text-ivory">
+                        {collection.travellerProfile}
+                      </dd>
                     </dl>
 
-                    <ul className="mt-6 flex flex-wrap gap-2">
-                      {collection.traits.map((trait) => (
-                        <li
-                          key={trait}
-                          className="border border-rule-on-dark px-3 py-1.5 text-[0.75rem] text-on-dark-soft"
-                        >
-                          {trait}
-                        </li>
-                      ))}
-                    </ul>
+                    {/* Los rasgos van como una línea de texto: cuatro etiquetas
+                        con borde se partían en dos filas en móvil y sumaban
+                        altura sin aportar nada. */}
+                    <p className="mt-5 text-[0.85rem] leading-relaxed text-on-dark-faint">
+                      {collection.traits.join("  ·  ")}
+                    </p>
 
                     <ButtonLink
                       href={`/collections/${collection.id}`}
                       variant="secondary"
                       tone="dark"
-                      className="mt-8"
+                      className="mt-7"
                     >
-                      Explore Collection
+                      Explore {collection.name}
                     </ButtonLink>
                   </div>
                 </article>

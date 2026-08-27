@@ -14,11 +14,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/destinations" },
 };
 
+/**
+ * El circuito norte abre la página: es el corazón comercial y donde están las
+ * fotografías más fuertes. Arusha (Gateway) va al final — es una ciudad, y
+ * abrir con una calle con cables de la luz hunde la primera impresión.
+ */
 const REGION_ORDER = [
-  "Gateway",
   "Northern Circuit",
   "Southern Circuit",
   "Coast & Islands",
+  "Gateway",
 ] as const;
 
 export default async function DestinationsPage() {
@@ -30,7 +35,8 @@ export default async function DestinationsPage() {
         eyebrow="Destinations"
         title="Nine places, one country"
         lede="Tanzania is not one landscape. These are the places we travel through, what lives in each and when they are at their best."
-        image={PHOTOS["ngorongoro-crater"]}
+        // No se usa la del cráter: es la portada de una de las fichas de abajo.
+        image={PHOTOS["masai-giraffe"]}
       />
 
       <div className="bg-page py-20 sm:py-24">
@@ -44,31 +50,58 @@ export default async function DestinationsPage() {
                 <h2 className="eyebrow border-b border-rule pb-4 text-terracotta">
                   {region}
                 </h2>
+                {/* Una región con un solo destino se presenta apaisada. En la
+                    rejilla de tres columnas quedaba una tarjeta sola con dos
+                    huecos al lado, que se lee como un fallo de maquetación. */}
                 <Reveal className="mt-8">
-                  <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                  <ul
+                    className={
+                      inRegion.length === 1
+                        ? "grid gap-6"
+                        : "grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+                    }
+                  >
                     {inRegion.map((destination) => (
                       <li key={destination.slug}>
                         <Link
                           href={`/destinations/${destination.slug}`}
-                          className="group block"
+                          className={`group block ${
+                            inRegion.length === 1
+                              ? "grid items-center gap-8 md:grid-cols-2"
+                              : ""
+                          }`}
                         >
-                          <div className="relative aspect-4/3 overflow-hidden">
+                          <div
+                            className={`relative overflow-hidden ${
+                              inRegion.length === 1 ? "aspect-16/9" : "aspect-4/3"
+                            }`}
+                          >
                             <Photo
                               photo={destination.image}
                               alt=""
-                              sizes="(max-width: 768px) 100vw, 32vw"
+                              sizes={
+                                inRegion.length === 1
+                                  ? "(max-width: 768px) 100vw, 45vw"
+                                  : "(max-width: 768px) 100vw, 32vw"
+                              }
                               className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
                             />
                           </div>
-                          <h3 className="font-display mt-5 text-[1.5rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta">
-                            {destination.name}
-                          </h3>
-                          <p className="mt-2 text-[0.94rem] leading-relaxed text-ink-soft">
-                            {destination.shortDescription}
-                          </p>
-                          <p className="tnum mt-3 text-[0.75rem] tracking-[0.1em] text-ink-faint">
-                            {destination.coordinates.label}
-                          </p>
+                          <div className={inRegion.length === 1 ? "" : "contents"}>
+                            <h3
+                              className={`font-display mt-5 text-[1.5rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta ${
+                                inRegion.length === 1 ? "md:mt-0" : ""
+                              }`}
+                            >
+                              {destination.name}
+                            </h3>
+                            <p className="mt-2 text-[0.94rem] leading-relaxed text-ink-soft">
+                              {destination.shortDescription}
+                            </p>
+                            <p className="tnum mt-3 text-[0.75rem] tracking-[0.1em] text-ink-faint">
+                              {destination.coordinates.label}
+                            </p>
+                          </div>
                         </Link>
                       </li>
                     ))}

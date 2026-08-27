@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { MediaFrame } from "@/components/ui/Photo";
+import { MediaFrame, PersonSlot } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { PHOTOS } from "@/data/photography";
 import { getTeam } from "@/lib/content";
@@ -34,15 +34,19 @@ export default async function TeamPage() {
                 <Reveal>
                   <article className="grid items-start gap-8 lg:grid-cols-12 lg:gap-14">
                     <div
-                      className={`relative aspect-4/5 overflow-hidden lg:col-span-4 ${
-                        index % 2 === 1 ? "lg:order-2 lg:col-start-9" : ""
-                      }`}
+                      className={`relative overflow-hidden lg:col-span-4 ${
+                        member.portrait.src ? "aspect-4/5" : "aspect-square"
+                      } ${index % 2 === 1 ? "lg:order-2 lg:col-start-9" : ""}`}
                     >
-                      <MediaFrame
-                        media={member.portrait}
-                        label={`Portrait of ${member.name}`}
-                        sizes="(max-width: 1024px) 100vw, 30vw"
-                      />
+                      {member.portrait.src ? (
+                        <MediaFrame
+                          media={member.portrait}
+                          label={`Portrait of ${member.name}`}
+                          sizes="(max-width: 1024px) 100vw, 30vw"
+                        />
+                      ) : (
+                        <PersonSlot name={member.name} />
+                      )}
                     </div>
 
                     <div

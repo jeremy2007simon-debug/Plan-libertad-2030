@@ -21,12 +21,20 @@ export function Carousel({
   className = "",
   itemClassName = "",
   tone = "light",
+  bleed = true,
 }: {
   children: ReactNode[];
   label: string;
   className?: string;
   itemClassName?: string;
   tone?: "light" | "dark";
+  /**
+   * Deja que las tarjetas lleguen al borde de la pantalla. Sin esto, la
+   * siguiente tarjeta asoma apenas veinte píxeles dentro del margen del
+   * contenedor y el carrusel se lee como una sola tarjeta: nadie descubre que
+   * hay más y el resto del contenido no se ve nunca.
+   */
+  bleed?: boolean;
 }) {
   const trackRef = useRef<HTMLUListElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -66,7 +74,9 @@ export function Carousel({
         ref={trackRef}
         onScroll={sync}
         aria-label={label}
-        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 sm:gap-6"
+        className={`no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 sm:gap-6 ${
+          bleed ? "-mr-5 pr-5 sm:-mr-8 sm:pr-8" : ""
+        }`}
       >
         {children.map((child, index) => (
           <li key={index} className={`snap-start shrink-0 ${itemClassName}`}>

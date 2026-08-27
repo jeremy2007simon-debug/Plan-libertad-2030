@@ -28,7 +28,7 @@ export async function Impact() {
               <LazyVideo
                 video={video}
                 label="Watch"
-                posterLabel="Maisha Quest Cares — community film"
+                posterLabel="Maisha Quest Cares, in the field"
                 tone="dark"
                 className="relative aspect-9/16 w-full bg-forest-deep"
               />

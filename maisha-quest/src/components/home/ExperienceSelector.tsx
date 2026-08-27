@@ -73,7 +73,10 @@ export async function ExperienceSelector() {
 
       {/* Móvil y tableta: carrusel táctil. */}
       <div className="mt-10 lg:hidden">
-        <Container width="wide" className="pr-0 sm:pr-0">
+        {/* El sangrado hasta el borde lo aplica ahora `Carousel`; quitarle aquí
+            el padding al contenedor lo duplicaría y sacaría la pista fuera de
+            la pantalla. */}
+        <Container width="wide">
           <Carousel
             label="Ways to experience Tanzania"
             itemClassName="w-[66vw] max-w-[19rem] sm:w-[34vw]"

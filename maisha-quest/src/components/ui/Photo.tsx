@@ -117,3 +117,50 @@ export function MediaFrame({
     />
   );
 }
+
+/**
+ * Retrato de una persona todavía sin fotografía.
+ *
+ * Un hueco vacío de 4:5 por cada fundador deja tres vacíos enormes apilados y
+ * hace que la web parezca a medio hacer — justo lo contrario de lo que la
+ * sección de equipo tiene que transmitir. Un monograma en serif sobre arena,
+ * en formato cuadrado, ocupa la mitad de alto y se lee como una decisión
+ * editorial en lugar de como una imagen que no ha cargado.
+ *
+ * Cuando lleguen los retratos reales, `Team` vuelve al marco 4:5 con la foto y
+ * este componente deja de usarse.
+ */
+export function PersonSlot({
+  name,
+  className = "",
+}: {
+  name: string;
+  className?: string;
+}) {
+  const initials = name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("");
+
+  return (
+    <div
+      role="img"
+      aria-label={`${name} — portrait to follow`}
+      className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-sand/30 ${className}`}
+    >
+      <span
+        aria-hidden="true"
+        className="font-display text-[3.4rem] leading-none text-forest/35 select-none"
+      >
+        {initials}
+      </span>
+      <CompassMark
+        aria-hidden="true"
+        className="absolute right-3 bottom-3 size-5 text-gold/45"
+        needle={false}
+      />
+    </div>
+  );
+}

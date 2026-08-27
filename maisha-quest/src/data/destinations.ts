@@ -21,21 +21,55 @@ function at(lat: number, lng: number) {
   return { x: p.x, y: p.y };
 }
 
+/**
+ * El orden importa: `DESTINATIONS[0]` es el destino con el que abre el mapa de
+ * la home y el primero de la lista de chips en móvil. Arusha va al final —es
+ * la ciudad de partida, no un reclamo— para que la sección no abra con una
+ * fotografía de calle. Las páginas agrupan por región por su cuenta.
+ */
 export const DESTINATIONS: Destination[] = [
   {
-    slug: "arusha",
-    name: "Arusha",
-    region: "Gateway",
-    shortDescription:
-      "Where every journey begins — and where we live.",
+    slug: "serengeti",
+    name: "Serengeti",
+    region: "Northern Circuit",
+    shortDescription: "Endless plains, and the migration that crosses them.",
     description:
-      "Arusha sits in the shadow of Mount Meru, at the foot of the northern circuit. It is the gateway to the Serengeti and Ngorongoro, and it is also home: our office, our guides and our vehicles are here. Most journeys start with a night in Arusha, a proper briefing and an unhurried first morning.",
-    coordinates: coords(-3.3869, 36.683),
-    bestTime: "Year-round",
-    wildlife: ["Colobus monkey", "Blue monkey", "Forest birdlife"],
-    experienceSlugs: ["cultural-encounters", "coffee-and-cuisine"],
-    image: PHOTOS.arusha,
-    mapPosition: at(-3.3869, 36.683),
+      "Serengeti means 'endless plains' in Maa, and the name is not decoration. It is a vast, layered park — short-grass plains in the south, granite kopjes in the centre, riverine forest in the north — carrying the year-round predator populations Tanzania is known for, and the wildebeest migration that moves through it in a slow annual circle.",
+    coordinates: coords(-2.3333, 34.8333),
+    bestTime: "Year-round, depending on where the migration is",
+    seasons: [
+      {
+        label: "Calving",
+        months: "January – March",
+        note: "The herds are on the southern short-grass plains. Concentrated predator activity.",
+      },
+      {
+        label: "Western corridor",
+        months: "May – July",
+        note: "The migration moves west and north. Grumeti river crossings.",
+      },
+      {
+        label: "Northern crossings",
+        months: "July – October",
+        note: "Mara River crossings in the north. The most sought-after weeks of the year.",
+      },
+    ],
+    wildlife: ["Lion", "Leopard", "Cheetah", "Wildebeest", "Zebra", "Elephant", "Hyena"],
+    experienceSlugs: [
+      "game-drives",
+      "great-migration",
+      "balloon-safari",
+      "photographic-safari",
+      "mobile-camping",
+    ],
+    image: PHOTOS["serengeti-plains"],
+    gallery: [
+      PHOTOS["serengeti-lion"],
+      PHOTOS["wildebeest-migration"],
+      PHOTOS["serengeti-cheetah"],
+      PHOTOS["serengeti-sunrise"],
+    ],
+    mapPosition: at(-2.3333, 34.8333),
   },
   {
     slug: "tarangire",
@@ -107,49 +141,6 @@ export const DESTINATIONS: Destination[] = [
     mapPosition: at(-3.1667, 35.5833),
   },
   {
-    slug: "serengeti",
-    name: "Serengeti",
-    region: "Northern Circuit",
-    shortDescription: "Endless plains, and the migration that crosses them.",
-    description:
-      "Serengeti means 'endless plains' in Maa, and the name is not decoration. It is a vast, layered park — short-grass plains in the south, granite kopjes in the centre, riverine forest in the north — carrying the year-round predator populations Tanzania is known for, and the wildebeest migration that moves through it in a slow annual circle.",
-    coordinates: coords(-2.3333, 34.8333),
-    bestTime: "Year-round, depending on where the migration is",
-    seasons: [
-      {
-        label: "Calving",
-        months: "January – March",
-        note: "The herds are on the southern short-grass plains. Concentrated predator activity.",
-      },
-      {
-        label: "Western corridor",
-        months: "May – July",
-        note: "The migration moves west and north. Grumeti river crossings.",
-      },
-      {
-        label: "Northern crossings",
-        months: "July – October",
-        note: "Mara River crossings in the north. The most sought-after weeks of the year.",
-      },
-    ],
-    wildlife: ["Lion", "Leopard", "Cheetah", "Wildebeest", "Zebra", "Elephant", "Hyena"],
-    experienceSlugs: [
-      "game-drives",
-      "great-migration",
-      "balloon-safari",
-      "photographic-safari",
-      "mobile-camping",
-    ],
-    image: PHOTOS["serengeti-plains"],
-    gallery: [
-      PHOTOS["serengeti-lion"],
-      PHOTOS["wildebeest-migration"],
-      PHOTOS["serengeti-cheetah"],
-      PHOTOS["serengeti-sunrise"],
-    ],
-    mapPosition: at(-2.3333, 34.8333),
-  },
-  {
     slug: "kilimanjaro",
     name: "Kilimanjaro",
     region: "Northern Circuit",
@@ -206,6 +197,21 @@ export const DESTINATIONS: Destination[] = [
     image: PHOTOS["zanzibar-nungwi"],
     gallery: [PHOTOS["zanzibar-dhow-sunset"], PHOTOS["zanzibar-stone-town"]],
     mapPosition: at(-6.1659, 39.2026),
+  },
+  {
+    slug: "arusha",
+    name: "Arusha",
+    region: "Gateway",
+    shortDescription:
+      "Where every journey begins — and where we live.",
+    description:
+      "Arusha sits in the shadow of Mount Meru, at the foot of the northern circuit. It is the gateway to the Serengeti and Ngorongoro, and it is also home: our office, our guides and our vehicles are here. Most journeys start with a night in Arusha, a proper briefing and an unhurried first morning.",
+    coordinates: coords(-3.3869, 36.683),
+    bestTime: "Year-round",
+    wildlife: ["Colobus monkey", "Blue monkey", "Forest birdlife"],
+    experienceSlugs: ["cultural-encounters", "coffee-and-cuisine"],
+    image: PHOTOS.arusha,
+    mapPosition: at(-3.3869, 36.683),
   },
 ];
 

@@ -54,7 +54,7 @@ export function VideoStory() {
     <section className="dark-section relative isolate overflow-hidden bg-forest-deep py-24 text-on-dark sm:py-32">
       {/* Fondo fotográfico muy atenuado: da profundidad sin competir. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-25">
-        <Photo photo={PHOTOS["serengeti-sunset-wide"]} alt="" sizes="100vw" />
+        <Photo photo={PHOTOS["tarangire-baobab"]} alt="" sizes="100vw" />
         <div className="absolute inset-0 bg-forest-deep/70" />
       </div>
 
@@ -66,7 +66,7 @@ export function VideoStory() {
               <LazyVideo
                 video={JOURNEY_FILM}
                 label="Watch the Journey"
-                posterLabel="Maisha Quest journey film — vertical"
+                posterLabel="Tanzania, in thirty-six seconds"
                 tone="dark"
                 className="relative aspect-9/16 w-full bg-charcoal"
               />

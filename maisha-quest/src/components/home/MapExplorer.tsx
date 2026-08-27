@@ -39,7 +39,17 @@ export interface MapDestination {
 }
 
 export function MapExplorer({ destinations }: { destinations: MapDestination[] }) {
-  const [activeSlug, setActiveSlug] = useState(destinations[0]?.slug ?? "");
+  /**
+   * Abre por el Serengeti. `DESTINATIONS` ya lo pone primero justamente para
+   * esto —así en móvil el chip activo es también el primero de la fila y se ve
+   * sin desplazar—, y la búsqueda explícita es la red de seguridad por si
+   * alguien reordena el array más adelante.
+   */
+  const [activeSlug, setActiveSlug] = useState(
+    destinations.find((d) => d.slug === "serengeti")?.slug ??
+      destinations[0]?.slug ??
+      "",
+  );
   const active =
     destinations.find((d) => d.slug === activeSlug) ?? destinations[0];
 

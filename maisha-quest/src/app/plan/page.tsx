@@ -3,6 +3,8 @@ import { PageHero } from "@/components/layout/PageHero";
 import { JourneyPlanner } from "@/components/planner/JourneyPlanner";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
+import { Photo } from "@/components/ui/Photo";
+import { PHOTOS } from "@/data/photography";
 import { getDestinations, getSafariBySlug } from "@/lib/content";
 import { COMPANY } from "@/lib/site";
 
@@ -49,7 +51,11 @@ export default async function PlanPage({
 
   return (
     <>
+      {/* Con fotografía: es la página de mayor intención de compra y era la
+          única sin una sola imagen, lo que la dejaba plana justo donde hay que
+          sostener el deseo mientras se rellena un formulario. */}
       <PageHero
+        image={safari ? safari.image : PHOTOS["balloon-serengeti"]}
         eyebrow="Plan your journey"
         title={safari ? `Customize: ${safari.name}` : "Let’s design your journey"}
         lede={
@@ -81,7 +87,15 @@ export default async function PlanPage({
                 ))}
               </ol>
 
-              <div className="mt-12 border-t border-rule pt-8">
+              <div className="relative mt-10 hidden aspect-4/5 overflow-hidden lg:block">
+                <Photo
+                  photo={PHOTOS["lake-manyara-giraffe"]}
+                  alt=""
+                  sizes="(max-width: 1024px) 0px, 28vw"
+                />
+              </div>
+
+              <div className="mt-10 border-t border-rule pt-8">
                 <CompassMark className="size-7 text-gold" needle={false} />
                 <p className="eyebrow mt-4 text-ink-faint">Rather just talk?</p>
                 <a
