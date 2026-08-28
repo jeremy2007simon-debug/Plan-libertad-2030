@@ -25,7 +25,7 @@ import { TRUST_CREDENTIALS } from "@/lib/site";
  */
 export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
   return (
-    <section className="dark-section texture-dust relative isolate bg-earth py-20 text-on-dark sm:py-24">
+    <section className="dark-section on-earth texture-dust relative isolate bg-earth py-12 text-on-dark sm:py-16">
       <Container width="wide">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
@@ -36,7 +36,7 @@ export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
               lede={t.home.why.lede}
             />
 
-            <ImageReveal className="mt-9 aspect-square">
+            <ImageReveal className="mt-8 aspect-16/9 lg:aspect-square">
               <Photo
                 photo={CLIENT_PHOTOS["giraffe-patterns-monochrome"]}
                 alt=""

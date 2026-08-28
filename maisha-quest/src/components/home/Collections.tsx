@@ -54,7 +54,7 @@ export async function Collections({
   const collections = await getCollections(locale);
 
   return (
-    <section className="texture-paper relative isolate bg-sand py-20 sm:py-24">
+    <section className="on-sand texture-paper relative isolate bg-sand py-12 sm:py-16">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.collections.eyebrow}
@@ -66,7 +66,7 @@ export async function Collections({
           </ButtonLink>
         </SectionHeading>
 
-        <div className="mt-14 flex flex-col gap-14 sm:gap-18">
+        <div className="mt-12 flex flex-col gap-12 sm:gap-16">
           {collections.map((collection, index) => {
             const range = t.common.durationRange(collectionDurationRange(collection));
             const flipped = index % 2 === 1;
@@ -75,11 +75,11 @@ export async function Collections({
             return (
               <article
                 key={collection.id}
-                className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14"
+                className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12"
               >
                   <ImageReveal
-                    className={`aspect-16/10 lg:col-span-7 ${
-                      flipped ? "lg:order-2 lg:col-start-6" : ""
+                    className={`aspect-16/9 lg:col-span-6 lg:aspect-16/10 ${
+                      flipped ? "lg:order-2 lg:col-start-7" : ""
                     }`}
                   >
                     <Link
@@ -106,7 +106,7 @@ export async function Collections({
                   </ImageReveal>
 
                   <div
-                    className={`lg:col-span-5 ${
+                    className={`lg:col-span-6 ${
                       flipped ? "lg:order-1 lg:col-start-1" : ""
                     }`}
                   >
@@ -142,11 +142,11 @@ export async function Collections({
                     />
 
                     <Reveal delay={0.2} from={flipped ? "right" : "left"}>
-                      <p className="measure mt-6 text-[0.98rem] leading-relaxed text-ink-soft">
+                      <p className="measure mt-5 text-[0.98rem] leading-relaxed text-ink-soft">
                         {collection.description}
                       </p>
 
-                      <dl className="mt-6">
+                      <dl className="mt-5">
                         <dt className="eyebrow text-ink-faint">{t.common.suits}</dt>
                         <dd className="mt-1.5 text-[0.95rem] text-forest">
                           {collection.travellerProfile}
@@ -162,7 +162,7 @@ export async function Collections({
 
                       <Link
                         href={localeHref(locale, `/collections/${collection.id}`)}
-                        className="group mt-7 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
+                        className="group mt-6 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
                       >
                         <span className="border-b border-forest/30 pb-1 transition-colors duration-[var(--dur-hover)] group-hover:border-terracotta-text group-hover:text-terracotta-text">
                           {t.home.collections.explore(collection.name)}

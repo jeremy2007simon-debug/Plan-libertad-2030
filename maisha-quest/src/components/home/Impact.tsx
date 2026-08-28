@@ -26,7 +26,7 @@ export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
       <Container width="wide">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Vídeo vertical */}
-          <ImageReveal className="mx-auto w-full max-w-[20rem] lg:col-span-4 lg:max-w-none">
+          <ImageReveal className="mx-auto w-full max-w-[17rem] lg:col-span-4 lg:max-w-[17rem]">
             <div className="w-full">
               <LazyVideo
                 video={video}

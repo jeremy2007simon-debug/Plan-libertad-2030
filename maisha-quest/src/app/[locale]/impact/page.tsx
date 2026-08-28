@@ -80,7 +80,7 @@ export default async function ImpactPage({
                       key={project.slug}
                       className="grid gap-x-8 gap-y-3 py-7 sm:grid-cols-[auto_1fr]"
                     >
-                      <span className="tnum eyebrow pt-1.5 text-gold">
+                      <span className="tnum eyebrow pt-1.5 text-gold-text">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <div>

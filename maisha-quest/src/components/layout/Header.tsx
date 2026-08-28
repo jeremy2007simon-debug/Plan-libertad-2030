@@ -77,7 +77,7 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) 
   /* La cabecera es oscura en los dos estados, así que el tono de los hijos
      (logo, selector, botón de menú) no cambia nunca. */
   const tone = "dark" as const;
-  const linkColor = "text-parchment/80 hover:text-parchment";
+  const linkColor = "text-parchment hover:text-sand";
 
   return (
     <header

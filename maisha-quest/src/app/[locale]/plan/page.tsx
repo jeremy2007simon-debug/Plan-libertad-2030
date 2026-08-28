@@ -75,7 +75,7 @@ export default async function PlanPage({
               <ol className="flex flex-col gap-8">
                 {t.plan.steps.map((step, index) => (
                   <li key={step.title} className="flex gap-5">
-                    <span className="tnum eyebrow shrink-0 pt-1 text-gold">
+                    <span className="tnum eyebrow shrink-0 pt-1 text-gold-text">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span>

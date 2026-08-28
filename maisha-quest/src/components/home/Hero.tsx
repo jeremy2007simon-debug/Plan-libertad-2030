@@ -49,7 +49,7 @@ export function Hero({
   const image = CLIENT_PHOTOS["tanzania-wildlife-sunset-hero"];
 
   return (
-    <section className="relative isolate flex min-h-[92svh] flex-col justify-end overflow-hidden bg-charcoal">
+    <section className="relative isolate flex min-h-[88svh] flex-col justify-end overflow-hidden bg-charcoal">
       {/* Fotografía */}
       <div className="absolute inset-0 -z-10">
         <ParallaxMedia strength={34} className="absolute -inset-y-12 inset-x-0">
@@ -76,6 +76,8 @@ export function Hero({
             del amanecer sin bajar la fotografía a un gris plano. */}
         <div className="media-scrim absolute inset-0" />
         <div className="media-scrim-side absolute inset-0" />
+        {/* Banda bajo la cabecera transparente. */}
+        <div className="media-scrim-top absolute inset-x-0 top-0 h-[7.5rem]" />
         <div className="grain absolute inset-0" />
         {/* Transición hacia la siguiente sección: la fotografía se funde en el
             pergamino en lugar de terminar en un corte recto. Va dentro de esta
@@ -87,7 +89,7 @@ export function Hero({
         <div className="max-w-3xl">
           <div className="animate-compass-in flex items-center gap-4">
             <CompassMark className="size-11 text-sand" />
-            <span className="tnum text-[0.68rem] tracking-[0.22em] text-parchment/70 uppercase">
+            <span className="tnum text-[0.68rem] tracking-[0.22em] text-parchment uppercase">
               {HOME_COORDINATES.label}
             </span>
             {/* Línea de brújula: se dibuja desde el punto de coordenadas
@@ -116,7 +118,7 @@ export function Hero({
           </h1>
 
           <p
-            className="animate-fade-up text-lede measure mt-6 text-parchment/90"
+            className="animate-fade-up text-lede measure mt-6 text-parchment"
             style={{ animationDelay: "480ms" }}
           >
             {t.home.hero.subline}
@@ -152,7 +154,7 @@ export function Hero({
                       ·
                     </span>
                   )}
-                  <span className="eyebrow text-parchment/75">{item}</span>
+                  <span className="eyebrow text-parchment">{item}</span>
                 </li>
               ),
             )}
@@ -165,7 +167,7 @@ export function Hero({
         aria-hidden="true"
         className="pointer-events-none absolute bottom-7 right-6 hidden flex-col items-center gap-3 sm:flex"
       >
-        <span className="eyebrow [writing-mode:vertical-rl] text-parchment/45">
+        <span className="eyebrow [writing-mode:vertical-rl] text-parchment/80">
           {t.home.hero.scroll}
         </span>
         <span className="animate-scroll-hint h-10 w-px bg-linear-to-b from-parchment/60 to-transparent" />

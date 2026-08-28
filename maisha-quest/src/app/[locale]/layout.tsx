@@ -1,11 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import {
-  Cormorant_Garamond,
-  Manrope,
-  Noto_Sans_SC,
-  Noto_Serif_SC,
-} from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { HAN_FONT_VARIABLES } from "./fonts-han";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
@@ -36,34 +32,6 @@ const manrope = Manrope({
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],
   display: "swap",
-});
-
-/**
- * Chino simplificado.
- *
- * Cormorant Garamond no contiene ni un solo hanzi: forzarla dejaría toda la
- * versión china compuesta con la fuente de respaldo del sistema, distinta en
- * cada dispositivo. Noto Serif SC es la contraparte real —serif de asta
- * modulada, editorial, con el mismo aire— y Noto Sans SC hace de Manrope.
- *
- * `preload: false` a propósito: solo se descargan cuando la página es china.
- * Google las sirve troceadas por rango unicode, así que ni siquiera entonces
- * baja la fuente entera.
- */
-const notoSerifSC = Noto_Serif_SC({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-  preload: false,
-});
-
-const notoSansSC = Noto_Sans_SC({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "700"],
-  display: "swap",
-  preload: false,
 });
 
 export function generateStaticParams() {
@@ -134,7 +102,7 @@ export default async function LocaleLayout({
   // ruso y español comparten familia; el chino no puede.
   const fonts =
     meta.script === "han"
-      ? `${notoSerifSC.variable} ${notoSansSC.variable}`
+      ? HAN_FONT_VARIABLES
       : `${cormorant.variable} ${manrope.variable}`;
 
   return (

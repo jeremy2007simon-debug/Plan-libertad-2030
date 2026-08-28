@@ -28,7 +28,7 @@ import { HOME_COORDINATES } from "@/lib/site";
  */
 export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
-    <section className="texture-paper relative isolate overflow-hidden bg-page py-20 sm:py-28">
+    <section className="texture-paper relative isolate overflow-hidden bg-page py-12 sm:py-20">
       {/* Marca de agua tipográfica. Decorativa: `aria-hidden`. */}
       <span
         aria-hidden="true"
@@ -40,7 +40,7 @@ export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) 
       <Container width="wide">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Fotografía: entra por máscara y se mueve muy poco al hacer scroll. */}
-          <ImageReveal className="aspect-4/5 sm:aspect-3/2 lg:col-span-6 lg:aspect-4/5">
+          <ImageReveal className="aspect-3/2 lg:col-span-6 lg:aspect-square">
             <ParallaxMedia strength={22} className="absolute -inset-y-8 inset-x-0">
               <Photo
                 photo={CLIENT_PHOTOS["african-elephant-portrait"]}

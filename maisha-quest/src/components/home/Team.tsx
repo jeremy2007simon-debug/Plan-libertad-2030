@@ -96,7 +96,7 @@ export async function Team({ locale, t }: { locale: Locale; t: Dictionary }) {
   const team = await getTeam(locale);
 
   return (
-    <section className="texture-paper relative isolate bg-sand py-20 sm:py-24">
+    <section className="on-sand texture-paper relative isolate bg-sand py-12 sm:py-16">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.team.eyebrow}

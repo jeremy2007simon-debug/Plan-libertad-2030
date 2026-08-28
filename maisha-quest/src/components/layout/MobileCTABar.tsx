@@ -47,7 +47,7 @@ export function MobileCTABar({
       <div className="flex items-stretch gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <Link
           href={localeHref(locale, "/plan")}
-          className="flex min-h-12 flex-1 items-center justify-center rounded-[2px] bg-terracotta px-5 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
+          className="flex min-h-12 flex-1 items-center justify-center rounded-[2px] bg-terracotta-deep px-5 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
         >
           {t.planShort}
         </Link>

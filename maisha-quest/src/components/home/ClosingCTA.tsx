@@ -37,7 +37,7 @@ export function ClosingCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
         <div className="fade-to-canopy absolute inset-0" />
       </div>
 
-      <Container width="wide" className="py-20 sm:py-24">
+      <Container width="wide" className="py-12 sm:py-16">
         <div className="max-w-2xl">
           <Reveal from="none">
             <CompassMark className="size-9 text-sand" />
@@ -48,7 +48,7 @@ export function ClosingCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
             </h2>
           </Reveal>
           <Reveal delay={0.18}>
-            <p className="text-lede measure mt-5 text-parchment/85">
+            <p className="text-lede measure mt-5 text-parchment">
               {t.home.closing.concept}
             </p>
           </Reveal>

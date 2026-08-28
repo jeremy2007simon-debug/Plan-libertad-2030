@@ -40,7 +40,7 @@ export async function PlannerSection({
   const showInvitation = testimonials.length === 0;
 
   return (
-    <section id="plan" className="texture-paper relative isolate bg-page py-20 sm:py-24">
+    <section id="plan" className="texture-paper relative isolate bg-page py-12 sm:py-16">
       <Container width="wide">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">

@@ -121,7 +121,7 @@ export function MapExplorer({
           <svg
             viewBox={`0 0 ${MAP_VIEWBOX.width} ${MAP_VIEWBOX.height}`}
             aria-hidden="true"
-            className="h-auto w-full overflow-visible"
+            className="mx-auto h-auto max-h-[28rem] w-full overflow-visible"
           >
             {/* Retícula de brújula, muy tenue */}
             <g stroke="currentColor" className="text-forest/12" strokeWidth="1">
@@ -263,7 +263,7 @@ export function MapExplorer({
                   aria-pressed={isActive}
                   className={`min-h-11 border px-4 py-2.5 text-[0.85rem] whitespace-nowrap transition-colors duration-300 ${
                     isActive
-                      ? "border-terracotta bg-terracotta text-white"
+                      ? "border-terracotta-deep bg-terracotta-deep text-white"
                       : "border-rule text-ink-soft"
                   }`}
                 >

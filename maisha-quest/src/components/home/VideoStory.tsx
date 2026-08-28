@@ -63,7 +63,7 @@ export function VideoStory({ locale, t }: { locale: Locale; t: Dictionary }) {
       <Container width="wide">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Vídeo vertical */}
-          <ImageReveal className="mx-auto w-full max-w-[22rem] lg:col-span-5 lg:max-w-none">
+          <ImageReveal className="mx-auto w-full max-w-[18rem] lg:col-span-5 lg:max-w-[20rem]">
             <div className="w-full">
               <LazyVideo
                 video={JOURNEY_FILM}

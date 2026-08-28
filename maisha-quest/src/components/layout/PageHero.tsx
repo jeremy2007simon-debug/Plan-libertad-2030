@@ -49,6 +49,7 @@ export function PageHero({
         </ParallaxMedia>
         <div className="media-scrim absolute inset-0" />
         <div className="media-scrim-side absolute inset-0" />
+        <div className="media-scrim-top absolute inset-x-0 top-0 h-[7.5rem]" />
         <div className="grain absolute inset-0" />
         {/* Salida en degradado hacia la sección siguiente, no un corte recto. */}
         <div
@@ -64,7 +65,7 @@ export function PageHero({
             <span className="animate-line-up block">{title}</span>
           </h1>
           {lede && (
-            <p className="text-lede measure mt-5 text-parchment/85">{lede}</p>
+            <p className="text-lede measure mt-5 text-parchment">{lede}</p>
           )}
           {children}
         </div>

@@ -86,7 +86,7 @@ export async function ExperienceSelector({
   );
 
   return (
-    <section className="texture-dust relative isolate bg-olive py-20 sm:py-24">
+    <section className="on-olive texture-dust relative isolate bg-olive-deep py-12 sm:py-16">
       <Container width="wide">
         <SectionHeading
           tone="dark"
@@ -102,8 +102,8 @@ export async function ExperienceSelector({
           <Stagger as="li" step={0.07}>
             {categories.map((category, index) =>
               index % 2 === 1 ? (
-                <div key={category.id} className="pt-12">
-                  {card(category, index, "aspect-4/5")}
+                <div key={category.id} className="pt-10">
+                  {card(category, index, "aspect-square")}
                 </div>
               ) : (
                 card(category, index, "aspect-3/4")

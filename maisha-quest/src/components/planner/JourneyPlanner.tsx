@@ -274,7 +274,7 @@ export function JourneyPlanner({
             href={`${COMPANY.emailHref}?subject=${encodeURIComponent(
               `${t.summary.heading} — ${state.firstName} ${state.lastName}`.trim(),
             )}&body=${encodeURIComponent(status.summary)}`}
-            className="inline-flex min-h-11 items-center rounded-[2px] bg-terracotta px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
+            className="inline-flex min-h-11 items-center rounded-[2px] bg-terracotta-deep px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
           >
             {t.status.sendByEmail}
           </a>
@@ -332,10 +332,14 @@ export function JourneyPlanner({
             className="h-px bg-terracotta transition-[width] duration-[var(--dur-base)] ease-[var(--ease-out)]"
             style={{ width: `${progress}%` }}
           />
+          {/* El punto se coloca con `left` en porcentaje y se centra sobre sí
+              mismo. La primera versión usaba un tramo del 100 % del ancho
+              desplazado por transform, y ese tramo sobresalía del contenedor:
+              18 px de desbordamiento horizontal en toda la web. */}
           <span
             aria-hidden="true"
-            className="absolute top-1/2 -ml-[7px] -translate-y-1/2 text-terracotta transition-transform duration-[var(--dur-base)] ease-[var(--ease-out)]"
-            style={{ transform: `translate(${progress}%, -50%)`, left: 0, width: "100%" }}
+            className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 text-terracotta transition-[left] duration-[var(--dur-base)] ease-[var(--ease-out)]"
+            style={{ left: `${progress}%` }}
           >
             <CompassMark className="size-3.5" needle={false} />
           </span>
@@ -349,12 +353,12 @@ export function JourneyPlanner({
                 type="button"
                 disabled={index > stepIndex}
                 onClick={() => goTo(index)}
-                className={`text-[0.75rem] tracking-[0.06em] uppercase transition-colors duration-300 disabled:cursor-default ${
+                className={`text-[0.75rem] tracking-[0.06em] uppercase transition-colors duration-[var(--dur-hover)] disabled:cursor-default ${
                   index === stepIndex
-                    ? "text-forest"
+                    ? "font-semibold text-forest"
                     : index < stepIndex
-                      ? "text-ink-faint hover:text-terracotta-text"
-                      : "text-ink-faint/45"
+                      ? "text-ink-faint underline decoration-rule underline-offset-4 hover:text-terracotta-text"
+                      : "text-ink-faint"
                 }`}
               >
                 {t.steps[candidate].label}

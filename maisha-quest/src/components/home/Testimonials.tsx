@@ -33,7 +33,7 @@ export async function Testimonials({ t }: { locale: Locale; t: Dictionary }) {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="texture-paper relative isolate bg-page py-20 sm:py-24">
+    <section className="texture-paper relative isolate bg-page py-12 sm:py-16">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.testimonials.eyebrow}
