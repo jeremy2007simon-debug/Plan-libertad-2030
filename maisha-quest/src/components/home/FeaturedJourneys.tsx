@@ -136,7 +136,6 @@ export async function FeaturedJourneys({
           photo={safari.image}
           alt=""
           sizes="84vw"
-          priority={index === 0}
           className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
         />
         <span className="media-scrim-soft absolute inset-0" />
@@ -186,7 +185,6 @@ export async function FeaturedJourneys({
                   photo={lead.image}
                   alt=""
                   sizes="(max-width: 1024px) 58vw, 54vw"
-                  priority
                   className="transition-transform duration-[1400ms] ease-[var(--ease-soft)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
                 />
                 <span className="media-scrim absolute inset-0" />

@@ -49,7 +49,12 @@ export async function ExperienceSelector({
       <Photo
         photo={category.experience.image}
         alt=""
-        sizes="(max-width: 640px) 76vw, (max-width: 1024px) 40vw, 23vw"
+        // 50vw en móvil frente a los 76vw reales: mismo tope de densidad que
+        // en la sección del elefante. El carrusel horizontal descarga las
+        // cuatro tarjetas antes de que nadie lo toque, así que aquí se
+        // multiplica por cuatro cada kilobyte de más.
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 23vw"
+        quality={60}
         className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
       />
       {/* Dos velos: el de base asienta el texto; el segundo, terracota muy

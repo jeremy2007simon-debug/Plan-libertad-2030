@@ -15,6 +15,7 @@ export function Photo({
   className = "",
   sizes = "100vw",
   priority = false,
+  quality,
   /** Alt alternativo cuando el contexto ya describe la imagen mejor. */
   alt,
 }: {
@@ -22,6 +23,8 @@ export function Photo({
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Calidad de compresión. Por defecto la de Next (75). */
+  quality?: number;
   alt?: string;
 }) {
   return (
@@ -31,6 +34,7 @@ export function Photo({
       fill
       sizes={sizes}
       priority={priority}
+      quality={quality}
       placeholder="blur"
       blurDataURL={photo.blurDataURL}
       // El encuadre se define por fotografía: el centro geométrico casi nunca
@@ -58,11 +62,14 @@ export function MediaFrame({
   className = "",
   sizes = "100vw",
   priority = false,
+  quality,
 }: {
   media: MediaImage | PhotoType;
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Calidad de compresión. Por defecto la de Next (75). */
+  quality?: number;
 }) {
   if (!media.src) return null;
   const blur = "blurDataURL" in media ? media.blurDataURL : undefined;
@@ -73,6 +80,7 @@ export function MediaFrame({
       fill
       sizes={sizes}
       priority={priority}
+      quality={quality}
       {...(blur ? { placeholder: "blur" as const, blurDataURL: blur } : {})}
       style={media.objectPosition ? { objectPosition: media.objectPosition } : undefined}
       className={`object-cover ${className}`}

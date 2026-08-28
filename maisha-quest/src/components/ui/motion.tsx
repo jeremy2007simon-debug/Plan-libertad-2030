@@ -297,13 +297,19 @@ export function MotionScript() {
   // Lo que React monta después de hidratar (mapa, planificador) no existía en
   // los barridos anteriores. Sin esto se quedaría oculto para siempre, que es
   // justo el fallo que este sistema evita.
-  if('MutationObserver' in window){
+  //
+  // Este script va en el <head>: cuando se ejecuta, document.body todavía no
+  // existe y observarlo lanzaba una excepción en todas las páginas, que además
+  // dejaba el rescán sin instalar. Se espera a que el cuerpo exista.
+  function watch(){
+    if(!('MutationObserver' in window)||!document.body)return;
     var pending=false;
     new MutationObserver(function(){
       if(pending)return;pending=true;
       requestAnimationFrame(function(){pending=false;scan();});
     }).observe(document.body,{childList:true,subtree:true});
   }
+  if(document.readyState!=='loading')watch();else document.addEventListener('DOMContentLoaded',watch);
 })();`;
 
   return <script dangerouslySetInnerHTML={{ __html: source }} />;

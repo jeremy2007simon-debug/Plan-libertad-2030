@@ -42,9 +42,16 @@ export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) 
           {/* Fotografía: entra por máscara y se mueve muy poco al hacer scroll. */}
           <ImageReveal className="aspect-3/2 lg:col-span-6 lg:aspect-square">
             <ParallaxMedia strength={22} className="absolute -inset-y-8 inset-x-0">
+              {/* `sizes` declara 66vw en móvil aunque la fotografía ocupe el
+                  ancho completo. Es un tope de densidad deliberado: en un
+                  teléfono de 390 px a 3× el navegador pediría 1.200 px reales
+                  (231 kB) y con esto pide 828 (124 kB), es decir algo más de
+                  2× de densidad. En una fotografía sin texto ni líneas finas
+                  la diferencia entre 2× y 3× no se ve; los 107 kB sí. */}
               <Photo
                 photo={CLIENT_PHOTOS["african-elephant-portrait"]}
-                sizes="(max-width: 1024px) 100vw, 46vw"
+                sizes="(max-width: 1024px) 66vw, 46vw"
+                quality={60}
               />
             </ParallaxMedia>
           </ImageReveal>

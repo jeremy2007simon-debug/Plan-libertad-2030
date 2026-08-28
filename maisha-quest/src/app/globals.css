@@ -520,6 +520,17 @@ p {
    Animaciones — lentas, discretas, siempre desactivables
    -------------------------------------------------------------------------- */
 
+/* Las entradas que parten de `opacity: 0` van condicionadas a
+   `:root[data-js]`.
+
+   El atributo `data-js` lo pone el script de movimiento, y solo lo pone si hay
+   JavaScript y el visitante no ha pedido movimiento reducido. Sin él, estos
+   elementos se pintan directamente en su estado final: nada nace invisible en
+   el HTML del servidor. Importa sobre todo en el <h1> de las cabeceras de
+   página y en el texto del hero, que con `animation: ... both` se quedaban a
+   cero opacidad en el primer fotograma y dependían de que la animación llegase
+   a arrancar para verse. */
+
 @keyframes mq-fade-up {
   from {
     opacity: 0;
@@ -569,15 +580,15 @@ p {
   }
 }
 
-.animate-fade-up {
+:root[data-js] .animate-fade-up {
   animation: mq-fade-up var(--dur-slow) var(--ease-out) both;
 }
 
-.animate-fade {
+:root[data-js] .animate-fade {
   animation: mq-fade var(--dur-slow) var(--ease-out) both;
 }
 
-.animate-compass-in {
+:root[data-js] .animate-compass-in {
   animation: mq-compass-in 1.4s var(--ease-out) both;
 }
 
@@ -616,7 +627,7 @@ p {
   }
 }
 
-.animate-line-up {
+:root[data-js] .animate-line-up {
   animation: mq-line-up 820ms var(--ease-out) both;
 }
 
@@ -673,7 +684,7 @@ p {
   }
 }
 
-.animate-crossfade {
+:root[data-js] .animate-crossfade {
   animation: mq-crossfade 460ms var(--ease-soft) both;
 }
 
@@ -689,7 +700,7 @@ p {
   }
 }
 
-.animate-panel-in {
+:root[data-js] .animate-panel-in {
   animation: mq-panel-in 620ms var(--ease-out) both;
 }
 

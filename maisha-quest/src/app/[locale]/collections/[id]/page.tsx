@@ -110,14 +110,12 @@ export default async function CollectionPage({
 
           <Reveal className="mt-10">
             <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {safaris.map((safari, index) => (
+              {safaris.map((safari) => (
                 <li key={safari.slug} className="flex">
-                  <SafariCard
-                    safari={safari}
-                    locale={locale}
-                    t={t}
-                    priority={index === 0}
-                  />
+                  {/* Sin `priority`: la rejilla queda por debajo del pliegue
+                      en cualquier viewport y competía con el hero por el
+                      ancho de banda de la primera pantalla. */}
+                  <SafariCard safari={safari} locale={locale} t={t} />
                 </li>
               ))}
             </ul>

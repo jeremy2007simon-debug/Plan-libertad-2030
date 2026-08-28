@@ -23,14 +23,14 @@ import "../globals.css";
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "cyrillic"],
   variable: "--font-display",
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
   variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
