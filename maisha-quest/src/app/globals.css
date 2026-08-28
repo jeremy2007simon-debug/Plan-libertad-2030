@@ -100,10 +100,15 @@
   --color-rule-on-dark: var(--rule-on-dark);
   --color-rule-gold: var(--rule-gold);
 
-  /* `--font-display` y `--font-body` los inyecta next/font en <html>, y su
-     valor cambia según el sistema de escritura: Cormorant/Manrope para latín
-     y cirílico, Noto Serif SC/Noto Sans SC para chino simplificado. Las pilas
-     de respaldo también son distintas por eso. */
+  /* `--font-display` y `--font-body` los inyecta next/font en <html>:
+     Cormorant Garamond y Manrope, con latín y cirílico, así que el ruso se
+     compone con la misma tipografía que el resto.
+
+     El chino no cabe en esas familias. Sus dos caras las declara
+     `HanFonts`, que solo se renderiza en `/zh-CN` y redefine estas dos
+     variables sobre `:root[data-script="han"]`; ahí gana por especificidad.
+     Va en línea y no aquí a propósito: en esta hoja viajaría en las seis
+     lenguas. */
   --font-display: var(--font-display), "Iowan Old Style", "Palatino Linotype",
     Palatino, Georgia, "Songti SC", "Noto Serif CJK SC", serif;
   --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,

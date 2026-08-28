@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
-import { HAN_FONT_VARIABLES } from "./fonts-han";
+import { HanFonts } from "@/components/layout/HanFonts";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
@@ -100,14 +100,17 @@ export default async function LocaleLayout({
   const meta = LOCALE_META[locale];
   // La pila tipográfica se decide por sistema de escritura, no por idioma:
   // ruso y español comparten familia; el chino no puede.
-  const fonts =
-    meta.script === "han"
-      ? HAN_FONT_VARIABLES
-      : `${cormorant.variable} ${manrope.variable}`;
+  const han = meta.script === "han";
 
   return (
-    <html lang={meta.htmlLang} className={fonts} data-script={meta.script}>
+    <html
+      lang={meta.htmlLang}
+      className={`${cormorant.variable} ${manrope.variable}`}
+      data-script={meta.script}
+    >
       <head>
+        {/* Dos caras recortadas, solo en chino: ver HanFonts. */}
+        {han && <HanFonts />}
         <MotionScript />
       </head>
       <body>
