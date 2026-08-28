@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
-import { COMPANY, FOOTER_NAV, HOME_COORDINATES } from "@/lib/site";
+import {
+  COMPANY,
+  FOOTER_NAV,
+  HOME_COORDINATES,
+  socialLinks,
+  whatsappHref,
+  WHATSAPP_MESSAGE,
+} from "@/lib/site";
 import { WhatsAppGlyph } from "./MobileCTABar";
 
 /**
@@ -13,6 +20,7 @@ import { WhatsAppGlyph } from "./MobileCTABar";
  */
 export function Footer() {
   const year = new Date().getFullYear();
+  const socials = socialLinks();
 
   return (
     <footer className="dark-section bg-forest text-on-dark">
@@ -43,7 +51,7 @@ export function Footer() {
                 {COMPANY.email}
               </a>
               <a
-                href={COMPANY.whatsappHref}
+                href={whatsappHref(WHATSAPP_MESSAGE.en)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 inline-flex w-fit items-center gap-2 text-[0.9rem] text-on-dark-soft transition-colors duration-300 hover:text-sand"
@@ -63,26 +71,25 @@ export function Footer() {
               <p className="tnum mt-2 tracking-[0.1em]">{HOME_COORDINATES.label}</p>
             </div>
 
-            <ul className="mt-8 flex gap-5">
-              {(
-                [
-                  ["Instagram", COMPANY.social.instagram],
-                  ["LinkedIn", COMPANY.social.linkedin],
-                  ["YouTube", COMPANY.social.youtube],
-                ] as const
-              ).map(([label, href]) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="eyebrow text-on-dark-soft transition-colors duration-300 hover:text-sand"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {/* Las URLs viven solo en `COMPANY.social`; aquí se pintan las que
+                estén confirmadas. Si algún día no hay ninguna, no queda hueco:
+                la lista entera desaparece del DOM. */}
+            {socials.length > 0 && (
+              <ul className="mt-8 flex gap-5">
+                {socials.map((social) => (
+                  <li key={social.label}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="eyebrow text-on-dark-soft transition-colors duration-300 hover:text-sand"
+                    >
+                      {social.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Navegación */}

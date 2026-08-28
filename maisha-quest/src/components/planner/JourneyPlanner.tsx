@@ -18,7 +18,7 @@ import {
   type PlannerState,
   type StepId,
 } from "@/lib/planner";
-import { COMPANY, LOCALES } from "@/lib/site";
+import { COMPANY, LOCALES, whatsappHref } from "@/lib/site";
 
 /**
  * Planificador de safari por pasos.
@@ -249,7 +249,7 @@ export function JourneyPlanner({
             Send by email
           </a>
           <a
-            href={`${COMPANY.whatsappHref}?text=${encodeURIComponent(status.summary)}`}
+            href={whatsappHref(status.summary)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-11 items-center rounded-[2px] border border-forest/35 px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"

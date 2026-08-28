@@ -100,28 +100,36 @@ export async function Testimonials() {
                   wrote ourselves.
                 </p>
                 <p className="measure mt-5 text-[0.96rem] leading-relaxed text-ink-soft">
-                  Reviews will be published here as travellers send them, each
-                  one with a link to where it was originally posted. Until then,
-                  look us up yourself — or ask, and we will put you in touch
-                  with someone who has travelled with us.
+                  {sources.length > 0
+                    ? "Reviews will be published here as travellers send them, each one with a link to where it was originally posted. Until then, look us up on the platforms below — or ask, and we will put you in touch with someone who has travelled with us."
+                    : "Reviews will be published here as travellers send them, each one with a link to where it was originally posted. Until then, ask us and we will put you in touch with someone who has travelled with us."}
                 </p>
 
-                <CompassDivider className="my-8 max-w-sm" />
-
-                <ul className="flex flex-wrap gap-x-6 gap-y-3">
-                  {sources.map((source) => (
-                    <li key={source.label}>
-                      <a
-                        href={source.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
-                      >
-                        Search on {source.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                {/* Los perfiles de reseñas solo se enlazan cuando hay una URL
+                    oficial. Sin ella no queda hueco: el filete de brújula y la
+                    lista desaparecen juntos y la columna de contacto de al lado
+                    sigue haciendo el trabajo comercial. Enlazar una *búsqueda*
+                    sería peor que no enlazar: puede devolver cero resultados, o
+                    a la competencia, desde una sección que promete verificación. */}
+                {sources.length > 0 && (
+                  <>
+                    <CompassDivider className="my-8 max-w-sm" />
+                    <ul className="flex flex-wrap gap-x-6 gap-y-3">
+                      {sources.map((source) => (
+                        <li key={source.label}>
+                          <a
+                            href={source.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
+                          >
+                            {source.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
 
               <div className="lg:col-span-4 lg:col-start-9">

@@ -25,17 +25,14 @@ export const TESTIMONIALS: Testimonial[] = [];
  * a fichas concretas: no afirmamos que exista un perfil con reseñas en cada
  * plataforma, solo damos el camino para buscarlo.
  */
-export const REVIEW_SOURCES = [
-  {
-    label: "TripAdvisor",
-    href: `https://www.tripadvisor.com/Search?q=${encodeURIComponent("Maisha Quest Arusha")}`,
-  },
-  {
-    label: "SafariBookings",
-    href: `https://www.safaribookings.com/operators?q=${encodeURIComponent("Maisha Quest")}`,
-  },
-  {
-    label: "Google",
-    href: `https://www.google.com/search?q=${encodeURIComponent("Maisha Quest Arusha reviews")}`,
-  },
-];
+/**
+ * Perfiles públicos donde un viajero puede comprobar las reseñas por su cuenta.
+ *
+ * VACÍO A PROPÓSITO. Aquí había tres enlaces a *búsquedas* genéricas
+ * ("buscar Maisha Quest en TripAdvisor"). Una búsqueda no es una reseña: puede
+ * devolver cero resultados —o directamente a la competencia— desde una sección
+ * que promete verificación. Se rellena cuando el cliente confirme las URLs
+ * exactas de sus perfiles; hasta entonces la interfaz no pinta la lista y
+ * ofrece hablar con el equipo, que sí es una acción real.
+ */
+export const REVIEW_SOURCES: { label: string; href: string }[] = [];

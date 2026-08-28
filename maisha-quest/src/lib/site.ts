@@ -24,17 +24,30 @@ export const COMPANY = {
   phoneHref: "tel:+255672426411",
   /** El número facilitado es el de contacto; confirmar que tiene WhatsApp Business activo. */
   whatsappHref: "https://wa.me/255672426411",
+  whatsappNumber: "255672426411",
   email: "info@maishaquest.com",
   emailHref: "mailto:info@maishaquest.com",
   hours: {
     label: "Monday – Saturday, 8:00 AM – 6:00 PM",
     timezone: "GMT+3",
   },
+  /**
+   * Perfiles sociales — ÚNICO sitio donde viven estas URLs.
+   *
+   * Verificadas contra la web oficial anterior de Maisha Quest. Ningún
+   * componente las escribe a mano: todos pasan por `socialLinks()`, así que
+   * cambiar un perfil se hace aquí y en ningún sitio más.
+   *
+   * `null` significa "no confirmada" y el enlace NO se pinta: ni `href="#"`,
+   * ni botón desactivado, ni icono muerto.
+   */
   social: {
-    instagram: "https://www.instagram.com/maishaquest/",
-    linkedin: "https://www.linkedin.com/company/maishaquest/",
+    instagram:
+      "https://www.instagram.com/maishaquest?igsh=MThwamk4OWNxM21ieg%3D%3D&utm_source=qr",
+    linkedin: "https://www.linkedin.com/in/maisha-quest-817ab6311/",
     youtube: "https://www.youtube.com/@MaishaQuest",
-  },
+    facebook: null,
+  } as Record<string, string | null>,
   /**
    * TODO (cliente): licencias TALA/TATO, seguros, años en operación y número de
    * viajeros atendidos. La sección "Your journey, in trusted hands" tiene el
@@ -191,3 +204,74 @@ export const TRUST_PILLARS = [
  * reales confirmados por el cliente.
  */
 export const TRUST_CREDENTIALS: { label: string; value: string }[] = [];
+
+
+/**
+ * Redes sociales con URL confirmada, en orden de presentación.
+ *
+ * Devuelve solo las que existen. Si el cliente no ha confirmado ninguna la
+ * lista viene vacía y quien la pinta no renderiza nada: ni enlaces a `#`, ni
+ * botones desactivados, ni iconos muertos.
+ */
+export function socialLinks(): { label: string; href: string }[] {
+  const order: [string, string | null][] = [
+    ["Instagram", COMPANY.social.instagram],
+    ["LinkedIn", COMPANY.social.linkedin],
+    ["YouTube", COMPANY.social.youtube],
+    ["Facebook", COMPANY.social.facebook],
+  ];
+  return order
+    .filter((entry): entry is [string, string] => Boolean(entry[1]))
+    .map(([label, href]) => ({ label, href }));
+}
+
+/**
+ * Enlace de WhatsApp con el mensaje inicial ya escrito.
+ *
+ * El texto va codificado con `encodeURIComponent`, así que acentos, signos de
+ * apertura y caracteres no latinos sobreviven al viaje. Sin mensaje devuelve
+ * el enlace pelado en lugar de un `?text=` vacío.
+ */
+export function whatsappHref(message?: string): string {
+  const base = `https://wa.me/${COMPANY.whatsappNumber}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
+/** Mensaje que se precarga en WhatsApp, por idioma. */
+export const WHATSAPP_MESSAGE: Record<string, string> = {
+  en: "Hello Maisha Quest, I would like help planning a safari in Tanzania.",
+  es: "Hola Maisha Quest, me gustaría recibir ayuda para planificar un safari en Tanzania.",
+  de: "Hallo Maisha Quest, ich hätte gern Hilfe bei der Planung einer Safari in Tansania.",
+  fr: "Bonjour Maisha Quest, j\u2019aimerais de l\u2019aide pour organiser un safari en Tanzanie.",
+  ru: "Здравствуйте, Maisha Quest! Мне нужна помощь в планировании сафари в Танзании.",
+  "zh-CN": "您好 Maisha Quest，我想请你们帮忙规划一次坦桑尼亚野生动物之旅。",
+};
+
+/**
+ * Datos que faltan por confirmar con el cliente.
+ *
+ * Lista viva de lo que hoy no se puede publicar porque no está verificado.
+ * Nada de esto se inventa ni se sustituye por un sucedáneo: si no hay dato, el
+ * elemento no se pinta.
+ */
+export const CLIENT_DATA_PENDING = [
+  {
+    key: "reviews.profiles",
+    label: "URLs oficiales de TripAdvisor, SafariBookings y Google Business",
+    note:
+      "La web anterior no contiene ninguna. Los tres botones están ocultos por " +
+      "completo: una búsqueda genérica no es una reseña y puede devolver a la " +
+      "competencia. Rellenar REVIEW_SOURCES en data/testimonials.ts cuando el " +
+      "cliente facilite los enlaces oficiales.",
+  },
+  {
+    key: "whatsapp.business",
+    label: "Confirmar que +255 672 426 411 tiene WhatsApp Business activo",
+    note: "El enlace wa.me se construye con ese número.",
+  },
+  {
+    key: "trust.credentials",
+    label: "Licencias TALA/TATO, seguros y años en operación",
+    note: "TRUST_CREDENTIALS sigue vacío y la franja no se pinta.",
+  },
+] as const;

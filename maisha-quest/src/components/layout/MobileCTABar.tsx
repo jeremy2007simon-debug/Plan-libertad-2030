@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { COMPANY } from "@/lib/site";
+import { whatsappHref, WHATSAPP_MESSAGE } from "@/lib/site";
 
 /**
  * Barra de acción persistente en móvil.
@@ -44,7 +44,7 @@ export function MobileCTABar() {
           Plan My Safari
         </Link>
         <a
-          href={COMPANY.whatsappHref}
+          href={whatsappHref(WHATSAPP_MESSAGE.en)}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Message Maisha Quest on WhatsApp"

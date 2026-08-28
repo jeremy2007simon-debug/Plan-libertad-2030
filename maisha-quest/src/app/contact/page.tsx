@@ -6,7 +6,14 @@ import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { PHOTOS } from "@/data/photography";
-import { COMPANY, HOME_COORDINATES, LOCALES } from "@/lib/site";
+import {
+  COMPANY,
+  HOME_COORDINATES,
+  LOCALES,
+  socialLinks,
+  whatsappHref,
+  WHATSAPP_MESSAGE,
+} from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -16,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const socials = socialLinks();
   const spokenLanguages = LOCALES.filter((locale) =>
     ["en", "ru", "zh"].includes(locale.code),
   );
@@ -59,7 +67,7 @@ export default function ContactPage() {
                   <dt className="eyebrow text-ink-faint">WhatsApp</dt>
                   <dd className="mt-2">
                     <a
-                      href={COMPANY.whatsappHref}
+                      href={whatsappHref(WHATSAPP_MESSAGE.en)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2.5 text-[1rem] text-forest transition-colors duration-300 hover:text-terracotta"
@@ -101,25 +109,21 @@ export default function ContactPage() {
                 </div>
               </dl>
 
-              <div className="mt-10 flex flex-wrap gap-5">
-                {(
-                  [
-                    ["Instagram", COMPANY.social.instagram],
-                    ["LinkedIn", COMPANY.social.linkedin],
-                    ["YouTube", COMPANY.social.youtube],
-                  ] as const
-                ).map(([label, href]) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="eyebrow text-ink-soft transition-colors duration-300 hover:text-terracotta"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </div>
+              {socials.length > 0 && (
+                <div className="mt-10 flex flex-wrap gap-5">
+                  {socials.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="eyebrow text-ink-soft transition-colors duration-300 hover:text-terracotta"
+                    >
+                      {social.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="lg:col-span-5 lg:col-start-8">

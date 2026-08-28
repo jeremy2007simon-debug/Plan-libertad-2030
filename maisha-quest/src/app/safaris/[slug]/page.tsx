@@ -75,6 +75,7 @@ export default async function SafariPage({
   ]);
 
   const relatedSafaris = related.filter((s) => s !== undefined);
+  const reviewSources = getReviewSources();
   const price = formatPrice(safari);
   const relatedTestimonials = testimonials.filter(
     (t) => t.safariSlug === safari.slug,
@@ -338,20 +339,24 @@ export default async function SafariPage({
                 not going to write one ourselves. Ask and we will put you in
                 touch with travellers who have done it.
               </p>
-              <ul className="flex flex-wrap gap-x-6 gap-y-2">
-                {getReviewSources().map((source) => (
-                  <li key={source.label}>
-                    <a
-                      href={source.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] hover:text-terracotta"
-                    >
-                      Search on {source.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {/* Sin URL oficial de perfil no se enlaza nada: una búsqueda
+                  genérica no es una reseña. La lista desaparece entera. */}
+              {reviewSources.length > 0 && (
+                <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                  {reviewSources.map((source) => (
+                    <li key={source.label}>
+                      <a
+                        href={source.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] hover:text-terracotta"
+                      >
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
         </Container>
