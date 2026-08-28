@@ -45,7 +45,7 @@ export const ru: Dictionary = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest — главная",
+    homeLabel: "Maisha Quest Tanzania — на главную",
     mainNavLabel: "Основная навигация",
     menu: "Меню",
     close: "Закрыть",

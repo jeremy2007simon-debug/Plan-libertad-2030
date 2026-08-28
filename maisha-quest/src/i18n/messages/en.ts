@@ -33,7 +33,7 @@ export const en = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest — home",
+    homeLabel: "Maisha Quest Tanzania — home",
     mainNavLabel: "Main",
     menu: "Menu",
     close: "Close",

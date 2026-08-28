@@ -16,7 +16,14 @@ export function Logo({
   className = "",
 }: {
   locale: Locale;
-  /** "Maisha Quest — home", ya traducido. La marca nunca se traduce. */
+  /**
+   * "Maisha Quest Tanzania — inicio", ya traducido. La marca no se traduce.
+   *
+   * TIENE que empezar por el texto que se ve. Decía solo "Maisha Quest — home"
+   * y el descriptor "Tanzania" quedaba fuera: quien maneja el navegador por
+   * voz y dice «Maisha Quest Tanzania» —lo que lee en pantalla— no acertaba el
+   * enlace. Es el criterio de WCAG 2.5.3, «etiqueta en el nombre».
+   */
   homeLabel: string;
   /** `light` = tinta oscura sobre marfil. `dark` = marfil sobre verde/foto. */
   tone?: "light" | "dark";

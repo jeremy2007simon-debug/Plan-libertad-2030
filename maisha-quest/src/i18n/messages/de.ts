@@ -32,7 +32,7 @@ export const de: Dictionary = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest — Startseite",
+    homeLabel: "Maisha Quest Tanzania — Startseite",
     mainNavLabel: "Hauptnavigation",
     menu: "Menü",
     close: "Schließen",

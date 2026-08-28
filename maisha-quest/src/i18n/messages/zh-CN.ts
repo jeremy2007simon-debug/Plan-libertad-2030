@@ -36,7 +36,7 @@ export const zhCN: Dictionary = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest — 首页",
+    homeLabel: "Maisha Quest Tanzania — 首页",
     mainNavLabel: "主导航",
     menu: "菜单",
     close: "关闭",
