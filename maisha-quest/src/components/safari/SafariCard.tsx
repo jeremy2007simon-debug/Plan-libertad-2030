@@ -17,13 +17,13 @@ export function SafariCard({
   locale,
   t,
   sizes = "(max-width: 768px) 88vw, (max-width: 1280px) 44vw, 30vw",
-  priority = false,
+  preload = false,
 }: {
   safari: Safari;
   locale: Locale;
   t: Dictionary;
   sizes?: string;
-  priority?: boolean;
+  preload?: boolean;
 }) {
   const price = formatPrice(locale, safari);
 
@@ -39,7 +39,7 @@ export function SafariCard({
           photo={safari.image}
           alt=""
           sizes={sizes}
-          priority={priority}
+          preload={preload}
           className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05] group-focus-visible:scale-[1.05]"
         />
         <span className="absolute left-4 top-4 bg-parchment/92 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.08em] text-forest uppercase">

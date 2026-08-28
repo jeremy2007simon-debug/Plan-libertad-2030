@@ -14,7 +14,7 @@ export function Photo({
   photo,
   className = "",
   sizes = "100vw",
-  priority = false,
+  preload = false,
   quality,
   /** Alt alternativo cuando el contexto ya describe la imagen mejor. */
   alt,
@@ -22,7 +22,16 @@ export function Photo({
   photo: PhotoType;
   className?: string;
   sizes?: string;
-  priority?: boolean;
+  /**
+   * Solo para la imagen que es el LCP de la página.
+   *
+   * `priority` quedó obsoleto en Next 16 a favor de `preload`, y ya no marca
+   * la prioridad de red: el `<link rel="preload">` salía sin
+   * `fetchpriority="high"` y Lighthouse lo señalaba. Van los tres juntos —
+   * preload, carga inmediata y prioridad alta— porque es lo que de verdad
+   * adelanta el pintado del hero.
+   */
+  preload?: boolean;
   /** Calidad de compresión. Por defecto la de Next (75). */
   quality?: number;
   alt?: string;
@@ -33,7 +42,9 @@ export function Photo({
       alt={alt ?? photo.alt}
       fill
       sizes={sizes}
-      priority={priority}
+      preload={preload}
+      loading={preload ? "eager" : "lazy"}
+      fetchPriority={preload ? "high" : undefined}
       quality={quality}
       placeholder="blur"
       blurDataURL={photo.blurDataURL}
@@ -61,13 +72,14 @@ export function MediaFrame({
   media,
   className = "",
   sizes = "100vw",
-  priority = false,
+  preload = false,
   quality,
 }: {
   media: MediaImage | PhotoType;
   className?: string;
   sizes?: string;
-  priority?: boolean;
+  /** Ver `Photo`: solo para el LCP. */
+  preload?: boolean;
   /** Calidad de compresión. Por defecto la de Next (75). */
   quality?: number;
 }) {
@@ -79,7 +91,9 @@ export function MediaFrame({
       alt={media.alt}
       fill
       sizes={sizes}
-      priority={priority}
+      preload={preload}
+      loading={preload ? "eager" : "lazy"}
+      fetchPriority={preload ? "high" : undefined}
       quality={quality}
       {...(blur ? { placeholder: "blur" as const, blurDataURL: blur } : {})}
       style={media.objectPosition ? { objectPosition: media.objectPosition } : undefined}

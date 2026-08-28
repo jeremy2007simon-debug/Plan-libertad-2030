@@ -45,7 +45,7 @@ export function PageHero({
     <section className="relative isolate flex min-h-[64svh] items-end overflow-hidden bg-charcoal">
       <div className="absolute inset-0 -z-10">
         <ParallaxMedia strength={22} className="absolute -inset-y-8 inset-x-0">
-          <Photo photo={image} alt="" sizes="100vw" priority className="scale-105" />
+          <Photo photo={image} alt="" sizes="100vw" preload className="scale-105" />
         </ParallaxMedia>
         <div className="media-scrim absolute inset-0" />
         <div className="media-scrim-side absolute inset-0" />

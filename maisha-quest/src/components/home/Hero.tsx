@@ -25,7 +25,7 @@ import type { MediaVideo } from "@/types/content";
  * móvil no hay ninguno: `background-attachment: fixed` no funciona en iOS y
  * un paralaje por scroll a esa altura de imagen se ve a tirones.
  *
- * La imagen lleva `priority`: es el LCP de la página y debe empezar a
+ * La imagen lleva `preload`: es el LCP de la página y debe empezar a
  * descargarse en el primer viaje al servidor.
  *
  * VÍDEO: el cliente entregó dos vídeos verticales sin comprimir; ninguno sirve
@@ -54,7 +54,7 @@ export function Hero({
       <div className="absolute inset-0 -z-10">
         <ParallaxMedia strength={34} className="absolute -inset-y-12 inset-x-0">
           <div className="animate-hero-zoom absolute inset-0 origin-center">
-            <Photo photo={image} priority sizes="100vw" />
+            <Photo photo={image} preload sizes="100vw" />
           </div>
         </ParallaxMedia>
         {video?.mp4 && (
