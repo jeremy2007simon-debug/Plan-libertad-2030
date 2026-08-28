@@ -45,7 +45,8 @@ export const ru: Dictionary = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest Tanzania — на главную",
+    /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
+    homeLabel: "— на главную",
     mainNavLabel: "Основная навигация",
     menu: "Меню",
     close: "Закрыть",

@@ -19,10 +19,13 @@ export function Logo({
   /**
    * "Maisha Quest Tanzania — inicio", ya traducido. La marca no se traduce.
    *
-   * TIENE que empezar por el texto que se ve. Decía solo "Maisha Quest — home"
-   * y el descriptor "Tanzania" quedaba fuera: quien maneja el navegador por
-   * voz y dice «Maisha Quest Tanzania» —lo que lee en pantalla— no acertaba el
-   * enlace. Es el criterio de WCAG 2.5.3, «etiqueta en el nombre».
+   * Solo se usa como ETIQUETA VISIBLE PARA LECTORES, no como `aria-label`.
+   * Con `aria-label` el nombre accesible sustituía al texto de la marca, y ni
+   * la mayúscula del descriptor ni el hecho de que los dos rótulos se
+   * concatenan sin espacio ("Maisha QuestTanzania") coincidían con él: quien
+   * maneja el navegador por voz y dice lo que lee en pantalla no acertaba el
+   * enlace. Es el criterio 2.5.3 de WCAG, «etiqueta en el nombre». Dejando que
+   * el nombre salga del propio texto, no pueden discrepar.
    */
   homeLabel: string;
   /** `light` = tinta oscura sobre marfil. `dark` = marfil sobre verde/foto. */
@@ -35,7 +38,6 @@ export function Logo({
   return (
     <Link
       href={localeHref(locale, "/")}
-      aria-label={homeLabel}
       // `min-h-11`: el logotipo es el enlace a la portada y su zona táctil
       // medía 28 px de alto en móvil.
       className={`group inline-flex min-h-11 items-center gap-3 ${color} ${className}`}
@@ -53,6 +55,10 @@ export function Logo({
           Tanzania
         </span>
       </span>
+      {/* «— inicio», solo para lectores de pantalla: sin esto el enlace se
+          anunciaría como el nombre de la marca a secas y no se sabría que
+          lleva a la portada. */}
+      <span className="sr-only">{homeLabel}</span>
     </Link>
   );
 }

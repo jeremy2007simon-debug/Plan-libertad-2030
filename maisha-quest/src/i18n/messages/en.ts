@@ -33,7 +33,8 @@ export const en = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest Tanzania — home",
+    /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
+    homeLabel: "— home",
     mainNavLabel: "Main",
     menu: "Menu",
     close: "Close",

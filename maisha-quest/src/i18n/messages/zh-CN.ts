@@ -36,7 +36,8 @@ export const zhCN: Dictionary = {
   },
 
   nav: {
-    homeLabel: "Maisha Quest Tanzania — 首页",
+    /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
+    homeLabel: "— 首页",
     mainNavLabel: "主导航",
     menu: "菜单",
     close: "关闭",
