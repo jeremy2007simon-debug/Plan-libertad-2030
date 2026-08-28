@@ -283,11 +283,21 @@ export function MotionScript() {
   }
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(frame);}}
 
+  // Cada barrido marca lo que ya ha visto. Sin esa marca, el observador de
+  // mutaciones —que dispara con cada lote de cambios de React durante la
+  // hidratación— volvía a recorrer y a observar el árbol entero cada vez, y
+  // eso salía en el perfil como estilo y layout forzados.
   function scan(){
     var nodes=document.querySelectorAll(SEL);
-    for(var i=0;i<nodes.length;i++)io.observe(nodes[i]);
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i];
+      if(n.__mqSeen)continue;
+      n.__mqSeen=1;
+      io.observe(n);
+    }
     if(!wantsParallax)return;
     var ps=document.querySelectorAll('[data-parallax]');
+    if(ps.length===px.length)return;
     px.length=0;
     for(var j=0;j<ps.length;j++){ps[j].__mq=parseFloat(ps[j].getAttribute('data-parallax'))||0;px.push(ps[j]);}
     if(px.length){window.addEventListener('scroll',onScroll,{passive:true});onScroll();}
