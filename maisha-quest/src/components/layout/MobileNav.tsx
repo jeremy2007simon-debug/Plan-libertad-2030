@@ -92,7 +92,7 @@ export function MobileNav({
         aria-expanded={open}
         aria-label={t.openMenu}
         className={`flex min-h-11 items-center gap-2.5 px-2 lg:hidden ${
-          dark ? "text-ivory" : "text-forest"
+          dark ? "text-parchment" : "text-forest"
         }`}
       >
         <span className="eyebrow">{t.menu}</span>
@@ -108,7 +108,7 @@ export function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label={t.siteMenu}
-          className="fixed inset-0 z-[60] flex flex-col bg-forest text-ivory lg:hidden"
+          className="fixed inset-0 z-[60] flex flex-col bg-forest text-parchment lg:hidden"
         >
           <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between px-5 sm:px-8">
             <span className="flex items-center gap-3">
@@ -124,7 +124,7 @@ export function MobileNav({
                   triggerRef.current?.focus();
                 }}
                 aria-label={t.closeMenu}
-                className="flex min-h-11 items-center gap-2.5 px-2 text-ivory"
+                className="flex min-h-11 items-center gap-2.5 px-2 text-parchment"
               >
                 <span className="eyebrow">{t.close}</span>
                 <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true">
@@ -148,7 +148,7 @@ export function MobileNav({
                 <li key={item.key} className="border-b border-rule-on-dark/45">
                   <Link
                     href={localeHref(locale, item.href)}
-                    className="flex min-h-14 items-center font-display text-[1.6rem] text-ivory"
+                    className="flex min-h-14 items-center font-display text-[1.6rem] text-parchment"
                   >
                     {t.items[item.key as keyof typeof t.items]}
                   </Link>

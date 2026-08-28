@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -62,7 +62,7 @@ export default async function DestinationsPage({
 
             return (
               <section key={region} className="mb-16 last:mb-0">
-                <h2 className="eyebrow border-b border-rule pb-4 text-terracotta">
+                <h2 className="eyebrow border-b border-rule pb-4 text-terracotta-text">
                   {t.regions[region]}
                 </h2>
                 {/* Una región con un solo destino se presenta apaisada. En la
@@ -107,7 +107,7 @@ export default async function DestinationsPage({
                           </div>
                           <div className={inRegion.length === 1 ? "" : "contents"}>
                             <h3
-                              className={`font-display mt-5 text-[1.5rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta ${
+                              className={`font-display mt-5 text-[1.5rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta-text ${
                                 inRegion.length === 1 ? "md:mt-0" : ""
                               }`}
                             >

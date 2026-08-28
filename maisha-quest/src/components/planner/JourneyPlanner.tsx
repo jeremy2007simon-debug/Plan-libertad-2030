@@ -261,7 +261,7 @@ export function JourneyPlanner({
   if (status.kind === "unconfigured") {
     return (
       <Panel>
-        <CompassMark className="size-12 text-terracotta" />
+        <CompassMark className="size-12 text-terracotta-text" />
         <h2 className="text-h2 mt-7 text-forest">
           {t.status.unconfiguredTitle}
         </h2>
@@ -305,17 +305,23 @@ export function JourneyPlanner({
   const progress = ((stepIndex + 1) / STEPS.length) * 100;
 
   return (
-    <div className="bg-ivory-warm">
-      {/* Indicador de progreso */}
+    <div className="border border-rule bg-cream">
+      {/* Indicador de progreso: una ruta, no una barra de carga.
+
+          El filete es el camino y el punto de brújula avanza por él. Se anima
+          `transform: translateX` sobre el punto —no el `width` de la barra—
+          para no recalcular el layout de la fila en cada paso; la barra de
+          relleno sí crece, pero está sola dentro de su contenedor y no arrastra
+          a nada. */}
       <div className="border-b border-rule px-6 py-5 sm:px-10">
         <div className="flex items-baseline justify-between gap-4">
-          <p className="eyebrow text-terracotta">
+          <p className="eyebrow text-terracotta-text">
             {fill(t.stepOf, { n: stepIndex + 1, total: STEPS.length })}
           </p>
           <p className="eyebrow text-ink-faint">{step.label}</p>
         </div>
         <div
-          className="mt-3 h-px w-full bg-rule"
+          className="relative mt-4 h-px w-full bg-rule"
           role="progressbar"
           aria-valuenow={stepIndex + 1}
           aria-valuemin={1}
@@ -323,9 +329,16 @@ export function JourneyPlanner({
           aria-label={t.progress}
         >
           <div
-            className="h-px bg-terracotta transition-[width] duration-500 ease-out"
+            className="h-px bg-terracotta transition-[width] duration-[var(--dur-base)] ease-[var(--ease-out)]"
             style={{ width: `${progress}%` }}
           />
+          <span
+            aria-hidden="true"
+            className="absolute top-1/2 -ml-[7px] -translate-y-1/2 text-terracotta transition-transform duration-[var(--dur-base)] ease-[var(--ease-out)]"
+            style={{ transform: `translate(${progress}%, -50%)`, left: 0, width: "100%" }}
+          >
+            <CompassMark className="size-3.5" needle={false} />
+          </span>
         </div>
 
         {/* Pasos ya completados: se puede volver a cualquiera. */}
@@ -340,7 +353,7 @@ export function JourneyPlanner({
                   index === stepIndex
                     ? "text-forest"
                     : index < stepIndex
-                      ? "text-ink-faint hover:text-terracotta"
+                      ? "text-ink-faint hover:text-terracotta-text"
                       : "text-ink-faint/45"
                 }`}
               >
@@ -702,7 +715,7 @@ export function JourneyPlanner({
 
 function Panel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-ivory-warm px-6 py-14 sm:px-12 sm:py-16">{children}</div>
+    <div className="bg-cream px-6 py-14 sm:px-12 sm:py-16">{children}</div>
   );
 }
 
@@ -740,7 +753,7 @@ function Field({
             en el propio campo. */}
         {required && (
           <>
-            <span aria-hidden="true" className="ml-1 text-terracotta">
+            <span aria-hidden="true" className="ml-1 text-terracotta-text">
               *
             </span>
             <span className="sr-only"> {requiredLabel}</span>
@@ -981,7 +994,7 @@ function Review({
           <button
             type="button"
             onClick={() => onEdit(STEPS.indexOf(row.step))}
-            className="text-[0.75rem] tracking-[0.06em] text-ink-faint uppercase underline underline-offset-4 transition-colors duration-300 hover:text-terracotta"
+            className="text-[0.75rem] tracking-[0.06em] text-ink-faint uppercase underline underline-offset-4 transition-colors duration-300 hover:text-terracotta-text"
           >
             {t.review.edit}
           </button>
@@ -1002,10 +1015,10 @@ function ContactFallback({
     <div className={`border-t border-rule pt-7 ${className}`}>
       <p className="eyebrow text-ink-faint">{label}</p>
       <div className="mt-3 flex flex-col gap-1.5 text-[0.95rem]">
-        <a href={COMPANY.phoneHref} className="text-forest hover:text-terracotta">
+        <a href={COMPANY.phoneHref} className="text-forest hover:text-terracotta-text">
           {COMPANY.phone}
         </a>
-        <a href={COMPANY.emailHref} className="text-forest hover:text-terracotta">
+        <a href={COMPANY.emailHref} className="text-forest hover:text-terracotta-text">
           {COMPANY.email}
         </a>
         <p className="mt-1 text-[0.85rem] text-ink-faint">

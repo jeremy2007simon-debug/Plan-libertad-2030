@@ -32,6 +32,7 @@ export interface MapStrings {
   wildlife: string;
   experiences: string;
   journeysHere: string;
+  chooseDestination: string;
 }
 
 /**
@@ -138,40 +139,64 @@ export function MapExplorer({
               />
             </g>
 
-            {/* País */}
+            {/* País.
+
+                Dos capas: el relleno aparece con una transición de opacidad y
+                el contorno se DIBUJA con `stroke-dashoffset`. `pathLength=1`
+                normaliza la longitud, así que no hace falta medir el trazado
+                en JavaScript. Sin JavaScript, o con movimiento reducido, la
+                silueta se ve terminada desde el primer momento. */}
             {Object.entries(TANZANIA_PATHS).map(([key, d]) => (
               <path
-                key={key}
+                key={`${key}-fill`}
                 d={d}
-                className="fill-sand/25 stroke-forest/45"
+                data-reveal=""
+                data-reveal-from="none"
+                className="fill-parchment"
+              />
+            ))}
+            {Object.entries(TANZANIA_PATHS).map(([key, d], index) => (
+              <path
+                key={`${key}-line`}
+                d={d}
+                pathLength={1}
+                data-draw=""
+                fill="none"
+                className="stroke-forest/55"
                 strokeWidth="1.6"
                 strokeLinejoin="round"
+                style={
+                  {
+                    "--draw-duration": "2.2s",
+                    "--draw-delay": `${index * 0.12}s`,
+                  } as React.CSSProperties
+                }
               />
             ))}
 
             {/* Ruta del viaje relacionado */}
             {routeLine && (
               <g key={routeLine.key}>
+                {/* La ruta se traza cada vez que cambia el destino activo:
+                    el `key` del grupo fuerza el remontaje y la animación
+                    arranca de cero. No se repite en bucle. */}
                 <path
                   d={routeLine.d}
+                  pathLength={1}
                   fill="none"
-                  className="stroke-terracotta"
+                  className="animate-route stroke-terracotta"
                   strokeWidth="2.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="6 9"
-                  style={{
-                    strokeDashoffset: 0,
-                    animation: "mq-fade 900ms var(--ease-out) both",
-                  }}
                 />
-                {routeLine.stops.map((stop) => (
+                {routeLine.stops.map((stop, index) => (
                   <circle
                     key={stop.slug}
                     cx={stop.mapPosition.x}
                     cy={stop.mapPosition.y}
                     r="5"
-                    className="fill-terracotta"
+                    className="animate-fade fill-terracotta"
+                    style={{ animationDelay: `${400 + index * 180}ms` }}
                   />
                 ))}
               </g>
@@ -187,17 +212,26 @@ export function MapExplorer({
                 type="button"
                 onClick={() => setActiveSlug(destination.slug)}
                 aria-pressed={isActive}
-                className="group absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 p-2"
+                /* La etiqueta va a la derecha del punto salvo en el tercio
+                   oriental del mapa, donde se voltea a la izquierda: si no,
+                   Kilimanjaro y Arusha —que caen casi en el borde— escriben
+                   sus nombres encima del vecino. `flex-row-reverse` mantiene
+                   el mismo marcado y el mismo orden de lectura. */
+                className={`group absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 p-2 ${
+                  destination.mapPosition.x > MAP_VIEWBOX.width * 0.66
+                    ? "flex-row-reverse"
+                    : ""
+                }`}
                 style={{
                   left: `${(destination.mapPosition.x / MAP_VIEWBOX.width) * 100}%`,
                   top: `${(destination.mapPosition.y / MAP_VIEWBOX.height) * 100}%`,
                 }}
               >
                 <span
-                  className={`block size-2.5 rotate-45 border transition-all duration-500 ease-out ${
+                  className={`block size-2.5 rotate-45 border transition-all duration-500 ease-[var(--ease-out)] ${
                     isActive
-                      ? "scale-125 border-terracotta bg-terracotta"
-                      : "border-forest/60 bg-ivory group-hover:border-terracotta group-hover:bg-terracotta/25"
+                      ? "animate-point-pulse scale-125 border-terracotta bg-terracotta"
+                      : "border-forest/60 bg-cream group-hover:border-terracotta group-hover:bg-terracotta/25"
                   }`}
                 />
                 <span
@@ -217,7 +251,7 @@ export function MapExplorer({
 
       {/* Selector en lista — la alternativa accesible en móvil */}
       <div className="lg:hidden">
-        <p className="eyebrow mb-3 text-ink-faint">Choose a destination</p>
+        <p className="eyebrow mb-3 text-ink-faint">{t.chooseDestination}</p>
         <ul className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 pb-1">
           {destinations.map((destination) => {
             const isActive = destination.slug === active.slug;
@@ -245,7 +279,7 @@ export function MapExplorer({
       <div className="lg:col-span-6 xl:col-span-5">
         {/* `key` fuerza el remontaje: la ficha entra con una transición suave
             en lugar de cambiar el texto de golpe. */}
-        <article key={active.slug} className="animate-fade">
+        <article key={active.slug} className="animate-panel-in">
           <div className="relative aspect-3/2 overflow-hidden">
             <Image
               src={active.image.src}
@@ -256,7 +290,7 @@ export function MapExplorer({
               blurDataURL={active.image.blurDataURL}
               className="object-cover"
             />
-            <div className="absolute left-4 top-4 flex items-center gap-2 bg-ivory/92 px-3 py-1.5">
+            <div className="absolute left-4 top-4 flex items-center gap-2 bg-parchment/92 px-3 py-1.5">
               <CompassMark className="size-3.5 text-gold" needle={false} />
               <span className="tnum text-[0.68rem] tracking-[0.1em] text-forest">
                 {active.coordinates}
@@ -264,7 +298,7 @@ export function MapExplorer({
             </div>
           </div>
 
-          <p className="eyebrow mt-6 text-terracotta">{active.region}</p>
+          <p className="eyebrow mt-6 text-terracotta-text">{active.region}</p>
           <h3 className="text-h2 mt-2.5 text-forest">{active.name}</h3>
           <p className="measure mt-4 text-[0.98rem] leading-relaxed text-ink-soft">
             {active.description}
@@ -305,7 +339,7 @@ export function MapExplorer({
                   <li key={safari.slug}>
                     <Link
                       href={localeHref(locale, `/safaris/${safari.slug}`)}
-                      className="flex items-baseline justify-between gap-4 py-3 transition-colors duration-300 hover:text-terracotta"
+                      className="flex items-baseline justify-between gap-4 py-3 transition-colors duration-300 hover:text-terracotta-text"
                     >
                       <span className="font-display text-[1.08rem] text-forest">
                         {safari.name}
@@ -322,7 +356,7 @@ export function MapExplorer({
 
           <Link
             href={localeHref(locale, `/destinations/${active.slug}`)}
-            className="mt-7 inline-flex text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
+            className="mt-7 inline-flex text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta-text hover:decoration-terracotta-text"
           >
             {active.moreOnLabel}
           </Link>

@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { LazyVideo } from "@/components/ui/LazyVideo";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { AnimatedLine, ImageReveal, Reveal, Stagger } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
@@ -46,18 +46,25 @@ export const JOURNEY_FILM: MediaVideo = {
 export function VideoStory({ locale, t }: { locale: Locale; t: Dictionary }) {
   const threads = t.home.film.threads;
   return (
-    <section className="dark-section relative isolate overflow-hidden bg-forest-deep py-24 text-on-dark sm:py-32">
+    <section className="dark-section relative isolate overflow-hidden bg-canopy py-20 text-on-dark sm:py-24">
       {/* Fondo fotográfico muy atenuado: da profundidad sin competir. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-25">
         <Photo photo={PHOTOS["tarangire-baobab"]} alt="" sizes="100vw" />
-        <div className="absolute inset-0 bg-forest-deep/70" />
+        <div className="absolute inset-0 bg-canopy/70" />
       </div>
+      {/* Halo cálido detrás del vídeo: una sola luz muy abierta, del color de
+          la hora dorada. Es un degradado radial, no un filtro — no cuesta
+          repintados y no se nota en móvil. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -z-10 h-[46rem] w-[46rem] -translate-x-1/3 -translate-y-1/4 rounded-full bg-[radial-gradient(circle,rgba(196,147,79,0.16),transparent_62%)] lg:left-[18%] lg:top-1/2"
+      />
 
       <Container width="wide">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Vídeo vertical */}
-          <Reveal className="lg:col-span-5">
-            <div className="mx-auto w-full max-w-[22rem] lg:max-w-none">
+          <ImageReveal className="mx-auto w-full max-w-[22rem] lg:col-span-5 lg:max-w-none">
+            <div className="w-full">
               <LazyVideo
                 video={JOURNEY_FILM}
                 label={t.home.film.watch}
@@ -69,36 +76,45 @@ export function VideoStory({ locale, t }: { locale: Locale; t: Dictionary }) {
                 className="relative aspect-9/16 w-full bg-charcoal"
               />
             </div>
-          </Reveal>
+          </ImageReveal>
 
           {/* Texto */}
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal>
               <p className="eyebrow text-sand">{t.home.film.eyebrow}</p>
-              <h2 className="text-h1 mt-5 text-ivory">{t.home.film.title}</h2>
+              <h2 className="text-h1 mt-5 text-parchment">{t.home.film.title}</h2>
+            </Reveal>
 
-              <ul className="mt-10 flex flex-col divide-y divide-rule-on-dark border-y border-rule-on-dark">
+            <AnimatedLine tone="gold" className="mt-8 max-w-[12rem]" delay={0.12} />
+
+            {/* Wildlife, Culture, Adventure, Ocean y Connection entran una a
+                una, con 90 ms entre ellas: es lo que hace que se lean como
+                cinco ideas y no como una lista. */}
+            <ul className="mt-8 flex flex-col divide-y divide-rule-on-dark border-b border-rule-on-dark">
+              <Stagger as="li" step={0.09}>
                 {threads.map((thread) => (
-                  <li
+                  <span
                     key={thread.label}
                     className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4"
                   >
-                    <span className="font-display min-w-[7.5rem] text-[1.3rem] text-ivory">
+                    <span className="font-display min-w-[7.5rem] text-[1.3rem] text-parchment">
                       {thread.label}
                     </span>
                     <span className="text-[0.92rem] text-on-dark-soft">
                       {thread.note}
                     </span>
-                  </li>
+                  </span>
                 ))}
-              </ul>
+              </Stagger>
+            </ul>
 
+            <Reveal delay={0.2}>
               <ButtonLink
                 href="/experiences"
                 locale={locale}
                 variant="secondary"
                 tone="dark"
-                className="mt-9"
+                className="mt-8"
               >
                 {t.home.film.cta}
               </ButtonLink>

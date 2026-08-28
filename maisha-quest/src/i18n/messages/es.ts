@@ -738,7 +738,7 @@ export const es: Dictionary = {
 
   home: {
     hero: {
-      headline: "Viajes privados por Tanzania",
+      headline: ["Viajes privados", "por Tanzania"],
       subline: "Guiados por expertos locales. Pensados para tu historia.",
       designCta: "Diseña tu safari",
       exploreCta: "Ver los viajes",
@@ -784,6 +784,7 @@ export const es: Dictionary = {
       wildlife: "Fauna",
       experiences: "Experiencias",
       journeysHere: "Viajes que pasan por aquí",
+      chooseDestination: "Elige un destino",
       dayCount: (n: number) => (n === 1 ? "1 día" : `${n} días`),
       moreOn: (place: string) => `Más sobre ${place}`,
     },

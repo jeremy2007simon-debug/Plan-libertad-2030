@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -64,10 +64,10 @@ export default async function ExperiencesPage({
                         className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
                       />
                     </div>
-                    <p className="eyebrow mt-5 text-terracotta">
+                    <p className="eyebrow mt-5 text-terracotta-text">
                       {t.categories[experience.category]}
                     </p>
-                    <h2 className="font-display mt-2 text-[1.45rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta">
+                    <h2 className="font-display mt-2 text-[1.45rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta-text">
                       {experience.name}
                     </h2>
                     <p className="mt-2.5 text-[0.94rem] leading-relaxed text-ink-soft">

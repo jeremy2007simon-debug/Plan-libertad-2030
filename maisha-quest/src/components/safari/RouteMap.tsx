@@ -107,7 +107,7 @@ export function RouteMap({ stops }: { stops: Destination[] }) {
               cx={stop.mapPosition.x}
               cy={stop.mapPosition.y}
               r={7 * unit}
-              className="fill-ivory stroke-terracotta"
+              className="fill-parchment stroke-terracotta"
               strokeWidth={2.6 * unit}
             />
             {/* Las etiquetas alternan lado para que dos paradas próximas —el

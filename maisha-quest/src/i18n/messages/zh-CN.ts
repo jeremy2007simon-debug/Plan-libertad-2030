@@ -714,7 +714,7 @@ export const zhCN: Dictionary = {
 
   home: {
     hero: {
-      headline: "坦桑尼亚私人定制之旅",
+      headline: ["坦桑尼亚", "私人定制之旅"],
       subline: "由当地专家带领，围绕您的故事设计。",
       designCta: "定制我的行程",
       exploreCta: "浏览行程",
@@ -760,6 +760,7 @@ export const zhCN: Dictionary = {
       wildlife: "野生动物",
       experiences: "体验",
       journeysHere: "途经此地的行程",
+      chooseDestination: "选择一处目的地",
       dayCount: (n: number) => `${n} 天`,
       moreOn: (place: string) => `了解更多：${place}`,
     },

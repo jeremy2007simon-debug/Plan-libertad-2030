@@ -17,7 +17,7 @@ export default async function NotFound() {
   const t = await getDictionary(locale);
 
   return (
-    <section className="flex min-h-[70svh] items-center bg-page pt-[var(--header-h)]">
+    <section className="texture-paper relative isolate flex min-h-[70svh] items-center bg-page pt-[var(--header-h)]">
       <Container width="prose" className="py-20 text-center">
         <CompassMark className="mx-auto size-14 text-gold" />
         <h1 className="text-h1 mt-8 text-forest">{t.notFound.title}</h1>

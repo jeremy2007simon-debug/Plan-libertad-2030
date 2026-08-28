@@ -3,11 +3,31 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassPoint } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { AnimatedLine, ImageReveal, MagneticArrow, ParallaxMedia, Reveal } from "@/components/ui/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { type Locale, localeHref } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { collectionDurationRange, getCollections } from "@/lib/content";
+
+
+/** Acento por colección. Solo colorea número, filete y antetítulo. */
+const ACCENT: Record<string, { text: string; line: string; wash: string }> = {
+  explorer: {
+    text: "text-terracotta-text",
+    line: "bg-[var(--terracotta)]",
+    wash: "from-[var(--forest)]/45",
+  },
+  escape: {
+    text: "text-[var(--olive-deep)]",
+    line: "bg-[var(--olive)]",
+    wash: "from-[var(--olive)]/40",
+  },
+  enrich: {
+    text: "text-[var(--earth)]",
+    line: "bg-[var(--gold)]",
+    wash: "from-[var(--earth)]/45",
+  },
+};
 
 /**
  * Las tres colecciones Maisha.
@@ -17,6 +37,12 @@ import { collectionDurationRange, getCollections } from "@/lib/content";
  * justo lo que hoy no se distingue. La duración sale calculada de los safaris
  * reales de cada colección, no escrita a mano — si mañana se añade un viaje de
  * 14 días, el rango se actualiza solo.
+ *
+ * Cada colección lleva además su propio acento, en lugar de repetir el mismo
+ * dorado tres veces: verde profundo y terracota para Explorer, arena y oliva
+ * para Escape, tierra y dorado suave para Enrich. Es lo que hace que las tres
+ * bandas se lean como tres propuestas distintas y no como una plantilla
+ * repetida.
  */
 export async function Collections({
   locale,
@@ -28,100 +54,124 @@ export async function Collections({
   const collections = await getCollections(locale);
 
   return (
-    <section className="dark-section bg-forest py-24 text-on-dark sm:py-32">
+    <section className="texture-paper relative isolate bg-sand py-20 sm:py-24">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.collections.eyebrow}
-          tone="dark"
           title={t.home.collections.title}
           lede={t.home.collections.lede}
         >
-          <ButtonLink href="/safaris" locale={locale} variant="quiet" tone="dark">
+          <ButtonLink href="/safaris" locale={locale} variant="quiet">
             {t.common.exploreAll}
           </ButtonLink>
         </SectionHeading>
 
-        <div className="mt-16 flex flex-col gap-16 sm:gap-20">
+        <div className="mt-14 flex flex-col gap-14 sm:gap-18">
           {collections.map((collection, index) => {
             const range = t.common.durationRange(collectionDurationRange(collection));
             const flipped = index % 2 === 1;
+            const accent = ACCENT[collection.id] ?? ACCENT.explorer;
 
             return (
-              <Reveal key={collection.id}>
-                <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
-                  <Link
-                    href={localeHref(locale, `/collections/${collection.id}`)}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className={`group relative block aspect-16/10 overflow-hidden lg:col-span-7 ${
+              <article
+                key={collection.id}
+                className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14"
+              >
+                  <ImageReveal
+                    className={`aspect-16/10 lg:col-span-7 ${
                       flipped ? "lg:order-2 lg:col-start-6" : ""
                     }`}
                   >
-                    <Photo
-                      photo={collection.image}
-                      alt=""
-                      sizes="(max-width: 1024px) 100vw, 55vw"
-                      className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
-                    />
-                  </Link>
+                    <Link
+                      href={localeHref(locale, `/collections/${collection.id}`)}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="group absolute inset-0 block"
+                    >
+                      <ParallaxMedia strength={18} className="absolute -inset-y-6 inset-x-0">
+                        <Photo
+                          photo={collection.image}
+                          alt=""
+                          sizes="(max-width: 1024px) 100vw, 55vw"
+                          className="transition-transform duration-[1400ms] ease-[var(--ease-soft)] group-hover:scale-[1.04]"
+                        />
+                      </ParallaxMedia>
+                      {/* Velo del color de la colección, muy diluido: es lo que
+                          diferencia las tres bandas sin teñir la fotografía. */}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute inset-0 bg-linear-to-t to-transparent ${accent.wash}`}
+                      />
+                    </Link>
+                  </ImageReveal>
 
                   <div
                     className={`lg:col-span-5 ${
                       flipped ? "lg:order-1 lg:col-start-1" : ""
                     }`}
                   >
-                    <p className="eyebrow flex items-center gap-2.5 text-sand">
-                      <CompassPoint className="size-2.5" />
-                      {String(index + 1).padStart(2, "0")} · {range}
-                    </p>
+                    <Reveal from={flipped ? "right" : "left"}>
+                      <p className={`eyebrow flex items-center gap-2.5 ${accent.text}`}>
+                        <CompassPoint className="size-2.5" />
+                        {String(index + 1).padStart(2, "0")} · {range}
+                      </p>
+                    </Reveal>
 
-                    {/* El nombre de la colección es el titular. Antes lo era el
-                        lema, que en móvil ocupaba tres líneas de serif y dejaba
-                        "Explorer / Escape / Enrich" —lo que el visitante tiene
-                        que elegir— escondido en el antetítulo. */}
-                    <h3 className="text-h2 mt-3 text-ivory">
+                    <Reveal delay={0.08} from={flipped ? "right" : "left"}>
+                      {/* El nombre de la colección es el titular. Antes lo era
+                          el lema, que en móvil ocupaba tres líneas de serif y
+                          dejaba "Explorer / Escape / Enrich" —lo que el
+                          visitante tiene que elegir— en el antetítulo. */}
+                      <h3 className="text-h2 mt-3 text-forest">
+                        <Link
+                          href={localeHref(locale, `/collections/${collection.id}`)}
+                          className="group transition-colors duration-[var(--dur-hover)] hover:text-terracotta-text"
+                        >
+                          {collection.name}
+                        </Link>
+                      </h3>
+
+                      <p className="text-lede measure mt-3 text-ink">
+                        {collection.tagline}
+                      </p>
+                    </Reveal>
+
+                    <AnimatedLine
+                      className={`mt-6 max-w-[11rem] ${accent.line}`}
+                      delay={0.16}
+                    />
+
+                    <Reveal delay={0.2} from={flipped ? "right" : "left"}>
+                      <p className="measure mt-6 text-[0.98rem] leading-relaxed text-ink-soft">
+                        {collection.description}
+                      </p>
+
+                      <dl className="mt-6">
+                        <dt className="eyebrow text-ink-faint">{t.common.suits}</dt>
+                        <dd className="mt-1.5 text-[0.95rem] text-forest">
+                          {collection.travellerProfile}
+                        </dd>
+                      </dl>
+
+                      {/* Los rasgos van como una línea de texto: cuatro
+                          etiquetas con borde se partían en dos filas en móvil
+                          y sumaban altura sin aportar nada. */}
+                      <p className="mt-4 text-[0.85rem] leading-relaxed text-ink-faint">
+                        {collection.traits.join("  ·  ")}
+                      </p>
+
                       <Link
                         href={localeHref(locale, `/collections/${collection.id}`)}
-                        className="transition-colors duration-300 hover:text-sand"
+                        className="group mt-7 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
                       >
-                        {collection.name}
+                        <span className="border-b border-forest/30 pb-1 transition-colors duration-[var(--dur-hover)] group-hover:border-terracotta-text group-hover:text-terracotta-text">
+                          {t.home.collections.explore(collection.name)}
+                        </span>
+                        <MagneticArrow className="text-terracotta-text" />
                       </Link>
-                    </h3>
-
-                    <p className="text-lede measure mt-3 text-ivory/85">
-                      {collection.tagline}
-                    </p>
-
-                    <p className="measure mt-5 text-[0.98rem] leading-relaxed text-on-dark-soft">
-                      {collection.description}
-                    </p>
-
-                    <dl className="mt-7 border-t border-rule-on-dark pt-6">
-                      <dt className="eyebrow text-on-dark-faint">{t.common.suits}</dt>
-                      <dd className="mt-1.5 text-[0.95rem] text-ivory">
-                        {collection.travellerProfile}
-                      </dd>
-                    </dl>
-
-                    {/* Los rasgos van como una línea de texto: cuatro etiquetas
-                        con borde se partían en dos filas en móvil y sumaban
-                        altura sin aportar nada. */}
-                    <p className="mt-5 text-[0.85rem] leading-relaxed text-on-dark-faint">
-                      {collection.traits.join("  ·  ")}
-                    </p>
-
-                    <ButtonLink
-                      href={`/collections/${collection.id}`}
-                      locale={locale}
-                      variant="secondary"
-                      tone="dark"
-                      className="mt-7"
-                    >
-                      {t.home.collections.explore(collection.name)}
-                    </ButtonLink>
+                    </Reveal>
                   </div>
                 </article>
-              </Reveal>
             );
           })}
         </div>

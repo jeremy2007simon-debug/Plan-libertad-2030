@@ -28,7 +28,7 @@ export function SafariCard({
   const price = formatPrice(locale, safari);
 
   return (
-    <article className="group flex h-full flex-col bg-ivory-warm">
+    <article className="group flex h-full flex-col bg-cream">
       <Link
         href={localeHref(locale, `/safaris/${safari.slug}`)}
         tabIndex={-1}
@@ -42,7 +42,7 @@ export function SafariCard({
           priority={priority}
           className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
         />
-        <span className="absolute left-4 top-4 bg-ivory/92 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.08em] text-forest uppercase">
+        <span className="absolute left-4 top-4 bg-parchment/92 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.08em] text-forest uppercase">
           {t.common.dayCount(safari.durationDays)}
         </span>
       </Link>
@@ -51,7 +51,7 @@ export function SafariCard({
         <h3 className="font-display text-[1.45rem] leading-tight text-forest">
           <Link
             href={localeHref(locale, `/safaris/${safari.slug}`)}
-            className="transition-colors duration-300 hover:text-terracotta"
+            className="transition-colors duration-300 hover:text-terracotta-text"
           >
             {safari.name}
           </Link>
@@ -86,13 +86,13 @@ export function SafariCard({
           <div className="flex items-center gap-4">
             <Link
               href={localeHref(locale, `/safaris/${safari.slug}`)}
-              className="text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
+              className="text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta-text hover:decoration-terracotta-text"
             >
               {t.common.viewJourney}
             </Link>
             <Link
               href={localeHref(locale, `/plan?safari=${safari.slug}`)}
-              className="text-[0.72rem] font-semibold tracking-[0.06em] text-terracotta uppercase underline decoration-terracotta/35 underline-offset-[6px] transition-colors duration-300 hover:decoration-terracotta"
+              className="text-[0.72rem] font-semibold tracking-[0.06em] text-terracotta-text uppercase underline decoration-terracotta-text/35 underline-offset-[6px] transition-colors duration-300 hover:decoration-terracotta-text"
             >
               {t.common.customize}
             </Link>

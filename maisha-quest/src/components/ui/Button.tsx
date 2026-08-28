@@ -30,17 +30,21 @@ const SIZES: Record<Size, string> = {
 const SHAPE = "rounded-[2px]";
 
 const VARIANTS: Record<Variant, Record<Tone, string>> = {
+  /* La terracota de marca (#B56142) da 4,42:1 con blanco, por debajo de AA
+     para una etiqueta de 0,72 rem en versalitas. El botón usa por eso la
+     variante profunda (5,73:1) y oscurece un paso más al pasar por encima,
+     con un filete dorado que aparece por debajo. */
   primary: {
-    light: "bg-terracotta text-white hover:bg-terracotta-deep",
-    dark: "bg-terracotta text-white hover:bg-terracotta-deep",
+    light: "bg-terracotta-deep text-white hover:bg-[#874429] hover:shadow-[inset_0_-2px_0_var(--gold)]",
+    dark: "bg-terracotta-deep text-white hover:bg-[#874429] hover:shadow-[inset_0_-2px_0_var(--gold)]",
   },
   secondary: {
     light:
-      "border border-forest/35 text-forest hover:bg-forest hover:text-ivory hover:border-forest",
-    dark: "border border-on-dark-faint text-on-dark hover:bg-ivory hover:text-forest hover:border-ivory",
+      "border border-forest/35 text-forest hover:bg-forest hover:text-parchment hover:border-forest",
+    dark: "border border-on-dark-faint text-on-dark hover:bg-parchment hover:text-forest hover:border-parchment",
   },
   quiet: {
-    light: "text-forest underline underline-offset-[6px] decoration-forest/30 hover:decoration-terracotta hover:text-terracotta px-0 min-h-0 py-1",
+    light: "text-forest underline underline-offset-[6px] decoration-forest/30 hover:decoration-terracotta-text hover:text-terracotta-text px-0 min-h-0 py-1",
     dark: "text-on-dark underline underline-offset-[6px] decoration-on-dark-faint hover:decoration-sand hover:text-sand px-0 min-h-0 py-1",
   },
 };

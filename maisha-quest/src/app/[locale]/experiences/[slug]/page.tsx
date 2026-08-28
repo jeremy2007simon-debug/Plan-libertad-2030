@@ -5,7 +5,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { SafariCard } from "@/components/safari/SafariCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { EXPERIENCE_STRUCTURE } from "@/data/structure/experiences";
 import { LOCALES, isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -101,7 +101,7 @@ export default async function ExperiencePage({
                           locale,
                           `/destinations/${destination.slug}`,
                         )}
-                        className="flex items-baseline justify-between gap-4 text-[0.95rem] text-forest transition-colors duration-300 hover:text-terracotta"
+                        className="flex items-baseline justify-between gap-4 text-[0.95rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                       >
                         {destination.name}
                         <span className="text-[0.78rem] text-ink-faint">
@@ -126,7 +126,7 @@ export default async function ExperiencePage({
       </div>
 
       {safaris.length > 0 && (
-        <section className="border-t border-rule bg-page-alt py-20">
+        <section className="texture-paper relative isolate border-t border-rule bg-page-alt py-20">
           <Container width="wide">
             <h2 className="text-h2 text-forest">{t.experiences.journeysIncluding}</h2>
             <ul className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

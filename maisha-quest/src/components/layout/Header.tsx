@@ -14,10 +14,19 @@ import { MobileNav } from "./MobileNav";
 /**
  * Cabecera.
  *
- * Arranca transparente sobre el hero y pasa a marfil sólido al hacer scroll.
- * El cambio se hace con una clase, no midiendo en cada scroll: el listener es
- * pasivo y solo escribe estado cuando cruza el umbral, así que no cuesta
- * fotogramas.
+ * Arranca transparente sobre el hero y, al hacer scroll, pasa a verde profundo
+ * translúcido con un desenfoque ligero por detrás. El cambio se hace con una
+ * clase, no midiendo en cada scroll: el listener es pasivo y solo escribe
+ * estado cuando cruza el umbral, así que no cuesta fotogramas.
+ *
+ * El fondo oscuro es el mismo en las once secciones de la home y en el resto
+ * de páginas, lo que evita el otro problema: una cabecera que cambia de claro
+ * a oscuro según la sección que tenga debajo obliga a recalcular el contraste
+ * de cada enlace en cada scroll y nunca queda del todo bien.
+ *
+ * Al fijarse, la cabecera se compacta de 76 a 62 px. Como es `fixed` y el
+ * `--header-h` que usan los heros vive en `:root`, esa altura no desplaza ni
+ * un píxel del documento: no hay salto de layout.
  *
  * Solo hay siete entradas en el nivel superior —el problema de la web actual
  * era tener catorce— y los tres tipos de paquete pasan a ser un submenú de
@@ -42,7 +51,7 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) 
   /**
    * Las páginas con hero a sangre dejan la cabecera transparente al inicio.
    * El resto la necesitan sólida desde el primer píxel, o el texto flotaría
-   * sobre el fondo marfil sin contraste.
+   * sobre el pergamino sin contraste.
    */
   const overHero = pathname === "/";
   const solid = scrolled || !overHero;
@@ -65,21 +74,23 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) 
     closeTimer.current = setTimeout(() => setMenuState(null), 140);
   };
 
-  const tone = solid ? "light" : "dark";
-  const linkColor = solid
-    ? "text-ink-soft hover:text-forest"
-    : "text-ivory/85 hover:text-ivory";
+  /* La cabecera es oscura en los dos estados, así que el tono de los hijos
+     (logo, selector, botón de menú) no cambia nunca. */
+  const tone = "dark" as const;
+  const linkColor = "text-parchment/80 hover:text-parchment";
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-500 ease-out ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-[var(--ease-out)] ${
         solid
-          ? "border-b border-rule bg-ivory/95 backdrop-blur-md"
+          ? "border-b border-[var(--rule-on-dark)] bg-[color-mix(in_srgb,var(--forest)_92%,transparent)] backdrop-blur-[10px] backdrop-saturate-125"
           : "border-b border-transparent bg-transparent"
       }`}
-      style={{ ["--header-h" as string]: "76px" }}
     >
-      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[88rem] items-center justify-between gap-6 px-5 sm:px-8">
+      <div
+        className="mx-auto flex w-full max-w-[88rem] items-center justify-between gap-6 px-5 transition-[height] duration-500 ease-[var(--ease-out)] sm:px-8"
+        style={{ height: solid ? "62px" : "76px" }}
+      >
         <Logo locale={locale} homeLabel={t.homeLabel} tone={tone} />
 
         {/* Navegación de escritorio */}
@@ -101,23 +112,21 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) 
                     aria-current={active ? "page" : undefined}
                     aria-expanded={item.children ? openMenu === item.key : undefined}
                     onFocus={() => item.children && openWithDelay(item.key)}
-                    className={`relative flex min-h-11 items-center px-3.5 text-[0.82rem] font-medium tracking-[0.02em] transition-colors duration-300 ${linkColor} ${
-                      active ? (solid ? "text-forest" : "text-ivory") : ""
+                    className={`relative flex min-h-11 items-center px-3.5 text-[0.82rem] font-medium tracking-[0.02em] transition-colors duration-[var(--dur-hover)] ${linkColor} ${
+                      active ? "text-parchment" : ""
                     }`}
                   >
                     {label}
                     {active && (
                       <span
                         aria-hidden="true"
-                        className={`absolute inset-x-3.5 bottom-2 h-px ${
-                          solid ? "bg-terracotta" : "bg-sand"
-                        }`}
+                        className="absolute inset-x-3.5 bottom-2 h-px bg-[var(--gold)]"
                       />
                     )}
                   </Link>
 
                   {item.children && openMenu === item.key && (
-                    <div className="absolute left-0 top-full w-80 border border-rule bg-ivory-warm p-2 shadow-[0_20px_60px_-30px_rgba(27,29,26,0.45)]">
+                    <div className="absolute left-0 top-full w-80 border border-[var(--rule-on-dark)] bg-[color-mix(in_srgb,var(--canopy)_96%,transparent)] p-2 backdrop-blur-[10px]">
                       <ul>
                         {item.children.map((child) => {
                           const description =
@@ -128,13 +137,13 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) 
                             <li key={child.key}>
                               <Link
                                 href={localeHref(locale, child.href)}
-                                className="block px-3.5 py-3 transition-colors duration-200 hover:bg-sand/25"
+                                className="block px-3.5 py-3 transition-colors duration-[var(--dur-hover)] hover:bg-[color-mix(in_srgb,var(--olive)_38%,transparent)]"
                               >
-                                <span className="block text-[0.9rem] text-forest">
+                                <span className="block text-[0.9rem] text-parchment">
                                   {t.items[child.key as keyof typeof t.items]}
                                 </span>
                                 {description && (
-                                  <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">
+                                  <span className="mt-0.5 block text-[0.8rem] leading-snug text-on-dark-soft">
                                     {description}
                                   </span>
                                 )}

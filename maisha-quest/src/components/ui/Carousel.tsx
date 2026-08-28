@@ -65,8 +65,8 @@ export function Carousel({
 
   const dark = tone === "dark";
   const button = dark
-    ? "border-on-dark-faint text-on-dark hover:bg-ivory hover:text-forest"
-    : "border-forest/25 text-forest hover:bg-forest hover:text-ivory";
+    ? "border-on-dark-faint text-on-dark hover:bg-parchment hover:text-forest"
+    : "border-forest/25 text-forest hover:bg-forest hover:text-parchment";
 
   return (
     <div className={`relative ${className}`}>

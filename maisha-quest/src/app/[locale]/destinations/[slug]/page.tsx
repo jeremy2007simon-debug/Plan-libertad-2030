@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { DESTINATION_STRUCTURE } from "@/data/structure/destinations";
 import { LOCALES, isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -94,7 +94,7 @@ export default async function DestinationPage({
                           <span className="font-display text-[1.25rem] text-forest">
                             {season.label}
                           </span>
-                          <span className="eyebrow text-terracotta">
+                          <span className="eyebrow text-terracotta-text">
                             {season.months}
                           </span>
                         </dt>
@@ -171,7 +171,7 @@ export default async function DestinationPage({
                             locale,
                             `/experiences/${experience.slug}`,
                           )}
-                          className="text-[0.95rem] text-forest underline decoration-forest/25 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
+                          className="text-[0.95rem] text-forest underline decoration-forest/25 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta-text hover:decoration-terracotta-text"
                         >
                           {experience.name}
                         </Link>
@@ -195,7 +195,7 @@ export default async function DestinationPage({
       </div>
 
       {safaris.length > 0 && (
-        <section className="border-t border-rule bg-page-alt py-20">
+        <section className="texture-paper relative isolate border-t border-rule bg-page-alt py-20">
           <Container width="wide">
             <h2 className="text-h2 text-forest">
               {t.destinations.journeysThrough(destination.name)}

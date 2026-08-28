@@ -62,7 +62,7 @@ export default async function FaqPage({
             if (inTopic.length === 0) return null;
             return (
               <section key={topic} className="mb-14 last:mb-0">
-                <h2 className="eyebrow border-b border-rule pb-4 text-terracotta">
+                <h2 className="eyebrow border-b border-rule pb-4 text-terracotta-text">
                   {t.faqTopics[topic]}
                 </h2>
                 <div className="flex flex-col divide-y divide-rule">
@@ -92,7 +92,7 @@ export default async function FaqPage({
               {t.faq.stillBefore}{" "}
               <a
                 href={COMPANY.emailHref}
-                className="text-forest underline underline-offset-4 hover:text-terracotta"
+                className="text-forest underline underline-offset-4 hover:text-terracotta-text"
               >
                 {COMPANY.email}
               </a>{" "}

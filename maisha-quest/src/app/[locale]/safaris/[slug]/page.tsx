@@ -10,7 +10,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark, CompassPoint } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { ImageSlot, Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { SAFARI_STRUCTURE } from "@/data/structure/safaris";
 import { LOCALES, isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -113,17 +113,17 @@ export default async function SafariPage({
         <dl className="mt-9 flex flex-wrap gap-x-10 gap-y-5">
           <div>
             <dt className="eyebrow text-sand">{t.common.duration}</dt>
-            <dd className="tnum mt-1.5 text-ivory">
+            <dd className="tnum mt-1.5 text-parchment">
               {t.common.dayCount(safari.durationDays)}
             </dd>
           </div>
           <div>
             <dt className="eyebrow text-sand">{t.common.route}</dt>
-            <dd className="mt-1.5 text-ivory">{formatRoute(locale, safari)}</dd>
+            <dd className="mt-1.5 text-parchment">{formatRoute(locale, safari)}</dd>
           </div>
           <div>
             <dt className="eyebrow text-sand">{t.safari.style}</dt>
-            <dd className="mt-1.5 text-ivory">
+            <dd className="mt-1.5 text-parchment">
               {t.common.safariMeta(t.accommodation[safari.accommodationStyle])}
             </dd>
           </div>
@@ -131,7 +131,7 @@ export default async function SafariPage({
       </PageHero>
 
       {/* Cinta de datos clave */}
-      <section className="border-b border-rule bg-page-alt">
+      <section className="texture-paper relative isolate border-b border-rule bg-page-alt">
         <Container width="wide">
           <dl className="grid gap-y-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -232,7 +232,7 @@ export default async function SafariPage({
             {/* Columna lateral */}
             <aside className="lg:col-span-5">
               <Reveal>
-                <div className="border border-rule bg-ivory-warm p-7">
+                <div className="border border-rule bg-cream p-7">
                   <h2 className="font-display text-[1.4rem] text-forest">
                     {t.safari.theRoute}
                   </h2>
@@ -244,7 +244,7 @@ export default async function SafariPage({
                       <li key={stop.slug}>
                         <Link
                           href={localeHref(locale, `/destinations/${stop.slug}`)}
-                          className="flex items-baseline justify-between gap-4 py-3 text-[0.92rem] text-forest transition-colors duration-300 hover:text-terracotta"
+                          className="flex items-baseline justify-between gap-4 py-3 text-[0.92rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                         >
                           {stop.name}
                           <span className="tnum shrink-0 text-[0.75rem] text-ink-faint">
@@ -260,7 +260,7 @@ export default async function SafariPage({
               <Reveal className="mt-8">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-1">
                   <div>
-                    <h2 className="eyebrow text-terracotta">{t.safari.included}</h2>
+                    <h2 className="eyebrow text-terracotta-text">{t.safari.included}</h2>
                     <ul className="mt-4 flex flex-col gap-2.5">
                       {safari.included.map((item) => (
                         <li
@@ -311,7 +311,7 @@ export default async function SafariPage({
       </div>
 
       {faqs.length > 0 && (
-        <section className="border-t border-rule bg-page-alt py-20">
+        <section className="texture-paper relative isolate border-t border-rule bg-page-alt py-20">
           <Container width="prose">
             <h2 className="text-h2 text-forest">{t.safari.commonQuestions}</h2>
             <div className="mt-8 flex flex-col divide-y divide-rule border-y border-rule">
@@ -334,14 +334,14 @@ export default async function SafariPage({
       )}
 
       {/* Testimonios del viaje. Sin datos reales, se ofrece la vía honesta. */}
-      <section className="bg-page py-20">
+      <section className="texture-paper relative isolate bg-page py-20">
         <Container width="wide">
           <h2 className="text-h2 text-forest">{t.safari.whatTravellersSaid}</h2>
           {relatedTestimonials.length > 0 ? (
             <ul className="mt-8 grid gap-6 md:grid-cols-2">
               {relatedTestimonials.map((testimonial) => (
                 <li key={testimonial.id}>
-                  <figure className="h-full bg-ivory-warm p-7">
+                  <figure className="h-full bg-cream p-7">
                     <blockquote className="font-display text-[1.2rem] leading-snug text-forest">
                       &ldquo;{testimonial.quote}&rdquo;
                     </blockquote>
@@ -367,7 +367,7 @@ export default async function SafariPage({
                         href={source.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] hover:text-terracotta"
+                        className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] hover:text-terracotta-text"
                       >
                         {source.label}
                       </a>
@@ -381,7 +381,7 @@ export default async function SafariPage({
       </section>
 
       {relatedSafaris.length > 0 && (
-        <section className="border-t border-rule bg-page-alt py-20">
+        <section className="texture-paper relative isolate border-t border-rule bg-page-alt py-20">
           <Container width="wide">
             <h2 className="text-h2 text-forest">{t.safari.similarJourneys}</h2>
             <ul className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -402,7 +402,7 @@ export default async function SafariPage({
             <div className="flex items-center gap-4">
               <CompassMark className="hidden size-8 text-sand sm:block" />
               <div>
-                <p className="font-display text-[1.1rem] leading-tight text-ivory">
+                <p className="font-display text-[1.1rem] leading-tight text-parchment">
                   {safari.name}
                 </p>
                 <p className="tnum text-[0.8rem] text-on-dark-faint">

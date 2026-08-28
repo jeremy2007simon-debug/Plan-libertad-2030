@@ -89,7 +89,7 @@ export default async function CreditsPage({
                     href={photo.credit?.source}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 inline-block text-[0.8rem] break-words text-ink-soft underline underline-offset-4 hover:text-terracotta"
+                    className="mt-1 inline-block text-[0.8rem] break-words text-ink-soft underline underline-offset-4 hover:text-terracotta-text"
                   >
                     {t.credits.sourceAndLicence}
                   </a>

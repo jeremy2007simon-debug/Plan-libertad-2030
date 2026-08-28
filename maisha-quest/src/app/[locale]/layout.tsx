@@ -10,7 +10,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { OrganizationSchema } from "@/components/seo/StructuredData";
-import { RevealScript } from "@/components/ui/Reveal";
+import { MotionScript } from "@/components/ui/motion";
 import { getDictionary } from "@/i18n/dictionaries";
 import { LOCALES, LOCALE_META, isLocale, localeHref } from "@/i18n/config";
 import { alternatesFor } from "@/lib/seo";
@@ -140,13 +140,13 @@ export default async function LocaleLayout({
   return (
     <html lang={meta.htmlLang} className={fonts} data-script={meta.script}>
       <head>
-        <RevealScript />
+        <MotionScript />
       </head>
       <body>
         {/* Salto al contenido: primer elemento enfocable de la página. */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[2px] focus:bg-forest focus:px-5 focus:py-3 focus:text-sm focus:text-ivory"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[2px] focus:bg-forest focus:px-5 focus:py-3 focus:text-sm focus:text-parchment"
         >
           {t.a11y.skipToContent}
         </a>

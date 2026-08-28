@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { CompassPoint } from "./Compass";
-import { Reveal } from "./Reveal";
+import { Reveal } from "./motion";
 
 /**
  * Encabezado de sección.
@@ -45,7 +45,7 @@ export function SectionHeading({
           {eyebrow && (
             <p
               className={`eyebrow mb-4 flex items-center gap-2.5 ${
-                dark ? "text-sand" : "text-terracotta"
+                dark ? "text-sand" : "text-terracotta-text"
               }`}
             >
               <CompassPoint className="size-2.5 shrink-0" />
@@ -53,7 +53,7 @@ export function SectionHeading({
             </p>
           )}
           <Tag
-            className={`text-h2 ${dark ? "text-ivory" : "text-forest"} ${
+            className={`text-h2 ${dark ? "text-parchment" : "text-forest"} ${
               centered ? "text-balance" : ""
             }`}
           >

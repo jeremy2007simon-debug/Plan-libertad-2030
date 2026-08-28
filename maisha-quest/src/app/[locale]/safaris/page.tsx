@@ -4,7 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { SafariCard } from "@/components/safari/SafariCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PHOTOS } from "@/data/photography";
 import { isLocale } from "@/i18n/config";
@@ -111,11 +111,11 @@ export default async function SafarisPage({
         })}
       </div>
 
-      <section className="dark-section bg-forest py-20 text-on-dark">
+      <section className="dark-section texture-dust relative isolate bg-forest py-20 text-on-dark">
         <Container width="wide">
           <div className="flex flex-col items-start gap-7 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-h2 text-ivory">{t.safaris.noneRightTitle}</h2>
+              <h2 className="text-h2 text-parchment">{t.safaris.noneRightTitle}</h2>
               <p className="measure mt-4 text-[0.98rem] text-on-dark-soft">
                 {t.safaris.noneRightBody}
               </p>

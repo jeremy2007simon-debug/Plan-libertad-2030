@@ -1,13 +1,11 @@
-import { ButtonLink } from "@/components/ui/Button";
-import { CompassDivider, CompassMark } from "@/components/ui/Compass";
+import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { MediaFrame } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { COMPANY } from "@/lib/site";
 import { type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
-import { getReviewSources, getTestimonials } from "@/lib/content";
+import { getTestimonials } from "@/lib/content";
 
 /**
  * "Stories brought home".
@@ -16,37 +14,38 @@ import { getReviewSources, getTestimonials } from "@/lib/content";
  * falsa es comprobable y destruye exactamente la confianza que esta sección
  * existe para construir.
  *
- * Así que la sección tiene dos caras. Con datos, pinta las citas completas
- * (retrato, valoración, viaje, fecha y fuente verificable). Sin datos, pinta
- * un estado vacío deliberado que sigue haciendo trabajo comercial: explica que
- * las opiniones se publicarán con su fuente, invita a comprobarlas por cuenta
- * propia y ofrece hablar con viajeros anteriores.
+ * Con datos, pinta las citas completas: retrato, valoración, viaje, fecha y
+ * fuente verificable.
+ *
+ * SIN datos —hoy— no pinta NADA en la home. Antes ocupaba una sección entera
+ * con un estado vacío; por bien resuelto que estuviera, eran 1.100 px que el
+ * visitante recorría para leer "todavía no hay opiniones". Esa invitación a
+ * hablar con el equipo vive ahora dentro del planificador, que es justo donde
+ * alguien está decidiendo. El día que haya reseñas reales, la sección vuelve
+ * sola: la home ya la tiene montada y esta condición deja de cumplirse.
+ *
+ * La ficha de cada safari mantiene su propio texto para el mismo caso, donde
+ * no compite con nada y ocupa tres líneas.
  */
-export async function Testimonials({
-  locale,
-  t,
-}: {
-  locale: Locale;
-  t: Dictionary;
-}) {
+export async function Testimonials({ t }: { locale: Locale; t: Dictionary }) {
   const testimonials = await getTestimonials();
-  const sources = getReviewSources();
+  // Sin reseñas reales la sección no se pinta. Ver la nota de arriba.
+  if (testimonials.length === 0) return null;
 
   return (
-    <section className="bg-page py-24 sm:py-32">
+    <section className="texture-paper relative isolate bg-page py-20 sm:py-24">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.testimonials.eyebrow}
           title={t.home.testimonials.title}
-          lede={testimonials.length > 0 ? t.home.testimonials.lede : undefined}
+          lede={t.home.testimonials.lede}
         />
 
-        {testimonials.length > 0 ? (
-          <Reveal className="mt-14">
+        <Reveal className="mt-12">
             <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {testimonials.map((testimonial) => (
                 <li key={testimonial.id}>
-                  <figure className="flex h-full flex-col bg-ivory-warm p-7">
+                  <figure className="flex h-full flex-col bg-cream p-7">
                     {testimonial.rating !== null && (
                       <p
                         className="flex gap-1 text-gold"
@@ -85,7 +84,7 @@ export async function Testimonials({
                         href={testimonial.source}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="eyebrow mt-4 text-ink-faint underline underline-offset-4 hover:text-terracotta"
+                        className="eyebrow mt-4 text-ink-faint underline underline-offset-4 hover:text-terracotta-text"
                       >
                         {t.home.testimonials.verified}
                       </a>
@@ -94,70 +93,7 @@ export async function Testimonials({
                 </li>
               ))}
             </ul>
-          </Reveal>
-        ) : (
-          <Reveal className="mt-12">
-            <div className="grid items-center gap-10 border border-rule bg-ivory-warm px-7 py-12 sm:px-12 lg:grid-cols-12 lg:gap-14">
-              <div className="lg:col-span-7">
-                <p className="font-display text-h3 text-forest">
-                  {t.home.testimonials.emptyTitle}
-                </p>
-                <p className="measure mt-5 text-[0.96rem] leading-relaxed text-ink-soft">
-                  {sources.length > 0
-                    ? t.home.testimonials.emptyBodyWithSources
-                    : t.home.testimonials.emptyBody}
-                </p>
-
-                {/* Los perfiles de reseñas solo se enlazan si el cliente ha
-                    confirmado la URL exacta. Sin ellos no queda un hueco: el
-                    filete de brújula y la lista desaparecen juntos, y la
-                    columna de contacto de al lado sigue haciendo el trabajo. */}
-                {sources.length > 0 && (
-                  <>
-                    <CompassDivider className="my-8 max-w-sm" />
-                    <ul className="flex flex-wrap gap-x-6 gap-y-3">
-                      {sources.map((source) => (
-                        <li key={source.label}>
-                          <a
-                            href={source.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[0.85rem] text-forest underline decoration-forest/25 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
-                          >
-                            {source.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </div>
-
-              <div className="lg:col-span-4 lg:col-start-9">
-                <p className="eyebrow text-ink-faint">{t.home.testimonials.speakDirectly}</p>
-                <a
-                  href={COMPANY.phoneHref}
-                  className="font-display mt-3 block text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta"
-                >
-                  {COMPANY.phone}
-                </a>
-                <p className="mt-2 text-[0.85rem] text-ink-faint">
-                  {COMPANY.hours.label}
-                  <br />
-                  {COMPANY.hours.timezone}
-                </p>
-                <ButtonLink
-                  href="/contact"
-                  locale={locale}
-                  variant="secondary"
-                  className="mt-6"
-                >
-                  {t.home.testimonials.askReferences}
-                </ButtonLink>
-              </div>
-            </div>
-          </Reveal>
-        )}
+        </Reveal>
       </Container>
     </section>
   );

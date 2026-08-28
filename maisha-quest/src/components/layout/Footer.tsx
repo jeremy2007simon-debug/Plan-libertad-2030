@@ -27,13 +27,13 @@ export function Footer({
   const socials = socialLinks();
 
   return (
-    <footer className="dark-section bg-forest text-on-dark">
-      <Container width="wide" className="py-16 sm:py-20">
+    <footer className="dark-section texture-dust relative isolate bg-canopy text-on-dark">
+      <Container width="wide" className="py-14 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[1.15fr_2fr]">
           {/* Marca y contacto */}
           <div>
-            <div className="flex items-center gap-3 text-ivory">
-              <CompassMark className="size-9 text-sand" />
+            <div className="flex items-center gap-3 text-parchment">
+              <CompassMark className="size-9 text-[var(--gold)]" />
               <span className="font-display text-[1.45rem]">Maisha Quest</span>
             </div>
             <p className="measure-narrow mt-5 text-[0.92rem] leading-relaxed text-on-dark-soft">
@@ -43,13 +43,13 @@ export function Footer({
             <address className="mt-8 flex flex-col gap-1 not-italic">
               <a
                 href={COMPANY.phoneHref}
-                className="text-[0.95rem] text-ivory transition-colors duration-300 hover:text-sand"
+                className="text-[0.95rem] text-parchment transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 {COMPANY.phone}
               </a>
               <a
                 href={COMPANY.emailHref}
-                className="text-[0.95rem] text-ivory transition-colors duration-300 hover:text-sand"
+                className="text-[0.95rem] text-parchment transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 {COMPANY.email}
               </a>
@@ -57,7 +57,7 @@ export function Footer({
                 href={whatsappHref(nav.whatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 inline-flex w-fit items-center gap-2 text-[0.9rem] text-on-dark-soft transition-colors duration-300 hover:text-sand"
+                className="mt-1 inline-flex w-fit items-center gap-2 text-[0.9rem] text-on-dark-soft transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 <WhatsAppGlyph className="size-4" />
                 {t.whatsapp}
@@ -84,7 +84,7 @@ export function Footer({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="eyebrow text-on-dark-soft transition-colors duration-300 hover:text-sand"
+                      className="eyebrow text-on-dark-soft transition-colors duration-300 hover:text-[var(--gold)]"
                     >
                       {social.label}
                     </a>
@@ -111,7 +111,7 @@ export function Footer({
                             ? item.href
                             : localeHref(locale, item.href)
                         }
-                        className="text-[0.92rem] text-on-dark-soft transition-colors duration-300 hover:text-ivory"
+                        className="text-[0.92rem] text-on-dark-soft transition-colors duration-300 hover:text-parchment"
                       >
                         {nav.items[item.key as keyof typeof nav.items]}
                       </Link>
@@ -123,7 +123,10 @@ export function Footer({
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-rule-on-dark pt-7 text-[0.8rem] text-on-dark-faint sm:flex-row sm:items-center sm:justify-between">
+        {/* Separador dorado en lugar de un filete gris. */}
+        <div aria-hidden="true" className="rule-gold mt-12 h-px w-full" />
+
+        <div className="mt-7 flex flex-col gap-4 pt-0 text-[0.8rem] text-on-dark-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} Maisha Quest. {t.rights}
           </p>

@@ -742,7 +742,7 @@ export const fr: Dictionary = {
 
   home: {
     hero: {
-      headline: "Voyages privés en Tanzanie",
+      headline: ["Voyages privés", "en Tanzanie"],
       subline: "Guidés par des experts locaux. Pensés pour votre histoire.",
       designCta: "Composez votre safari",
       exploreCta: "Découvrir les voyages",
@@ -788,6 +788,7 @@ export const fr: Dictionary = {
       wildlife: "Faune",
       experiences: "Expériences",
       journeysHere: "Voyages qui passent par ici",
+      chooseDestination: "Choisissez une destination",
       dayCount: (n: number) => (n === 1 ? "1 jour" : `${n} jours`),
       moreOn: (place: string) => `En savoir plus sur ${place}`,
     },

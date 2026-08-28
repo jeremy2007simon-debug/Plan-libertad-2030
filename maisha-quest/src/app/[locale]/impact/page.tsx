@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { LazyVideo } from "@/components/ui/LazyVideo";
 import { MediaFrame } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -57,7 +57,7 @@ export default async function ImpactPage({
         image={PHOTOS["ngorongoro-zebras"]}
       />
 
-      <section className="bg-page py-20 sm:py-24">
+      <section className="texture-paper relative isolate bg-page py-20 sm:py-24">
         <Container width="wide">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
@@ -84,7 +84,7 @@ export default async function ImpactPage({
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <div>
-                        <p className="eyebrow text-terracotta">{t.impactAreas[project.area]}</p>
+                        <p className="eyebrow text-terracotta-text">{t.impactAreas[project.area]}</p>
                         <h2 className="font-display mt-1.5 text-[1.4rem] leading-tight text-forest">
                           {project.title}
                         </h2>
@@ -134,7 +134,7 @@ export default async function ImpactPage({
                       t.home.impact.posterLabel,
                     )}
                     tone="dark"
-                    className="relative aspect-9/16 w-full bg-forest-deep"
+                    className="relative aspect-9/16 w-full bg-canopy"
                   />
                 </div>
                 <ButtonLink

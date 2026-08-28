@@ -66,14 +66,14 @@ export async function DestinationMap({
   );
 
   return (
-    <section className="bg-page-alt py-24 sm:py-32">
+    <section className="texture-paper relative isolate bg-sand py-20 sm:py-24">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.map.eyebrow}
           title={t.home.map.title}
           lede={t.home.map.lede}
         />
-        <div className="mt-14">
+        <div className="mt-12">
           <MapExplorer
             destinations={payload}
             locale={locale}
@@ -88,6 +88,7 @@ export async function DestinationMap({
               wildlife: t.home.map.wildlife,
               experiences: t.home.map.experiences,
               journeysHere: t.home.map.journeysHere,
+              chooseDestination: t.home.map.chooseDestination,
             }}
           />
         </div>

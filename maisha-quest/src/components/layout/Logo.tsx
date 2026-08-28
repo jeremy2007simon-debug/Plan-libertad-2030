@@ -22,7 +22,7 @@ export function Logo({
   tone?: "light" | "dark";
   className?: string;
 }) {
-  const color = tone === "dark" ? "text-ivory" : "text-forest";
+  const color = tone === "dark" ? "text-parchment" : "text-forest";
   const accent = tone === "dark" ? "text-sand" : "text-gold";
 
   return (

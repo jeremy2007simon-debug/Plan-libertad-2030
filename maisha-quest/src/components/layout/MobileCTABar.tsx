@@ -56,7 +56,7 @@ export function MobileCTABar({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t.whatsappLabel}
-          className="flex min-h-12 items-center justify-center gap-2 rounded-[2px] border border-on-dark-faint px-4 text-[0.72rem] font-semibold tracking-[0.06em] text-ivory uppercase"
+          className="flex min-h-12 items-center justify-center gap-2 rounded-[2px] border border-on-dark-faint px-4 text-[0.72rem] font-semibold tracking-[0.06em] text-parchment uppercase"
         >
           <WhatsAppGlyph className="size-4" />
           {t.chat}

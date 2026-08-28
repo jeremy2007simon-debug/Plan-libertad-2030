@@ -32,7 +32,7 @@ export function Itinerary({
         <li key={day.day}>
           <details open={index === 0} className="group">
             <summary className="flex cursor-pointer list-none items-baseline gap-5 py-6 [&::-webkit-details-marker]:hidden">
-              <span className="tnum eyebrow w-14 shrink-0 pt-1 text-terracotta">
+              <span className="tnum eyebrow w-14 shrink-0 pt-1 text-terracotta-text">
                 {t.common.dayLabel(day.day)}
               </span>
               <span className="flex-1">

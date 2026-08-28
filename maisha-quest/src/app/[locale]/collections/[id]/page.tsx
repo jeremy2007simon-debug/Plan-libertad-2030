@@ -4,7 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { SafariCard } from "@/components/safari/SafariCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { COLLECTION_STRUCTURE } from "@/data/structure/collections";
 import { LOCALES, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -74,18 +74,18 @@ export default async function CollectionPage({
         <dl className="mt-9 flex flex-wrap gap-x-12 gap-y-5">
           <div>
             <dt className="eyebrow text-sand">{t.collections.typicalLength}</dt>
-            <dd className="mt-1.5 text-ivory">
+            <dd className="mt-1.5 text-parchment">
               {t.common.durationRange(collectionDurationRange(collection))}
             </dd>
           </div>
           <div>
             <dt className="eyebrow text-sand">{t.common.suits}</dt>
-            <dd className="mt-1.5 text-ivory">{collection.travellerProfile}</dd>
+            <dd className="mt-1.5 text-parchment">{collection.travellerProfile}</dd>
           </div>
         </dl>
       </PageHero>
 
-      <section className="bg-page py-20 sm:py-24">
+      <section className="texture-paper relative isolate bg-page py-20 sm:py-24">
         <Container width="wide">
           <p className="text-lede measure text-ink-soft">
             {collection.description}
@@ -126,13 +126,13 @@ export default async function CollectionPage({
       </section>
 
       {/* Las otras dos colecciones, por si esta no encaja. */}
-      <section className="border-t border-rule bg-page-alt py-20">
+      <section className="texture-paper relative isolate border-t border-rule bg-page-alt py-20">
         <Container width="wide">
           <h2 className="text-h2 text-forest">{t.collections.notQuiteYou}</h2>
           <ul className="mt-10 grid gap-10 md:grid-cols-2">
             {others.map((other) => (
               <li key={other.id}>
-                <p className="eyebrow text-terracotta">
+                <p className="eyebrow text-terracotta-text">
                   {t.collections.pageTitle(other.name)}
                 </p>
                 <h3 className="font-display mt-3 text-[1.5rem] leading-tight text-forest">

@@ -152,7 +152,7 @@ export function LazyVideo({
           role="img"
           aria-label={filmToFollowLabel}
           className={`absolute inset-0 flex flex-col items-center justify-center gap-4 ${
-            dark ? "bg-forest-deep text-on-dark-faint" : "bg-sand/25 text-ink-faint"
+            dark ? "bg-canopy text-on-dark-faint" : "bg-sand/25 text-ink-faint"
           }`}
         >
           <span
@@ -185,8 +185,8 @@ export function LazyVideo({
             onClick={handleButton}
             className={`inline-flex min-h-11 items-center gap-3 rounded-[2px] px-5 py-3 text-[0.7rem] font-semibold tracking-[0.06em] uppercase backdrop-blur-sm transition-colors duration-300 ${
               dark
-                ? "bg-ivory/12 text-ivory hover:bg-ivory hover:text-forest"
-                : "bg-forest/85 text-ivory hover:bg-forest"
+                ? "bg-parchment/12 text-parchment hover:bg-parchment hover:text-forest"
+                : "bg-forest/85 text-parchment hover:bg-forest"
             }`}
           >
             <PlayIcon playing={playing} className="size-3.5" />
@@ -195,7 +195,7 @@ export function LazyVideo({
         ) : (
           <p
             className={`eyebrow rounded-[2px] px-3 py-2 ${
-              dark ? "bg-forest-deep/70 text-on-dark-faint" : "bg-ivory/85 text-ink-faint"
+              dark ? "bg-canopy/70 text-on-dark-faint" : "bg-parchment/85 text-ink-faint"
             }`}
           >
             {pendingLabel}

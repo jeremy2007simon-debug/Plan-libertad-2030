@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -65,13 +65,13 @@ export default async function JournalPage({
                           className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
                         />
                       </div>
-                      <p className="eyebrow mt-5 flex items-center gap-3 text-terracotta">
+                      <p className="eyebrow mt-5 flex items-center gap-3 text-terracotta-text">
                         {post.category}
                         <span className="text-ink-faint">
                           {t.common.readingTime(post.readingMinutes)}
                         </span>
                       </p>
-                      <h2 className="font-display mt-2.5 text-[1.45rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta">
+                      <h2 className="font-display mt-2.5 text-[1.45rem] leading-tight text-forest transition-colors duration-300 group-hover:text-terracotta-text">
                         {post.title}
                       </h2>
                       <p className="mt-3 text-[0.94rem] leading-relaxed text-ink-soft">

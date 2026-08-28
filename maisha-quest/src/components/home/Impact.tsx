@@ -1,7 +1,7 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { LazyVideo } from "@/components/ui/LazyVideo";
-import { Reveal } from "@/components/ui/Reveal";
+import { AnimatedLine, ImageReveal, Reveal, Stagger } from "@/components/ui/motion";
 import { type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { getImpact } from "@/lib/content";
@@ -22,12 +22,12 @@ export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
   const intro = t.home.impact.intro;
 
   return (
-    <section className="dark-section bg-forest py-24 text-on-dark sm:py-32">
+    <section className="dark-section texture-dust relative isolate bg-forest py-20 text-on-dark sm:py-24">
       <Container width="wide">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Vídeo vertical */}
-          <Reveal className="lg:col-span-4">
-            <div className="mx-auto w-full max-w-[20rem] lg:max-w-none">
+          <ImageReveal className="mx-auto w-full max-w-[20rem] lg:col-span-4 lg:max-w-none">
+            <div className="w-full">
               <LazyVideo
                 video={video}
                 label={t.home.impact.watch}
@@ -36,17 +36,17 @@ export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
                 pendingLabel={t.video.pending}
                 filmToFollowLabel={t.video.filmToFollow(t.home.impact.posterLabel)}
                 tone="dark"
-                className="relative aspect-9/16 w-full bg-forest-deep"
+                className="relative aspect-9/16 w-full bg-canopy"
               />
             </div>
-          </Reveal>
+          </ImageReveal>
 
           {/* Texto y proyectos */}
           <div className="lg:col-span-7 lg:col-start-6">
             <Reveal>
               <p className="eyebrow text-sand">{t.home.impact.eyebrow}</p>
-              <h2 className="text-h1 mt-5 text-ivory">{intro.title}</h2>
-              <p className="text-lede measure mt-6 text-ivory/90 italic">
+              <h2 className="text-h1 mt-5 text-parchment">{intro.title}</h2>
+              <p className="text-lede measure mt-6 text-parchment/90 italic">
                 {intro.lede}
               </p>
               <p className="measure mt-6 text-[0.96rem] leading-relaxed text-on-dark-soft">
@@ -54,31 +54,37 @@ export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
               </p>
             </Reveal>
 
-            <Reveal className="mt-12">
-              <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+            {/* Línea de impacto: un solo filete dorado que se traza al entrar.
+                Nada de contadores ni de cifras — no las tenemos. */}
+            <AnimatedLine tone="gold" className="mt-10 max-w-[16rem]" delay={0.1} />
+
+            <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              <Stagger as="li" step={0.09}>
                 {projects.map((project) => (
-                  <li key={project.slug}>
-                    <p className="eyebrow text-on-dark-faint">{t.impactAreas[project.area]}</p>
-                    <h3 className="font-display mt-2 text-[1.25rem] text-ivory">
+                  <span key={project.slug} className="block">
+                    <span className="eyebrow block text-on-dark-faint">
+                      {t.impactAreas[project.area]}
+                    </span>
+                    <span className="font-display mt-2 block text-[1.25rem] text-parchment">
                       {project.title}
-                    </h3>
-                    <p className="mt-2.5 text-[0.9rem] leading-relaxed text-on-dark-soft">
+                    </span>
+                    <span className="mt-2.5 block text-[0.9rem] leading-relaxed text-on-dark-soft">
                       {project.description}
-                    </p>
+                    </span>
                     {/* Resultados: solo si existen de verdad. */}
                     {project.outcomes.length > 0 && (
-                      <ul className="mt-3 flex flex-col gap-1.5">
+                      <span className="mt-3 flex flex-col gap-1.5">
                         {project.outcomes.map((outcome) => (
-                          <li key={outcome} className="text-[0.88rem] text-sand">
+                          <span key={outcome} className="text-[0.88rem] text-sand">
                             {outcome}
-                          </li>
+                          </span>
                         ))}
-                      </ul>
+                      </span>
                     )}
-                  </li>
+                  </span>
                 ))}
-              </ul>
-            </Reveal>
+              </Stagger>
+            </ul>
 
             <Reveal>
               <ButtonLink
@@ -86,7 +92,7 @@ export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
                 locale={locale}
                 variant="secondary"
                 tone="dark"
-                className="mt-11"
+                className="mt-10"
               >
                 {t.home.impact.cta}
               </ButtonLink>

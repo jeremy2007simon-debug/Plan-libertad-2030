@@ -103,13 +103,13 @@ export default async function PlanPage({
                 <p className="eyebrow mt-4 text-ink-faint">{t.home.planner.ratherTalk}</p>
                 <a
                   href={COMPANY.phoneHref}
-                  className="font-display mt-2 block text-[1.35rem] text-forest transition-colors duration-300 hover:text-terracotta"
+                  className="font-display mt-2 block text-[1.35rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                 >
                   {COMPANY.phone}
                 </a>
                 <a
                   href={COMPANY.emailHref}
-                  className="mt-1 block text-[0.95rem] text-ink-soft transition-colors duration-300 hover:text-terracotta"
+                  className="mt-1 block text-[0.95rem] text-ink-soft transition-colors duration-300 hover:text-terracotta-text"
                 >
                   {COMPANY.email}
                 </a>

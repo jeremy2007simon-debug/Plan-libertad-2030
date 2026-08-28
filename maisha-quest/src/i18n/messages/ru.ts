@@ -760,7 +760,7 @@ export const ru: Dictionary = {
 
   home: {
     hero: {
-      headline: "Индивидуальные путешествия по Танзании",
+      headline: ["Индивидуальные путешествия", "по Танзании"],
       subline: "С местными экспертами. Собрано вокруг вашей истории.",
       designCta: "Собрать сафари",
       exploreCta: "Смотреть маршруты",
@@ -810,6 +810,7 @@ export const ru: Dictionary = {
       wildlife: "Животные",
       experiences: "Впечатления",
       journeysHere: "Маршруты, проходящие здесь",
+      chooseDestination: "Выберите направление",
       dayCount: (n: number) => `${n} ${plural(n, "день", "дня", "дней")}`,
       moreOn: (place: string) => `Подробнее: ${place}`,
     },

@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassDivider } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { ImageSlot, Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -48,7 +48,7 @@ export default async function AboutPage({
         image={PHOTOS.arusha}
       />
 
-      <section className="bg-page py-20 sm:py-24">
+      <section className="texture-paper relative isolate bg-page py-20 sm:py-24">
         <Container width="wide">
           <div className="grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
@@ -99,13 +99,13 @@ export default async function AboutPage({
         </Container>
       </section>
 
-      <section className="dark-section bg-forest py-20 text-on-dark sm:py-24">
+      <section className="dark-section texture-dust relative isolate bg-forest py-20 text-on-dark sm:py-24">
         <Container width="wide">
-          <h2 className="text-h2 text-ivory">{t.about.howWeWork}</h2>
+          <h2 className="text-h2 text-parchment">{t.about.howWeWork}</h2>
           <ul className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {t.home.why.pillars.map((pillar) => (
               <li key={pillar.title}>
-                <h3 className="font-display text-[1.3rem] text-ivory">
+                <h3 className="font-display text-[1.3rem] text-parchment">
                   {pillar.title}
                 </h3>
                 <p className="mt-2.5 text-[0.93rem] leading-relaxed text-on-dark-soft">
@@ -117,7 +117,7 @@ export default async function AboutPage({
         </Container>
       </section>
 
-      <section className="bg-page-alt py-20">
+      <section className="texture-paper relative isolate bg-page-alt py-20">
         <Container width="wide">
           <h2 className="text-h2 text-forest">{t.about.people}</h2>
           <ul className="mt-10 flex flex-col divide-y divide-rule border-y border-rule">
@@ -129,7 +129,7 @@ export default async function AboutPage({
                 <span className="font-display w-48 text-[1.35rem] text-forest">
                   {member.name}
                 </span>
-                <span className="eyebrow w-56 text-terracotta">{member.role}</span>
+                <span className="eyebrow w-56 text-terracotta-text">{member.role}</span>
                 <span className="flex-1 text-[0.9rem] text-ink-soft">
                   {member.languages
                     .map((code) => t.languageNames[code as keyof typeof t.languageNames])
@@ -149,7 +149,7 @@ export default async function AboutPage({
         </Container>
       </section>
 
-      <section className="bg-page py-20">
+      <section className="texture-paper relative isolate bg-page py-20">
         <Container width="prose">
           <h2 className="text-h2 text-forest">{t.about.talkTitle}</h2>
           <p className="mt-5 text-[0.98rem] leading-relaxed text-ink-soft">

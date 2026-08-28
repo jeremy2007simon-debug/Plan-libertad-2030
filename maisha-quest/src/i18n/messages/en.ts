@@ -748,7 +748,9 @@ export const en = {
 
   home: {
     hero: {
-      headline: "Private journeys through Tanzania",
+      /* En líneas: el hero las revela una tras otra. El corte es
+         editorial y propio de cada idioma, no un salto automático. */
+      headline: ["Private journeys", "through Tanzania"],
       subline: "Guided by local experts. Designed around your story.",
       designCta: "Design Your Safari",
       exploreCta: "Explore Journeys",
@@ -795,6 +797,7 @@ export const en = {
       wildlife: "Wildlife",
       experiences: "Experiences",
       journeysHere: "Journeys that go here",
+      chooseDestination: "Choose a destination",
       dayCount: (n: number) => `${n} days`,
       moreOn: (place: string) => `More on ${place}`,
     },

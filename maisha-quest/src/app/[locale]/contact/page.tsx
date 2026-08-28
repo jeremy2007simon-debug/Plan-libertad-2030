@@ -46,7 +46,7 @@ export default async function ContactPage({
         lede={t.contact.lede}
       />
 
-      <section className="bg-page py-16 sm:py-20">
+      <section className="texture-paper relative isolate bg-page py-16 sm:py-20">
         <Container width="wide">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
@@ -56,7 +56,7 @@ export default async function ContactPage({
                   <dd className="mt-2">
                     <a
                       href={COMPANY.phoneHref}
-                      className="font-display text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta"
+                      className="font-display text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                     >
                       {COMPANY.phone}
                     </a>
@@ -67,7 +67,7 @@ export default async function ContactPage({
                   <dd className="mt-2">
                     <a
                       href={COMPANY.emailHref}
-                      className="font-display text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta"
+                      className="font-display text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                     >
                       {COMPANY.email}
                     </a>
@@ -80,7 +80,7 @@ export default async function ContactPage({
                       href={whatsappHref(t.nav.whatsappMessage)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2.5 text-[1rem] text-forest transition-colors duration-300 hover:text-terracotta"
+                      className="inline-flex items-center gap-2.5 text-[1rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                     >
                       <WhatsAppGlyph className="size-4" />
                       {t.contact.messageUs}
@@ -121,7 +121,7 @@ export default async function ContactPage({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="eyebrow text-ink-soft transition-colors duration-300 hover:text-terracotta"
+                      className="eyebrow text-ink-soft transition-colors duration-300 hover:text-terracotta-text"
                     >
                       {social.label}
                     </a>
@@ -131,7 +131,7 @@ export default async function ContactPage({
             </div>
 
             <div className="lg:col-span-5 lg:col-start-8">
-              <div className="border border-rule bg-ivory-warm p-8">
+              <div className="border border-rule bg-cream p-8">
                 <CompassMark className="size-8 text-gold" />
                 <h2 className="font-display mt-5 text-[1.5rem] leading-tight text-forest">
                   {t.contact.planningTitle}

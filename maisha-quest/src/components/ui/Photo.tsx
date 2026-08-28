@@ -69,7 +69,7 @@ export function ImageSlot({
       aria-label={`${label} — photograph to follow`}
       className={`flex h-full w-full flex-col items-center justify-center gap-3 ${
         dark
-          ? "bg-forest-deep text-on-dark-faint"
+          ? "bg-canopy text-on-dark-faint"
           : "bg-sand/25 text-ink-faint"
       } ${className}`}
     >

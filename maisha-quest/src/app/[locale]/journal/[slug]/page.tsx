@@ -67,7 +67,7 @@ export default async function JournalPostPage({
         lede={post.excerpt}
         image={post.image}
       >
-        <p className="mt-8 flex flex-wrap items-center gap-x-4 text-[0.82rem] text-ivory/70">
+        <p className="mt-8 flex flex-wrap items-center gap-x-4 text-[0.82rem] text-parchment/70">
           <time dateTime={post.date}>
             {formatDate(locale, post.date)}
           </time>

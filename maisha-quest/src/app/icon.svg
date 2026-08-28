@@ -1,0 +1,17 @@
+<!--
+  Icono de pestaña. Es la misma marca de brújula que usa la web (`CompassMark`),
+  no un archivo aparte que pueda divergir: círculo, rosa de cuatro puntas y
+  aguja, en dorado sobre verde profundo.
+
+  A 16 px la versión completa se convierte en una mancha, así que aquí el trazo
+  es más grueso, el círculo interior desaparece y la aguja queda sólida. Va
+  como `app/icon.svg` para que Next lo sirva con su hash y sus cabeceras.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect width="48" height="48" fill="#1F3026"/>
+  <g stroke="#C4934F" fill="none" stroke-width="2.4">
+    <circle cx="24" cy="24" r="16"/>
+    <path d="M24 3v6M24 39v6M3 24h6M39 24h6"/>
+  </g>
+  <path d="M24 12 27.8 24 24 36 20.2 24Z" fill="#C4934F"/>
+</svg>

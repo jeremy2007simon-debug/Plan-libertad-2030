@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Carousel } from "@/components/ui/Carousel";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { MagneticArrow, Reveal, Stagger } from "@/components/ui/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { type Locale, localeHref } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
@@ -18,6 +18,13 @@ import { getExperienceCategories } from "@/lib/content";
  * En escritorio es una rejilla; en móvil, el mismo marcado se convierte en
  * carrusel táctil (`Carousel` usa scroll nativo con snap, así que no hay dos
  * versiones del contenido ni JavaScript duplicado).
+ *
+ * Sobre oliva y con ritmo: las tarjetas pares bajan media altura y son algo
+ * más cortas, de modo que la fila deja de leerse como una cuadrícula. La
+ * información esencial —número, título y descripción— está SIEMPRE visible;
+ * al pasar por encima solo cambian el velo, un zoom del 3 % y la flecha. Nada
+ * que haga falta para decidir se esconde detrás de un hover, que además no
+ * existe en pantallas táctiles.
  */
 export async function ExperienceSelector({
   locale,
@@ -28,55 +35,82 @@ export async function ExperienceSelector({
 }) {
   const categories = await getExperienceCategories(locale);
 
-  const cards = categories.map((category, index) => (
+  const card = (
+    category: (typeof categories)[number],
+    index: number,
+    /** En la rejilla de escritorio las pares son algo más cortas. */
+    ratio: string,
+  ) => (
     <Link
       key={category.id}
       href={localeHref(locale, `/experiences/${category.experience.slug}`)}
-      className="group relative block aspect-3/4 w-full overflow-hidden"
+      className={`group relative block w-full overflow-hidden ${ratio}`}
     >
       <Photo
         photo={category.experience.image}
         alt=""
-        sizes="(max-width: 640px) 66vw, (max-width: 1024px) 33vw, 22vw"
-        className="transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+        sizes="(max-width: 640px) 76vw, (max-width: 1024px) 40vw, 23vw"
+        className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
       />
-      <div className="media-scrim-soft absolute inset-0 transition-opacity duration-500 group-hover:opacity-90" />
-      <div className="absolute inset-x-0 bottom-0 p-5">
+      {/* Dos velos: el de base asienta el texto; el segundo, terracota muy
+          diluida, entra al pasar por encima y da el calor de la hora dorada
+          sin apagar la fotografía. */}
+      <div className="media-scrim-soft absolute inset-0" />
+      <div className="absolute inset-0 bg-linear-to-t from-[var(--terracotta)]/38 to-transparent opacity-0 transition-opacity duration-[var(--dur-base)] group-hover:opacity-100 group-focus-visible:opacity-100" />
+      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
         <span
           aria-hidden="true"
-          className="tnum block text-[0.65rem] tracking-[0.2em] text-sand/70"
+          className="tnum block text-[0.65rem] tracking-[0.24em] text-[var(--gold)]"
         >
           {String(index + 1).padStart(2, "0")}
         </span>
-        <h3 className="font-display mt-1.5 text-[1.35rem] leading-tight text-ivory">
+        <span
+          aria-hidden="true"
+          className="mt-2 block h-px w-8 origin-left bg-[var(--gold)]/70 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out)] group-hover:scale-x-[2.6] group-focus-visible:scale-x-[2.6]"
+        />
+        <h3 className="font-display mt-3 text-[1.4rem] leading-tight text-parchment">
           {t.categories[category.id as keyof typeof t.categories]}
         </h3>
-        <p className="mt-1.5 max-w-[24ch] text-[0.82rem] leading-snug text-ivory/70">
+        <p className="mt-2 max-w-[26ch] text-[0.84rem] leading-snug text-parchment/80">
           {category.experience.shortDescription}
         </p>
+        <span className="mt-3 flex text-[var(--gold)]">
+          <MagneticArrow />
+        </span>
       </div>
     </Link>
-  ));
+  );
+
+  const carouselCards = categories.map((category, index) =>
+    card(category, index, "aspect-3/4"),
+  );
 
   return (
-    <section className="bg-page-alt py-24 sm:py-28">
+    <section className="texture-dust relative isolate bg-olive py-20 sm:py-24">
       <Container width="wide">
         <SectionHeading
+          tone="dark"
           eyebrow={t.home.experiences.eyebrow}
           title={t.home.experiences.title}
           lede={t.home.experiences.lede}
         />
       </Container>
 
-      {/* Escritorio: rejilla de ocho. */}
+      {/* Escritorio: rejilla de ocho con alturas alternas. */}
       <Container width="wide" className="mt-12 hidden lg:block">
-        <Reveal>
-          <ul className="grid grid-cols-4 gap-5">
-            {cards.map((card, index) => (
-              <li key={index}>{card}</li>
-            ))}
-          </ul>
-        </Reveal>
+        <ul className="grid grid-cols-4 items-start gap-5">
+          <Stagger as="li" step={0.07}>
+            {categories.map((category, index) =>
+              index % 2 === 1 ? (
+                <div key={category.id} className="pt-12">
+                  {card(category, index, "aspect-4/5")}
+                </div>
+              ) : (
+                card(category, index, "aspect-3/4")
+              ),
+            )}
+          </Stagger>
+        </ul>
       </Container>
 
       {/* Móvil y tableta: carrusel táctil. */}
@@ -85,12 +119,14 @@ export async function ExperienceSelector({
             el padding al contenedor lo duplicaría y sacaría la pista fuera de
             la pantalla. */}
         <Container width="wide">
-          <Carousel
-            label={t.home.experiences.carouselLabel}
-            itemClassName="w-[66vw] max-w-[19rem] sm:w-[34vw]"
-          >
-            {cards}
-          </Carousel>
+          <Reveal>
+            <Carousel
+              label={t.home.experiences.carouselLabel}
+              itemClassName="w-[74vw] max-w-[21rem] sm:w-[38vw]"
+            >
+              {carouselCards}
+            </Carousel>
+          </Reveal>
         </Container>
       </div>
     </section>

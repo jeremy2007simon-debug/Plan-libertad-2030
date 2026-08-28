@@ -4,7 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { MediaFrame, PersonSlot } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -74,7 +74,7 @@ export default async function TeamPage({
                         index % 2 === 1 ? "lg:order-1 lg:col-start-1" : "lg:col-start-6"
                       }`}
                     >
-                      <p className="eyebrow text-terracotta">{member.role}</p>
+                      <p className="eyebrow text-terracotta-text">{member.role}</p>
                       <h2 className="text-h2 mt-3 text-forest">{member.name}</h2>
                       <p className="text-lede measure mt-5 text-ink-soft">
                         {member.bio}

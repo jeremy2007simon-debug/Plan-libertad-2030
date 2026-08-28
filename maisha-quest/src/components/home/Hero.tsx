@@ -2,6 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
+import { ParallaxMedia } from "@/components/ui/motion";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { HOME_COORDINATES } from "@/lib/site";
 import type { Locale } from "@/i18n/config";
@@ -12,9 +13,17 @@ import type { MediaVideo } from "@/types/content";
  * Hero.
  *
  * Sin JavaScript: la entrada es CSS puro (opacidad y un desplazamiento corto,
- * escalonados) y la fotografía deriva muy lentamente con `transform`, así que
+ * escalonados) y la fotografía hace un zoom lentísimo con `transform`, así que
  * no hay reflow ni trabajo en el hilo principal. Con `prefers-reduced-motion`
  * todo queda quieto y colocado.
+ *
+ * El titular entra línea a línea, con las líneas definidas en el diccionario:
+ * el corte es una decisión editorial de cada idioma, no un salto automático
+ * que en alemán o en ruso caería en mitad de una palabra larga.
+ *
+ * El paralaje del fondo solo se activa en escritorio con puntero fino. En
+ * móvil no hay ninguno: `background-attachment: fixed` no funciona en iOS y
+ * un paralaje por scroll a esa altura de imagen se ve a tirones.
  *
  * La imagen lleva `priority`: es el LCP de la página y debe empezar a
  * descargarse en el primer viaje al servidor.
@@ -43,9 +52,11 @@ export function Hero({
     <section className="relative isolate flex min-h-[92svh] flex-col justify-end overflow-hidden bg-charcoal">
       {/* Fotografía */}
       <div className="absolute inset-0 -z-10">
-        <div className="animate-drift absolute inset-0 origin-center">
-          <Photo photo={image} priority sizes="100vw" />
-        </div>
+        <ParallaxMedia strength={34} className="absolute -inset-y-12 inset-x-0">
+          <div className="animate-hero-zoom absolute inset-0 origin-center">
+            <Photo photo={image} priority sizes="100vw" />
+          </div>
+        </ParallaxMedia>
         {video?.mp4 && (
           <video
             autoPlay
@@ -66,34 +77,54 @@ export function Hero({
         <div className="media-scrim absolute inset-0" />
         <div className="media-scrim-side absolute inset-0" />
         <div className="grain absolute inset-0" />
+        {/* Transición hacia la siguiente sección: la fotografía se funde en el
+            pergamino en lugar de terminar en un corte recto. Va dentro de esta
+            capa (`-z-10`) para quedar por debajo del texto. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-b from-transparent to-[var(--page)] sm:h-32" />
       </div>
 
       <Container width="wide" className="pb-14 pt-32 sm:pb-20">
         <div className="max-w-3xl">
           <div className="animate-compass-in flex items-center gap-4">
             <CompassMark className="size-11 text-sand" />
-            <span className="tnum text-[0.68rem] tracking-[0.22em] text-ivory/60 uppercase">
+            <span className="tnum text-[0.68rem] tracking-[0.22em] text-parchment/70 uppercase">
               {HOME_COORDINATES.label}
             </span>
+            {/* Línea de brújula: se dibuja desde el punto de coordenadas
+                hacia el borde, como el rumbo trazado sobre una carta. */}
+            <span
+              aria-hidden="true"
+              className="animate-compass-line hidden h-px flex-1 origin-left bg-linear-to-r from-sand/60 to-transparent sm:block"
+            />
           </div>
 
-          <h1
-            className="animate-fade-up text-display mt-8 text-ivory"
-            style={{ animationDelay: "180ms" }}
-          >
-            {t.home.hero.headline}
+          <h1 className="text-display mt-8 text-parchment">
+            {t.home.hero.headline.map((line, index) => (
+              /* Cada línea sube desde su propia máscara. El `overflow-hidden`
+                 va en el contenedor y el movimiento en el hijo, para que la
+                 animación no recorte los descendentes de la tipografía. */
+              <span key={line} className="block overflow-hidden pb-[0.08em]">
+                <span
+                  className="animate-line-up block"
+                  style={{ animationDelay: `${160 + index * 120}ms` }}
+                >
+                  {line}
+                  {index < t.home.hero.headline.length - 1 ? " " : ""}
+                </span>
+              </span>
+            ))}
           </h1>
 
           <p
-            className="animate-fade-up text-lede measure mt-6 text-ivory/90"
-            style={{ animationDelay: "320ms" }}
+            className="animate-fade-up text-lede measure mt-6 text-parchment/90"
+            style={{ animationDelay: "480ms" }}
           >
             {t.home.hero.subline}
           </p>
 
           <div
             className="animate-fade-up mt-10 flex flex-wrap items-center gap-3 sm:gap-4"
-            style={{ animationDelay: "440ms" }}
+            style={{ animationDelay: "640ms" }}
           >
             <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
               {t.home.hero.designCta}
@@ -110,18 +141,18 @@ export function Hero({
           </div>
 
           <ul
-            className="animate-fade-up mt-11 flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-5"
-            style={{ animationDelay: "560ms" }}
+            className="animate-fade-up mt-10 flex flex-wrap items-center gap-x-5 gap-y-1.5 sm:gap-x-5"
+            style={{ animationDelay: "800ms" }}
           >
             {t.home.hero.pillars.map(
               (item, index) => (
                 <li key={item} className="flex items-center gap-3 sm:gap-5">
                   {index > 0 && (
-                    <span aria-hidden="true" className="text-sand/50">
+                    <span aria-hidden="true" className="hidden text-sand/50 sm:inline">
                       ·
                     </span>
                   )}
-                  <span className="eyebrow text-ivory/75">{item}</span>
+                  <span className="eyebrow text-parchment/75">{item}</span>
                 </li>
               ),
             )}
@@ -134,10 +165,10 @@ export function Hero({
         aria-hidden="true"
         className="pointer-events-none absolute bottom-7 right-6 hidden flex-col items-center gap-3 sm:flex"
       >
-        <span className="eyebrow [writing-mode:vertical-rl] text-ivory/45">
+        <span className="eyebrow [writing-mode:vertical-rl] text-parchment/45">
           {t.home.hero.scroll}
         </span>
-        <span className="animate-scroll-hint h-10 w-px bg-linear-to-b from-ivory/60 to-transparent" />
+        <span className="animate-scroll-hint h-10 w-px bg-linear-to-b from-parchment/60 to-transparent" />
       </div>
     </section>
   );
