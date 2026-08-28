@@ -56,6 +56,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: false,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "antelope-herd-grasslands": {
@@ -72,6 +74,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: false,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "elephant-herd-protecting-calf": {
@@ -89,6 +93,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "african-elephant-portrait": {
@@ -105,6 +111,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "elephant-family-walking": {
@@ -122,6 +130,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "savannah-acacia-sunset": {
@@ -139,6 +149,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "lion-pair-calling": {
@@ -156,6 +168,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "giraffe-oxpecker-birds": {
@@ -172,6 +186,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "flamingo-taking-flight": {
@@ -189,6 +205,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "flamingos-tanzania-lake": {
@@ -206,6 +224,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "male-lions-together": {
@@ -223,6 +243,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "giraffes-open-savannah": {
@@ -240,6 +262,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "leopard-in-tree": {
@@ -256,6 +280,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "zebra-herd-monochrome": {
@@ -273,6 +299,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "lion-open-savannah": {
@@ -290,6 +318,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "giraffe-patterns-monochrome": {
@@ -306,6 +336,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "safari-tent-accommodation": {
@@ -323,6 +355,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "flamingo-low-flight": {
@@ -340,6 +374,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
   "flamingo-flock-in-motion": {
@@ -357,6 +393,8 @@ export const CLIENT_PHOTOS = {
       commercialUseConfirmed: false,
       locationConfirmed: false,
       subjectConfirmed: true,
+      creditRequired: false,
+      creditText: null,
     },
   },
 } as const satisfies Record<string, ClientPhoto>;

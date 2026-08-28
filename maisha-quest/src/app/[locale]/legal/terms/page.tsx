@@ -17,8 +17,18 @@ export async function generateMetadata({
     title: t.legal.terms.title,
     description: t.legal.terms.intro,
     alternates: alternatesFor(locale, "/legal/terms"),
-    // Las páginas legales no se indexan mientras sean un esqueleto.
-    robots: { index: false, follow: true },
+    /*
+     * Borrador: no se indexa ni se siguen sus enlaces.
+     *
+     * `follow: false` además de `index: false` porque esta página todavía
+     * afirma cosas —quién es el operador, qué condiciones se aplican— que no
+     * están confirmadas. Mientras eso siga así no debe alimentar el índice de
+     * nadie, ni directamente ni a través de lo que enlaza. Tampoco está en el
+     * sitemap: ver `src/app/sitemap.ts`.
+     *
+     * Se levanta cuando el texto esté aprobado, no antes.
+     */
+    robots: { index: false, follow: false },
   };
 }
 

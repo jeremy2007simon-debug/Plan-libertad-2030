@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-han-subset.mjs",
+    "prebuild": "node scripts/check-han-subset.mjs && node scripts/check-photo-rights.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -12,7 +12,8 @@
     "check:han": "node scripts/check-han-subset.mjs",
     "check:i18n": "node scripts/check-untranslated.mjs",
     "test:planner": "node scripts/test-planner-locale.mjs",
-    "test:delivery": "node scripts/test-journey-delivery.mjs"
+    "test:delivery": "node scripts/test-journey-delivery.mjs",
+    "check:rights": "node scripts/check-photo-rights.mjs"
   },
   "dependencies": {
     "next": "16.2.10",

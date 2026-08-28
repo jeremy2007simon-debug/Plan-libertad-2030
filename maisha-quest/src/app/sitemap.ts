@@ -30,10 +30,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/impact", 0.6, new Date()],
     ["/journal", 0.6, new Date()],
     ["/faq", 0.6, new Date()],
-    ["/legal/terms", 0.3, new Date()],
-    ["/legal/privacy", 0.3, new Date()],
-    ["/legal/cookies", 0.3, new Date()],
-    ["/legal/credits", 0.3, new Date()],
+    /*
+     * Las cuatro páginas legales NO van en el sitemap.
+     *
+     * Las tres primeras están en borrador y salen con `noindex, nofollow`
+     * hasta que su texto esté aprobado; los créditos no se indexan porque son
+     * una página de atribución, no contenido. Un sitemap que anuncia páginas
+     * marcadas «no indexar» se contradice a sí mismo, y es de las cosas que
+     * un auditor SEO señala en el primer minuto.
+     *
+     * Vuelven aquí en cuanto los legales dejen de ser un borrador.
+     */
     ...COLLECTION_STRUCTURE.map(
       (c) => [`/collections/${c.id}`, 0.8, new Date()] as [string, number, Date],
     ),

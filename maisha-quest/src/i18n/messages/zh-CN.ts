@@ -493,10 +493,18 @@ export const zhCN: Dictionary = {
     eyebrow: "图片来源",
     title: "摄影来源",
     lede:
-      "本站图片为坦桑尼亚的临时纪实摄影，依 Creative Commons 许可使用，Maisha Quest 自有摄影正在准备中。",
-    sourceAndLicence: "来源与许可",
+      "本站照片的来源，一张一张列出。",
     body:
-      "下方每一张图片都是因为其来源记录同时确认了国家与拍摄对象才被选用——因此本站不会出现任何不属于坦桑尼亚的物种或风景。这些照片都不是 Maisha Quest 拍摄的，也没有一张出现我们的客人、向导、车辆或营地。",
+      "分两组，含义并不相同。由 Maisha Quest 提供的照片是公司自己的素材。其余是坦桑尼亚的临时纪实照片，采用知识共享许可，逐张挑选，因为它们的来源记录能确认国家与主体——因此本站不会出现任何不属于坦桑尼亚的物种或景观。",
+    /** Fotografía del cliente. */
+    ownTitle: "由 Maisha Quest 提供的照片",
+    ownBody:
+      "公司提供的素材。这里没有署名摄影师，因为尚未确认；编造署名比不署名更糟。",
+    /** Fotografía provisional de Commons. */
+    ccTitle: "知识共享许可下的临时照片",
+    ccBody:
+      "这些都不是 Maisha Quest 拍摄的，也没有一张出现 Maisha Quest 的旅客、向导、车辆或营地。每一张都保留其许可所要求的署名。",
+    sourceAndLicence: "来源与许可",
     allOwn: "本站所有摄影现已全部为 Maisha Quest 自有。",
   },
 

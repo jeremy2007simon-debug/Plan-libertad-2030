@@ -85,8 +85,58 @@ coordenadas, temporadas y fauna) y la silueta del mapa (Natural Earth).
 | Derechos de la fotografía del cliente | Sin confirmación escrita de uso comercial. Ver la sección siguiente. |
 | Fotografía de relleno | 22 fotos documentales de Wikimedia Commons cubren los huecos que las 22 del cliente no alcanzan. Ver `public/images/CREDITS.md`. |
 | Los dos vídeos | Ver `public/video/README.md`. **Uno tiene una condición de consentimiento previa.** |
-| Textos legales | `src/components/legal/LegalPage.tsx` — esqueleto, pendiente de revisión jurídica. |
-| Traducciones | Solo hay inglés. El selector lista los otros cinco idiomas desactivados en lugar de llevar a texto sin traducir. |
+| Textos legales | Borrador. Salen con `noindex, nofollow` y fuera del sitemap. Lo que hace falta para cerrarlos está en el cuadro de abajo. |
+| Envío del formulario | `JOURNEY_REQUEST_WEBHOOK` sin configurar. Comprobado, no deducido: `GET /api/journey-requests` responde `{"configured": false}`. Sin él el formulario responde 501, lo dice y ofrece correo y WhatsApp. |
+
+## Información que debe facilitar el cliente para cerrar los legales
+
+Los tres documentos legales —condiciones, privacidad y cookies— **están en
+borrador**. Salen con `noindex, nofollow`, no están en el sitemap y llevan un
+aviso visible que dice que se están terminando con el asesor legal y que lo que
+se aplica a una reserva es lo que figura por escrito en su confirmación.
+
+Nada de lo de abajo se inventa ni se rellena con un valor «razonable». Un número
+de licencia inventado en unas condiciones de venta es un problema legal, no un
+detalle de maqueta. **Mientras esta tabla tenga huecos, la web no puede
+declararse lista para producción.**
+
+Cada fila indica dónde se escribe la respuesta. Los textos se traducen a los
+seis idiomas sin cambiar su significado legal.
+
+| # | Dato | Para qué | Dónde se escribe | Estado |
+| --- | --- | --- | --- | --- |
+| 1 | Razón social | Identificar al responsable del contrato | `legal.terms.sections` · `legal.privacy.sections` | Pendiente |
+| 2 | Nombre comercial | Distinguir marca de sociedad | `COMPANY` en `src/lib/site.ts` | «Maisha Quest» |
+| 3 | Número de registro mercantil | Identificación legal | `legal.terms.sections[0]` | Pendiente |
+| 4 | Licencia TALA / TATO u otras | Acreditar la actividad de operador | `TRUST_CREDENTIALS` en `src/lib/site.ts` | Pendiente |
+| 5 | Domicilio social | Notificaciones y sede | `legal.terms.sections[0]` | Solo consta «Arusha, Tanzania» |
+| 6 | Correo para asuntos legales | Canal de reclamaciones | `COMPANY` en `src/lib/site.ts` | Pendiente (hoy solo `info@`) |
+| 7 | Responsable del tratamiento | Base del aviso de privacidad | `legal.privacy.sections` | Pendiente |
+| 8 | Encargados y servicios externos | Quién más ve los datos | `legal.privacy.sections` | Pendiente |
+| 9 | Países donde se procesan los datos | Transferencias internacionales | `legal.privacy.sections` | Pendiente |
+| 10 | Plazos de conservación | Cuánto se guarda cada dato | `legal.privacy.sections` | Pendiente |
+| 11 | Bases jurídicas del tratamiento | Por qué es lícito tratar cada dato | `legal.privacy.sections` | Pendiente |
+| 12 | Depósito y saldo | Condiciones de pago | `legal.terms.sections` | Pendiente |
+| 13 | Cancelaciones | Plazos y penalizaciones | `legal.terms.sections` | Pendiente |
+| 14 | Reembolsos | Qué se devuelve y cuándo | `legal.terms.sections` | Pendiente |
+| 15 | Cambios de reserva | Qué se puede modificar y con qué coste | `legal.terms.sections` | Pendiente |
+| 16 | Fuerza mayor | Qué ocurre ante causas ajenas | `legal.terms.sections` | Pendiente |
+| 17 | Seguros | Cobertura exigida y cobertura propia | `legal.terms.sections` | Pendiente |
+| 18 | Responsabilidad | Límites y exclusiones | `legal.terms.sections` | Pendiente |
+| 19 | Ley y jurisdicción aplicables | Dónde se resuelve un conflicto | `legal.terms.sections` | Pendiente |
+| 20 | Política sobre menores | Edad mínima, acompañamiento, consentimiento de imagen | `legal.terms.sections` · `legal.privacy.sections` | Pendiente |
+| 21 | Cookies y analítica realmente usadas | Contenido real del aviso de cookies | `legal.cookies.sections` | Hoy la web NO instala ninguna cookie ni analítica; el texto lo dice así |
+
+### Autorización de imagen
+
+Aparte de la tabla, y con la misma condición de bloqueo:
+
+- **Fotografía del cliente**: 22 archivos entregados, **sin confirmación escrita
+  de uso comercial**. `MAISHA_QUEST_PRODUCTION=1 npm run check:rights` falla
+  mientras siga habiendo una sola publicada sin confirmar.
+- **Vídeo grabado en un colegio**: no se publica sin autorización escrita de
+  los tutores de los menores y del centro. Difuminar o recortar a los menores
+  para esquivar el consentimiento no es una alternativa.
 
 ## Client-supplied photography — commercial rights pending confirmation
 

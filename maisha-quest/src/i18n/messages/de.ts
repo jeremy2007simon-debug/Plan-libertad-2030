@@ -514,10 +514,18 @@ export const de: Dictionary = {
     eyebrow: "Nachweise",
     title: "Bildnachweise",
     lede:
-      "Die Bilder auf dieser Seite sind vorläufige dokumentarische Aufnahmen aus Tansania unter Creative-Commons-Lizenz, solange die eigene Fotografie von Maisha Quest vorbereitet wird.",
-    sourceAndLicence: "Quelle und Lizenz",
+      "Woher die Fotografie dieser Website stammt, Bild für Bild.",
     body:
-      "Jedes Bild wurde ausgewählt, weil sein Quellendatensatz sowohl das Land als auch das Motiv belegt — so erscheint auf dieser Seite keine Art und keine Landschaft, die nicht nach Tansania gehört. Keine dieser Aufnahmen stammt von Maisha Quest, und auf keiner sind Gäste, Guides, Fahrzeuge oder Camps von Maisha Quest zu sehen.",
+      "Es sind zwei Gruppen, und sie bedeuten nicht dasselbe. Die von Maisha Quest bereitgestellten Fotografien sind eigenes Material des Unternehmens. Der Rest sind vorläufige dokumentarische Aufnahmen aus Tansania unter Creative-Commons-Lizenz, einzeln ausgewählt, weil ihr Quellennachweis Land und Motiv belegt — so erscheint auf dieser Website keine Art und keine Landschaft, die nicht nach Tansania gehört.",
+    /** Fotografía del cliente. */
+    ownTitle: "Von Maisha Quest bereitgestellte Fotografie",
+    ownBody:
+      "Vom Unternehmen geliefertes Material. Hier wird kein Fotograf genannt, weil das nicht bestätigt ist, und ein erfundener Bildnachweis wäre schlimmer als gar keiner.",
+    /** Fotografía provisional de Commons. */
+    ccTitle: "Vorläufige Fotografie unter Creative Commons",
+    ccBody:
+      "Keine davon stammt von Maisha Quest, und auf keiner sind Gäste, Guides, Fahrzeuge oder Camps von Maisha Quest zu sehen. Jede behält den Nachweis, den ihre Lizenz verlangt.",
+    sourceAndLicence: "Quelle und Lizenz",
     allOwn:
       "Die gesamte Fotografie dieser Seite stammt inzwischen von Maisha Quest selbst.",
   },

@@ -515,10 +515,18 @@ export const es: Dictionary = {
     eyebrow: "Créditos",
     title: "Créditos fotográficos",
     lede:
-      "Las imágenes de este sitio son fotografías documentales provisionales de Tanzania, usadas bajo licencia Creative Commons mientras se prepara la fotografía propia de Maisha Quest.",
-    sourceAndLicence: "Ficha y licencia",
+      "De dónde procede la fotografía de esta web, imagen por imagen.",
     body:
-      "Cada imagen se eligió porque su ficha de origen acredita tanto el país como el sujeto, de modo que en esta web no aparece ninguna especie ni paisaje ajeno a Tanzania. Ninguna de estas fotografías la tomó Maisha Quest, y en ninguna aparecen viajeros, guías, vehículos ni campamentos de Maisha Quest.",
+      "Son dos grupos y no significan lo mismo. Las fotografías suministradas por Maisha Quest son material propio de la empresa. El resto son fotografías documentales provisionales de Tanzania, bajo licencia Creative Commons y elegidas una a una porque su ficha acredita el país y el sujeto: así ninguna especie ni paisaje ajeno a Tanzania aparece en esta web.",
+    /** Fotografía del cliente. */
+    ownTitle: "Fotografía suministrada por Maisha Quest",
+    ownBody:
+      "Material facilitado por la empresa. Aquí no se atribuye a ningún fotógrafo porque no está confirmado, y un crédito inventado sería peor que ninguno.",
+    /** Fotografía provisional de Commons. */
+    ccTitle: "Fotografía provisional bajo Creative Commons",
+    ccBody:
+      "Ninguna la tomó Maisha Quest, y en ninguna aparecen viajeros, guías, vehículos ni campamentos de Maisha Quest. Cada una conserva la atribución que exige su licencia.",
+    sourceAndLicence: "Ficha y licencia",
     allOwn: "Toda la fotografía de este sitio es ya material propio de Maisha Quest.",
   },
 

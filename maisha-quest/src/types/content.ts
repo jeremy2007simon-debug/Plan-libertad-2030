@@ -58,6 +58,17 @@ export interface ClientPhotoProvenance {
   locationConfirmed: boolean;
   /** ¿Está confirmada la especie o el sujeto concreto? */
   subjectConfirmed: boolean;
+  /**
+   * ¿Exige esta fotografía un crédito visible al publicarla?
+   *
+   * Distinto de tener autor: una foto puede tener autor conocido y no exigir
+   * crédito, o exigirlo sin que sepamos todavía con qué texto. Mientras esto
+   * sea `true` y `creditText` sea `null`, la fotografía NO se puede publicar:
+   * saldría sin la atribución que su licencia exige.
+   */
+  creditRequired: boolean;
+  /** Texto exacto del crédito, tal y como debe aparecer. `null` = sin definir. */
+  creditText: string | null;
   /** Nota interna: marca de agua visible, restricción concreta, etc. */
   note?: string;
 }

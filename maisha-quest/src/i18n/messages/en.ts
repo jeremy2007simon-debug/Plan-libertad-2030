@@ -524,10 +524,18 @@ export const en = {
     eyebrow: "Credits",
     title: "Photography credits",
     lede:
-      "The images on this site are provisional documentary photographs of Tanzania, used under Creative Commons licences while Maisha Quest’s own photography is prepared.",
-    sourceAndLicence: "Source and licence",
+      "Where the photography on this site comes from, image by image.",
     body:
-      "Every image below was selected because its source record confirms both the country and the subject — so no species or landscape that does not belong to Tanzania appears anywhere on this site. None of these photographs were taken by Maisha Quest, and none of them show Maisha Quest guests, guides, vehicles or camps.",
+      "Two groups, and they are not the same thing. The photographs Maisha Quest supplied are the company’s own material. The rest are provisional documentary photographs of Tanzania, used under Creative Commons licences and chosen one by one because their source record confirms the country and the subject — so no species or landscape that does not belong to Tanzania appears anywhere on this site.",
+    /** Fotografía del cliente. */
+    ownTitle: "Photography supplied by Maisha Quest",
+    ownBody:
+      "Material the company provided. It is not attributed to a photographer here because that has not been confirmed, and a made-up credit would be worse than none.",
+    /** Fotografía provisional de Commons. */
+    ccTitle: "Provisional photography under Creative Commons",
+    ccBody:
+      "None of these were taken by Maisha Quest, and none of them show Maisha Quest guests, guides, vehicles or camps. Each one keeps the attribution its licence requires.",
+    sourceAndLicence: "Source and licence",
     allOwn: "All photography on this site is now Maisha Quest’s own.",
   },
 
