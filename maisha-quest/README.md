@@ -207,10 +207,6 @@ Los originales se conservan intactos —mismo nombre, mismos bytes, misma
 metadata— en `public/images/maisha-quest/originals/`. Nunca se sobrescriben
 ni se comprimen.
 
-
-Se conservan intactos —mismo nombre, mismos bytes, misma metadata— en
-`public/images/maisha-quest/originals/`. Nunca se sobrescriben ni se comprimen.
-
 | # | Original | Píxeles | Peso | Nombre semántico | Derivado web | Dónde se usa |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `x-X4.jpg` | 2048×1152 | 180 kB | `tanzania-wildlife-sunset-hero` | `tanzania-wildlife-sunset-hero.webp` · 2000×1125 · 36 kB | Home — hero |
