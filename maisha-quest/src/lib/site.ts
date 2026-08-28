@@ -5,8 +5,6 @@
  * confirmado por el cliente se deja como `null` con un TODO, nunca inventado.
  */
 
-import type { Locale } from "@/types/content";
-
 export const SITE_URL = "https://www.maishaquest.com";
 
 export const COMPANY = {
@@ -63,105 +61,11 @@ export const HOME_COORDINATES = {
   label: "3°23'13\"S  36°40'59\"E",
 };
 
-export interface NavItem {
-  label: string;
-  href: string;
-  description?: string;
-  children?: NavItem[];
-}
-
-export const MAIN_NAV: NavItem[] = [
-  {
-    label: "Safaris",
-    href: "/safaris",
-    description: "Private journeys, grouped by the way you like to travel.",
-    children: [
-      { label: "All safaris", href: "/safaris" },
-      {
-        label: "Explorer Collection",
-        href: "/collections/explorer",
-        description: "Wild landscapes, adventure and discovery.",
-      },
-      {
-        label: "Escape Collection",
-        href: "/collections/escape",
-        description: "Space, comfort and effortless connection.",
-      },
-      {
-        label: "Enrich Collection",
-        href: "/collections/enrich",
-        description: "Culture, cuisine and communities.",
-      },
-    ],
-  },
-  { label: "Destinations", href: "/destinations" },
-  { label: "Experiences", href: "/experiences" },
-  {
-    label: "About",
-    href: "/about",
-    children: [
-      { label: "Our story", href: "/about" },
-      { label: "The team", href: "/about/team" },
-    ],
-  },
-  { label: "Impact", href: "/impact" },
-  { label: "Journal", href: "/journal" },
-];
-
-export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
-  {
-    title: "Travel",
-    items: [
-      { label: "All safaris", href: "/safaris" },
-      { label: "Explorer Collection", href: "/collections/explorer" },
-      { label: "Escape Collection", href: "/collections/escape" },
-      { label: "Enrich Collection", href: "/collections/enrich" },
-      { label: "Destinations", href: "/destinations" },
-      { label: "Experiences", href: "/experiences" },
-    ],
-  },
-  {
-    title: "Maisha Quest",
-    items: [
-      { label: "About us", href: "/about" },
-      { label: "The team", href: "/about/team" },
-      { label: "Impact", href: "/impact" },
-      { label: "Journal", href: "/journal" },
-      { label: "Contact", href: "/contact" },
-      { label: "FAQ", href: "/faq" },
-    ],
-  },
-  {
-    title: "Legal",
-    items: [
-      { label: "Terms & Conditions", href: "/legal/terms" },
-      { label: "Privacy Policy", href: "/legal/privacy" },
-      { label: "Cookie Policy", href: "/legal/cookies" },
-      { label: "Photo credits", href: "/legal/credits" },
-      { label: "Sitemap", href: "/sitemap.xml" },
-    ],
-  },
-];
-
 /**
- * Idiomas previstos. Solo `en` está traducido: el resto queda declarado para
- * que el selector y el enrutado existan, pero sin traducciones inventadas.
+ * La navegación (rutas + claves de traducción) vive en `src/lib/nav.ts`. Aquí
+ * estaba con las etiquetas en inglés incrustadas, que es justo lo que impedía
+ * traducir el menú.
  */
-export const LOCALES: {
-  code: Locale;
-  label: string;
-  englishLabel: string;
-  available: boolean;
-}[] = [
-  { code: "en", label: "English", englishLabel: "English", available: true },
-  { code: "es", label: "Español", englishLabel: "Spanish", available: false },
-  { code: "de", label: "Deutsch", englishLabel: "German", available: false },
-  { code: "fr", label: "Français", englishLabel: "French", available: false },
-  { code: "ru", label: "Русский", englishLabel: "Russian", available: false },
-  { code: "zh", label: "中文", englishLabel: "Mandarin", available: false },
-];
-
-export const DEFAULT_LOCALE: Locale = "en";
 
 /** Beneficios de "Your journey, in trusted hands". Sin cifras: nada inventado. */
 export const TRUST_PILLARS = [
@@ -237,15 +141,6 @@ export function whatsappHref(message?: string): string {
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
-/** Mensaje que se precarga en WhatsApp, por idioma. */
-export const WHATSAPP_MESSAGE: Record<string, string> = {
-  en: "Hello Maisha Quest, I would like help planning a safari in Tanzania.",
-  es: "Hola Maisha Quest, me gustaría recibir ayuda para planificar un safari en Tanzania.",
-  de: "Hallo Maisha Quest, ich hätte gern Hilfe bei der Planung einer Safari in Tansania.",
-  fr: "Bonjour Maisha Quest, j\u2019aimerais de l\u2019aide pour organiser un safari en Tanzanie.",
-  ru: "Здравствуйте, Maisha Quest! Мне нужна помощь в планировании сафари в Танзании.",
-  "zh-CN": "您好 Maisha Quest，我想请你们帮忙规划一次坦桑尼亚野生动物之旅。",
-};
 
 /**
  * Datos que faltan por confirmar con el cliente.

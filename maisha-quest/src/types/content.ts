@@ -18,7 +18,8 @@ export type Pending<T> = T | null;
 
 export type CollectionId = "explorer" | "escape" | "enrich";
 
-export type Locale = "en" | "es" | "de" | "fr" | "ru" | "zh";
+import type { Locale } from "@/i18n/config";
+export type { Locale };
 
 /** Atribución de una fotografía provisional. */
 export interface PhotoCredit {
@@ -147,18 +148,14 @@ export interface Destination {
   slug: Slug;
   name: string;
   /** Región tal y como la agrupa Maisha Quest hoy. */
-  region:
-    | "Northern Circuit"
-    | "Southern Circuit"
-    | "Coast & Islands"
-    | "Gateway";
+  region: "northern" | "southern" | "coast" | "gateway";
   shortDescription: string;
   description: string;
   coordinates: Coordinates;
   /** Meses recomendados, en texto corto ("June – October"). */
   bestTime: string;
   /** Detalle por temporadas para la ficha ampliada. */
-  seasons?: { label: string; months: string; note: string }[];
+  seasons: { label: string; months: string; note: string }[];
   /** Fauna característica. Solo especies presentes en Tanzania. */
   wildlife: string[];
   /** Slugs de `experiences` disponibles aquí. */
@@ -214,7 +211,7 @@ export interface ItineraryDay {
   activities: string[];
   /** Slug de `accommodations` o nombre pendiente de confirmar. */
   accommodationSlug: Pending<Slug>;
-  meals: ("Breakfast" | "Lunch" | "Dinner")[];
+  meals: ("breakfast" | "lunch" | "dinner")[];
   /** Tiempo estimado de trayecto/actividad. */
   estimatedDuration: Pending<string>;
   images?: ResolvedImage[];
@@ -290,7 +287,7 @@ export interface Testimonial {
 export interface ImpactProject {
   slug: Slug;
   title: string;
-  area: "Education" | "Conservation" | "Community" | "Local employment";
+  area: "education" | "conservation" | "community" | "employment";
   description: string;
   /** Resultados concretos. Vacío mientras el cliente no facilite datos reales. */
   outcomes: string[];
@@ -315,7 +312,7 @@ export interface FAQ {
   slug: Slug;
   question: string;
   answer: string;
-  topic: "Planning" | "Travel" | "Safari" | "Health & safety" | "Payment";
+  topic: "planning" | "travel" | "safari" | "health" | "payment";
 }
 
 /* -------------------------------------------------------------------------
@@ -345,4 +342,162 @@ export interface ContactRequest {
   honeypot?: string;
   /** Milisegundos que tardó en completar el formulario (antispam). */
   elapsedMs?: number;
+}
+
+/* -------------------------------------------------------------------------
+ * Estructura vs. texto
+ *
+ * Cada modelo se parte en dos: lo que NO depende del idioma (slugs, fechas,
+ * duraciones, coordenadas, rutas, imágenes, relaciones) vive una sola vez; lo
+ * que sí (títulos, descripciones, actividades) vive una vez por idioma. Así el
+ * contenido no se duplica seis veces y es imposible que la versión alemana
+ * declare siete días y la francesa ocho: la duración solo existe en un sitio.
+ *
+ * Los tipos `*Text` son `Record<Slug, …>`. Si a un idioma le falta un slug o
+ * un campo, TypeScript lo detiene en compilación.
+ * ---------------------------------------------------------------------- */
+
+export interface SafariStructure {
+  slug: Slug;
+  collection: CollectionId;
+  durationDays: number;
+  routeDestinationSlugs: Slug[];
+  accommodationStyle: AccommodationStyle;
+  price: { fromPerPerson: Pending<number>; currency: "USD" };
+  image: ResolvedImage;
+  gallery?: ResolvedImage[];
+  video?: MediaVideo;
+  itinerary: {
+    day: number;
+    accommodationSlug: Pending<Slug>;
+    meals: ("breakfast" | "lunch" | "dinner")[];
+    images?: ResolvedImage[];
+  }[];
+  faqSlugs?: Slug[];
+  relatedSafariSlugs?: Slug[];
+  featured?: boolean;
+  draft?: boolean;
+}
+
+export interface SafariText {
+  name: string;
+  summary: string;
+  overview?: string;
+  travellerProfile: string;
+  bestTime: string;
+  priceNote?: string;
+  included: string[];
+  notIncluded: string[];
+  practicalInfo?: { label: string; value: string }[];
+  /** Un elemento por día, en el mismo orden que `itinerary`. */
+  days: {
+    title: string;
+    route: Pending<string>;
+    activities: string[];
+    estimatedDuration: Pending<string>;
+  }[];
+}
+
+export interface DestinationStructure {
+  slug: Slug;
+  region: "northern" | "southern" | "coast" | "gateway";
+  coordinates: Coordinates;
+  experienceSlugs: Slug[];
+  image: ResolvedImage;
+  gallery?: ResolvedImage[];
+  mapPosition: { x: number; y: number };
+  /** Número de temporadas descritas; el texto de cada una va por idioma. */
+  seasonCount: number;
+}
+
+export interface DestinationText {
+  name: string;
+  shortDescription: string;
+  description: string;
+  bestTime: string;
+  seasons: { label: string; months: string; note: string }[];
+  wildlife: string[];
+}
+
+export interface ExperienceStructure {
+  slug: Slug;
+  category: Experience["category"];
+  image: ResolvedImage;
+  destinationSlugs: Slug[];
+}
+
+export interface ExperienceText {
+  name: string;
+  shortDescription: string;
+  description: string;
+}
+
+export interface CollectionStructure {
+  id: CollectionId;
+  typicalDurationDays: [number, number];
+  accent: "sand" | "terracotta" | "gold";
+  image: ResolvedImage;
+}
+
+export interface CollectionText {
+  /** "Explorer", "Escape", "Enrich" son nombres de marca: no se traducen. */
+  tagline: string;
+  description: string;
+  travellerProfile: string;
+  traits: string[];
+}
+
+export interface JournalStructure {
+  slug: Slug;
+  date: string;
+  author: Pending<string>;
+  readingMinutes: number;
+  image: ResolvedImage;
+}
+
+export interface JournalText {
+  title: string;
+  excerpt: string;
+  category: string;
+  body?: string[];
+}
+
+export interface FaqStructure {
+  slug: Slug;
+  topic: "planning" | "travel" | "safari" | "health" | "payment";
+}
+
+export interface FaqText {
+  question: string;
+  answer: string;
+}
+
+export interface TeamStructure {
+  slug: Slug;
+  /** Nombre propio: nunca se traduce. */
+  name: string;
+  /** Códigos de idioma que habla; la etiqueta sale del diccionario. */
+  languageCodes: string[];
+  portrait: MediaImage;
+}
+
+export interface TeamText {
+  role: string;
+  bio: string;
+  specialty: string;
+  favouritePlace: Pending<string>;
+}
+
+export interface ImpactStructure {
+  slug: Slug;
+  area: "education" | "conservation" | "community" | "employment";
+  /** Vacío mientras el cliente no facilite cifras reales. */
+  outcomes: string[];
+  image: MediaImage;
+}
+
+export interface ImpactText {
+  title: string;
+  description: string;
+  location: Pending<string>;
 }

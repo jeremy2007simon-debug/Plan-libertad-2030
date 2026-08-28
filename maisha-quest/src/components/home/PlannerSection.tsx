@@ -4,6 +4,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { JourneyPlanner } from "@/components/planner/JourneyPlanner";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
+import { type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import { getDestinations } from "@/lib/content";
 import { COMPANY } from "@/lib/site";
 
@@ -15,8 +17,14 @@ import { COMPANY } from "@/lib/site";
  * mayor intención es justo después de haber visto los viajes, el mapa y al
  * equipo, y cada clic intermedio pierde solicitudes.
  */
-export async function PlannerSection() {
-  const destinations = await getDestinations();
+export async function PlannerSection({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const destinations = await getDestinations(locale);
 
   return (
     <section id="plan" className="bg-page-alt py-24 sm:py-32">
@@ -24,9 +32,9 @@ export async function PlannerSection() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
             <SectionHeading
-              eyebrow="Plan your journey"
-              title="Let’s design your journey"
-              lede="Seven short steps. No obligation, no automated quote — a person in Arusha reads every one of these and replies with a route."
+              eyebrow={t.home.planner.eyebrow}
+              title={t.home.planner.title}
+              lede={t.home.planner.lede}
             />
 
             <Reveal className="mt-10 hidden lg:block">
@@ -40,7 +48,7 @@ export async function PlannerSection() {
             </Reveal>
 
             <Reveal className="mt-8">
-              <p className="eyebrow text-ink-faint">Rather just talk?</p>
+              <p className="eyebrow text-ink-faint">{t.home.planner.ratherTalk}</p>
               <a
                 href={COMPANY.phoneHref}
                 className="font-display mt-2 block text-[1.45rem] text-forest transition-colors duration-300 hover:text-terracotta"
@@ -55,10 +63,13 @@ export async function PlannerSection() {
 
           <Reveal className="lg:col-span-8">
             <JourneyPlanner
+              locale={locale}
+              t={t.planner}
+              requiredLabel={t.a11y.required}
               destinations={destinations.map((destination) => ({
                 slug: destination.slug,
                 name: destination.name,
-                region: destination.region,
+                region: t.regions[destination.region],
               }))}
             />
           </Reveal>

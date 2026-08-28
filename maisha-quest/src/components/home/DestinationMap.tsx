@@ -6,6 +6,8 @@ import {
   getExperienceForDestination,
   getSafarisByDestination,
 } from "@/lib/content";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import { MapExplorer, type MapDestination } from "./MapExplorer";
 
 /**
@@ -15,16 +17,23 @@ import { MapExplorer, type MapDestination } from "./MapExplorer";
  * capa de datos y le pasa al cliente sólo lo que el mapa necesita. Así el
  * bundle de cliente no arrastra el catálogo entero.
  */
-export async function DestinationMap() {
-  const destinations = await getDestinations();
+export async function DestinationMap({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const destinations = await getDestinations(locale);
 
   const payload: MapDestination[] = await Promise.all(
     destinations.map(async (destination) => {
-      const safaris = await getSafarisByDestination(destination.slug);
+      const safaris = await getSafarisByDestination(locale, destination.slug);
       return {
         slug: destination.slug,
         name: destination.name,
-        region: destination.region,
+        moreOnLabel: t.home.map.moreOn(destination.name),
+        region: t.regions[destination.region],
         shortDescription: destination.shortDescription,
         description: destination.description,
         bestTime: destination.bestTime,
@@ -41,7 +50,7 @@ export async function DestinationMap() {
               ? (destination.image.blurDataURL as string)
               : "",
         },
-        experiences: getExperienceForDestination(destination.slug).map((e) => ({
+        experiences: getExperienceForDestination(locale, destination.slug).map((e) => ({
           slug: e.slug,
           name: e.name,
         })),
@@ -49,7 +58,8 @@ export async function DestinationMap() {
           slug: safari.slug,
           name: safari.name,
           durationDays: safari.durationDays,
-          route: formatRoute(safari),
+          durationLabel: t.home.map.dayCount(safari.durationDays),
+          route: formatRoute(locale, safari),
         })),
       };
     }),
@@ -59,12 +69,27 @@ export async function DestinationMap() {
     <section className="bg-page-alt py-24 sm:py-32">
       <Container width="wide">
         <SectionHeading
-          eyebrow="The map"
-          title="Find your place in Tanzania"
-          lede="Nine places, four circuits and one coastline. Select one to see when to go, what lives there and which journeys pass through."
+          eyebrow={t.home.map.eyebrow}
+          title={t.home.map.title}
+          lede={t.home.map.lede}
         />
         <div className="mt-14">
-          <MapExplorer destinations={payload} />
+          <MapExplorer
+            destinations={payload}
+            locale={locale}
+            /* Solo las cadenas: `t.home.map` también contiene funciones de
+               traducción (`dayCount`, `moreOn`) y esas se resuelven arriba,
+               al construir `payload`. */
+            t={{
+              eyebrow: t.home.map.eyebrow,
+              title: t.home.map.title,
+              lede: t.home.map.lede,
+              bestTime: t.home.map.bestTime,
+              wildlife: t.home.map.wildlife,
+              experiences: t.home.map.experiences,
+              journeysHere: t.home.map.journeysHere,
+            }}
+          />
         </div>
       </Container>
     </section>

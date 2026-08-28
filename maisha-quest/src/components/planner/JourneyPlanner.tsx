@@ -11,14 +11,16 @@ import {
   PLANNER_STORAGE_KEY,
   STEPS,
   TRIP_TYPES,
-  labelFor,
   toContactRequest,
   validateStep,
   type Errors,
   type PlannerState,
   type StepId,
 } from "@/lib/planner";
-import { COMPANY, LOCALES, whatsappHref } from "@/lib/site";
+import { LOCALES, LOCALE_META, type Locale } from "@/i18n/config";
+import { fill, plural, type PluralForms } from "@/i18n/format";
+import type { Dictionary } from "@/i18n/messages/en";
+import { COMPANY, whatsappHref } from "@/lib/site";
 
 /**
  * Planificador de safari por pasos.
@@ -37,6 +39,22 @@ import { COMPANY, LOCALES, whatsappHref } from "@/lib/site";
  *   el mismo resumen por email o WhatsApp, con todo ya escrito.
  */
 
+/**
+ * "2 adultos, 1 niño" en el idioma activo.
+ *
+ * La categoría de plural la elige `Intl.PluralRules`: el ruso necesita tres
+ * formas y el chino ninguna, y una comparación con 1 solo acierta en inglés.
+ */
+function travellerCount(
+  locale: Locale,
+  t: { adultCount: PluralForms; childCount: PluralForms },
+  adults: number,
+  children: number,
+): string {
+  const first = plural(locale, adults, t.adultCount);
+  return children > 0 ? first + plural(locale, children, t.childCount) : first;
+}
+
 type Status =
   | { kind: "idle" }
   | { kind: "sending" }
@@ -45,10 +63,22 @@ type Status =
   | { kind: "error"; message: string };
 
 export function JourneyPlanner({
+  locale,
+  t,
+  requiredLabel,
   destinations,
   /** Safari preseleccionado al llegar desde "Customize" en una tarjeta. */
   initialSafari,
 }: {
+  locale: Locale;
+  /**
+   * Solo la sección del planificador, no el diccionario entero: este es un
+   * componente de cliente y el resto del diccionario contiene funciones de
+   * traducción, que no pueden cruzar la frontera servidor→cliente de React.
+   */
+  t: Dictionary["planner"];
+  /** `a11y.required`, ya traducido. */
+  requiredLabel: string;
   destinations: { slug: string; name: string; region: string }[];
   initialSafari?: { slug: string; name: string; destinationSlugs: string[] } | null;
 }) {
@@ -65,8 +95,9 @@ export function JourneyPlanner({
   const honeypot = useRef<HTMLInputElement>(null);
   const isFirstRender = useRef(true);
 
-  const step = STEPS[stepIndex];
-  const isReview = step.id === "review";
+  const stepId = STEPS[stepIndex];
+  const step = t.steps[stepId];
+  const isReview = stepId === "review";
 
   /* ---- Borrador local ---------------------------------------------------- */
 
@@ -127,7 +158,7 @@ export function JourneyPlanner({
   }, []);
 
   const next = () => {
-    const found = validateStep(step.id, state);
+    const found = validateStep(stepId, state);
     if (Object.keys(found).length > 0) {
       setErrors(found);
       return;
@@ -140,13 +171,16 @@ export function JourneyPlanner({
 
   /* ---- Envío ------------------------------------------------------------- */
 
-  const summaryText = useMemo(() => buildSummary(state, destinations), [state, destinations]);
+  const summaryText = useMemo(
+    () => buildSummary(state, destinations, locale, t),
+    [state, destinations, locale, t],
+  );
 
   const submit = async () => {
     // Revalida todos los pasos: nadie llega al resumen sin pasar por ellos,
     // pero un borrador restaurado podría estar incompleto.
     for (const candidate of STEPS) {
-      const found = validateStep(candidate.id, state);
+      const found = validateStep(candidate, state);
       if (Object.keys(found).length > 0) {
         setErrors(found);
         goTo(STEPS.indexOf(candidate));
@@ -183,7 +217,7 @@ export function JourneyPlanner({
       if (!response.ok) {
         setStatus({
           kind: "error",
-          message: body.message ?? "We could not send that just now.",
+          message: body.message ?? t.status.sendFailed,
         });
         return;
       }
@@ -197,8 +231,7 @@ export function JourneyPlanner({
     } catch {
       setStatus({
         kind: "error",
-        message:
-          "We could not reach our server. Check your connection and try again.",
+        message: t.status.offline,
       });
     }
   };
@@ -209,18 +242,18 @@ export function JourneyPlanner({
     return (
       <Panel>
         <CompassMark className="size-12 text-gold" />
-        <h2 className="text-h2 mt-7 text-forest">Your enquiry is with us.</h2>
+        <h2 className="text-h2 mt-7 text-forest">{t.status.sentTitle}</h2>
         <p className="measure mt-5 text-[1rem] leading-relaxed text-ink-soft">
-          Thank you, {state.firstName}. One of the team in Arusha will read this
-          properly and come back to you — not with a template, with a route.
+          {fill(t.status.sentBody, { name: state.firstName })}
           {status.reference && (
             <>
               {" "}
-              Your reference is <span className="tnum">{status.reference}</span>.
+              {t.status.reference}{" "}
+              <span className="tnum">{status.reference}</span>.
             </>
           )}
         </p>
-        <ContactFallback className="mt-9" />
+        <ContactFallback label={t.status.inTheMeantime} className="mt-9" />
       </Panel>
     );
   }
@@ -230,23 +263,20 @@ export function JourneyPlanner({
       <Panel>
         <CompassMark className="size-12 text-terracotta" />
         <h2 className="text-h2 mt-7 text-forest">
-          Almost — this form is not connected yet.
+          {t.status.unconfiguredTitle}
         </h2>
         <p className="measure mt-5 text-[1rem] leading-relaxed text-ink-soft">
-          We are not going to tell you your enquiry was sent when it was not.
-          The submission endpoint has not been connected to email or a CRM yet,
-          so nothing reached us. Your answers are below, ready to send — one tap
-          and they are on their way.
+          {t.status.unconfiguredBody}
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
           <a
             href={`${COMPANY.emailHref}?subject=${encodeURIComponent(
-              "Journey enquiry — " + state.firstName + " " + state.lastName,
+              `${t.summary.heading} — ${state.firstName} ${state.lastName}`.trim(),
             )}&body=${encodeURIComponent(status.summary)}`}
             className="inline-flex min-h-11 items-center rounded-[2px] bg-terracotta px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
           >
-            Send by email
+            {t.status.sendByEmail}
           </a>
           <a
             href={whatsappHref(status.summary)}
@@ -254,13 +284,13 @@ export function JourneyPlanner({
             rel="noopener noreferrer"
             className="inline-flex min-h-11 items-center rounded-[2px] border border-forest/35 px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
           >
-            Send on WhatsApp
+            {t.status.sendOnWhatsApp}
           </a>
         </div>
 
         <details className="mt-8 border-t border-rule pt-6">
           <summary className="eyebrow cursor-pointer text-ink-faint">
-            Your answers
+            {t.status.yourAnswers}
           </summary>
           <pre className="mt-4 overflow-x-auto text-[0.85rem] leading-relaxed whitespace-pre-wrap text-ink-soft">
             {status.summary}
@@ -280,7 +310,7 @@ export function JourneyPlanner({
       <div className="border-b border-rule px-6 py-5 sm:px-10">
         <div className="flex items-baseline justify-between gap-4">
           <p className="eyebrow text-terracotta">
-            Step {stepIndex + 1} of {STEPS.length}
+            {fill(t.stepOf, { n: stepIndex + 1, total: STEPS.length })}
           </p>
           <p className="eyebrow text-ink-faint">{step.label}</p>
         </div>
@@ -290,7 +320,7 @@ export function JourneyPlanner({
           aria-valuenow={stepIndex + 1}
           aria-valuemin={1}
           aria-valuemax={STEPS.length}
-          aria-label="Planner progress"
+          aria-label={t.progress}
         >
           <div
             className="h-px bg-terracotta transition-[width] duration-500 ease-out"
@@ -301,7 +331,7 @@ export function JourneyPlanner({
         {/* Pasos ya completados: se puede volver a cualquiera. */}
         <ol className="no-scrollbar mt-4 flex gap-4 overflow-x-auto">
           {STEPS.map((candidate, index) => (
-            <li key={candidate.id} className="shrink-0">
+            <li key={candidate} className="shrink-0">
               <button
                 type="button"
                 disabled={index > stepIndex}
@@ -314,7 +344,7 @@ export function JourneyPlanner({
                       : "text-ink-faint/45"
                 }`}
               >
-                {candidate.label}
+                {t.steps[candidate].label}
               </button>
             </li>
           ))}
@@ -324,8 +354,7 @@ export function JourneyPlanner({
       <div className="px-6 py-10 sm:px-10 sm:py-12">
         {restored && stepIndex === 0 && (
           <p className="mb-7 border-l-2 border-gold pl-4 text-[0.88rem] text-ink-soft">
-            We picked up where you left off. Your previous answers are saved on
-            this device only.
+            {t.draftRestored}
           </p>
         )}
 
@@ -343,20 +372,21 @@ export function JourneyPlanner({
         )}
 
         <div className="mt-9">
-          {step.id === "trip" && (
+          {stepId === "trip" && (
             <ChoiceGrid
               name="tripType"
               options={TRIP_TYPES}
+              labels={t.tripTypes}
               value={state.tripType}
               onChange={(value) => update("tripType", value)}
-              error={errors.tripType}
-              legend="Kind of journey"
+              error={errors.tripType && t.errors[errors.tripType]}
+              legend={t.legends.tripType}
             />
           )}
 
-          {step.id === "destinations" && (
+          {stepId === "destinations" && (
             <fieldset>
-              <legend className="sr-only">Destinations</legend>
+              <legend className="sr-only">{t.review.destinations}</legend>
               <ul className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
                 {destinations.map((destination) => {
                   const checked = state.destinationSlugs.includes(destination.slug);
@@ -403,10 +433,10 @@ export function JourneyPlanner({
             </fieldset>
           )}
 
-          {step.id === "dates" && (
+          {stepId === "dates" && (
             <div className="flex flex-col gap-8">
               <Field
-                label="Roughly when?"
+                label={t.fields.month}
                 htmlFor="travelMonth"
                 error={errors.travelMonth}
               >
@@ -436,64 +466,75 @@ export function JourneyPlanner({
               <ChoiceGrid
                 name="durationDays"
                 options={DURATIONS}
+                labels={t.durations}
                 value={state.durationDays}
                 onChange={(value) => update("durationDays", value)}
-                error={errors.durationDays}
-                legend="How long?"
+                error={errors.durationDays && t.errors[errors.durationDays]}
+                legend={t.legends.duration}
                 columns={3}
               />
             </div>
           )}
 
-          {step.id === "travellers" && (
+          {stepId === "travellers" && (
             <div className="flex flex-col gap-8">
               <fieldset>
-                <legend className="eyebrow text-ink-faint">Travellers</legend>
+                <legend className="eyebrow text-ink-faint">{t.legends.travellers}</legend>
                 <div className="mt-4 flex flex-wrap gap-8">
                   <Counter
-                    label="Adults"
+                    label={t.fields.adults}
                     value={state.adults}
                     min={1}
                     onChange={(value) => update("adults", value)}
                   />
                   <Counter
-                    label="Children"
-                    hint="Under 18"
+                    label={t.fields.children}
+                    hint={t.fields.childrenHint}
                     value={state.children}
                     min={0}
                     onChange={(value) => update("children", value)}
                   />
                 </div>
-                {errors.adults && <ErrorText>{errors.adults}</ErrorText>}
+                {errors.adults && <ErrorText>{t.errors[errors.adults]}</ErrorText>}
               </fieldset>
 
               <ChoiceGrid
                 name="accommodationStyle"
                 options={ACCOMMODATION_STYLES}
+                labels={t.accommodationStyles}
                 value={state.accommodationStyle}
                 onChange={(value) => update("accommodationStyle", value)}
-                error={errors.accommodationStyle}
-                legend="How would you like to stay?"
+                error={
+                  errors.accommodationStyle && t.errors[errors.accommodationStyle]
+                }
+                legend={t.legends.accommodation}
               />
             </div>
           )}
 
-          {step.id === "budget" && (
+          {stepId === "budget" && (
             <ChoiceGrid
               name="budgetPerPerson"
               options={BUDGET_RANGES}
+              labels={t.budgets}
               value={state.budgetPerPerson}
               onChange={(value) => update("budgetPerPerson", value)}
-              error={errors.budgetPerPerson}
-              legend="Budget per person"
+              error={errors.budgetPerPerson && t.errors[errors.budgetPerPerson]}
+              legend={t.legends.budget}
               columns={3}
             />
           )}
 
-          {step.id === "contact" && (
+          {stepId === "contact" && (
             <div className="flex flex-col gap-6">
               <div className="grid gap-6 sm:grid-cols-2">
-                <Field label="First name" htmlFor="firstName" error={errors.firstName} required>
+                <Field
+                  label={t.fields.firstName}
+                  htmlFor="firstName"
+                  error={errors.firstName && t.errors[errors.firstName]}
+                  required
+                  requiredLabel={requiredLabel}
+                >
                   <TextInput
                     id="firstName"
                     required
@@ -503,7 +544,7 @@ export function JourneyPlanner({
                     invalid={Boolean(errors.firstName)}
                   />
                 </Field>
-                <Field label="Last name" htmlFor="lastName">
+                <Field label={t.fields.lastName} htmlFor="lastName">
                   <TextInput
                     id="lastName"
                     autoComplete="family-name"
@@ -511,7 +552,13 @@ export function JourneyPlanner({
                     onChange={(value) => update("lastName", value)}
                   />
                 </Field>
-                <Field label="Email" htmlFor="email" error={errors.email} required>
+                <Field
+                  label={t.fields.email}
+                  htmlFor="email"
+                  error={errors.email && t.errors[errors.email]}
+                  required
+                  requiredLabel={requiredLabel}
+                >
                   <TextInput
                     id="email"
                     type="email"
@@ -522,7 +569,7 @@ export function JourneyPlanner({
                     invalid={Boolean(errors.email)}
                   />
                 </Field>
-                <Field label="Phone or WhatsApp" htmlFor="phone">
+                <Field label={t.fields.phone} htmlFor="phone">
                   <TextInput
                     id="phone"
                     type="tel"
@@ -531,7 +578,7 @@ export function JourneyPlanner({
                     onChange={(value) => update("phone", value)}
                   />
                 </Field>
-                <Field label="Country" htmlFor="country">
+                <Field label={t.fields.country} htmlFor="country">
                   <TextInput
                     id="country"
                     autoComplete="country-name"
@@ -539,29 +586,29 @@ export function JourneyPlanner({
                     onChange={(value) => update("country", value)}
                   />
                 </Field>
-                <Field label="Reply to me in" htmlFor="preferredLanguage">
+                <Field label={t.fields.replyIn} htmlFor="preferredLanguage">
                   <select
                     id="preferredLanguage"
                     value={state.preferredLanguage}
                     onChange={(event) => update("preferredLanguage", event.target.value)}
                     className="min-h-12 w-full border border-rule bg-white px-4 text-[0.95rem] text-forest"
                   >
-                    {LOCALES.map((locale) => (
-                      <option key={locale.code} value={locale.code}>
-                        {locale.englishLabel}
+                    {LOCALES.map((code) => (
+                      <option key={code} value={code}>
+                        {LOCALE_META[code].nativeName}
                       </option>
                     ))}
                   </select>
                 </Field>
               </div>
 
-              <Field label="Anything else we should know?" htmlFor="specialRequests">
+              <Field label={t.fields.notes} htmlFor="specialRequests">
                 <textarea
                   id="specialRequests"
                   rows={4}
                   value={state.specialRequests}
                   onChange={(event) => update("specialRequests", event.target.value)}
-                  placeholder="Celebrations, dietary needs, mobility, photography, animals you are hoping to see…"
+                  placeholder={t.fields.notesPlaceholder}
                   className="w-full border border-rule bg-white px-4 py-3 text-[0.95rem] leading-relaxed text-forest placeholder:text-ink-faint"
                 />
               </Field>
@@ -595,7 +642,13 @@ export function JourneyPlanner({
           )}
 
           {isReview && (
-            <Review state={state} destinations={destinations} onEdit={goTo} />
+            <Review
+              state={state}
+              destinations={destinations}
+              onEdit={goTo}
+              locale={locale}
+              t={t}
+            />
           )}
         </div>
 
@@ -604,7 +657,7 @@ export function JourneyPlanner({
             role="alert"
             className="mt-8 border-l-2 border-terracotta bg-terracotta/6 py-3 pl-4 text-[0.9rem] text-ink"
           >
-            {status.message} You can also email us at{" "}
+            {status.message} {t.status.orEmailUs}{" "}
             <a href={COMPANY.emailHref} className="underline underline-offset-4">
               {COMPANY.email}
             </a>
@@ -616,7 +669,7 @@ export function JourneyPlanner({
         <div className="mt-11 flex flex-wrap items-center gap-4 border-t border-rule pt-7">
           {stepIndex > 0 && (
             <Button variant="secondary" onClick={back} type="button">
-              Back
+              {t.back}
             </Button>
           )}
           {isReview ? (
@@ -627,15 +680,15 @@ export function JourneyPlanner({
               type="button"
               disabled={status.kind === "sending"}
             >
-              {status.kind === "sending" ? "Sending…" : "Send my enquiry"}
+              {status.kind === "sending" ? t.sending : t.send}
             </Button>
           ) : (
             <Button variant="primary" onClick={next} type="button">
-              Continue
+              {t.continue}
             </Button>
           )}
           <p className="ml-auto text-[0.8rem] text-ink-faint">
-            Saved on this device as you go
+            {t.savedLocally}
           </p>
         </div>
       </div>
@@ -666,12 +719,15 @@ function Field({
   htmlFor,
   error,
   required,
+  requiredLabel,
   children,
 }: {
   label: string;
   htmlFor?: string;
   error?: string;
   required?: boolean;
+  /** "(obligatorio)" en el idioma activo, solo para lectores de pantalla. */
+  requiredLabel?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -687,7 +743,7 @@ function Field({
             <span aria-hidden="true" className="ml-1 text-terracotta">
               *
             </span>
-            <span className="sr-only"> (required)</span>
+            <span className="sr-only"> {requiredLabel}</span>
           </>
         )}
       </label>
@@ -733,6 +789,7 @@ function TextInput({
 function ChoiceGrid({
   name,
   options,
+  labels,
   value,
   onChange,
   error,
@@ -740,7 +797,10 @@ function ChoiceGrid({
   columns = 2,
 }: {
   name: string;
-  options: { value: string; label: string; note?: string }[];
+  /** Valores estables; no cambian de idioma. */
+  options: readonly string[];
+  /** Etiqueta y nota de cada valor, en el idioma activo. */
+  labels: Record<string, { label: string; note?: string }>;
   value: string;
   onChange: (value: string) => void;
   error?: string;
@@ -756,9 +816,10 @@ function ChoiceGrid({
         }`}
       >
         {options.map((option) => {
-          const checked = value === option.value;
+          const checked = value === option;
+          const text = labels[option] ?? { label: option };
           return (
-            <li key={option.value}>
+            <li key={option}>
               <label
                 className={`flex min-h-14 cursor-pointer flex-col justify-center border px-4 py-3 transition-colors duration-300 ${
                   checked
@@ -770,16 +831,16 @@ function ChoiceGrid({
                   <input
                     type="radio"
                     name={name}
-                    value={option.value}
+                    value={option}
                     checked={checked}
-                    onChange={() => onChange(option.value)}
+                    onChange={() => onChange(option)}
                     className="size-4 accent-[#B56545]"
                   />
-                  <span className="text-[0.95rem] text-forest">{option.label}</span>
+                  <span className="text-[0.95rem] text-forest">{text.label}</span>
                 </span>
-                {option.note && (
+                {text.note && (
                   <span className="mt-1 pl-7 text-[0.78rem] text-ink-faint">
-                    {option.note}
+                    {text.note}
                   </span>
                 )}
               </label>
@@ -840,59 +901,72 @@ function Review({
   state,
   destinations,
   onEdit,
+  locale,
+  t,
 }: {
   state: PlannerState;
   destinations: { slug: string; name: string }[];
   onEdit: (index: number) => void;
+  locale: Locale;
+  t: Dictionary["planner"];
 }) {
+  const label = (
+    group: Record<string, { label: string }>,
+    value: string,
+  ) => group[value]?.label ?? value;
+
   const rows: { label: string; value: string; step: StepId }[] = [
-    { label: "Journey", value: labelFor(TRIP_TYPES, state.tripType), step: "trip" },
+    { label: t.review.journey, value: label(t.tripTypes, state.tripType), step: "trip" },
     {
-      label: "Destinations",
+      label: t.review.destinations,
       value:
         state.destinationSlugs.length > 0
           ? state.destinationSlugs
               .map((slug) => destinations.find((d) => d.slug === slug)?.name ?? slug)
               .join(", ")
-          : "Open to suggestions",
+          : t.review.openToSuggestions,
       step: "destinations",
     },
     {
-      label: "When",
+      label: t.review.when,
       value: state.datesFlexible
-        ? "Flexible"
-        : formatMonth(state.travelMonth) || "Not given",
+        ? t.review.flexible
+        : formatMonth(state.travelMonth, locale) || t.review.notGiven,
       step: "dates",
     },
-    { label: "Length", value: labelFor(DURATIONS, state.durationDays), step: "dates" },
     {
-      label: "Travellers",
-      value:
-        `${state.adults} adult${state.adults === 1 ? "" : "s"}` +
-        (state.children > 0
-          ? `, ${state.children} child${state.children === 1 ? "" : "ren"}`
-          : ""),
+      label: t.review.length,
+      value: label(t.durations, state.durationDays),
+      step: "dates",
+    },
+    {
+      label: t.review.travellers,
+      value: travellerCount(locale, t.review, state.adults, state.children),
       step: "travellers",
     },
     {
-      label: "Stays",
-      value: labelFor(ACCOMMODATION_STYLES, state.accommodationStyle),
+      label: t.review.stays,
+      value: label(t.accommodationStyles, state.accommodationStyle),
       step: "travellers",
     },
     {
-      label: "Budget",
-      value: labelFor(BUDGET_RANGES, state.budgetPerPerson),
+      label: t.review.budget,
+      value: label(t.budgets, state.budgetPerPerson),
       step: "budget",
     },
     {
-      label: "Contact",
+      label: t.review.contact,
       value: `${state.firstName} ${state.lastName}`.trim() + ` · ${state.email}`,
       step: "contact",
     },
   ];
 
   if (state.specialRequests.trim()) {
-    rows.push({ label: "Notes", value: state.specialRequests.trim(), step: "contact" });
+    rows.push({
+      label: t.review.notes,
+      value: state.specialRequests.trim(),
+      step: "contact",
+    });
   }
 
   return (
@@ -906,10 +980,10 @@ function Review({
           <dd className="flex-1 text-[0.95rem] text-forest">{row.value}</dd>
           <button
             type="button"
-            onClick={() => onEdit(STEPS.findIndex((s) => s.id === row.step))}
+            onClick={() => onEdit(STEPS.indexOf(row.step))}
             className="text-[0.75rem] tracking-[0.06em] text-ink-faint uppercase underline underline-offset-4 transition-colors duration-300 hover:text-terracotta"
           >
-            Edit
+            {t.review.edit}
           </button>
         </div>
       ))}
@@ -917,10 +991,16 @@ function Review({
   );
 }
 
-function ContactFallback({ className = "" }: { className?: string }) {
+function ContactFallback({
+  label,
+  className = "",
+}: {
+  label: string;
+  className?: string;
+}) {
   return (
     <div className={`border-t border-rule pt-7 ${className}`}>
-      <p className="eyebrow text-ink-faint">In the meantime</p>
+      <p className="eyebrow text-ink-faint">{label}</p>
       <div className="mt-3 flex flex-col gap-1.5 text-[0.95rem]">
         <a href={COMPANY.phoneHref} className="text-forest hover:text-terracotta">
           {COMPANY.phone}
@@ -940,45 +1020,63 @@ function ContactFallback({ className = "" }: { className?: string }) {
  * Utilidades
  * ----------------------------------------------------------------------- */
 
-function formatMonth(value: string): string {
+function formatMonth(value: string, locale: Locale): string {
   if (!value) return "";
   const [year, month] = value.split("-");
   const date = new Date(Number(year), Number(month) - 1);
-  return date.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+  return date.toLocaleDateString(LOCALE_META[locale].intl, {
+    month: "long",
+    year: "numeric",
+  });
 }
 
-/** Resumen en texto plano, reutilizado en email y WhatsApp. */
+/**
+ * Resumen en texto plano, reutilizado en email y WhatsApp.
+ *
+ * Va en el idioma que el visitante está usando: quien rellena el formulario en
+ * ruso no debería recibir de vuelta un correo en inglés que no reconoce como
+ * suyo. El idioma preferido de respuesta viaja aparte, en su propio campo.
+ */
 function buildSummary(
   state: PlannerState,
   destinations: { slug: string; name: string }[],
+  locale: Locale,
+  t: Dictionary["planner"],
 ): string {
+  const label = (g: Record<string, { label: string }>, v: string) =>
+    g[v]?.label ?? v;
   const places =
     state.destinationSlugs.length > 0
       ? state.destinationSlugs
           .map((slug) => destinations.find((d) => d.slug === slug)?.name ?? slug)
           .join(", ")
-      : "Open to suggestions";
+      : t.review.openToSuggestions;
 
+  const s = t.summary;
   return [
-    "Journey enquiry — Maisha Quest",
+    s.heading,
     "",
-    `Name: ${state.firstName} ${state.lastName}`.trim(),
-    `Email: ${state.email}`,
-    state.phone && `Phone: ${state.phone}`,
-    state.country && `Country: ${state.country}`,
-    `Reply in: ${
-      LOCALES.find((l) => l.code === state.preferredLanguage)?.englishLabel ??
+    `${s.name}: ${state.firstName} ${state.lastName}`.trim(),
+    `${s.email}: ${state.email}`,
+    state.phone && `${s.phone}: ${state.phone}`,
+    state.country && `${s.country}: ${state.country}`,
+    `${s.replyIn}: ${
+      LOCALE_META[state.preferredLanguage as Locale]?.nativeName ??
       state.preferredLanguage
     }`,
     "",
-    `Journey type: ${labelFor(TRIP_TYPES, state.tripType)}`,
-    `Destinations: ${places}`,
-    `When: ${state.datesFlexible ? "Flexible" : formatMonth(state.travelMonth) || "Not given"}`,
-    `Length: ${labelFor(DURATIONS, state.durationDays)}`,
-    `Travellers: ${state.adults} adults, ${state.children} children`,
-    `Stays: ${labelFor(ACCOMMODATION_STYLES, state.accommodationStyle)}`,
-    `Budget per person: ${labelFor(BUDGET_RANGES, state.budgetPerPerson)}`,
-    state.specialRequests.trim() && `\nNotes: ${state.specialRequests.trim()}`,
+    `${s.journeyType}: ${label(t.tripTypes, state.tripType)}`,
+    `${t.review.destinations}: ${places}`,
+    `${t.review.when}: ${
+      state.datesFlexible
+        ? t.review.flexible
+        : formatMonth(state.travelMonth, locale) || t.review.notGiven
+    }`,
+    `${t.review.length}: ${label(t.durations, state.durationDays)}`,
+    `${t.review.travellers}: ${travellerCount(locale, t.review, state.adults, state.children)}`,
+    `${t.review.stays}: ${label(t.accommodationStyles, state.accommodationStyle)}`,
+    `${s.budgetPerPerson}: ${label(t.budgets, state.budgetPerPerson)}`,
+    state.specialRequests.trim() && `\n${t.review.notes}: ${state.specialRequests.trim()}`,
   ]
     .filter(Boolean)
     .join("\n");

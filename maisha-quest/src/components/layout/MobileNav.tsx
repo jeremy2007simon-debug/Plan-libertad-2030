@@ -5,7 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
-import { COMPANY, MAIN_NAV } from "@/lib/site";
+import { type Locale, localeHref } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
+import { MAIN_NAV } from "@/lib/nav";
+import { COMPANY } from "@/lib/site";
 import { LocaleSelector } from "./LocaleSelector";
 
 /**
@@ -19,7 +22,15 @@ import { LocaleSelector } from "./LocaleSelector";
  * foco al botón al cerrar y atrapa el tabulador dentro del panel mientras está
  * abierto.
  */
-export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
+export function MobileNav({
+  locale,
+  t,
+  tone = "light",
+}: {
+  locale: Locale;
+  t: Dictionary["nav"];
+  tone?: "light" | "dark";
+}) {
   const pathname = usePathname();
   /**
    * El panel se guarda con la ruta en la que se abrió y se considera cerrado
@@ -79,12 +90,12 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-expanded={open}
-        aria-label="Open menu"
+        aria-label={t.openMenu}
         className={`flex min-h-11 items-center gap-2.5 px-2 lg:hidden ${
           dark ? "text-ivory" : "text-forest"
         }`}
       >
-        <span className="eyebrow">Menu</span>
+        <span className="eyebrow">{t.menu}</span>
         <span aria-hidden="true" className="flex w-5 flex-col gap-[5px]">
           <span className="h-px w-full bg-current" />
           <span className="h-px w-full bg-current" />
@@ -96,7 +107,7 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
           ref={panelRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Site menu"
+          aria-label={t.siteMenu}
           className="fixed inset-0 z-[60] flex flex-col bg-forest text-ivory lg:hidden"
         >
           <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between px-5 sm:px-8">
@@ -105,17 +116,17 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
               <span className="font-display text-[1.25rem]">Maisha Quest</span>
             </span>
             <div className="flex items-center gap-2">
-              <LocaleSelector tone="dark" />
+              <LocaleSelector locale={locale} tone="dark" t={t.language} />
               <button
                 type="button"
                 onClick={() => {
                   setOpen(false);
                   triggerRef.current?.focus();
                 }}
-                aria-label="Close menu"
+                aria-label={t.closeMenu}
                 className="flex min-h-11 items-center gap-2.5 px-2 text-ivory"
               >
-                <span className="eyebrow">Close</span>
+                <span className="eyebrow">{t.close}</span>
                 <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true">
                   <path
                     d="m3 3 10 10M13 3 3 13"
@@ -129,29 +140,29 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
           </div>
 
           <nav
-            aria-label="Main"
+            aria-label={t.mainNavLabel}
             className="flex-1 overflow-y-auto px-5 pb-8 pt-4 sm:px-8"
           >
             <ul className="flex flex-col">
               {MAIN_NAV.map((item) => (
-                <li key={item.label} className="border-b border-rule-on-dark/45">
+                <li key={item.key} className="border-b border-rule-on-dark/45">
                   <Link
-                    href={item.href}
+                    href={localeHref(locale, item.href)}
                     className="flex min-h-14 items-center font-display text-[1.6rem] text-ivory"
                   >
-                    {item.label}
+                    {t.items[item.key as keyof typeof t.items]}
                   </Link>
                   {item.children && (
                     <ul className="-mt-1 flex flex-col pb-4 pl-4">
                       {item.children
                         .filter((child) => child.href !== item.href)
                         .map((child) => (
-                          <li key={child.href}>
+                          <li key={child.key}>
                             <Link
-                              href={child.href}
+                              href={localeHref(locale, child.href)}
                               className="flex min-h-11 items-center text-[0.92rem] text-on-dark-soft"
                             >
-                              {child.label}
+                              {t.items[child.key as keyof typeof t.items]}
                             </Link>
                           </li>
                         ))}
@@ -162,11 +173,17 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
             </ul>
 
             <div className="mt-9 flex flex-col gap-3">
-              <ButtonLink href="/plan" variant="primary" size="lg">
-                Plan My Safari
+              <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
+                {t.planShort}
               </ButtonLink>
-              <ButtonLink href="/contact" variant="secondary" tone="dark" size="lg">
-                Speak to a local expert
+              <ButtonLink
+                href="/contact"
+                locale={locale}
+                variant="secondary"
+                tone="dark"
+                size="lg"
+              >
+                {t.speakToExpert}
               </ButtonLink>
             </div>
 

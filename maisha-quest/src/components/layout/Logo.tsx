@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompassMark } from "@/components/ui/Compass";
+import { type Locale, localeHref } from "@/i18n/config";
 
 /**
  * Marca: brújula + nombre en serif.
@@ -9,9 +10,14 @@ import { CompassMark } from "@/components/ui/Compass";
  * que además la deja nítida en cualquier pantalla y legible como texto.
  */
 export function Logo({
+  locale,
+  homeLabel,
   tone = "light",
   className = "",
 }: {
+  locale: Locale;
+  /** "Maisha Quest — home", ya traducido. La marca nunca se traduce. */
+  homeLabel: string;
   /** `light` = tinta oscura sobre marfil. `dark` = marfil sobre verde/foto. */
   tone?: "light" | "dark";
   className?: string;
@@ -21,8 +27,8 @@ export function Logo({
 
   return (
     <Link
-      href="/"
-      aria-label="Maisha Quest — home"
+      href={localeHref(locale, "/")}
+      aria-label={homeLabel}
       className={`group inline-flex items-center gap-3 ${color} ${className}`}
     >
       <CompassMark

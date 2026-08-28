@@ -15,31 +15,39 @@ import { COMPANY } from "@/lib/site";
  * mostrar un texto legal inventado, que sería peor que no tener página.
  */
 export function LegalPage({
+  eyebrow,
   title,
   intro,
   sections,
+  notice,
+  pendingLabel,
 }: {
+  eyebrow: string;
   title: string;
   intro: string;
-  sections: { heading: string; body: string[]; pending?: boolean }[];
+  sections: readonly {
+    readonly heading: string;
+    readonly body: readonly string[];
+    readonly pending?: boolean;
+  }[];
+  notice: { before: string; after: string };
+  pendingLabel: string;
 }) {
   return (
     <>
-      <PageHero eyebrow="Legal" title={title} lede={intro} />
+      <PageHero eyebrow={eyebrow} title={title} lede={intro} />
 
       <div className="bg-page py-16 sm:py-20">
         <Container width="prose">
           <p className="border-l-2 border-gold bg-sand/12 py-4 pl-5 text-[0.9rem] leading-relaxed text-ink-soft">
-            This page is being finalised with Maisha Quest&rsquo;s legal adviser.
-            Until it is, the terms that apply to your booking are the ones set
-            out in writing in your booking confirmation. Ask us at{" "}
+            {notice.before}{" "}
             <a
               href={COMPANY.emailHref}
               className="text-forest underline underline-offset-4"
             >
               {COMPANY.email}
             </a>{" "}
-            for the current version.
+            {notice.after}
           </p>
 
           {sections.map((section) => (
@@ -57,7 +65,7 @@ export function LegalPage({
               ))}
               {section.pending && (
                 <p className="mt-4 text-[0.88rem] text-ink-faint italic">
-                  Full wording for this section is pending legal review.
+                  {pendingLabel}
                 </p>
               )}
             </section>

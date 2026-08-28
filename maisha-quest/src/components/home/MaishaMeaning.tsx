@@ -4,6 +4,8 @@ import { Container } from "@/components/ui/Container";
 import { ImageSlot, Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 
 /**
  * "Maisha significa vida" — el bloque editorial que explica la marca.
@@ -14,7 +16,7 @@ import { CLIENT_PHOTOS } from "@/data/client-photography";
  * mientras tanto lo ocupa una fotografía de paisaje y, debajo, un hueco
  * declarado para la foto del equipo en Arusha.
  */
-export function MaishaMeaning() {
+export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <section className="bg-page py-24 sm:py-32">
       <Container width="wide">
@@ -29,7 +31,7 @@ export function MaishaMeaning() {
                 />
               </div>
               <div className="relative col-span-5 aspect-4/5 self-end overflow-hidden sm:col-span-2">
-                <ImageSlot label="The Maisha Quest team in Arusha" />
+                <ImageSlot label={t.home.maisha.teamSlot} />
               </div>
             </div>
           </Reveal>
@@ -37,27 +39,30 @@ export function MaishaMeaning() {
           {/* Texto */}
           <div className="lg:col-span-5 lg:col-start-8">
             <Reveal>
-              <p className="eyebrow text-terracotta">Our name</p>
+              <p className="eyebrow text-terracotta">{t.home.maisha.eyebrow}</p>
+              {/* "Maisha" es la marca: se queda en swahili en los seis
+                  idiomas y solo se traduce lo que la acompaña. */}
               <h2 className="text-h1 mt-5 text-forest">
-                <span className="italic">&lsquo;Maisha&rsquo;</span> means life.
+                <span className="italic">&lsquo;Maisha&rsquo;</span>{" "}
+                {t.home.maisha.meansLife}
               </h2>
               <p className="text-lede measure mt-7 text-ink-soft">
-                Every journey is a chance to discover, connect and live more
-                fully. We create private Tanzanian safaris shaped around who you
-                are and how you want to travel.
+                {t.home.maisha.lede}
               </p>
 
               <CompassDivider className="my-9 max-w-xs" />
 
               <p className="measure text-[0.98rem] leading-relaxed text-ink-soft">
-                Maisha Quest was founded in Arusha, at the foot of Mount Meru
-                and the start of the northern circuit. We are a small team: the
-                people who answer your first email are the people who meet you
-                at the airport.
+                {t.home.maisha.body}
               </p>
 
-              <ButtonLink href="/about" variant="secondary" className="mt-9">
-                Meet Maisha Quest
+              <ButtonLink
+                href="/about"
+                locale={locale}
+                variant="secondary"
+                className="mt-9"
+              >
+                {t.home.maisha.cta}
               </ButtonLink>
             </Reveal>
           </div>

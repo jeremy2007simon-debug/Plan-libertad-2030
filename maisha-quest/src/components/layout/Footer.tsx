@@ -1,14 +1,10 @@
 import Link from "next/link";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
-import {
-  COMPANY,
-  FOOTER_NAV,
-  HOME_COORDINATES,
-  socialLinks,
-  whatsappHref,
-  WHATSAPP_MESSAGE,
-} from "@/lib/site";
+import { type Locale, localeHref } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
+import { FOOTER_NAV } from "@/lib/nav";
+import { COMPANY, HOME_COORDINATES, socialLinks, whatsappHref } from "@/lib/site";
 import { WhatsAppGlyph } from "./MobileCTABar";
 
 /**
@@ -18,7 +14,15 @@ import { WhatsAppGlyph } from "./MobileCTABar";
  * datos reales: teléfono, email, horario y zona horaria. Las coordenadas de
  * Arusha cierran el hilo de la brújula que abre el hero.
  */
-export function Footer() {
+export function Footer({
+  locale,
+  t,
+  nav,
+}: {
+  locale: Locale;
+  t: Dictionary["footer"];
+  nav: Dictionary["nav"];
+}) {
   const year = new Date().getFullYear();
   const socials = socialLinks();
 
@@ -33,8 +37,7 @@ export function Footer() {
               <span className="font-display text-[1.45rem]">Maisha Quest</span>
             </div>
             <p className="measure-narrow mt-5 text-[0.92rem] leading-relaxed text-on-dark-soft">
-              Private journeys through Tanzania, designed and guided from
-              Arusha. {COMPANY.concept}
+              {t.blurb}
             </p>
 
             <address className="mt-8 flex flex-col gap-1 not-italic">
@@ -51,13 +54,13 @@ export function Footer() {
                 {COMPANY.email}
               </a>
               <a
-                href={whatsappHref(WHATSAPP_MESSAGE.en)}
+                href={whatsappHref(nav.whatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 inline-flex w-fit items-center gap-2 text-[0.9rem] text-on-dark-soft transition-colors duration-300 hover:text-sand"
               >
                 <WhatsAppGlyph className="size-4" />
-                Message us on WhatsApp
+                {t.whatsapp}
               </a>
             </address>
 
@@ -71,9 +74,8 @@ export function Footer() {
               <p className="tnum mt-2 tracking-[0.1em]">{HOME_COORDINATES.label}</p>
             </div>
 
-            {/* Las URLs viven solo en `COMPANY.social`; aquí se pintan las que
-                estén confirmadas. Si algún día no hay ninguna, no queda hueco:
-                la lista entera desaparece del DOM. */}
+            {/* Solo se pintan las redes con URL confirmada por el cliente.
+                Hoy no hay ninguna, así que la lista no existe en el DOM. */}
             {socials.length > 0 && (
               <ul className="mt-8 flex gap-5">
                 {socials.map((social) => (
@@ -93,18 +95,25 @@ export function Footer() {
           </div>
 
           {/* Navegación */}
-          <nav aria-label="Footer" className="grid gap-10 sm:grid-cols-3">
+          <nav aria-label={t.navLabel} className="grid gap-10 sm:grid-cols-3">
             {FOOTER_NAV.map((group) => (
-              <div key={group.title}>
-                <h2 className="eyebrow text-sand">{group.title}</h2>
+              <div key={group.titleKey}>
+                <h2 className="eyebrow text-sand">
+                  {t.groups[group.titleKey as keyof typeof t.groups]}
+                </h2>
                 <ul className="mt-5 flex flex-col gap-3">
                   {group.items.map((item) => (
-                    <li key={item.href}>
+                    <li key={item.key}>
                       <Link
-                        href={item.href}
+                        href={
+                          // El sitemap es un documento XML único, sin idioma.
+                          item.href.endsWith(".xml")
+                            ? item.href
+                            : localeHref(locale, item.href)
+                        }
                         className="text-[0.92rem] text-on-dark-soft transition-colors duration-300 hover:text-ivory"
                       >
-                        {item.label}
+                        {nav.items[item.key as keyof typeof nav.items]}
                       </Link>
                     </li>
                   ))}
@@ -116,7 +125,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-rule-on-dark pt-7 text-[0.8rem] text-on-dark-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} Maisha Quest. Maisha means life — {COMPANY.meaning}.
+            © {year} Maisha Quest. {t.rights}
           </p>
           <p className="italic">{COMPANY.legacyTagline}</p>
         </div>

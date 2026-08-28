@@ -26,6 +26,9 @@ export function LazyVideo({
   video,
   label,
   posterLabel,
+  pauseLabel,
+  pendingLabel,
+  filmToFollowLabel,
   className = "",
   tone = "dark",
 }: {
@@ -34,6 +37,12 @@ export function LazyVideo({
   label: string;
   /** Descripción del hueco de póster si tampoco hay póster todavía. */
   posterLabel: string;
+  /** "Pausar", ya traducido. */
+  pauseLabel: string;
+  /** "Película pendiente", el pie del hueco sin vídeo. */
+  pendingLabel: string;
+  /** Nombre accesible del hueco: "<póster> — película pendiente". */
+  filmToFollowLabel: string;
   className?: string;
   tone?: "light" | "dark";
 }) {
@@ -141,7 +150,7 @@ export function LazyVideo({
            anunciada se lee como un fotograma reservado, no como un error. */
         <div
           role="img"
-          aria-label={`${posterLabel} — film to follow`}
+          aria-label={filmToFollowLabel}
           className={`absolute inset-0 flex flex-col items-center justify-center gap-4 ${
             dark ? "bg-forest-deep text-on-dark-faint" : "bg-sand/25 text-ink-faint"
           }`}
@@ -181,7 +190,7 @@ export function LazyVideo({
             }`}
           >
             <PlayIcon playing={playing} className="size-3.5" />
-            {playing ? "Pause" : label}
+            {playing ? pauseLabel : label}
           </button>
         ) : (
           <p
@@ -189,7 +198,7 @@ export function LazyVideo({
               dark ? "bg-forest-deep/70 text-on-dark-faint" : "bg-ivory/85 text-ink-faint"
             }`}
           >
-            Film to follow
+            {pendingLabel}
           </p>
         )}
         {video.durationSeconds && hasFile && (

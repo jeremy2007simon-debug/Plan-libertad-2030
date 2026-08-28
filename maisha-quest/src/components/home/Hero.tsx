@@ -3,7 +3,9 @@ import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
-import { COMPANY, HOME_COORDINATES } from "@/lib/site";
+import { HOME_COORDINATES } from "@/lib/site";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import type { MediaVideo } from "@/types/content";
 
 /**
@@ -23,7 +25,15 @@ import type { MediaVideo } from "@/types/content";
  * pasa por la prop `video` y este componente lo reproduce sobre la fotografía,
  * que se queda como póster. Hasta entonces, foto real.
  */
-export function Hero({ video }: { video?: MediaVideo }) {
+export function Hero({
+  locale,
+  t,
+  video,
+}: {
+  locale: Locale;
+  t: Dictionary;
+  video?: MediaVideo;
+}) {
   // Fotografía del cliente: siluetas de fauna cruzando el horizonte al
   // atardecer. Su `objectPosition` mantiene el sol y las siluetas dentro del
   // recorte también en vertical, donde el hero pierde el 70 % del ancho.
@@ -71,25 +81,31 @@ export function Hero({ video }: { video?: MediaVideo }) {
             className="animate-fade-up text-display mt-8 text-ivory"
             style={{ animationDelay: "180ms" }}
           >
-            {COMPANY.valueProposition.headline}
+            {t.home.hero.headline}
           </h1>
 
           <p
             className="animate-fade-up text-lede measure mt-6 text-ivory/90"
             style={{ animationDelay: "320ms" }}
           >
-            {COMPANY.valueProposition.subline}
+            {t.home.hero.subline}
           </p>
 
           <div
             className="animate-fade-up mt-10 flex flex-wrap items-center gap-3 sm:gap-4"
             style={{ animationDelay: "440ms" }}
           >
-            <ButtonLink href="/plan" variant="primary" size="lg">
-              Design Your Safari
+            <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
+              {t.home.hero.designCta}
             </ButtonLink>
-            <ButtonLink href="/safaris" variant="secondary" tone="dark" size="lg">
-              Explore Journeys
+            <ButtonLink
+              href="/safaris"
+              locale={locale}
+              variant="secondary"
+              tone="dark"
+              size="lg"
+            >
+              {t.home.hero.exploreCta}
             </ButtonLink>
           </div>
 
@@ -97,7 +113,7 @@ export function Hero({ video }: { video?: MediaVideo }) {
             className="animate-fade-up mt-11 flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-5"
             style={{ animationDelay: "560ms" }}
           >
-            {["Local experts", "Private safaris", "Responsible travel"].map(
+            {t.home.hero.pillars.map(
               (item, index) => (
                 <li key={item} className="flex items-center gap-3 sm:gap-5">
                   {index > 0 && (
@@ -119,7 +135,7 @@ export function Hero({ video }: { video?: MediaVideo }) {
         className="pointer-events-none absolute bottom-7 right-6 hidden flex-col items-center gap-3 sm:flex"
       >
         <span className="eyebrow [writing-mode:vertical-rl] text-ivory/45">
-          Scroll
+          {t.home.hero.scroll}
         </span>
         <span className="animate-scroll-hint h-10 w-px bg-linear-to-b from-ivory/60 to-transparent" />
       </div>

@@ -3,7 +3,9 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { whatsappHref, WHATSAPP_MESSAGE } from "@/lib/site";
+import { type Locale, localeHref, stripLocale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
+import { whatsappHref } from "@/lib/site";
 
 /**
  * Barra de acción persistente en móvil.
@@ -15,7 +17,13 @@ import { whatsappHref, WHATSAPP_MESSAGE } from "@/lib/site";
  * barra, sin burbuja verde flotante. Es el canal que de verdad usa un viajero
  * para preguntar algo rápido, pero no tiene por qué gritar.
  */
-export function MobileCTABar() {
+export function MobileCTABar({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary["nav"];
+}) {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
@@ -26,7 +34,7 @@ export function MobileCTABar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (pathname === "/plan") return null;
+  if (stripLocale(pathname).path === "/plan") return null;
 
   return (
     <div
@@ -38,20 +46,20 @@ export function MobileCTABar() {
     >
       <div className="flex items-stretch gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <Link
-          href="/plan"
+          href={localeHref(locale, "/plan")}
           className="flex min-h-12 flex-1 items-center justify-center rounded-[2px] bg-terracotta px-5 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
         >
-          Plan My Safari
+          {t.planShort}
         </Link>
         <a
-          href={whatsappHref(WHATSAPP_MESSAGE.en)}
+          href={whatsappHref(t.whatsappMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Message Maisha Quest on WhatsApp"
+          aria-label={t.whatsappLabel}
           className="flex min-h-12 items-center justify-center gap-2 rounded-[2px] border border-on-dark-faint px-4 text-[0.72rem] font-semibold tracking-[0.06em] text-ivory uppercase"
         >
           <WhatsAppGlyph className="size-4" />
-          Chat
+          {t.chat}
         </a>
       </div>
     </div>

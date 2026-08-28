@@ -4,6 +4,8 @@ import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { type Locale, localeHref } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import { getExperienceCategories } from "@/lib/content";
 
 /**
@@ -17,13 +19,19 @@ import { getExperienceCategories } from "@/lib/content";
  * carrusel táctil (`Carousel` usa scroll nativo con snap, así que no hay dos
  * versiones del contenido ni JavaScript duplicado).
  */
-export async function ExperienceSelector() {
-  const categories = await getExperienceCategories();
+export async function ExperienceSelector({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const categories = await getExperienceCategories(locale);
 
   const cards = categories.map((category, index) => (
     <Link
       key={category.id}
-      href={`/experiences/${category.experience.slug}`}
+      href={localeHref(locale, `/experiences/${category.experience.slug}`)}
       className="group relative block aspect-3/4 w-full overflow-hidden"
     >
       <Photo
@@ -41,7 +49,7 @@ export async function ExperienceSelector() {
           {String(index + 1).padStart(2, "0")}
         </span>
         <h3 className="font-display mt-1.5 text-[1.35rem] leading-tight text-ivory">
-          {category.label}
+          {t.categories[category.id as keyof typeof t.categories]}
         </h3>
         <p className="mt-1.5 max-w-[24ch] text-[0.82rem] leading-snug text-ivory/70">
           {category.experience.shortDescription}
@@ -54,9 +62,9 @@ export async function ExperienceSelector() {
     <section className="bg-page-alt py-24 sm:py-28">
       <Container width="wide">
         <SectionHeading
-          eyebrow="Start here"
-          title="How do you want to experience Tanzania?"
-          lede="Every journey we build starts with this question rather than with a package. Pick the one that sounds most like you — you can combine them later."
+          eyebrow={t.home.experiences.eyebrow}
+          title={t.home.experiences.title}
+          lede={t.home.experiences.lede}
         />
       </Container>
 
@@ -78,7 +86,7 @@ export async function ExperienceSelector() {
             la pantalla. */}
         <Container width="wide">
           <Carousel
-            label="Ways to experience Tanzania"
+            label={t.home.experiences.carouselLabel}
             itemClassName="w-[66vw] max-w-[19rem] sm:w-[34vw]"
           >
             {cards}

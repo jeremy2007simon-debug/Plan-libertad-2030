@@ -1,5 +1,6 @@
 import { CompassPoint } from "@/components/ui/Compass";
 import { Photo } from "@/components/ui/Photo";
+import type { Dictionary } from "@/i18n/messages/en";
 import type { ItineraryDay } from "@/types/content";
 
 /**
@@ -10,12 +11,17 @@ import type { ItineraryDay } from "@/types/content";
  * pantalla lo anuncian correctamente y el buscador indexa el contenido aunque
  * esté plegado. El primer día viene abierto para que se vea de qué va.
  */
-export function Itinerary({ days }: { days: ItineraryDay[] }) {
+export function Itinerary({
+  days,
+  t,
+}: {
+  days: ItineraryDay[];
+  t: Dictionary;
+}) {
   if (days.length === 0) {
     return (
       <p className="border-l-2 border-gold/60 py-2 pl-5 text-[0.95rem] leading-relaxed text-ink-soft">
-        The day-by-day itinerary for this journey is being finalised with our
-        team in Arusha. Ask us for it and we will send the current version.
+        {t.safari.itineraryPending}
       </p>
     );
   }
@@ -27,7 +33,7 @@ export function Itinerary({ days }: { days: ItineraryDay[] }) {
           <details open={index === 0} className="group">
             <summary className="flex cursor-pointer list-none items-baseline gap-5 py-6 [&::-webkit-details-marker]:hidden">
               <span className="tnum eyebrow w-14 shrink-0 pt-1 text-terracotta">
-                Day {day.day}
+                {t.common.dayLabel(day.day)}
               </span>
               <span className="flex-1">
                 <span className="font-display block text-[1.35rem] leading-tight text-forest">
@@ -62,22 +68,24 @@ export function Itinerary({ days }: { days: ItineraryDay[] }) {
 
               <dl className="mt-6 grid gap-x-8 gap-y-4 border-t border-rule pt-5 sm:grid-cols-3">
                 <div>
-                  <dt className="eyebrow text-ink-faint">Stay</dt>
+                  <dt className="eyebrow text-ink-faint">{t.safari.stay}</dt>
                   <dd className="mt-1 text-[0.9rem] text-ink-soft">
                     {/* Los nombres de campamento se confirman con el viajero:
                         anunciar uno concreto implicaría un acuerdo que no
                         podemos afirmar. */}
-                    {day.accommodationSlug ?? "Confirmed with your proposal"}
+                    {day.accommodationSlug ?? t.safari.stayPending}
                   </dd>
                 </div>
                 <div>
-                  <dt className="eyebrow text-ink-faint">Meals</dt>
+                  <dt className="eyebrow text-ink-faint">{t.safari.meals}</dt>
                   <dd className="mt-1 text-[0.9rem] text-ink-soft">
-                    {day.meals.length > 0 ? day.meals.join(", ") : "—"}
+                    {day.meals.length > 0
+                      ? day.meals.map((m) => t.meals[m]).join(", ")
+                      : "—"}
                   </dd>
                 </div>
                 <div>
-                  <dt className="eyebrow text-ink-faint">Time</dt>
+                  <dt className="eyebrow text-ink-faint">{t.safari.time}</dt>
                   <dd className="mt-1 text-[0.9rem] text-ink-soft">
                     {day.estimatedDuration ?? "—"}
                   </dd>

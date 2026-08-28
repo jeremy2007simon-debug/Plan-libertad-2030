@@ -4,6 +4,8 @@ import { Container } from "@/components/ui/Container";
 import { MediaFrame, PersonSlot } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import { getTeam } from "@/lib/content";
 
 /**
@@ -17,19 +19,19 @@ import { getTeam } from "@/lib/content";
  * proporción que tendrá la foto, así que el día que lleguen no se mueve nada.
  * Poner aquí fotos de archivo sería inventarse a tres personas concretas.
  */
-export async function Team() {
-  const team = await getTeam();
+export async function Team({ locale, t }: { locale: Locale; t: Dictionary }) {
+  const team = await getTeam(locale);
 
   return (
     <section className="bg-page-alt py-24 sm:py-32">
       <Container width="wide">
         <SectionHeading
-          eyebrow="The team"
-          title="Meet the people behind your journey"
-          lede="Three founders in Arusha. Between them they cover journey design, safari operations and everything you feel once you are on the ground."
+          eyebrow={t.home.team.eyebrow}
+          title={t.home.team.title}
+          lede={t.home.team.lede}
         >
-          <ButtonLink href="/about/team" variant="quiet">
-            The full team
+          <ButtonLink href="/about/team" locale={locale} variant="quiet">
+            {t.home.team.cta}
           </ButtonLink>
         </SectionHeading>
 
@@ -48,7 +50,7 @@ export async function Team() {
                     {member.portrait.src ? (
                       <MediaFrame
                         media={member.portrait}
-                        label={`Portrait of ${member.name}`}
+                        label={t.team.portraitOf(member.name)}
                         sizes="(max-width: 768px) 100vw, 30vw"
                       />
                     ) : (
@@ -67,13 +69,15 @@ export async function Team() {
 
                   <dl className="mt-6 flex flex-col gap-3 border-t border-rule pt-5 text-[0.85rem]">
                     <div>
-                      <dt className="eyebrow text-ink-faint">Languages</dt>
+                      <dt className="eyebrow text-ink-faint">{t.team.languages}</dt>
                       <dd className="mt-1 text-ink-soft">
-                        {member.languages.join(" · ")}
+                        {member.languages
+                          .map((code) => t.languageNames[code as keyof typeof t.languageNames])
+                          .join(" · ")}
                       </dd>
                     </div>
                     <div>
-                      <dt className="eyebrow text-ink-faint">Specialty</dt>
+                      <dt className="eyebrow text-ink-faint">{t.team.specialty}</dt>
                       <dd className="mt-1 text-ink-soft">{member.specialty}</dd>
                     </div>
                     {/* El lugar favorito solo aparece cuando cada persona lo
@@ -81,7 +85,7 @@ export async function Team() {
                     {member.favouritePlace && (
                       <div>
                         <dt className="eyebrow text-ink-faint">
-                          Favourite place in Tanzania
+                          {t.team.favouritePlace}
                         </dt>
                         <dd className="mt-1 text-ink-soft">{member.favouritePlace}</dd>
                       </div>
@@ -97,7 +101,7 @@ export async function Team() {
             sumaban 2.800 px y obligaban a pasar por las tres para llegar a la
             siguiente sección. */}
         <div className="mt-10 md:hidden">
-          <Carousel label="The Maisha Quest team" itemClassName="w-[86vw] max-w-[21rem]">
+          <Carousel label={t.home.team.title} itemClassName="w-[86vw] max-w-[21rem]">
             {team.map((member) => (
               <article key={member.slug} className="flex h-full flex-col">
                 <div
@@ -108,7 +112,7 @@ export async function Team() {
                   {member.portrait.src ? (
                     <MediaFrame
                       media={member.portrait}
-                      label={`Portrait of ${member.name}`}
+                      label={t.team.portraitOf(member.name)}
                       sizes="86vw"
                     />
                   ) : (
@@ -124,8 +128,10 @@ export async function Team() {
                   {member.bio}
                 </p>
                 <dl className="mt-5 border-t border-rule pt-4 text-[0.85rem]">
-                  <dt className="eyebrow text-ink-faint">Languages</dt>
-                  <dd className="mt-1 text-ink-soft">{member.languages.join(" · ")}</dd>
+                  <dt className="eyebrow text-ink-faint">{t.team.languages}</dt>
+                  <dd className="mt-1 text-ink-soft">{member.languages
+                          .map((code) => t.languageNames[code as keyof typeof t.languageNames])
+                          .join(" · ")}</dd>
                 </dl>
               </article>
             ))}

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { type Locale, localeHref } from "@/i18n/config";
 import { CompassMark } from "@/components/ui/Compass";
 import { MAP_VIEWBOX, TANZANIA_PATHS } from "@/lib/map";
 
@@ -23,9 +24,28 @@ import { MAP_VIEWBOX, TANZANIA_PATHS } from "@/lib/map";
  *    mapa: es el motivo de la sección, no un adorno.
  */
 
+export interface MapStrings {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  bestTime: string;
+  wildlife: string;
+  experiences: string;
+  journeysHere: string;
+}
+
+/**
+ * Destino ya preparado para el cliente.
+ *
+ * Las etiquetas que dependen de una regla de plural (`durationLabel`) o del
+ * nombre del destino (`moreOnLabel`) llegan ya resueltas como cadenas: una
+ * función de traducción no puede cruzar la frontera servidor→cliente de React,
+ * y resolverlas arriba mantiene el diccionario completo fuera del bundle.
+ */
 export interface MapDestination {
   slug: string;
   name: string;
+  moreOnLabel: string;
   region: string;
   shortDescription: string;
   description: string;
@@ -35,10 +55,24 @@ export interface MapDestination {
   mapPosition: { x: number; y: number };
   image: { src: string; alt: string; width: number; height: number; blurDataURL: string };
   experiences: { slug: string; name: string }[];
-  safaris: { slug: string; name: string; durationDays: number; route: string }[];
+  safaris: {
+    slug: string;
+    name: string;
+    durationDays: number;
+    durationLabel: string;
+    route: string;
+  }[];
 }
 
-export function MapExplorer({ destinations }: { destinations: MapDestination[] }) {
+export function MapExplorer({
+  destinations,
+  locale,
+  t,
+}: {
+  destinations: MapDestination[];
+  locale: Locale;
+  t: MapStrings;
+}) {
   /**
    * Abre por el Serengeti. `DESTINATIONS` ya lo pone primero justamente para
    * esto —así en móvil el chip activo es también el primero de la fila y se ve
@@ -238,22 +272,22 @@ export function MapExplorer({ destinations }: { destinations: MapDestination[] }
 
           <dl className="mt-7 grid gap-x-8 gap-y-5 border-t border-rule pt-6 sm:grid-cols-2">
             <div>
-              <dt className="eyebrow text-ink-faint">Best time</dt>
+              <dt className="eyebrow text-ink-faint">{t.bestTime}</dt>
               <dd className="mt-1.5 text-[0.92rem] text-forest">{active.bestTime}</dd>
             </div>
             <div>
-              <dt className="eyebrow text-ink-faint">Wildlife</dt>
+              <dt className="eyebrow text-ink-faint">{t.wildlife}</dt>
               <dd className="mt-1.5 text-[0.92rem] text-forest">
                 {active.wildlife.join(", ")}
               </dd>
             </div>
             <div className="sm:col-span-2">
-              <dt className="eyebrow text-ink-faint">Experiences</dt>
+              <dt className="eyebrow text-ink-faint">{t.experiences}</dt>
               <dd className="mt-2 flex flex-wrap gap-2">
                 {active.experiences.map((experience) => (
                   <Link
                     key={experience.slug}
-                    href={`/experiences/${experience.slug}`}
+                    href={localeHref(locale, `/experiences/${experience.slug}`)}
                     className="border border-rule px-3 py-1.5 text-[0.78rem] text-ink-soft transition-colors duration-300 hover:border-forest hover:text-forest"
                   >
                     {experience.name}
@@ -265,19 +299,19 @@ export function MapExplorer({ destinations }: { destinations: MapDestination[] }
 
           {active.safaris.length > 0 && (
             <div className="mt-7 border-t border-rule pt-6">
-              <p className="eyebrow text-ink-faint">Journeys that go here</p>
+              <p className="eyebrow text-ink-faint">{t.journeysHere}</p>
               <ul className="mt-3 flex flex-col divide-y divide-rule">
                 {active.safaris.slice(0, 3).map((safari) => (
                   <li key={safari.slug}>
                     <Link
-                      href={`/safaris/${safari.slug}`}
+                      href={localeHref(locale, `/safaris/${safari.slug}`)}
                       className="flex items-baseline justify-between gap-4 py-3 transition-colors duration-300 hover:text-terracotta"
                     >
                       <span className="font-display text-[1.08rem] text-forest">
                         {safari.name}
                       </span>
                       <span className="tnum shrink-0 text-[0.8rem] text-ink-faint">
-                        {safari.durationDays} days
+                        {safari.durationLabel}
                       </span>
                     </Link>
                   </li>
@@ -287,10 +321,10 @@ export function MapExplorer({ destinations }: { destinations: MapDestination[] }
           )}
 
           <Link
-            href={`/destinations/${active.slug}`}
+            href={localeHref(locale, `/destinations/${active.slug}`)}
             className="mt-7 inline-flex text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta hover:decoration-terracotta"
           >
-            More on {active.name}
+            {active.moreOnLabel}
           </Link>
         </article>
       </div>

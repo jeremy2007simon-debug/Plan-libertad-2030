@@ -5,6 +5,8 @@ import { MediaFrame } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { COMPANY } from "@/lib/site";
+import { type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import { getReviewSources, getTestimonials } from "@/lib/content";
 
 /**
@@ -20,7 +22,13 @@ import { getReviewSources, getTestimonials } from "@/lib/content";
  * las opiniones se publicarán con su fuente, invita a comprobarlas por cuenta
  * propia y ofrece hablar con viajeros anteriores.
  */
-export async function Testimonials() {
+export async function Testimonials({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
   const testimonials = await getTestimonials();
   const sources = getReviewSources();
 
@@ -28,13 +36,9 @@ export async function Testimonials() {
     <section className="bg-page py-24 sm:py-32">
       <Container width="wide">
         <SectionHeading
-          eyebrow="Travellers"
-          title="Stories brought home"
-          lede={
-            testimonials.length > 0
-              ? "What travellers said after they got back, published with the source so you can check it yourself."
-              : undefined
-          }
+          eyebrow={t.home.testimonials.eyebrow}
+          title={t.home.testimonials.title}
+          lede={testimonials.length > 0 ? t.home.testimonials.lede : undefined}
         />
 
         {testimonials.length > 0 ? (
@@ -46,7 +50,7 @@ export async function Testimonials() {
                     {testimonial.rating !== null && (
                       <p
                         className="flex gap-1 text-gold"
-                        aria-label={`Rated ${testimonial.rating} out of 5`}
+                        aria-label={t.home.testimonials.rated(testimonial.rating)}
                       >
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
                           <CompassMark key={i} className="size-3.5" needle={false} />
@@ -83,7 +87,7 @@ export async function Testimonials() {
                         rel="noopener noreferrer"
                         className="eyebrow mt-4 text-ink-faint underline underline-offset-4 hover:text-terracotta"
                       >
-                        Verified review
+                        {t.home.testimonials.verified}
                       </a>
                     )}
                   </figure>
@@ -96,21 +100,18 @@ export async function Testimonials() {
             <div className="grid items-center gap-10 border border-rule bg-ivory-warm px-7 py-12 sm:px-12 lg:grid-cols-12 lg:gap-14">
               <div className="lg:col-span-7">
                 <p className="font-display text-h3 text-forest">
-                  We would rather show you nothing than show you something we
-                  wrote ourselves.
+                  {t.home.testimonials.emptyTitle}
                 </p>
                 <p className="measure mt-5 text-[0.96rem] leading-relaxed text-ink-soft">
                   {sources.length > 0
-                    ? "Reviews will be published here as travellers send them, each one with a link to where it was originally posted. Until then, look us up on the platforms below — or ask, and we will put you in touch with someone who has travelled with us."
-                    : "Reviews will be published here as travellers send them, each one with a link to where it was originally posted. Until then, ask us and we will put you in touch with someone who has travelled with us."}
+                    ? t.home.testimonials.emptyBodyWithSources
+                    : t.home.testimonials.emptyBody}
                 </p>
 
-                {/* Los perfiles de reseñas solo se enlazan cuando hay una URL
-                    oficial. Sin ella no queda hueco: el filete de brújula y la
-                    lista desaparecen juntos y la columna de contacto de al lado
-                    sigue haciendo el trabajo comercial. Enlazar una *búsqueda*
-                    sería peor que no enlazar: puede devolver cero resultados, o
-                    a la competencia, desde una sección que promete verificación. */}
+                {/* Los perfiles de reseñas solo se enlazan si el cliente ha
+                    confirmado la URL exacta. Sin ellos no queda un hueco: el
+                    filete de brújula y la lista desaparecen juntos, y la
+                    columna de contacto de al lado sigue haciendo el trabajo. */}
                 {sources.length > 0 && (
                   <>
                     <CompassDivider className="my-8 max-w-sm" />
@@ -133,7 +134,7 @@ export async function Testimonials() {
               </div>
 
               <div className="lg:col-span-4 lg:col-start-9">
-                <p className="eyebrow text-ink-faint">Speak to us directly</p>
+                <p className="eyebrow text-ink-faint">{t.home.testimonials.speakDirectly}</p>
                 <a
                   href={COMPANY.phoneHref}
                   className="font-display mt-3 block text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta"
@@ -145,8 +146,13 @@ export async function Testimonials() {
                   <br />
                   {COMPANY.hours.timezone}
                 </p>
-                <ButtonLink href="/contact" variant="secondary" className="mt-6">
-                  Ask for references
+                <ButtonLink
+                  href="/contact"
+                  locale={locale}
+                  variant="secondary"
+                  className="mt-6"
+                >
+                  {t.home.testimonials.askReferences}
                 </ButtonLink>
               </div>
             </div>

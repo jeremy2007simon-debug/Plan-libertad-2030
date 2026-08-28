@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { type Locale, localeHref } from "@/i18n/config";
 import type { ComponentProps, ReactNode } from "react";
 
 /**
@@ -57,17 +58,32 @@ interface Common {
   className?: string;
 }
 
+/**
+ * Botón-enlace.
+ *
+ * `locale` es obligatorio cuando el destino es interno: el prefijo de idioma
+ * lo pone `localeHref`, nunca quien llama. Para destinos externos, `tel:` o
+ * `mailto:` se pasa `locale={null}` y el href sale tal cual.
+ */
 export function ButtonLink({
   href,
+  locale,
   children,
   variant = "primary",
   tone = "light",
   size = "md",
   className = "",
   ...rest
-}: Common & { href: string } & Omit<ComponentProps<typeof Link>, "href" | "className">) {
+}: Common & { href: string; locale: Locale | null } & Omit<
+    ComponentProps<typeof Link>,
+    "href" | "className"
+  >) {
   return (
-    <Link href={href} className={classes(variant, tone, size, className)} {...rest}>
+    <Link
+      href={locale ? localeHref(locale, href) : href}
+      className={classes(variant, tone, size, className)}
+      {...rest}
+    >
       {children}
     </Link>
   );

@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
-import { MAIN_NAV } from "@/lib/site";
+import { type Locale, localeHref, stripLocale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
+import { MAIN_NAV } from "@/lib/nav";
 import { LocaleSelector } from "./LocaleSelector";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
@@ -21,8 +23,10 @@ import { MobileNav } from "./MobileNav";
  * era tener catorce— y los tres tipos de paquete pasan a ser un submenú de
  * Safaris.
  */
-export function Header() {
-  const pathname = usePathname();
+export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) {
+  // La ruta con la que se compara el estado activo va SIN prefijo de idioma:
+  // `/es/safaris` y `/en/safaris` son la misma entrada de menú.
+  const pathname = stripLocale(usePathname()).path;
   const [scrolled, setScrolled] = useState(false);
   /**
    * El submenú abierto se guarda junto a la ruta en la que se abrió, y se
@@ -76,31 +80,32 @@ export function Header() {
       style={{ ["--header-h" as string]: "76px" }}
     >
       <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[88rem] items-center justify-between gap-6 px-5 sm:px-8">
-        <Logo tone={tone} />
+        <Logo locale={locale} homeLabel={t.homeLabel} tone={tone} />
 
         {/* Navegación de escritorio */}
-        <nav aria-label="Main" className="hidden lg:block">
+        <nav aria-label={t.mainNavLabel} className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {MAIN_NAV.map((item) => {
+              const label = t.items[item.key as keyof typeof t.items];
               const active =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <li
-                  key={item.label}
+                  key={item.key}
                   className="relative"
-                  onMouseEnter={() => item.children && openWithDelay(item.label)}
+                  onMouseEnter={() => item.children && openWithDelay(item.key)}
                   onMouseLeave={closeWithDelay}
                 >
                   <Link
-                    href={item.href}
+                    href={localeHref(locale, item.href)}
                     aria-current={active ? "page" : undefined}
-                    aria-expanded={item.children ? openMenu === item.label : undefined}
-                    onFocus={() => item.children && openWithDelay(item.label)}
+                    aria-expanded={item.children ? openMenu === item.key : undefined}
+                    onFocus={() => item.children && openWithDelay(item.key)}
                     className={`relative flex min-h-11 items-center px-3.5 text-[0.82rem] font-medium tracking-[0.02em] transition-colors duration-300 ${linkColor} ${
                       active ? (solid ? "text-forest" : "text-ivory") : ""
                     }`}
                   >
-                    {item.label}
+                    {label}
                     {active && (
                       <span
                         aria-hidden="true"
@@ -111,26 +116,32 @@ export function Header() {
                     )}
                   </Link>
 
-                  {item.children && openMenu === item.label && (
+                  {item.children && openMenu === item.key && (
                     <div className="absolute left-0 top-full w-80 border border-rule bg-ivory-warm p-2 shadow-[0_20px_60px_-30px_rgba(27,29,26,0.45)]">
                       <ul>
-                        {item.children.map((child) => (
-                          <li key={child.href}>
-                            <Link
-                              href={child.href}
-                              className="block px-3.5 py-3 transition-colors duration-200 hover:bg-sand/25"
-                            >
-                              <span className="block text-[0.9rem] text-forest">
-                                {child.label}
-                              </span>
-                              {child.description && (
-                                <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">
-                                  {child.description}
+                        {item.children.map((child) => {
+                          const description =
+                            t.descriptions[
+                              child.key as keyof typeof t.descriptions
+                            ];
+                          return (
+                            <li key={child.key}>
+                              <Link
+                                href={localeHref(locale, child.href)}
+                                className="block px-3.5 py-3 transition-colors duration-200 hover:bg-sand/25"
+                              >
+                                <span className="block text-[0.9rem] text-forest">
+                                  {t.items[child.key as keyof typeof t.items]}
                                 </span>
-                              )}
-                            </Link>
-                          </li>
-                        ))}
+                                {description && (
+                                  <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">
+                                    {description}
+                                  </span>
+                                )}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   )}
@@ -142,18 +153,18 @@ export function Header() {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="hidden sm:block">
-            <LocaleSelector tone={tone} />
+            <LocaleSelector locale={locale} tone={tone} t={t.language} />
           </div>
           {/* Envuelto en lugar de pasarle `hidden` al botón: `Button` lleva
               `inline-flex` en su clase base y, al estar ambas en la misma capa,
               Tailwind resuelve el empate por su propio orden, no por el del
               atributo — el botón se quedaría visible en móvil. */}
           <div className="hidden lg:block">
-            <ButtonLink href="/plan" variant="primary" size="md">
-              Plan Your Journey
+            <ButtonLink href="/plan" locale={locale} variant="primary" size="md">
+              {t.planCta}
             </ButtonLink>
           </div>
-          <MobileNav tone={tone} />
+          <MobileNav locale={locale} tone={tone} t={t} />
         </div>
       </div>
     </header>

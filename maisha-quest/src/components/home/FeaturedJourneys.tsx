@@ -4,6 +4,8 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SafariCard } from "@/components/safari/SafariCard";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import { getFeaturedSafaris } from "@/lib/content";
 
 /**
@@ -14,20 +16,26 @@ import { getFeaturedSafaris } from "@/lib/content";
  * columna se parecían entre sí más de lo que en realidad se diferencian. Es la
  * misma tarjeta y los mismos datos; solo cambia la disposición.
  */
-export async function FeaturedJourneys() {
-  const safaris = await getFeaturedSafaris(3);
+export async function FeaturedJourneys({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const safaris = await getFeaturedSafaris(locale, 3);
   if (safaris.length === 0) return null;
 
   return (
     <section className="bg-page py-24 sm:py-32">
       <Container width="wide">
         <SectionHeading
-          eyebrow="Featured journeys"
-          title="Journeys worth remembering"
-          lede="Starting points, not fixed departures. Every one of these is rebuilt around your dates, your pace and the people you are travelling with."
+          eyebrow={t.home.featured.eyebrow}
+          title={t.home.featured.title}
+          lede={t.home.featured.lede}
         >
-          <ButtonLink href="/safaris" variant="secondary">
-            All safaris
+          <ButtonLink href="/safaris" locale={locale} variant="secondary">
+            {t.nav.items.allSafaris}
           </ButtonLink>
         </SectionHeading>
 
@@ -36,7 +44,12 @@ export async function FeaturedJourneys() {
           <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {safaris.map((safari, index) => (
               <li key={safari.slug} className="flex">
-                <SafariCard safari={safari} priority={index === 0} />
+                <SafariCard
+                  safari={safari}
+                  locale={locale}
+                  t={t}
+                  priority={index === 0}
+                />
               </li>
             ))}
           </ul>
@@ -44,9 +57,18 @@ export async function FeaturedJourneys() {
 
         {/* Móvil */}
         <div className="mt-10 md:hidden">
-          <Carousel label="Featured journeys" itemClassName="w-[86vw] max-w-[22rem]">
+          <Carousel
+            label={t.home.featured.title}
+            itemClassName="w-[86vw] max-w-[22rem]"
+          >
             {safaris.map((safari, index) => (
-              <SafariCard key={safari.slug} safari={safari} priority={index === 0} />
+              <SafariCard
+                key={safari.slug}
+                safari={safari}
+                locale={locale}
+                t={t}
+                priority={index === 0}
+              />
             ))}
           </Carousel>
         </div>

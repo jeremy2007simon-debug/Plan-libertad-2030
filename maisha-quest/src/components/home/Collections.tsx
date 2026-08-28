@@ -5,11 +5,9 @@ import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import {
-  collectionDurationRange,
-  formatDurationRange,
-  getCollections,
-} from "@/lib/content";
+import { type Locale, localeHref } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
+import { collectionDurationRange, getCollections } from "@/lib/content";
 
 /**
  * Las tres colecciones Maisha.
@@ -20,33 +18,39 @@ import {
  * reales de cada colección, no escrita a mano — si mañana se añade un viaje de
  * 14 días, el rango se actualiza solo.
  */
-export async function Collections() {
-  const collections = await getCollections();
+export async function Collections({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const collections = await getCollections(locale);
 
   return (
     <section className="dark-section bg-forest py-24 text-on-dark sm:py-32">
       <Container width="wide">
         <SectionHeading
-          eyebrow="The Maisha Collections"
+          eyebrow={t.home.collections.eyebrow}
           tone="dark"
-          title="Three ways to travel Tanzania"
-          lede="Not three price tiers — three temperaments. Most travellers know which one is theirs by the end of the first line."
+          title={t.home.collections.title}
+          lede={t.home.collections.lede}
         >
-          <ButtonLink href="/safaris" variant="quiet" tone="dark">
-            View all safaris
+          <ButtonLink href="/safaris" locale={locale} variant="quiet" tone="dark">
+            {t.common.exploreAll}
           </ButtonLink>
         </SectionHeading>
 
         <div className="mt-16 flex flex-col gap-16 sm:gap-20">
           {collections.map((collection, index) => {
-            const range = formatDurationRange(collectionDurationRange(collection));
+            const range = t.common.durationRange(collectionDurationRange(collection));
             const flipped = index % 2 === 1;
 
             return (
               <Reveal key={collection.id}>
                 <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
                   <Link
-                    href={`/collections/${collection.id}`}
+                    href={localeHref(locale, `/collections/${collection.id}`)}
                     tabIndex={-1}
                     aria-hidden="true"
                     className={`group relative block aspect-16/10 overflow-hidden lg:col-span-7 ${
@@ -77,7 +81,7 @@ export async function Collections() {
                         que elegir— escondido en el antetítulo. */}
                     <h3 className="text-h2 mt-3 text-ivory">
                       <Link
-                        href={`/collections/${collection.id}`}
+                        href={localeHref(locale, `/collections/${collection.id}`)}
                         className="transition-colors duration-300 hover:text-sand"
                       >
                         {collection.name}
@@ -93,7 +97,7 @@ export async function Collections() {
                     </p>
 
                     <dl className="mt-7 border-t border-rule-on-dark pt-6">
-                      <dt className="eyebrow text-on-dark-faint">Suits</dt>
+                      <dt className="eyebrow text-on-dark-faint">{t.common.suits}</dt>
                       <dd className="mt-1.5 text-[0.95rem] text-ivory">
                         {collection.travellerProfile}
                       </dd>
@@ -108,11 +112,12 @@ export async function Collections() {
 
                     <ButtonLink
                       href={`/collections/${collection.id}`}
+                      locale={locale}
                       variant="secondary"
                       tone="dark"
                       className="mt-7"
                     >
-                      Explore {collection.name}
+                      {t.home.collections.explore(collection.name)}
                     </ButtonLink>
                   </div>
                 </article>

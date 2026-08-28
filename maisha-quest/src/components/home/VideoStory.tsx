@@ -4,6 +4,8 @@ import { LazyVideo } from "@/components/ui/LazyVideo";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { PHOTOS } from "@/data/photography";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
 import type { MediaVideo } from "@/types/content";
 
 /**
@@ -41,15 +43,8 @@ export const JOURNEY_FILM: MediaVideo = {
   },
 };
 
-const THREADS = [
-  { label: "Wildlife", note: "The plains, and what moves across them." },
-  { label: "Culture", note: "Time with the people who live here." },
-  { label: "Adventure", note: "On foot, on water, on the mountain." },
-  { label: "Ocean", note: "Where the journey slows down." },
-  { label: "Connection", note: "The reason any of it matters." },
-];
-
-export function VideoStory() {
+export function VideoStory({ locale, t }: { locale: Locale; t: Dictionary }) {
+  const threads = t.home.film.threads;
   return (
     <section className="dark-section relative isolate overflow-hidden bg-forest-deep py-24 text-on-dark sm:py-32">
       {/* Fondo fotográfico muy atenuado: da profundidad sin competir. */}
@@ -65,8 +60,11 @@ export function VideoStory() {
             <div className="mx-auto w-full max-w-[22rem] lg:max-w-none">
               <LazyVideo
                 video={JOURNEY_FILM}
-                label="Watch the Journey"
-                posterLabel="Tanzania, in thirty-six seconds"
+                label={t.home.film.watch}
+                posterLabel={t.home.film.posterLabel}
+                pauseLabel={t.video.pause}
+                pendingLabel={t.video.pending}
+                filmToFollowLabel={t.video.filmToFollow(t.home.film.posterLabel)}
                 tone="dark"
                 className="relative aspect-9/16 w-full bg-charcoal"
               />
@@ -76,13 +74,11 @@ export function VideoStory() {
           {/* Texto */}
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal>
-              <p className="eyebrow text-sand">The film</p>
-              <h2 className="text-h1 mt-5 text-ivory">
-                One country. Endless ways to feel alive.
-              </h2>
+              <p className="eyebrow text-sand">{t.home.film.eyebrow}</p>
+              <h2 className="text-h1 mt-5 text-ivory">{t.home.film.title}</h2>
 
               <ul className="mt-10 flex flex-col divide-y divide-rule-on-dark border-y border-rule-on-dark">
-                {THREADS.map((thread) => (
+                {threads.map((thread) => (
                   <li
                     key={thread.label}
                     className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4"
@@ -99,11 +95,12 @@ export function VideoStory() {
 
               <ButtonLink
                 href="/experiences"
+                locale={locale}
                 variant="secondary"
                 tone="dark"
                 className="mt-9"
               >
-                Explore experiences
+                {t.home.film.cta}
               </ButtonLink>
             </Reveal>
           </div>

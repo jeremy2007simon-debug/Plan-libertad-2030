@@ -4,7 +4,9 @@ import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
-import { TRUST_CREDENTIALS, TRUST_PILLARS } from "@/lib/site";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/messages/en";
+import { TRUST_CREDENTIALS } from "@/lib/site";
 
 /**
  * "Your journey, in trusted hands".
@@ -16,16 +18,16 @@ import { TRUST_CREDENTIALS, TRUST_PILLARS } from "@/lib/site";
  * disponemos de esas cifras y ponerlas inventadas sería el peor error posible
  * en una sección que se titula "en manos de confianza".
  */
-export function WhyMaisha() {
+export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
   return (
     <section className="bg-page py-24 sm:py-32">
       <Container width="wide">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <SectionHeading
-              eyebrow="Why Maisha Quest"
-              title="Your journey, in trusted hands"
-              lede="We are a Tanzanian company. That is not a marketing line — it changes who answers the phone, who drives the vehicle and where the money goes."
+              eyebrow={t.home.why.eyebrow}
+              title={t.home.why.title}
+              lede={t.home.why.lede}
             />
 
             <Reveal className="mt-10">
@@ -42,7 +44,7 @@ export function WhyMaisha() {
           <div className="lg:col-span-7">
             <Reveal>
               <ul className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
-                {TRUST_PILLARS.map((pillar) => (
+                {t.home.why.pillars.map((pillar) => (
                   <li key={pillar.title}>
                     <CompassMark
                       className="size-6 text-gold"

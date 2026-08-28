@@ -1,4 +1,5 @@
-import { COMPANY, SITE_URL } from "@/lib/site";
+import { type Locale, localeHref } from "@/i18n/config";
+import { COMPANY, SITE_URL, socialLinks } from "@/lib/site";
 import type { FAQ, Safari } from "@/types/content";
 import { formatRoute } from "@/lib/content";
 
@@ -22,14 +23,14 @@ function JsonLd({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export function OrganizationSchema() {
+export function OrganizationSchema({ locale }: { locale: Locale }) {
   return (
     <JsonLd
       data={{
         "@context": "https://schema.org",
         "@type": "TravelAgency",
         name: COMPANY.name,
-        url: SITE_URL,
+        url: `${SITE_URL}${localeHref(locale, "/")}`,
         description:
           "Private, tailor-made safaris through Tanzania, designed and guided by a local team based in Arusha.",
         address: {
@@ -53,11 +54,11 @@ export function OrganizationSchema() {
           opens: "08:00",
           closes: "18:00",
         },
-        sameAs: [
-          COMPANY.social.instagram,
-          COMPANY.social.linkedin,
-          COMPANY.social.youtube,
-        ],
+        // `sameAs` solo si hay perfiles confirmados: declararle a Google un
+        // perfil que quizá no es del cliente es peor que no declarar ninguno.
+        ...(socialLinks().length > 0
+          ? { sameAs: socialLinks().map((s) => s.href) }
+          : {}),
       }}
     />
   );
@@ -67,7 +68,7 @@ export function OrganizationSchema() {
  * Ficha de un safari. Se declara `offers` únicamente cuando hay un precio
  * real: un `offers` sin precio, o con precio inventado, es peor que ninguno.
  */
-export function SafariSchema({ safari }: { safari: Safari }) {
+export function SafariSchema({ locale, safari }: { locale: Locale; safari: Safari }) {
   const price = safari.price.fromPerPerson;
   return (
     <JsonLd
@@ -76,12 +77,12 @@ export function SafariSchema({ safari }: { safari: Safari }) {
         "@type": "TouristTrip",
         name: safari.name,
         description: safari.summary,
-        url: `${SITE_URL}/safaris/${safari.slug}`,
+        url: `${SITE_URL}${localeHref(locale, `/safaris/${safari.slug}`)}`,
         touristType: safari.travellerProfile,
         itinerary: {
           "@type": "ItemList",
           numberOfItems: safari.routeDestinationSlugs.length,
-          itemListElement: formatRoute(safari)
+          itemListElement: formatRoute(locale, safari)
             .split(" · ")
             .map((name, index) => ({
               "@type": "ListItem",

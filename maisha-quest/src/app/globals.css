@@ -68,8 +68,14 @@
   --color-rule-strong: var(--rule-strong);
   --color-rule-on-dark: var(--rule-on-dark);
 
-  --font-display: var(--font-cormorant);
-  --font-sans: var(--font-manrope);
+  /* `--font-display` y `--font-body` los inyecta next/font en <html>, y su
+     valor cambia según el sistema de escritura: Cormorant/Manrope para latín
+     y cirílico, Noto Serif SC/Noto Sans SC para chino simplificado. Las pilas
+     de respaldo también son distintas por eso. */
+  --font-display: var(--font-display), "Iowan Old Style", "Palatino Linotype",
+    Palatino, Georgia, "Songti SC", "Noto Serif CJK SC", serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
 
   /* Escala tipográfica editorial: títulos elegantes, no gigantes. */
   --text-display: clamp(2.6rem, 5.2vw, 4.4rem);
