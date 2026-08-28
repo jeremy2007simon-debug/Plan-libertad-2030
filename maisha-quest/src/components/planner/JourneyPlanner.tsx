@@ -394,7 +394,7 @@ export function JourneyPlanner({
                 type="button"
                 disabled={index > stepIndex}
                 onClick={() => goTo(index)}
-                className={`text-[0.75rem] tracking-[0.06em] uppercase transition-colors duration-[var(--dur-hover)] disabled:cursor-default ${
+                className={`tap-44 text-[0.75rem] tracking-[0.06em] uppercase transition-colors duration-[var(--dur-hover)] disabled:cursor-default ${
                   index === stepIndex
                     ? "font-semibold text-forest"
                     : index < stepIndex
@@ -776,9 +776,13 @@ function Panel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ErrorText({ children }: { children: React.ReactNode }) {
+function ErrorText({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
-    <span role="alert" className="mt-2 block text-[0.83rem] text-terracotta-deep">
+    <span
+      id={id}
+      role="alert"
+      className="mt-2 block text-[0.83rem] text-terracotta-deep"
+    >
       {children}
     </span>
   );
@@ -817,8 +821,14 @@ function Field({
           </>
         )}
       </label>
-      <div className="mt-2.5">{children}</div>
-      {error && <ErrorText>{error}</ErrorText>}
+      {/* El error se asocia al campo con `aria-describedby`, no solo se
+          anuncia: quien vuelve al campo con el tabulador después de que el
+          anuncio haya pasado necesita volver a oír qué falla. El `role="alert"`
+          cubre el momento del error; `aria-describedby`, todo lo demás. */}
+      <div className="mt-2.5" aria-describedby={error ? `${htmlFor}-error` : undefined}>
+        {children}
+      </div>
+      {error && <ErrorText id={`${htmlFor}-error`}>{error}</ErrorText>}
     </div>
   );
 }
@@ -877,8 +887,12 @@ function ChoiceGrid({
   legend: string;
   columns?: 2 | 3;
 }) {
+  const errorId = `${name}-error`;
   return (
-    <fieldset>
+    <fieldset
+      aria-describedby={error ? errorId : undefined}
+      aria-invalid={error ? true : undefined}
+    >
       <legend className="eyebrow text-ink-faint">{legend}</legend>
       <ul
         className={`mt-4 grid gap-2.5 ${
@@ -918,7 +932,7 @@ function ChoiceGrid({
           );
         })}
       </ul>
-      {error && <ErrorText>{error}</ErrorText>}
+      {error && <ErrorText id={errorId}>{error}</ErrorText>}
     </fieldset>
   );
 }
@@ -1087,10 +1101,16 @@ function ContactFallback({
     <div className={`border-t border-rule pt-7 ${className}`}>
       <p className="eyebrow text-ink-faint">{label}</p>
       <div className="mt-3 flex flex-col gap-1.5 text-[0.95rem]">
-        <a href={COMPANY.phoneHref} className="text-forest hover:text-terracotta-text">
+        <a
+          href={COMPANY.phoneHref}
+          className="tap-44 inline-block text-forest hover:text-terracotta-text"
+        >
           {COMPANY.phone}
         </a>
-        <a href={COMPANY.emailHref} className="text-forest hover:text-terracotta-text">
+        <a
+          href={COMPANY.emailHref}
+          className="tap-44 inline-block text-forest hover:text-terracotta-text"
+        >
           {COMPANY.email}
         </a>
         <p className="mt-1 text-[0.85rem] text-ink-faint">

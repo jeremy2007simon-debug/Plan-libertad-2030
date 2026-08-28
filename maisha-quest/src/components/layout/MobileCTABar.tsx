@@ -38,6 +38,9 @@ export function MobileCTABar({
 
   return (
     <div
+      // Lo lee `scripts/check-responsive.mjs` para comprobar que la barra no
+      // tapa ningún control alcanzable.
+      data-mobile-cta=""
       className={`fixed inset-x-0 bottom-0 z-40 border-t border-rule-on-dark/30 bg-forest/97 backdrop-blur-md transition-transform duration-500 ease-out lg:hidden ${
         visible ? "translate-y-0" : "translate-y-full"
       }`}

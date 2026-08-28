@@ -743,3 +743,45 @@ p {
     scroll-behavior: auto !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Zona táctil de 44 px sin tocar el diseño
+   --------------------------------------------------------------------------
+
+   Varios enlaces y botones de la web son texto de una línea: el teléfono del
+   pie, los pasos del planificador, los enlaces «Descubre →» de las tarjetas.
+   Visualmente están bien —así se aprobaron— pero su zona sensible al dedo
+   medía entre 20 y 35 px de alto, por debajo de los 44 que pide la guía.
+
+   Crecerlos con `min-height` cambiaría el ritmo vertical de secciones ya
+   aprobadas. Este pseudoelemento amplía SOLO el área que responde al toque,
+   centrada sobre el elemento: no ocupa espacio, no desplaza nada y no se ve.
+
+   Se aplica a mano donde hace falta y no de forma global a propósito: en un
+   enlace dentro de un párrafo, un área de 44 px se solaparía con la de la
+   línea de arriba y robaría toques que no le corresponden.
+   -------------------------------------------------------------------------- */
+
+.tap-44 {
+  position: relative;
+}
+
+.tap-44::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  min-width: 44px;
+  height: max(100%, 44px);
+  transform: translateY(-50%);
+  /* Detrás del contenido: no debe tapar nada ni robar el cursor a un hijo. */
+  z-index: -1;
+}
+
+/* En un puntero fino no hace falta y podría estorbar a elementos vecinos. */
+@media (pointer: fine) {
+  .tap-44::after {
+    display: none;
+  }
+}

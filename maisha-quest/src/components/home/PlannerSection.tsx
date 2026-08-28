@@ -62,7 +62,7 @@ export async function PlannerSection({
               <p className="eyebrow text-ink-faint">{t.home.planner.ratherTalk}</p>
               <a
                 href={COMPANY.phoneHref}
-                className="font-display mt-2 block text-[1.45rem] text-forest transition-colors duration-[var(--dur-hover)] hover:text-terracotta-text"
+                className="tap-44 font-display mt-2 inline-block text-[1.45rem] text-forest transition-colors duration-[var(--dur-hover)] hover:text-terracotta-text"
               >
                 {COMPANY.phone}
               </a>

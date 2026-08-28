@@ -19,6 +19,7 @@
  * a mano si cambia la imagen.
  */
 
+import { CLIENT_PHOTOS } from "./client-photography";
 import type { ResolvedImage } from "@/types/content";
 
 /** Toda foto del registro es una imagen resuelta: existe el archivo y tiene metadatos. */
@@ -321,6 +322,18 @@ export function photo(id: PhotoId): Photo {
 }
 
 /** Todas las fotos provisionales, para la página de créditos. */
+/**
+ * Toda la fotografía que se publica, con su clave.
+ *
+ * Devolvía solo `PHOTOS` —las provisionales de Commons— y por eso la página de
+ * créditos no listaba ni una de las 19 que entregó el cliente, que son la mitad
+ * de lo que se ve en la web. Una página de procedencia que se deja fuera la
+ * mitad del material no cumple su función.
+ */
 export function allCredits(): (Photo & { id: string })[] {
-  return Object.entries(PHOTOS).map(([id, p]) => ({ ...p, id }));
+  return [
+    // El material del cliente primero: es la fotografía real del negocio.
+    ...Object.entries(CLIENT_PHOTOS).map(([id, p]) => ({ ...p, id })),
+    ...Object.entries(PHOTOS).map(([id, p]) => ({ ...p, id })),
+  ];
 }

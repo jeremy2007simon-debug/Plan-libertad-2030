@@ -43,9 +43,14 @@ const VARIANTS: Record<Variant, Record<Tone, string>> = {
       "border border-forest/35 text-forest hover:bg-forest hover:text-parchment hover:border-forest",
     dark: "border border-on-dark-faint text-on-dark hover:bg-parchment hover:text-forest hover:border-parchment",
   },
+  /*
+   * `tap-44`: la variante discreta es texto subrayado sin caja, así que su
+   * zona táctil medía la altura de una línea. El pseudoelemento la lleva a
+   * 44 px sin cambiar ni un píxel del diseño. Ver `globals.css`.
+   */
   quiet: {
-    light: "text-forest underline underline-offset-[6px] decoration-forest/30 hover:decoration-terracotta-text hover:text-terracotta-text px-0 min-h-0 py-1",
-    dark: "text-on-dark underline underline-offset-[6px] decoration-on-dark-faint hover:decoration-sand hover:text-sand px-0 min-h-0 py-1",
+    light: "tap-44 text-forest underline underline-offset-[6px] decoration-forest/30 hover:decoration-terracotta-text hover:text-terracotta-text px-0 min-h-0 py-1",
+    dark: "tap-44 text-on-dark underline underline-offset-[6px] decoration-on-dark-faint hover:decoration-sand hover:text-sand px-0 min-h-0 py-1",
   },
 };
 

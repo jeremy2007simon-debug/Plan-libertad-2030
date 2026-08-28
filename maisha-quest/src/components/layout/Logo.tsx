@@ -29,7 +29,9 @@ export function Logo({
     <Link
       href={localeHref(locale, "/")}
       aria-label={homeLabel}
-      className={`group inline-flex items-center gap-3 ${color} ${className}`}
+      // `min-h-11`: el logotipo es el enlace a la portada y su zona táctil
+      // medía 28 px de alto en móvil.
+      className={`group inline-flex min-h-11 items-center gap-3 ${color} ${className}`}
     >
       <CompassMark
         className={`size-7 shrink-0 transition-transform duration-700 ease-out group-hover:rotate-45 sm:size-8 ${accent}`}

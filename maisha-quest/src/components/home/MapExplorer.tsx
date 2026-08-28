@@ -355,7 +355,7 @@ export function MapExplorer({
 
           <Link
             href={localeHref(locale, `/destinations/${active.slug}`)}
-            className="mt-7 inline-flex text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta-text hover:decoration-terracotta-text"
+            className="tap-44 mt-7 inline-flex items-center text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta-text hover:decoration-terracotta-text"
           >
             {active.moreOnLabel}
           </Link>

@@ -125,7 +125,7 @@ export async function Collections({
                       <h3 className="text-h2 mt-3 text-forest">
                         <Link
                           href={localeHref(locale, `/collections/${collection.id}`)}
-                          className="group transition-colors duration-[var(--dur-hover)] hover:text-terracotta-text"
+                          className="tap-44 group inline-block transition-colors duration-[var(--dur-hover)] hover:text-terracotta-text"
                         >
                           {collection.name}
                         </Link>
@@ -148,7 +148,7 @@ export async function Collections({
 
                       <Link
                         href={localeHref(locale, `/collections/${collection.id}`)}
-                        className="group mt-6 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
+                        className="tap-44 group mt-6 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
                       >
                         <span className="border-b border-forest/30 pb-1 transition-colors duration-[var(--dur-hover)] group-hover:border-terracotta-text group-focus-visible:border-terracotta-text group-hover:text-terracotta-text group-focus-visible:text-terracotta-text">
                           {t.home.collections.explore(collection.name)}

@@ -58,7 +58,7 @@ export default async function ContactPage({
                   <dd className="mt-2">
                     <a
                       href={COMPANY.phoneHref}
-                      className="font-display text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
+                      className="tap-44 font-display inline-block text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                     >
                       {COMPANY.phone}
                     </a>
@@ -69,7 +69,7 @@ export default async function ContactPage({
                   <dd className="mt-2">
                     <a
                       href={COMPANY.emailHref}
-                      className="font-display text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
+                      className="tap-44 font-display inline-block text-[1.6rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                     >
                       {COMPANY.email}
                     </a>
@@ -82,7 +82,7 @@ export default async function ContactPage({
                       href={whatsappHref(t.nav.whatsappMessage)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2.5 text-[1rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
+                      className="tap-44 inline-flex items-center gap-2.5 text-[1rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                     >
                       <WhatsAppGlyph className="size-4" />
                       {t.contact.messageUs}
@@ -122,7 +122,7 @@ export default async function ContactPage({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="eyebrow text-ink-soft transition-colors duration-300 hover:text-terracotta-text"
+                      className="tap-44 eyebrow inline-flex items-center text-ink-soft transition-colors duration-300 hover:text-terracotta-text"
                     >
                       {social.label}
                     </a>

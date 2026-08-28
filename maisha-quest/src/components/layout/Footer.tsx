@@ -49,16 +49,20 @@ export function Footer({
               {t.blurb}
             </p>
 
-            <address className="mt-8 flex flex-col gap-1 not-italic">
+            {/* Teléfono y correo son los dos enlaces que más se tocan desde un
+                móvil, y su zona táctil era la altura de una línea: 25 px. Con
+                `min-h-11` y `w-fit` llegan a los 44 px que pide la guía sin
+                ensancharse hasta ocupar toda la columna. */}
+            <address className="mt-8 flex flex-col not-italic">
               <a
                 href={COMPANY.phoneHref}
-                className="text-[0.95rem] text-parchment transition-colors duration-300 hover:text-[var(--gold)]"
+                className="inline-flex min-h-11 w-fit items-center text-[0.95rem] text-parchment transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 {COMPANY.phone}
               </a>
               <a
                 href={COMPANY.emailHref}
-                className="text-[0.95rem] text-parchment transition-colors duration-300 hover:text-[var(--gold)]"
+                className="inline-flex min-h-11 w-fit items-center text-[0.95rem] text-parchment transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 {COMPANY.email}
               </a>
@@ -66,7 +70,7 @@ export function Footer({
                 href={whatsappHref(nav.whatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 inline-flex w-fit items-center gap-2 text-[0.9rem] text-on-dark-soft transition-colors duration-300 hover:text-[var(--gold)]"
+                className="inline-flex min-h-11 w-fit items-center gap-2 text-[0.9rem] text-on-dark-soft transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 <WhatsAppGlyph className="size-4" />
                 {t.whatsapp}
@@ -93,7 +97,7 @@ export function Footer({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="eyebrow text-on-dark-soft transition-colors duration-300 hover:text-[var(--gold)]"
+                      className="tap-44 eyebrow inline-flex items-center text-on-dark-soft transition-colors duration-300 hover:text-[var(--gold)]"
                     >
                       {social.label}
                     </a>

@@ -13,7 +13,10 @@
     "check:i18n": "node scripts/check-untranslated.mjs",
     "test:planner": "node scripts/test-planner-locale.mjs",
     "test:delivery": "node scripts/test-journey-delivery.mjs",
-    "check:rights": "node scripts/check-photo-rights.mjs"
+    "check:rights": "node scripts/check-photo-rights.mjs",
+    "check:links": "node scripts/check-links-seo.mjs",
+    "check:a11y": "node scripts/check-a11y.mjs",
+    "check:responsive": "node scripts/check-responsive.mjs"
   },
   "dependencies": {
     "next": "16.2.10",

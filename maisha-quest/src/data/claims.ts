@@ -25,6 +25,24 @@ export interface BusinessClaim {
   status: ClaimStatus;
   /** De dónde sale, si está confirmada. */
   source?: string;
+  /**
+   * Cuándo se confirmó, en formato `AAAA-MM-DD`.
+   *
+   * Sin fecha, «confirmado» envejece mal: una licencia que se verificó hace
+   * tres años puede haber caducado, y un dato de plantilla cambia. Toda
+   * entrada `confirmed` la lleva; las demás, no.
+   */
+  confirmedAt?: string;
+  /**
+   * ¿Hay que preguntarle esto al cliente antes de lanzar?
+   *
+   * No es lo mismo que `status: "pending"`. Una afirmación puede estar
+   * confirmada y aun así necesitar una revisión —porque se confirmó de oído,
+   * o porque el dato caduca—, y una editorial no necesita ninguna.
+   */
+  needsClientReview: boolean;
+  /** Qué hay que preguntar exactamente cuando `needsClientReview` es `true`. */
+  reviewNote?: string;
   /** Dónde vive el texto hoy. */
   usedIn: string[];
   /**
@@ -47,6 +65,10 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
     key: "company.base",
     claim: "Maisha Quest es una empresa tanzana con sede en Arusha.",
     status: "confirmed",
+    confirmedAt: "2026-08-28",
+    needsClientReview: true,
+    reviewNote:
+      "Confirmar la forma jurídica exacta y el domicilio social; «empresa tanzana con sede en Arusha» sale de su web anterior, no de un registro.",
     source: "Web anterior del cliente y datos de contacto facilitados (+255, Arusha).",
     usedIn: ["lib/site.ts COMPANY.base", "home.maisha.body", "why.pillars[0]", "footer"],
   },
@@ -54,6 +76,10 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
     key: "company.contact",
     claim: "Teléfono +255 672 426 411, info@maishaquest.com, WhatsApp y horario L–S 8:00–18:00 GMT+3.",
     status: "confirmed",
+    confirmedAt: "2026-08-28",
+    needsClientReview: true,
+    reviewNote:
+      "Confirmar que el número tiene WhatsApp Business activo.",
     source: "Facilitados por el cliente y verificados contra su web anterior.",
     usedIn: ["lib/site.ts COMPANY", "contacto", "footer", "planificador"],
     note:
@@ -64,6 +90,10 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
     key: "company.social",
     claim: "Perfiles de Instagram, LinkedIn y YouTube.",
     status: "confirmed",
+    confirmedAt: "2026-08-28",
+    needsClientReview: true,
+    reviewNote:
+      "Reconfirmar antes del lanzamiento: un perfil puede cambiar de nombre.",
     source: "URLs verificadas por el cliente en la ronda de enlaces.",
     usedIn: ["lib/site.ts COMPANY.social"],
   },
@@ -71,6 +101,8 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
     key: "product.private",
     claim: "Todos los viajes son privados y se construyen a medida.",
     status: "confirmed",
+    confirmedAt: "2026-08-28",
+    needsClientReview: false,
     source: "Es el modelo de negocio declarado por el cliente; sostiene toda la web.",
     usedIn: ["why.pillars[1]", "faq.what-does-private-mean", "safaris"],
   },
@@ -78,6 +110,10 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
     key: "team.founders",
     claim: "Tres fundadores: Talisa Tufts, Frank Lyatuu y Tina Ngabo, con sus funciones.",
     status: "confirmed",
+    confirmedAt: "2026-08-28",
+    needsClientReview: true,
+    reviewNote:
+      "Confirmar los cargos y que los tres siguen en la empresa.",
     source: "Nombres y cargos facilitados por el cliente.",
     usedIn: ["data/structure/team.ts", "home.team", "/about/team"],
   },
@@ -85,6 +121,10 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
     key: "team.languages",
     claim: "El equipo trabaja en inglés y suajili; Talisa habla además ruso y chino mandarín.",
     status: "confirmed",
+    confirmedAt: "2026-08-28",
+    needsClientReview: true,
+    reviewNote:
+      "Confirmar el nivel de cada idioma y si se usan al planificar o también sobre el terreno.",
     source: "Idiomas de cada persona facilitados por el cliente.",
     usedIn: ["data/structure/team.ts languageCodes", "faq.languages", "why.pillars[2]"],
     note:
@@ -101,9 +141,42 @@ export const CONFIRMED_CLAIMS: BusinessClaim[] = [
 
 export const PENDING_CLAIMS: BusinessClaim[] = [
   {
+    key: "team.frank-routes",
+    claim: "Frank es de Arusha y conoce las rutas de conducirlas él mismo.",
+    status: "pending",
+    needsClientReview: true,
+    usedIn: ["content team frank-lyatuu.bio"],
+    publishedAs:
+      "Se publica tal cual, en su biografía y en primera persona del equipo. " +
+      "No es una promesa comercial ni una cifra, pero sí una afirmación sobre " +
+      "una persona concreta y debe confirmarla ella.",
+    reviewNote:
+      "Que Frank confirme que la biografía dice de él lo que él diría, y en " +
+      "particular que ha conducido las rutas que la web ofrece.",
+  },
+  {
+    key: "service.airport-welcome",
+    claim:
+      "Quien responde al primer correo es quien recibe al viajero en el aeropuerto.",
+    status: "pending",
+    needsClientReview: true,
+    usedIn: ["home.maisha.body", "why.pillars[0]", "about.lede"],
+    publishedAs:
+      "Se publica tal cual. Es la afirmación más comprobable de toda la web " +
+      "—un viajero la verifica el primer día— y con un equipo de tres personas " +
+      "es plausible, pero no consta confirmada por el cliente.",
+    strongerWording:
+      "Si no siempre es así, basta con «te recibe alguien del equipo, no un " +
+      "proveedor», que sigue siendo un argumento fuerte y no se puede desmentir.",
+    reviewNote:
+      "¿Recibe SIEMPRE en el aeropuerto alguien de los tres, o a veces un " +
+      "conductor o guía contratado? Si es lo segundo, hay que suavizarlo.",
+  },
+  {
     key: "service.guiding-languages",
     claim: "Maisha Quest planifica Y ACOMPAÑA en inglés, suajili, ruso y chino mandarín.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["why.pillars[2]"],
     publishedAs:
       "Que la planificación y la correspondencia son en inglés y suajili, y que " +
@@ -118,6 +191,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "service.lodges-visited",
     claim: "Los campamentos y lodges que se ofrecen los ha visitado el equipo en persona.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["why.pillars[3]"],
     publishedAs:
       "El criterio de selección (ubicación, gestión y lo que se ve desde allí), " +
@@ -128,6 +202,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "service.support-throughout",
     claim: "El equipo está localizable durante todo el viaje.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["why.pillars[5]"],
     publishedAs:
       "Que es un solo equipo de principio a fin —quien planifica es quien " +
@@ -143,6 +218,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "partners.years",
     claim: "Acceso privado a través de gente con la que se trabaja «desde hace años».",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["content collections.enrich.description"],
     publishedAs: "Que el acceso se acuerda directamente con quien lo acoge.",
     strongerWording: "«…con gente con la que trabajamos desde hace N años.»",
@@ -152,6 +228,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "impact.community-fees",
     claim: "Las visitas a comunidades se pagan a la comunidad y no a un intermediario.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["content impact.community.description"],
     publishedAs:
       "Que las visitas se acuerdan directamente con quien las acoge y en el " +
@@ -163,6 +240,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "impact.kpap",
     claim: "En el Kilimanjaro se siguen las pautas de KPAP sobre sueldo y carga de porteadores.",
     status: "pending",
+    needsClientReview: true,
     usedIn: [
       "content impact.local-employment.description",
       "team.note",
@@ -182,6 +260,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "impact.share-of-revenue",
     claim: "Una parte de cada viaje se destina a trabajo de impacto.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["home.impact.intro.body", "meta.impact.description"],
     publishedAs:
       "Los ámbitos en los que se quiere trabajar y el modelo (guías y " +
@@ -193,6 +272,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "impact.active-programmes",
     claim: "Hay programas activos de educación y conservación en marcha.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["content impact.education", "content impact.conservation"],
     publishedAs:
       "Las áreas de trabajo de Maisha Quest Cares descritas como el foco del " +
@@ -205,6 +285,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "impact.local-wages",
     claim: "Guías locales «con salarios locales» y personal formado por la empresa.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["home.impact.intro.body", "content impact.local-employment"],
     publishedAs: "Que la contratación es en Tanzania. Sin afirmar nivel salarial ni formación propia.",
     strongerWording: "«…con salarios por encima del convenio del sector», si es el caso.",
@@ -213,6 +294,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "trust.credentials",
     claim: "Licencias TALA/TATO, seguros, asociaciones, años en operación, viajeros atendidos.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["lib/site.ts TRUST_CREDENTIALS"],
     publishedAs: null,
     note:
@@ -225,6 +307,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
       "Las listas de «incluye» de los siete viajes (cobertura de evacuación, " +
       "tasas, traslados…).",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["content safaris.*.included"],
     publishedAs:
       "Se publican bajo el sello de itinerario de muestra: los siete safaris " +
@@ -238,6 +321,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "reviews.profiles",
     claim: "Perfiles de TripAdvisor, SafariBookings y Google Business.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["data/testimonials.ts REVIEW_SOURCES"],
     publishedAs: null,
     note: "REVIEW_SOURCES vacío: los tres enlaces no existen en el DOM.",
@@ -246,6 +330,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "media.impact-video",
     claim: "Vídeo de Maisha Quest Cares grabado en un colegio.",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["data/impact.ts IMPACT_VIDEO"],
     publishedAs: null,
     note:
@@ -256,6 +341,7 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     key: "media.journey-film",
     claim: "Vídeo vertical de 36 s para la sección «The film».",
     status: "pending",
+    needsClientReview: true,
     usedIn: ["components/home/VideoStory.tsx JOURNEY_FILM"],
     publishedAs: null,
     note:
@@ -274,18 +360,21 @@ export const EDITORIAL_CLAIMS: BusinessClaim[] = [
     key: "editorial.collections",
     claim: "«No son tres niveles de precio, son tres temperamentos.»",
     status: "editorial",
+    needsClientReview: false,
     usedIn: ["home.collections.lede"],
   },
   {
     key: "editorial.maisha",
     claim: "«Cada viaje es una oportunidad de descubrir, conectar y vivir más plenamente.»",
     status: "editorial",
+    needsClientReview: false,
     usedIn: ["home.maisha.lede"],
   },
   {
     key: "editorial.destinations",
     claim: "Descripciones de parques, temporadas y fauna.",
     status: "editorial",
+    needsClientReview: false,
     usedIn: ["content destinations.*", "content experiences.*"],
     note:
       "Son datos geográficos y de temporada, no afirmaciones sobre la empresa. " +
