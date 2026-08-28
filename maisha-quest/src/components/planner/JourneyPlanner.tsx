@@ -242,6 +242,7 @@ export function JourneyPlanner({
       const body = (await response.json()) as {
         status?: string;
         reference?: string;
+        code?: keyof typeof t.status.delivery;
         message?: string;
       };
 
@@ -252,9 +253,21 @@ export function JourneyPlanner({
       }
 
       if (!response.ok) {
+        /*
+         * El mensaje se traduce AQUÍ, a partir del código que manda el
+         * servidor. Antes se pintaba el `message` de la respuesta, que va en
+         * inglés, y quien rellenaba el formulario en ruso y se topaba con el
+         * limitador veía «Too many enquiries from this connection» en mitad de
+         * su página en ruso.
+         *
+         * Ningún caso se descarta en silencio: un 429 se ve igual que un 502.
+         */
+        const known = body.code && body.code in t.status.delivery;
         setStatus({
           kind: "error",
-          message: body.message ?? t.status.sendFailed,
+          message: known
+            ? t.status.delivery[body.code as keyof typeof t.status.delivery]
+            : t.status.sendFailed,
         });
         return;
       }
@@ -550,8 +563,8 @@ export function JourneyPlanner({
                     value={state.adults}
                     min={1}
                     onChange={(value) => update("adults", value)}
-                    oneFewer={t.fields.oneFewer}
-                    oneMore={t.fields.oneMore}
+                    removeLabel={t.fields.removeAdult}
+                    addLabel={t.fields.addAdult}
                   />
                   <Counter
                     label={t.fields.children}
@@ -559,8 +572,8 @@ export function JourneyPlanner({
                     value={state.children}
                     min={0}
                     onChange={(value) => update("children", value)}
-                    oneFewer={t.fields.oneFewer}
-                    oneMore={t.fields.oneMore}
+                    removeLabel={t.fields.removeChild}
+                    addLabel={t.fields.addChild}
                   />
                 </div>
                 {errors.adults && <ErrorText>{t.errors[errors.adults]}</ErrorText>}
@@ -943,8 +956,8 @@ function Counter({
   value,
   min,
   onChange,
-  oneFewer,
-  oneMore,
+  removeLabel,
+  addLabel,
 }: {
   label: string;
   hint?: string;
@@ -952,15 +965,21 @@ function Counter({
   min: number;
   onChange: (value: number) => void;
   /**
-   * Plantillas del nombre accesible de los dos botones.
+   * Nombres accesibles de los dos botones, YA COMPLETOS.
    *
-   * Eran `One fewer ${label}` escritas a mano, así que en las cinco lenguas no
-   * inglesas un lector de pantalla anunciaba «One fewer adultos». El plural y
-   * el orden de las palabras cambian por idioma, de ahí la plantilla con
-   * `{label}` en lugar de una concatenación.
+   * Primero fueron `One fewer ${label}` en el código, y un lector de pantalla
+   * en español anunciaba «One fewer adultos». Al pasarlos al diccionario se
+   * quedaron como plantilla con un hueco —«Un {label} menos»— y el resultado
+   * seguía sin ser gramatical: «Un adultos menos».
+   *
+   * Ahora llegan hechos. No se componen aquí porque no se pueden componer: el
+   * verbo alemán rige acusativo y cambia el artículo («einen Erwachsenen»,
+   * «ein Kind»), el ruso declina el sustantivo, y el chino usa un clasificador
+   * distinto para personas adultas y para menores. Cuatro frases, cuatro
+   * traducciones.
    */
-  oneFewer: string;
-  oneMore: string;
+  removeLabel: string;
+  addLabel: string;
 }) {
   return (
     <div>
@@ -972,7 +991,7 @@ function Counter({
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
-          aria-label={fill(oneFewer, { label: label.toLowerCase() })}
+          aria-label={removeLabel}
           className="flex size-11 items-center justify-center border border-rule text-forest transition-colors duration-300 hover:border-forest"
         >
           −
@@ -983,7 +1002,7 @@ function Counter({
         <button
           type="button"
           onClick={() => onChange(value + 1)}
-          aria-label={fill(oneMore, { label: label.toLowerCase() })}
+          aria-label={addLabel}
           className="flex size-11 items-center justify-center border border-rule text-forest transition-colors duration-300 hover:border-forest"
         >
           +

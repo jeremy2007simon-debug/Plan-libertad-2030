@@ -249,9 +249,18 @@ export const en = {
       replyIn: "Reply to me in",
       consentLabel:
         "I agree that Maisha Quest may use these details to reply to my enquiry.",
-      /** Nombre accesible de los botones del contador de viajeros. */
-      oneFewer: "One fewer {label}",
-      oneMore: "One more {label}",
+      /**
+       * Accessible names for the traveller counters. Four complete sentences: building them by joining a verb to a field label produced «One fewer adults».
+       *
+       * Cada una es una cadena entera y traducida por separado. El género,
+       * el caso y el clasificador cambian por idioma —y dentro de un idioma,
+       * entre «adulto» y «niño»—, así que una plantilla con un hueco no puede
+       * dar las cuatro formas correctas.
+       */
+      removeAdult: "Remove one adult",
+      addAdult: "Add one adult",
+      removeChild: "Remove one child",
+      addChild: "Add one child",
       /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
       prefilledNote:
         "Starting point: {name}. I would like to adapt this journey.",
@@ -323,6 +332,25 @@ export const en = {
       sendOnWhatsApp: "Send on WhatsApp",
       yourAnswers: "Your answers",
       sendFailed: "We could not send that just now.",
+      /**
+       * Errores que devuelve el servidor, traducidos AQUÍ.
+       *
+       * El endpoint manda un código, no una frase. Antes pintaba el mensaje
+       * que venía en la respuesta, y quien rellenaba el formulario en ruso y
+       * se topaba con el limitador veía «Too many enquiries from this
+       * connection» en mitad de su página en ruso.
+       *
+       * Ninguno dice que la solicitud se haya perdido, porque no se pierde:
+       * el borrador sigue en el navegador y el resumen se puede mandar por
+       * correo o por WhatsApp.
+       */
+      delivery: {
+        rateLimited:
+          "Too many enquiries from this connection. Wait a few minutes and try again — nothing has been lost.",
+        notDelivered:
+          "We could not deliver your enquiry just now. Your answers are still here: try again, or send them by email or WhatsApp.",
+        malformed: "Something went wrong with that request. Please try again.",
+      },
       offline: "We could not reach our server. Check your connection and try again.",
       orEmailUs: "You can also email us at",
       inTheMeantime: "In the meantime",
@@ -527,17 +555,21 @@ export const en = {
     lede:
       "Where the photography on this site comes from, image by image.",
     body:
-      "Two groups, and they are not the same thing. The photographs Maisha Quest supplied are the company’s own material. The rest are provisional documentary photographs of Tanzania, used under Creative Commons licences and chosen one by one because their source record confirms the country and the subject — so no species or landscape that does not belong to Tanzania appears anywhere on this site.",
-    /** Fotografía del cliente. */
+      "Two groups, and they are not the same thing. The first was supplied by Maisha Quest. The rest are provisional documentary photographs of Tanzania, used under Creative Commons licences and chosen one by one because their source record confirms the country and the subject — so no species or landscape that does not belong to Tanzania appears anywhere on this site.",
     ownTitle: "Photography supplied by Maisha Quest",
+    /*
+     * Redacción EXACTA acordada mientras los derechos comerciales sigan
+     * sin confirmar por escrito. No dice que sean «material propio de la
+     * empresa» —eso sería afirmar una titularidad que no consta— sino
+     * quién las suministró y que las condiciones son las de su
+     * documentación. Tampoco atribuye autoría: no se conoce.
+     */
     ownBody:
-      "Material the company provided. It is not attributed to a photographer here because that has not been confirmed, and a made-up credit would be worse than none.",
-    /** Fotografía provisional de Commons. */
+      "Photographs supplied by Maisha Quest. Ownership, authorship and terms of use remain as set out in the documentation the company provided.",
     ccTitle: "Provisional photography under Creative Commons",
     ccBody:
       "None of these were taken by Maisha Quest, and none of them show Maisha Quest guests, guides, vehicles or camps. Each one keeps the attribution its licence requires.",
     sourceAndLicence: "Source and licence",
-    allOwn: "All photography on this site is now Maisha Quest’s own.",
   },
 
   meta: {

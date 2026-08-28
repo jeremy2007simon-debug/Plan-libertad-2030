@@ -246,9 +246,18 @@ export const zhCN: Dictionary = {
       replyIn: "回复语言",
       consentLabel:
         "我同意 Maisha Quest 使用这些信息回复我的咨询。",
-      /** Nombre accesible de los botones del contador de viajeros. */
-      oneFewer: "{label}减少一位",
-      oneMore: "{label}增加一位",
+      /**
+       * Nombres accesibles de los contadores de viajeros, en chino.
+       *
+       * Cada una es una cadena entera y traducida por separado. El género,
+       * el caso y el clasificador cambian por idioma —y dentro de un idioma,
+       * entre «adulto» y «niño»—, así que una plantilla con un hueco no puede
+       * dar las cuatro formas correctas.
+       */
+      removeAdult: "减少一位成人",
+      addAdult: "增加一位成人",
+      removeChild: "减少一名儿童",
+      addChild: "增加一名儿童",
       /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
       prefilledNote:
         "出发点：{name}。我想在此基础上调整行程。",
@@ -313,6 +322,25 @@ export const zhCN: Dictionary = {
       sendOnWhatsApp: "通过 WhatsApp 发送",
       yourAnswers: "您的回答",
       sendFailed: "现在无法发送。",
+      /**
+       * Errores que devuelve el servidor, traducidos AQUÍ.
+       *
+       * El endpoint manda un código, no una frase. Antes pintaba el mensaje
+       * que venía en la respuesta, y quien rellenaba el formulario en ruso y
+       * se topaba con el limitador veía «Too many enquiries from this
+       * connection» en mitad de su página en ruso.
+       *
+       * Ninguno dice que la solicitud se haya perdido, porque no se pierde:
+       * el borrador sigue en el navegador y el resumen se puede mandar por
+       * correo o por WhatsApp.
+       */
+      delivery: {
+        rateLimited:
+          "来自此连接的请求过多。请等待几分钟后重试，内容不会丢失。",
+        notDelivered:
+          "暂时无法送出您的需求。您填写的内容仍在：可以重试，或改用邮件或 WhatsApp 发送。",
+        malformed: "这次请求出了点问题，请重试。",
+      },
       offline: "无法连接到我们的服务器。请检查网络后重试。",
       orEmailUs: "您也可以发邮件到",
       inTheMeantime: "在此期间",
@@ -496,17 +524,21 @@ export const zhCN: Dictionary = {
     lede:
       "本站照片的来源，一张一张列出。",
     body:
-      "分两组，含义并不相同。由 Maisha Quest 提供的照片是公司自己的素材。其余是坦桑尼亚的临时纪实照片，采用知识共享许可，逐张挑选，因为它们的来源记录能确认国家与主体——因此本站不会出现任何不属于坦桑尼亚的物种或景观。",
-    /** Fotografía del cliente. */
+      "分两组，含义并不相同。第一组由 Maisha Quest 提供。其余是坦桑尼亚的临时纪实照片，采用知识共享许可，逐张挑选，因为它们的来源记录能确认国家与主体——因此本站不会出现任何不属于坦桑尼亚的物种或景观。",
     ownTitle: "由 Maisha Quest 提供的照片",
+    /*
+     * Redacción EXACTA acordada mientras los derechos comerciales sigan
+     * sin confirmar por escrito. No dice que sean «material propio de la
+     * empresa» —eso sería afirmar una titularidad que no consta— sino
+     * quién las suministró y que las condiciones son las de su
+     * documentación. Tampoco atribuye autoría: no se conoce.
+     */
     ownBody:
-      "公司提供的素材。这里没有署名摄影师，因为尚未确认；编造署名比不署名更糟。",
-    /** Fotografía provisional de Commons. */
+      "由 Maisha Quest 提供的照片。所有权、署名与使用条件以该公司提供的文件为准。",
     ccTitle: "知识共享许可下的临时照片",
     ccBody:
       "这些都不是 Maisha Quest 拍摄的，也没有一张出现 Maisha Quest 的旅客、向导、车辆或营地。每一张都保留其许可所要求的署名。",
     sourceAndLicence: "来源与许可",
-    allOwn: "本站所有摄影现已全部为 Maisha Quest 自有。",
   },
 
   meta: {

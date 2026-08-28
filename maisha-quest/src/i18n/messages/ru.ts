@@ -266,9 +266,18 @@ export const ru: Dictionary = {
       replyIn: "Язык ответа",
       consentLabel:
         "Я согласен, что Maisha Quest может использовать эти данные для ответа на мой запрос.",
-      /** Nombre accesible de los botones del contador de viajeros. */
-      oneFewer: "На одного меньше: {label}",
-      oneMore: "На одного больше: {label}",
+      /**
+       * Доступные имена счётчиков путешественников. Четыре полные фразы.
+       *
+       * Cada una es una cadena entera y traducida por separado. El género,
+       * el caso y el clasificador cambian por idioma —y dentro de un idioma,
+       * entre «adulto» y «niño»—, así que una plantilla con un hueco no puede
+       * dar las cuatro formas correctas.
+       */
+      removeAdult: "Убрать одного взрослого",
+      addAdult: "Добавить одного взрослого",
+      removeChild: "Убрать одного ребёнка",
+      addChild: "Добавить одного ребёнка",
       /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
       prefilledNote:
         "Отправная точка: {name}. Хочу адаптировать это путешествие.",
@@ -349,6 +358,25 @@ export const ru: Dictionary = {
       sendOnWhatsApp: "Отправить в WhatsApp",
       yourAnswers: "Ваши ответы",
       sendFailed: "Сейчас отправить не получилось.",
+      /**
+       * Errores que devuelve el servidor, traducidos AQUÍ.
+       *
+       * El endpoint manda un código, no una frase. Antes pintaba el mensaje
+       * que venía en la respuesta, y quien rellenaba el formulario en ruso y
+       * se topaba con el limitador veía «Too many enquiries from this
+       * connection» en mitad de su página en ruso.
+       *
+       * Ninguno dice que la solicitud se haya perdido, porque no se pierde:
+       * el borrador sigue en el navegador y el resumen se puede mandar por
+       * correo o por WhatsApp.
+       */
+      delivery: {
+        rateLimited:
+          "Слишком много запросов с этого подключения. Подождите несколько минут и попробуйте снова — ничего не потеряно.",
+        notDelivered:
+          "Сейчас не удалось доставить ваш запрос. Ваши ответы на месте: попробуйте ещё раз или отправьте их по почте либо в WhatsApp.",
+        malformed: "С этим запросом что-то пошло не так. Попробуйте ещё раз.",
+      },
       offline:
         "Не удалось связаться с нашим сервером. Проверьте соединение и попробуйте ещё раз.",
       orEmailUs: "Вы также можете написать нам на",
@@ -540,17 +568,21 @@ export const ru: Dictionary = {
     lede:
       "Откуда взяты фотографии этого сайта — снимок за снимком.",
     body:
-      "Это две разные группы. Фотографии, предоставленные Maisha Quest, — собственный материал компании. Остальные — временные документальные снимки Танзании под лицензией Creative Commons, отобранные по одному, потому что их описание подтверждает страну и сюжет: так на сайте не появится ни один вид и ни один пейзаж, не относящийся к Танзании.",
-    /** Fotografía del cliente. */
+      "Это две разные группы. Первую предоставила Maisha Quest. Остальные — временные документальные снимки Танзании под лицензией Creative Commons, отобранные по одному, потому что их описание подтверждает страну и сюжет: так на сайте не появится ни один вид и ни один пейзаж, не относящийся к Танзании.",
     ownTitle: "Фотографии, предоставленные Maisha Quest",
+    /*
+     * Redacción EXACTA acordada mientras los derechos comerciales sigan
+     * sin confirmar por escrito. No dice que sean «material propio de la
+     * empresa» —eso sería afirmar una titularidad que no consta— sino
+     * quién las suministró y que las condiciones son las de su
+     * documentación. Tampoco atribuye autoría: no se conoce.
+     */
     ownBody:
-      "Материал, переданный компанией. Автор здесь не указан, потому что он не подтверждён, а выдуманная подпись была бы хуже её отсутствия.",
-    /** Fotografía provisional de Commons. */
+      "Фотографии, предоставленные Maisha Quest. Права, авторство и условия использования сохраняются в соответствии с документацией, переданной компанией.",
     ccTitle: "Временные фотографии под лицензией Creative Commons",
     ccBody:
       "Ни одну из них не снимала Maisha Quest, и ни на одной нет путешественников, гидов, автомобилей или лагерей Maisha Quest. За каждой сохраняется атрибуция, которой требует её лицензия.",
     sourceAndLicence: "Источник и лицензия",
-    allOwn: "Вся фотография на этом сайте теперь принадлежит Maisha Quest.",
   },
 
   meta: {

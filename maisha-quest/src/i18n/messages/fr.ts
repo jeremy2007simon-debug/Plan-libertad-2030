@@ -255,9 +255,18 @@ export const fr: Dictionary = {
       replyIn: "Langue de réponse",
       consentLabel:
         "J’accepte que Maisha Quest utilise ces informations pour répondre à ma demande.",
-      /** Nombre accesible de los botones del contador de viajeros. */
-      oneFewer: "Un {label} de moins",
-      oneMore: "Un {label} de plus",
+      /**
+       * Noms accessibles des compteurs de voyageurs. Quatre phrases complètes.
+       *
+       * Cada una es una cadena entera y traducida por separado. El género,
+       * el caso y el clasificador cambian por idioma —y dentro de un idioma,
+       * entre «adulto» y «niño»—, así que una plantilla con un hueco no puede
+       * dar las cuatro formas correctas.
+       */
+      removeAdult: "Retirer un adulte",
+      addAdult: "Ajouter un adulte",
+      removeChild: "Retirer un enfant",
+      addChild: "Ajouter un enfant",
       /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
       prefilledNote:
         "Point de départ : {name}. Je souhaite adapter ce voyage.",
@@ -328,6 +337,25 @@ export const fr: Dictionary = {
       sendOnWhatsApp: "Envoyer sur WhatsApp",
       yourAnswers: "Vos réponses",
       sendFailed: "Nous n’avons pas pu l’envoyer à l’instant.",
+      /**
+       * Errores que devuelve el servidor, traducidos AQUÍ.
+       *
+       * El endpoint manda un código, no una frase. Antes pintaba el mensaje
+       * que venía en la respuesta, y quien rellenaba el formulario en ruso y
+       * se topaba con el limitador veía «Too many enquiries from this
+       * connection» en mitad de su página en ruso.
+       *
+       * Ninguno dice que la solicitud se haya perdido, porque no se pierde:
+       * el borrador sigue en el navegador y el resumen se puede mandar por
+       * correo o por WhatsApp.
+       */
+      delivery: {
+        rateLimited:
+          "Trop de demandes depuis cette connexion. Attendez quelques minutes et réessayez : rien n’a été perdu.",
+        notDelivered:
+          "Nous n’avons pas pu transmettre votre demande à l’instant. Vos réponses sont toujours là : réessayez, ou envoyez-les par e-mail ou WhatsApp.",
+        malformed: "Un problème est survenu avec cette demande. Veuillez réessayer.",
+      },
       offline:
         "Nous n’avons pas pu joindre notre serveur. Vérifiez votre connexion et réessayez.",
       orEmailUs: "Vous pouvez aussi nous écrire à",
@@ -521,18 +549,21 @@ export const fr: Dictionary = {
     lede:
       "D’où vient la photographie de ce site, image par image.",
     body:
-      "Deux ensembles, et ils ne signifient pas la même chose. Les photographies fournies par Maisha Quest sont le matériel propre de l’entreprise. Les autres sont des photographies documentaires provisoires de Tanzanie, sous licence Creative Commons, choisies une par une parce que leur fiche atteste du pays et du sujet — ainsi aucune espèce ni aucun paysage étranger à la Tanzanie n’apparaît sur ce site.",
-    /** Fotografía del cliente. */
+      "Deux ensembles, et ils ne signifient pas la même chose. Le premier a été fourni par Maisha Quest. Les autres sont des photographies documentaires provisoires de Tanzanie, sous licence Creative Commons, choisies une par une parce que leur fiche atteste du pays et du sujet — ainsi aucune espèce ni aucun paysage étranger à la Tanzanie n’apparaît sur ce site.",
     ownTitle: "Photographie fournie par Maisha Quest",
+    /*
+     * Redacción EXACTA acordada mientras los derechos comerciales sigan
+     * sin confirmar por escrito. No dice que sean «material propio de la
+     * empresa» —eso sería afirmar una titularidad que no consta— sino
+     * quién las suministró y que las condiciones son las de su
+     * documentación. Tampoco atribuye autoría: no se conoce.
+     */
     ownBody:
-      "Matériel transmis par l’entreprise. Aucun photographe n’est cité ici parce que ce n’est pas confirmé, et un crédit inventé serait pire que pas de crédit du tout.",
-    /** Fotografía provisional de Commons. */
+      "Photographies fournies par Maisha Quest. La titularité, la paternité et les conditions d’utilisation restent celles indiquées dans la documentation transmise par l’entreprise.",
     ccTitle: "Photographie provisoire sous Creative Commons",
     ccBody:
       "Aucune n’a été prise par Maisha Quest, et aucune ne montre de voyageurs, de guides, de véhicules ni de camps de Maisha Quest. Chacune conserve l’attribution exigée par sa licence.",
     sourceAndLicence: "Source et licence",
-    allOwn:
-      "Toute la photographie de ce site est désormais celle de Maisha Quest.",
   },
 
   meta: {

@@ -43,11 +43,34 @@ export interface PhotoCredit {
  * Mientras `commercialUseConfirmed` sea `false`, el material puede verse en la
  * preview de revisión pero NO debe considerarse aprobado para producción.
  */
+/** Qué se ha hecho con un archivo entregado por el cliente. */
+export type PhotoPublicationStatus =
+  /** Publicado en la web: existe su derivado y algún componente lo usa. */
+  | "published"
+  /** Byte a byte igual que otro archivo entregado. */
+  | "excluded-duplicate"
+  /** Marca de agua de un tercero impresa en la propia imagen. */
+  | "excluded-watermark"
+  /** Resolución por debajo del mínimo de cualquier hueco del diseño. */
+  | "excluded-resolution"
+  /** Derechos que impiden publicarla, distintos de la marca de agua. */
+  | "excluded-rights";
+
 export interface ClientPhotoProvenance {
   /** Nombre del archivo tal y como lo entregó el cliente. Nunca se renombra. */
-  originalFilename: string;
+  sourceFilename: string;
+  /** Qué se ha hecho con este archivo. */
+  publicationStatus: PhotoPublicationStatus;
   /** Autor. `null` mientras el cliente no lo facilite: no se inventa. */
   photographer: string | null;
+  /**
+   * ¿Está confirmado POR ESCRITO quién hizo la fotografía?
+   *
+   * Distinto de que `photographer` tenga valor: alguien puede decir de palabra
+   * quién la hizo, y eso no basta para atribuirla en público. Mientras esto sea
+   * `false`, la web no nombra a ningún autor de estas imágenes.
+   */
+  authorConfirmed: boolean;
   /** URL de crédito o de la ficha del autor, si la hay. */
   creditUrl: string | null;
   /** Licencia declarada. `null` = sin licencia documentada. */

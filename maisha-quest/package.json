@@ -13,6 +13,8 @@
     "check:i18n": "node scripts/check-untranslated.mjs",
     "test:planner": "node scripts/test-planner-locale.mjs",
     "test:delivery": "node scripts/test-journey-delivery.mjs",
+    "test:labels": "node scripts/test-counter-labels.mjs",
+    "report:photos": "node scripts/report-client-photos.mjs",
     "check:rights": "node scripts/check-photo-rights.mjs",
     "check:links": "node scripts/check-links-seo.mjs",
     "check:a11y": "node scripts/check-a11y.mjs",

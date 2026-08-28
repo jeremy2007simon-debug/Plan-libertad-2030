@@ -88,75 +88,125 @@ coordenadas, temporadas y fauna) y la silueta del mapa (Natural Earth).
 | Textos legales | Borrador. Salen con `noindex, nofollow` y fuera del sitemap. Lo que hace falta para cerrarlos está en el cuadro de abajo. |
 | Envío del formulario | `JOURNEY_REQUEST_WEBHOOK` sin configurar. Comprobado, no deducido: `GET /api/journey-requests` responde `{"configured": false}`. Sin él el formulario responde 501, lo dice y ofrece correo y WhatsApp. |
 
-## Información que debe facilitar el cliente para cerrar los legales
+## Production launch — client information required
 
-Los tres documentos legales —condiciones, privacidad y cookies— **están en
-borrador**. Salen con `noindex, nofollow`, no están en el sitemap y llevan un
-aviso visible que dice que se están terminando con el asesor legal y que lo que
-se aplica a una reserva es lo que figura por escrito en su confirmación.
+Lo que falta para poder decir `READY FOR PRODUCTION`. Cada punto lo tiene que
+facilitar el cliente o su asesor jurídico: **nada de esto se inventa ni se
+rellena con un valor razonable**. Un número de licencia inventado en unas
+condiciones de venta es un problema legal, no un detalle de maqueta.
 
-Nada de lo de abajo se inventa ni se rellena con un valor «razonable». Un número
-de licencia inventado en unas condiciones de venta es un problema legal, no un
-detalle de maqueta. **Mientras esta tabla tenga huecos, la web no puede
-declararse lista para producción.**
+Mientras la casilla siga sin marcar, la web se entrega como
+`PREVIEW READY — PRODUCTION BLOCKED`.
 
-Cada fila indica dónde se escribe la respuesta. Los textos se traducen a los
-seis idiomas sin cambiar su significado legal.
+### Identidad de la empresa
 
-| # | Dato | Para qué | Dónde se escribe | Estado |
-| --- | --- | --- | --- | --- |
-| 1 | Razón social | Identificar al responsable del contrato | `legal.terms.sections` · `legal.privacy.sections` | Pendiente |
-| 2 | Nombre comercial | Distinguir marca de sociedad | `COMPANY` en `src/lib/site.ts` | «Maisha Quest» |
-| 3 | Número de registro mercantil | Identificación legal | `legal.terms.sections[0]` | Pendiente |
-| 4 | Licencia TALA / TATO u otras | Acreditar la actividad de operador | `TRUST_CREDENTIALS` en `src/lib/site.ts` | Pendiente |
-| 5 | Domicilio social | Notificaciones y sede | `legal.terms.sections[0]` | Solo consta «Arusha, Tanzania» |
-| 6 | Correo para asuntos legales | Canal de reclamaciones | `COMPANY` en `src/lib/site.ts` | Pendiente (hoy solo `info@`) |
-| 7 | Responsable del tratamiento | Base del aviso de privacidad | `legal.privacy.sections` | Pendiente |
-| 8 | Encargados y servicios externos | Quién más ve los datos | `legal.privacy.sections` | Pendiente |
-| 9 | Países donde se procesan los datos | Transferencias internacionales | `legal.privacy.sections` | Pendiente |
-| 10 | Plazos de conservación | Cuánto se guarda cada dato | `legal.privacy.sections` | Pendiente |
-| 11 | Bases jurídicas del tratamiento | Por qué es lícito tratar cada dato | `legal.privacy.sections` | Pendiente |
-| 12 | Depósito y saldo | Condiciones de pago | `legal.terms.sections` | Pendiente |
-| 13 | Cancelaciones | Plazos y penalizaciones | `legal.terms.sections` | Pendiente |
-| 14 | Reembolsos | Qué se devuelve y cuándo | `legal.terms.sections` | Pendiente |
-| 15 | Cambios de reserva | Qué se puede modificar y con qué coste | `legal.terms.sections` | Pendiente |
-| 16 | Fuerza mayor | Qué ocurre ante causas ajenas | `legal.terms.sections` | Pendiente |
-| 17 | Seguros | Cobertura exigida y cobertura propia | `legal.terms.sections` | Pendiente |
-| 18 | Responsabilidad | Límites y exclusiones | `legal.terms.sections` | Pendiente |
-| 19 | Ley y jurisdicción aplicables | Dónde se resuelve un conflicto | `legal.terms.sections` | Pendiente |
-| 20 | Política sobre menores | Edad mínima, acompañamiento, consentimiento de imagen | `legal.terms.sections` · `legal.privacy.sections` | Pendiente |
-| 21 | Cookies y analítica realmente usadas | Contenido real del aviso de cookies | `legal.cookies.sections` | Hoy la web NO instala ninguna cookie ni analítica; el texto lo dice así |
+- [ ] **Razón social** — nombre legal completo de la sociedad
+- [ ] **Nombre comercial** — hoy se publica «Maisha Quest»; confirmar que es el correcto
+- [ ] **Número de registro mercantil** — identificación de la sociedad
+- [ ] **Licencia de operador turístico** — TALA, TATO u otras, con número y vigencia
+- [ ] **Asociaciones oficiales** — TATO, ATTA, KPAP u otras, y desde cuándo
+- [ ] **Domicilio legal** — hoy solo consta «Arusha, Tanzania»
+- [ ] **Correo jurídico** — canal de reclamaciones; hoy solo hay `info@`
 
-### Autorización de imagen
+### Protección de datos
 
-Aparte de la tabla, y con la misma condición de bloqueo:
+- [ ] **Responsable del tratamiento** — quién responde legalmente de los datos
+- [ ] **Proveedores que procesan datos** — CRM, correo, alojamiento, analítica
+- [ ] **Política de conservación** — cuánto se guarda cada dato y por qué
+- [ ] **Bases jurídicas** — por qué es lícito tratar cada dato
+- [ ] **Países donde se procesan** — transferencias internacionales
 
-- **Fotografía del cliente**: 22 archivos entregados, **sin confirmación escrita
-  de uso comercial**. `MAISHA_QUEST_PRODUCTION=1 npm run check:rights` falla
-  mientras siga habiendo una sola publicada sin confirmar.
-- **Vídeo grabado en un colegio**: no se publica sin autorización escrita de
-  los tutores de los menores y del centro. Difuminar o recortar a los menores
-  para esquivar el consentimiento no es una alternativa.
+### Condiciones de venta
 
-## Client-supplied photography — commercial rights pending confirmation
+- [ ] **Condiciones de depósito y saldo** — importes, plazos y forma de pago
+- [ ] **Cancelaciones y reembolsos** — plazos, penalizaciones y qué se devuelve
+- [ ] **Cambios de reserva** — qué se puede cambiar, con qué antelación y coste
+- [ ] **Fuerza mayor** — qué ocurre ante causas ajenas a las partes
+- [ ] **Seguro obligatorio** — cobertura exigida al viajero y cobertura propia
+- [ ] **Responsabilidad** — límites y exclusiones
+- [ ] **Ley y jurisdicción aplicables** — dónde se resuelve un conflicto
+- [ ] **Política sobre menores** — edad mínima, acompañamiento, consentimiento de imagen
+- [ ] **Cookies y analítica realmente usadas** — hoy la web no instala ninguna
 
-El cliente entregó **22 fotografías**. **No hay confirmación escrita de
-derechos de uso comercial**, así que ninguna se marca como autorizada: las
-entradas de `src/data/client-photography.ts` llevan todas
-`commercialUseConfirmed: false`, y `photographer`, `creditUrl` y `license`
-quedan en `null` porque no se sabe quién las hizo ni bajo qué licencia. No se
-inventa ninguno de esos tres campos, y en ningún sitio se afirma que las tomara
-Maisha Quest.
+### Aprobación
 
-`locationConfirmed: false` en todas: las asignaciones a destinos son temáticas,
-no una afirmación de dónde se tomó cada foto, y por eso ningún `alt` nombra un
-parque concreto. `subjectConfirmed` solo es `true` donde la especie es
-inequívoca en la propia imagen.
+- [ ] **Texto aprobado por asesor jurídico** — los tres documentos, en su versión final
 
-**Antes del lanzamiento hay que resolver esto por escrito con el cliente.**
-Nada de este control aparece en la interfaz pública.
+Dónde se escribe cada respuesta: `legal.terms.sections` y
+`legal.privacy.sections` en los seis `src/i18n/messages/*.ts`;
+`TRUST_CREDENTIALS` y `COMPANY` en `src/lib/site.ts`. Los textos se traducen a
+los seis idiomas sin cambiar su significado legal.
 
-### Los 22 originales entregados
+### Fuera de los legales, con la misma condición de bloqueo
+
+- [ ] **Derechos comerciales de las 19 fotografías publicadas** — ninguna
+      confirmada por escrito. `MAISHA_QUEST_PRODUCTION=1 npm run build` falla
+      mientras siga habiendo una sola sin confirmar.
+- [ ] **Autoría de esas 19 fotografías** — no consta ninguna. Hasta que conste,
+      la web no nombra a ningún autor.
+- [ ] **`JOURNEY_REQUEST_WEBHOOK`** — sin configurar. Comprobado, no deducido:
+      `GET /api/journey-requests` responde `{"configured": false}`.
+- [ ] **Los dos vídeos** — no existen en el repositorio. Ver
+      `public/video/README.md`. El grabado en un colegio necesita además
+      autorización escrita de tutores y centro.
+
+## Las 22 fotografías entregadas por el cliente
+
+Generada con `node scripts/report-client-photos.mjs --markdown`. La tabla NO se
+escribe a mano: el script contrasta los archivos que hay en `originals/`, las
+entradas publicadas y las excluidas, y se queja si no cuadran. **22 entregadas
+= 19 publicadas + 3 excluidas.**
+
+| # | Archivo original | Nombre web | Estado | Uso | Derechos comerciales | Motivo de exclusión |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | `x-X4.jpg` | `tanzania-wildlife-sunset-hero` | Publicada | 1 sitio · 2000×1125 | **Sin confirmar** | — |
+| 2 | `image-X4.jpg` | `antelope-herd-grasslands` | Publicada | 3 sitios · 2000×1090 | **Sin confirmar** | — |
+| 3 | `image-X4-13.jpg` | `elephant-herd-protecting-calf` | Publicada | 1 sitio · 2000×1384 | **Sin confirmar** | — |
+| 4 | `image-X4-14.jpg` | `african-elephant-portrait` | Publicada | 1 sitio · 1400×1750 | **Sin confirmar** | — |
+| 5 | `image-X4-15.jpg` | `elephant-family-walking` | Publicada | 2 sitios · 2000×1601 | **Sin confirmar** | — |
+| 6 | `image-X4-16.jpg` | `savannah-acacia-sunset` | Publicada | 1 sitio · 2000×1334 | **Sin confirmar** | — |
+| 7 | `image-X4-17.jpg` | `lion-pair-calling` | Publicada | 1 sitio · 1600×1600 | **Sin confirmar** | — |
+| 8 | `image-X4-19.jpg` | `giraffe-oxpecker-birds` | Publicada | 1 sitio · 2000×1000 | **Sin confirmar** | — |
+| 9 | `Canon-2098745.jpg` | `flamingo-taking-flight` | Publicada | 2 sitios · 2000×1333 | **Sin confirmar** | — |
+| 10 | `image-X4-1.jpg` | `flamingos-tanzania-lake` | Publicada | 1 sitio · 2000×1333 | **Sin confirmar** | — |
+| 11 | `image-X4-2.jpg` | `male-lions-together` | Publicada | 3 sitios · 2000×1335 | **Sin confirmar** | — |
+| 12 | `image-X4-3.jpg` | `giraffes-open-savannah` | Publicada | 2 sitios · 2000×1500 | **Sin confirmar** | — |
+| 13 | `image-X4-4.jpg` | `leopard-in-tree` | Publicada | 1 sitio · 1600×1600 | **Sin confirmar** | — |
+| 14 | `image-X4-5.jpg` | `zebra-herd-monochrome` | Publicada | 2 sitios · 2000×1000 | **Sin confirmar** | — |
+| 15 | `image-X4-6.jpg` | `lion-open-savannah` | Publicada | 1 sitio · 2000×1000 | **Sin confirmar** | — |
+| 16 | `image-X4-7.jpg` | `giraffe-patterns-monochrome` | Publicada | 2 sitios · 2000×1126 | **Sin confirmar** | — |
+| 17 | `image-X4-8.jpg` | `safari-tent-accommodation` | Publicada | 1 sitio · 2000×1320 | **Sin confirmar** | — |
+| 18 | `image-X4-11.jpg` | `flamingo-low-flight` | Publicada | 1 sitio · 2000×1125 | **Sin confirmar** | — |
+| 19 | `image-X4-12.jpg` | `flamingo-flock-in-motion` | Publicada | 2 sitios · 2000×1333 | **Sin confirmar** | — |
+| 20 | `image-X4-18.jpg` | — | No publicada | Original conservado | **Sin confirmar** | Marca de agua de un tercero impresa en la imagen |
+| 21 | `image-XL.jpg` | — | No publicada | Original conservado | **Sin confirmar** | Resolución por debajo del mínimo del diseño |
+| 22 | `image-X4-9.jpg` | — | No publicada | Original conservado | **Sin confirmar** | Duplicado exacto de otro archivo entregado |
+
+**Ninguna de las 19 publicadas tiene los derechos comerciales confirmados por
+escrito, y de ninguna consta la autoría.** Se ven en la preview porque es la
+única forma de que el cliente las revise; para producción,
+`MAISHA_QUEST_PRODUCTION=1 npm run build` falla mientras siga siendo así.
+
+Por eso la página de créditos **no** dice que sean «material propio de la
+empresa» —eso afirmaría una titularidad que no consta— sino:
+
+> Fotografías suministradas por Maisha Quest. La titularidad, autoría y
+> condiciones de uso se mantienen según la documentación facilitada por la
+> empresa.
+
+Cada entrada de `src/data/client-photography.ts` lleva seis campos de derechos:
+`sourceFilename`, `publicationStatus`, `commercialUseConfirmed`,
+`authorConfirmed`, `creditRequired` y `creditText`, más `locationConfirmed` y
+`subjectConfirmed`. Lo que no se sabe se declara `null` o `false`; no se
+inventa ni un fotógrafo ni una licencia.
+
+## Detalle por archivo de los 22 originales
+
+Complemento de la tabla de arriba: píxeles, peso y dónde se usa cada una.
+Los originales se conservan intactos —mismo nombre, mismos bytes, misma
+metadata— en `public/images/maisha-quest/originals/`. Nunca se sobrescriben
+ni se comprimen.
+
 
 Se conservan intactos —mismo nombre, mismos bytes, misma metadata— en
 `public/images/maisha-quest/originals/`. Nunca se sobrescriben ni se comprimen.

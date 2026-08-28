@@ -67,10 +67,6 @@ export default async function CreditsPage({
             {t.credits.body}
           </p>
 
-          {commons.length === 0 && supplied.length === 0 && (
-            <p className="mt-10 text-[0.96rem] text-ink-soft">{t.credits.allOwn}</p>
-          )}
-
           {supplied.length > 0 && (
             <section className="mt-14">
               <h2 className="text-h2 text-forest">{t.credits.ownTitle}</h2>

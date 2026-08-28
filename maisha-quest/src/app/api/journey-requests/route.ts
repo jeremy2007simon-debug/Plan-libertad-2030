@@ -19,6 +19,21 @@ import type { ContactRequest } from "@/types/content";
  */
 
 /**
+ * Códigos de error, para que la interfaz los traduzca.
+ *
+ * El `message` en inglés que acompaña a cada uno es para quien llame al
+ * endpoint a mano; la interfaz NO lo pinta. Antes sí lo hacía, y una viajera
+ * que rellenaba el formulario en ruso y se topaba con el limitador veía
+ * «Too many enquiries from this connection» en mitad de su página en ruso.
+ */
+export type DeliveryErrorCode =
+  | "malformed"
+  | "rateLimited"
+  | "contactRequired"
+  | "emailInvalid"
+  | "notDelivered";
+
+/**
  * Antispam: umbral por debajo del cual la cumplimentación es sospechosa.
  *
  * NO se descarta la solicitud por esto. Un viajero que vuelve a un borrador
@@ -103,7 +118,7 @@ export async function POST(request: Request) {
     payload = (await request.json()) as ContactRequest;
   } catch {
     return NextResponse.json(
-      { status: "error", message: "We could not read that request." },
+      { status: "error", code: "malformed", message: "We could not read that request." },
       { status: 400 },
     );
   }
@@ -126,6 +141,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         status: "error",
+        code: "rateLimited",
         message: "Too many enquiries from this connection. Please try again shortly.",
       },
       { status: 429, headers: { "Retry-After": String(RATE_WINDOW_MS / 1000) } },
@@ -141,13 +157,13 @@ export async function POST(request: Request) {
   const contact = payload.contact;
   if (!contact?.firstName?.trim() || !contact?.email?.trim()) {
     return NextResponse.json(
-      { status: "error", message: "Name and email are required." },
+      { status: "error", code: "contactRequired", message: "Name and email are required." },
       { status: 422 },
     );
   }
   if (!isValidEmail(contact.email)) {
     return NextResponse.json(
-      { status: "error", message: "That email address does not look right." },
+      { status: "error", code: "emailInvalid", message: "That email address does not look right." },
       { status: 422 },
     );
   }
@@ -207,7 +223,7 @@ export async function POST(request: Request) {
     if (!response.ok) {
       logFailure("el destino respondió con error", reference, response.status);
       return NextResponse.json(
-        { status: "error", message: "We could not deliver your enquiry just now." },
+        { status: "error", code: "notDelivered", message: "We could not deliver your enquiry just now." },
         { status: 502 },
       );
     }
@@ -218,7 +234,7 @@ export async function POST(request: Request) {
         : "no se pudo contactar con el destino";
     logFailure(reason, reference);
     return NextResponse.json(
-      { status: "error", message: "We could not deliver your enquiry just now." },
+      { status: "error", code: "notDelivered", message: "We could not deliver your enquiry just now." },
       { status: 502 },
     );
   }
