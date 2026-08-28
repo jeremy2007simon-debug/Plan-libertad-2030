@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "check:han": "node scripts/check-han-subset.mjs",
     "check:i18n": "node scripts/check-untranslated.mjs",
-    "test:planner": "node scripts/test-planner-locale.mjs"
+    "test:planner": "node scripts/test-planner-locale.mjs",
+    "test:delivery": "node scripts/test-journey-delivery.mjs"
   },
   "dependencies": {
     "next": "16.2.10",

@@ -352,10 +352,27 @@ export interface ContactRequest {
   specialRequests?: string;
   /** Idioma en el que el viajero quiere que le respondan. */
   preferredLanguage: Locale;
+  /**
+   * Idioma en el que estaba navegando al enviar.
+   *
+   * No siempre coincide con `preferredLanguage`: alguien puede leer la web en
+   * inglés y pedir que le respondan en ruso. Las dos cosas importan para
+   * atender la solicitud.
+   */
+  locale?: string;
   /** Campo trampa antispam: si viene relleno, se descarta la solicitud. */
   honeypot?: string;
   /** Milisegundos que tardó en completar el formulario (antispam). */
   elapsedMs?: number;
+  /**
+   * Identificador estable de esta solicitud, generado en el navegador.
+   *
+   * Evita que una conexión que se corta después de entregar y antes de
+   * responder acabe mandando la misma solicitud dos veces al cliente: el
+   * servidor devuelve la referencia que ya emitió en lugar de reenviarla.
+   * No identifica a nadie; es un número aleatorio por borrador.
+   */
+  requestId?: string;
 }
 
 /* -------------------------------------------------------------------------

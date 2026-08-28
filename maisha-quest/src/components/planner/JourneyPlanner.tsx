@@ -104,6 +104,15 @@ export function JourneyPlanner({
   // impuro y rompería el renderizado concurrente.
   const startedAt = useRef<number>(0);
   const honeypot = useRef<HTMLInputElement>(null);
+  /**
+   * Identificador de esta solicitud, estable mientras dure el borrador.
+   *
+   * Si la conexión se corta después de que el servidor haya entregado la
+   * solicitud pero antes de responder, el visitante ve un error y vuelve a
+   * darle a enviar. Con el mismo identificador, el servidor devuelve la
+   * referencia que ya emitió en lugar de mandar la solicitud dos veces.
+   */
+  const requestId = useRef<string>("");
   const isFirstRender = useRef(true);
 
   const stepId = STEPS[stepIndex];
@@ -115,6 +124,11 @@ export function JourneyPlanner({
   useEffect(() => {
     startedAt.current = Date.now();
     const draft = readPlannerDraft();
+    requestId.current =
+      draft?.requestId ||
+      (typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
     if (draft) {
       // Leer el borrador es sincronizar con un sistema externo en el montaje.
       // No puede hacerse en el inicializador de useState porque el servidor no
@@ -156,7 +170,13 @@ export function JourneyPlanner({
       isFirstRender.current = false;
       return;
     }
-    writePlannerDraft({ version: 2, step: stepIndex, state, languageTouched });
+    writePlannerDraft({
+      version: 2,
+      step: stepIndex,
+      state,
+      languageTouched,
+      requestId: requestId.current,
+    });
   }, [state, stepIndex, languageTouched]);
 
   /* ---- Navegación entre pasos -------------------------------------------- */
@@ -213,6 +233,8 @@ export function JourneyPlanner({
           toContactRequest(state, {
             elapsedMs: Date.now() - startedAt.current,
             honeypot: honeypot.current?.value ?? "",
+            locale,
+            requestId: requestId.current,
           }),
         ),
       });

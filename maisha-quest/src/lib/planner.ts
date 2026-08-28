@@ -195,7 +195,13 @@ export function isValidEmail(value: string): boolean {
 /** Convierte el estado del formulario en la solicitud que viaja al servidor. */
 export function toContactRequest(
   state: PlannerState,
-  meta: { elapsedMs: number; honeypot: string },
+  meta: {
+    elapsedMs: number;
+    honeypot: string;
+    /** Idioma en el que estaba navegando: no siempre es el de respuesta. */
+    locale: string;
+    requestId: string;
+  },
 ): ContactRequest {
   return {
     tripType: state.tripType,
@@ -216,6 +222,8 @@ export function toContactRequest(
     preferredLanguage: state.preferredLanguage as ContactRequest["preferredLanguage"],
     honeypot: meta.honeypot,
     elapsedMs: meta.elapsedMs,
+    locale: meta.locale,
+    requestId: meta.requestId,
   };
 }
 
@@ -250,6 +258,8 @@ export interface PlannerDraft {
    * aunque después cambie de idioma la web.
    */
   languageTouched: boolean;
+  /** Identificador de la solicitud; evita entregarla dos veces. */
+  requestId?: string;
 }
 
 /**
@@ -270,6 +280,7 @@ export function readPlannerDraft(): PlannerDraft | null {
         step: clampStep(parsed.step),
         state: { ...EMPTY_PLANNER, ...parsed.state },
         languageTouched: parsed.languageTouched === true,
+        requestId: typeof parsed.requestId === "string" ? parsed.requestId : undefined,
       };
     }
     // Migración desde v1: allí solo se guardaba el estado, sin paso.
