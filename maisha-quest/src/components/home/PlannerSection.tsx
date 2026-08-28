@@ -67,7 +67,7 @@ export async function PlannerSection({
                 {COMPANY.phone}
               </a>
               <p className="mt-1.5 text-[0.85rem] text-ink-faint">
-                {COMPANY.hours.label} · {COMPANY.hours.timezone}
+                {t.company.hours} · {COMPANY.hours.timezone}
               </p>
             </Reveal>
 
@@ -78,6 +78,7 @@ export async function PlannerSection({
               locale={locale}
               t={t.planner}
               requiredLabel={t.a11y.required}
+              hours={t.company.hours}
               destinations={destinations.map((destination) => ({
                 slug: destination.slug,
                 name: destination.name,

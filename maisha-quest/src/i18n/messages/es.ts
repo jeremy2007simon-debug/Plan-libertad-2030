@@ -250,7 +250,16 @@ export const es: Dictionary = {
       email: "Correo electrónico",
       phone: "Teléfono o WhatsApp",
       country: "País",
-      replyIn: "Respondedme en",
+      replyIn: "Idioma de respuesta",
+      consentLabel:
+        "Acepto que Maisha Quest use estos datos para responder a mi solicitud.",
+      /** Nombre accesible de los botones del contador de viajeros. */
+      oneFewer: "Un {label} menos",
+      oneMore: "Un {label} más",
+      /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
+      prefilledNote:
+        "Punto de partida: {name}. Me gustaría adaptar este viaje.",
+
       notes: "¿Algo más que debamos saber?",
       notesPlaceholder:
         "Celebraciones, necesidades alimentarias, movilidad, fotografía, animales que esperas ver…",
@@ -689,11 +698,26 @@ export const es: Dictionary = {
     French: "Francés",
   },
 
+  /**
+   * Datos de la empresa que se muestran al visitante y por tanto se traducen.
+   *
+   * El horario vivía en `src/lib/site.ts` como una sola cadena en inglés y
+   * salía tal cual en el pie, en contacto, en el planificador y en el menú
+   * móvil de los seis idiomas. Los datos que no dependen del idioma
+   * —teléfono, correo, huso horario— siguen en `site.ts`.
+   */
+  company: {
+    hours: "De lunes a sábado, de 8:00 a 18:00",
+    utcNote: "Tanzania va tres horas por delante del UTC durante todo el año.",
+    arushaCaption: "Arusha, al pie del monte Meru: donde empieza cada viaje.",
+  },
+
   video: {
     play: "Reproducir",
     pause: "Pausar",
     unmute: "Activar el sonido",
     mute: "Silenciar",
+    label: "Vídeo",
   },
 
   team: {
@@ -709,6 +733,13 @@ export const es: Dictionary = {
   },
 
   safari: {
+    sampleTitle: "Itinerario de muestra.",
+    sampleBody:
+      "Esta ruta muestra la estructura general del viaje. Los horarios, alojamientos y el itinerario definitivo día a día se confirman contigo antes de realizar cualquier reserva.",
+    mapScale: "Las distancias están a escala; las rutas por carretera siguen los caminos del parque.",
+    /** Separador entre paradas dentro del nombre accesible del mapa. */
+    routeMapJoin: ", luego ",
+    routeMapLabel: (stops: string) => `Mapa de la ruta: ${stops}`,
     itineraryPending:
       "Nuestro equipo en Arusha está terminando el itinerario día a día de este viaje. Pídenoslo y te enviamos la versión actual.",
     stay: "Alojamiento",

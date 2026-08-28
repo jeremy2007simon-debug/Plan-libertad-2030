@@ -1,5 +1,6 @@
 import { CompassMark } from "@/components/ui/Compass";
 import { MAP_VIEWBOX, TANZANIA_PATHS } from "@/lib/map";
+import type { Dictionary } from "@/i18n/messages/en";
 import type { Destination } from "@/types/content";
 
 /**
@@ -59,7 +60,13 @@ function frameFor(stops: Destination[]) {
  * `routeDestinationSlugs`, la misma fuente que el texto de la ruta— y no puede
  * contradecirlo.
  */
-export function RouteMap({ stops }: { stops: Destination[] }) {
+export function RouteMap({
+  stops,
+  t,
+}: {
+  stops: Destination[];
+  t: Dictionary;
+}) {
   if (stops.length === 0) return null;
 
   const line =
@@ -78,7 +85,9 @@ export function RouteMap({ stops }: { stops: Destination[] }) {
       <svg
         viewBox={`${frame.minX.toFixed(1)} ${frame.minY.toFixed(1)} ${frame.width.toFixed(1)} ${frame.height.toFixed(1)}`}
         role="img"
-        aria-label={`Route map: ${stops.map((s) => s.name).join(", then ")}`}
+        aria-label={t.safari.routeMapLabel(
+          stops.map((s) => s.name).join(t.safari.routeMapJoin),
+        )}
         className="h-auto w-full"
       >
         {Object.entries(TANZANIA_PATHS).map(([key, d]) => (
@@ -127,7 +136,7 @@ export function RouteMap({ stops }: { stops: Destination[] }) {
 
       <figcaption className="mt-4 flex items-center gap-2.5 text-[0.8rem] text-ink-faint">
         <CompassMark className="size-4 text-gold" needle={false} />
-        Distances are shown to scale; driving routes follow park roads.
+        {t.safari.mapScale}
       </figcaption>
     </figure>
   );

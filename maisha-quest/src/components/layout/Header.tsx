@@ -32,7 +32,16 @@ import { MobileNav } from "./MobileNav";
  * era tener catorce— y los tres tipos de paquete pasan a ser un submenú de
  * Safaris.
  */
-export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) {
+export function Header({
+  locale,
+  t,
+  hours,
+}: {
+  locale: Locale;
+  t: Dictionary["nav"];
+  /** Horario ya traducido; solo lo usa el menú móvil. Ver `Footer`. */
+  hours: string;
+}) {
   // La ruta con la que se compara el estado activo va SIN prefijo de idioma:
   // `/es/safaris` y `/en/safaris` son la misma entrada de menú.
   const pathname = stripLocale(usePathname()).path;
@@ -173,7 +182,7 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) 
               {t.planCta}
             </ButtonLink>
           </div>
-          <MobileNav locale={locale} tone={tone} t={t} />
+          <MobileNav locale={locale} tone={tone} t={t} hours={hours} />
         </div>
       </div>
     </header>

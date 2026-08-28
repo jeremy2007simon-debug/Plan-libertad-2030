@@ -22,18 +22,18 @@ export const TEAM_STRUCTURE: TeamStructure[] = [
     slug: "talisa-tufts",
     name: "Talisa Tufts",
     languageCodes: ["English","Swahili","Russian","Mandarin Chinese"],
-    portrait: {"src":null,"alt":"Talisa Tufts, founder of Maisha Quest"},
+    portrait: {"src":null},
   },
   {
     slug: "frank-lyatuu",
     name: "Frank Lyatuu",
     languageCodes: ["English","Swahili"],
-    portrait: {"src":null,"alt":"Frank Lyatuu, co-founder of Maisha Quest"},
+    portrait: {"src":null},
   },
   {
     slug: "tina-ngabo",
     name: "Tina Ngabo",
     languageCodes: ["English","Swahili"],
-    portrait: {"src":null,"alt":"Tina Ngabo, co-founder of Maisha Quest"},
+    portrait: {"src":null},
   },
 ];

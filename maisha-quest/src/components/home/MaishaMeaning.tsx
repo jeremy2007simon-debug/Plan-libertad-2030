@@ -7,6 +7,7 @@ import { CLIENT_PHOTOS } from "@/data/client-photography";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { HOME_COORDINATES } from "@/lib/site";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /**
  * "Maisha significa vida" — el bloque editorial que explica la marca.
@@ -26,7 +27,14 @@ import { HOME_COORDINATES } from "@/lib/site";
  *   opacidad: da profundidad sin convertirse en un elemento más que leer.
  *   Es marca, así que no se traduce, y va oculto a lectores de pantalla.
  */
-export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) {
+export async function MaishaMeaning({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const alt = await getPhotoAlt(locale);
   return (
     <section className="texture-paper relative isolate overflow-hidden bg-page py-10 sm:py-16">
       {/* Marca de agua tipográfica. Decorativa: `aria-hidden`. */}
@@ -50,6 +58,7 @@ export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) 
                   la diferencia entre 2× y 3× no se ve; los 107 kB sí. */}
               <Photo
                 photo={CLIENT_PHOTOS["african-elephant-portrait"]}
+                alt={alt["african-elephant-portrait"]}
                 sizes="(max-width: 1024px) 66vw, 46vw"
                 quality={60}
               />

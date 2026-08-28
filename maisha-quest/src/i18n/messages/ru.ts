@@ -262,7 +262,16 @@ export const ru: Dictionary = {
       email: "Электронная почта",
       phone: "Телефон или WhatsApp",
       country: "Страна",
-      replyIn: "Ответить мне на",
+      replyIn: "Язык ответа",
+      consentLabel:
+        "Я согласен, что Maisha Quest может использовать эти данные для ответа на мой запрос.",
+      /** Nombre accesible de los botones del contador de viajeros. */
+      oneFewer: "На одного меньше: {label}",
+      oneMore: "На одного больше: {label}",
+      /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
+      prefilledNote:
+        "Отправная точка: {name}. Хочу адаптировать это путешествие.",
+
       notes: "Что ещё нам стоит знать?",
       notesPlaceholder:
         "Праздники, особенности питания, мобильность, фотография, животные, которых вы надеетесь увидеть…",
@@ -711,11 +720,26 @@ export const ru: Dictionary = {
     French: "Французский",
   },
 
+  /**
+   * Datos de la empresa que se muestran al visitante y por tanto se traducen.
+   *
+   * El horario vivía en `src/lib/site.ts` como una sola cadena en inglés y
+   * salía tal cual en el pie, en contacto, en el planificador y en el menú
+   * móvil de los seis idiomas. Los datos que no dependen del idioma
+   * —teléfono, correo, huso horario— siguen en `site.ts`.
+   */
+  company: {
+    hours: "С понедельника по субботу, с 8:00 до 18:00",
+    utcNote: "Танзания опережает UTC на три часа круглый год.",
+    arushaCaption: "Аруша, у подножия горы Меру, — здесь начинается каждое путешествие.",
+  },
+
   video: {
     play: "Смотреть",
     pause: "Пауза",
     unmute: "Включить звук",
     mute: "Выключить звук",
+    label: "Видео",
   },
 
   team: {
@@ -731,6 +755,13 @@ export const ru: Dictionary = {
   },
 
   safari: {
+    sampleTitle: "Примерный маршрут.",
+    sampleBody:
+      "Этот маршрут показывает общую структуру поездки. Время, лагеря и окончательный план по дням согласовываются с вами до того, как что-либо бронируется.",
+    mapScale: "Расстояния показаны в масштабе; автомобильные маршруты идут по дорогам парка.",
+    /** Separador entre paradas dentro del nombre accesible del mapa. */
+    routeMapJoin: ", затем ",
+    routeMapLabel: (stops: string) => `Карта маршрута: ${stops}`,
     itineraryPending:
       "Наша команда в Аруше дорабатывает подробную программу этого маршрута по дням. Попросите её, и мы пришлём текущую версию.",
     stay: "Размещение",

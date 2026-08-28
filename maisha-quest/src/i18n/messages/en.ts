@@ -246,6 +246,15 @@ export const en = {
       phone: "Phone or WhatsApp",
       country: "Country",
       replyIn: "Reply to me in",
+      consentLabel:
+        "I agree that Maisha Quest may use these details to reply to my enquiry.",
+      /** Nombre accesible de los botones del contador de viajeros. */
+      oneFewer: "One fewer {label}",
+      oneMore: "One more {label}",
+      /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
+      prefilledNote:
+        "Starting point: {name}. I would like to adapt this journey.",
+
       notes: "Anything else we should know?",
       notesPlaceholder:
         "Celebrations, dietary needs, mobility, photography, animals you are hoping to see…",
@@ -699,11 +708,26 @@ export const en = {
     French: "French",
   },
 
+  /**
+   * Datos de la empresa que se muestran al visitante y por tanto se traducen.
+   *
+   * El horario vivía en `src/lib/site.ts` como una sola cadena en inglés y
+   * salía tal cual en el pie, en contacto, en el planificador y en el menú
+   * móvil de los seis idiomas. Los datos que no dependen del idioma
+   * —teléfono, correo, huso horario— siguen en `site.ts`.
+   */
+  company: {
+    hours: "Monday to Saturday, 8:00–18:00",
+    utcNote: "Tanzania is three hours ahead of UTC, all year.",
+    arushaCaption: "Arusha, at the foot of Mount Meru — where every journey starts.",
+  },
+
   video: {
     play: "Play",
     pause: "Pause",
     unmute: "Turn sound on",
     mute: "Turn sound off",
+    label: "Video",
   },
 
   team: {
@@ -719,6 +743,13 @@ export const en = {
   },
 
   safari: {
+    sampleTitle: "Sample itinerary.",
+    sampleBody:
+      "This route shows the shape of the journey. Timings, camps and the final day-by-day are confirmed with you before anything is booked.",
+    mapScale: "Distances are shown to scale; driving routes follow park roads.",
+    /** Separador entre paradas dentro del nombre accesible del mapa. */
+    routeMapJoin: ", then ",
+    routeMapLabel: (stops: string) => `Route map: ${stops}`,
     itineraryPending:
       "The day-by-day itinerary for this journey is being finalised with our team in Arusha. Ask us for it and we will send the current version.",
     stay: "Stay",

@@ -121,9 +121,9 @@ export default async function LocaleLayout({
         >
           {t.a11y.skipToContent}
         </a>
-        <Header locale={locale} t={t.nav} />
+        <Header locale={locale} t={t.nav} hours={t.company.hours} />
         <main id="main">{children}</main>
-        <Footer locale={locale} t={t.footer} nav={t.nav} />
+        <Footer locale={locale} t={t.footer} nav={t.nav} hours={t.company.hours} />
         <MobileCTABar locale={locale} t={t.nav} />
         <OrganizationSchema locale={locale} />
       </body>

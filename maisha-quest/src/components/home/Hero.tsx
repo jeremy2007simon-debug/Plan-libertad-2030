@@ -8,6 +8,7 @@ import { HOME_COORDINATES } from "@/lib/site";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import type { MediaVideo } from "@/types/content";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /**
  * Hero.
@@ -34,7 +35,7 @@ import type { MediaVideo } from "@/types/content";
  * pasa por la prop `video` y este componente lo reproduce sobre la fotografía,
  * que se queda como póster. Hasta entonces, foto real.
  */
-export function Hero({
+export async function Hero({
   locale,
   t,
   video,
@@ -43,6 +44,7 @@ export function Hero({
   t: Dictionary;
   video?: MediaVideo;
 }) {
+  const alt = await getPhotoAlt(locale);
   // Fotografía del cliente: siluetas de fauna cruzando el horizonte al
   // atardecer. Su `objectPosition` mantiene el sol y las siluetas dentro del
   // recorte también en vertical, donde el hero pierde el 70 % del ancho.
@@ -54,7 +56,7 @@ export function Hero({
       <div className="absolute inset-0 -z-10">
         <ParallaxMedia strength={34} className="absolute -inset-y-12 inset-x-0">
           <div className="animate-hero-zoom absolute inset-0 origin-center">
-            <Photo photo={image} preload sizes="100vw" />
+            <Photo photo={image} alt={alt[image.altKey]} preload sizes="100vw" />
           </div>
         </ParallaxMedia>
         {video?.mp4 && (

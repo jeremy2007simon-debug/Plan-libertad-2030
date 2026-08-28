@@ -248,7 +248,16 @@ export const de: Dictionary = {
       email: "E-Mail",
       phone: "Telefon oder WhatsApp",
       country: "Land",
-      replyIn: "Antwort bitte auf",
+      replyIn: "Antwortsprache",
+      consentLabel:
+        "Ich bin damit einverstanden, dass Maisha Quest diese Angaben zur Beantwortung meiner Anfrage verwendet.",
+      /** Nombre accesible de los botones del contador de viajeros. */
+      oneFewer: "Ein {label} weniger",
+      oneMore: "Ein {label} mehr",
+      /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
+      prefilledNote:
+        "Ausgangspunkt: {name}. Ich möchte diese Reise anpassen.",
+
       notes: "Sonst noch etwas, das wir wissen sollten?",
       notesPlaceholder:
         "Anlässe, Ernährung, Mobilität, Fotografie, Tiere, die Sie sehen möchten…",
@@ -689,11 +698,26 @@ export const de: Dictionary = {
     French: "Französisch",
   },
 
+  /**
+   * Datos de la empresa que se muestran al visitante y por tanto se traducen.
+   *
+   * El horario vivía en `src/lib/site.ts` como una sola cadena en inglés y
+   * salía tal cual en el pie, en contacto, en el planificador y en el menú
+   * móvil de los seis idiomas. Los datos que no dependen del idioma
+   * —teléfono, correo, huso horario— siguen en `site.ts`.
+   */
+  company: {
+    hours: "Montag bis Samstag, 8:00–18:00 Uhr",
+    utcNote: "Tansania liegt ganzjährig drei Stunden vor UTC.",
+    arushaCaption: "Arusha, am Fuß des Mount Meru — wo jede Reise beginnt.",
+  },
+
   video: {
     play: "Abspielen",
     pause: "Pause",
     unmute: "Ton einschalten",
     mute: "Ton ausschalten",
+    label: "Video",
   },
 
   team: {
@@ -709,6 +733,13 @@ export const de: Dictionary = {
   },
 
   safari: {
+    sampleTitle: "Beispielroute.",
+    sampleBody:
+      "Diese Route zeigt den grundsätzlichen Verlauf der Reise. Zeiten, Camps und der endgültige Tagesablauf werden mit Ihnen abgestimmt, bevor irgendetwas gebucht wird.",
+    mapScale: "Entfernungen sind maßstabsgetreu; die Fahrtstrecken folgen den Parkstraßen.",
+    /** Separador entre paradas dentro del nombre accesible del mapa. */
+    routeMapJoin: ", dann ",
+    routeMapLabel: (stops: string) => `Streckenkarte: ${stops}`,
     itineraryPending:
       "Unser Team in Arusha stellt den Tag-für-Tag-Ablauf dieser Reise gerade fertig. Fragen Sie danach, und wir senden Ihnen die aktuelle Fassung.",
     stay: "Unterkunft",

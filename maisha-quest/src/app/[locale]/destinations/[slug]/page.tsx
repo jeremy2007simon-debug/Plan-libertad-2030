@@ -17,6 +17,7 @@ import {
   getSafarisByDestination,
 } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /** Nueve destinos × seis idiomas = 54 rutas estáticas. */
 export function generateStaticParams() {
@@ -37,12 +38,13 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const destination = await getDestination(locale, slug);
   if (!destination) return {};
+  const alt = await getPhotoAlt(locale);
   return pageMetadata({
     locale,
     path: `/destinations/${destination.slug}`,
     title: `${destination.name}, Tanzania`,
     description: destination.description.slice(0, 158),
-    image: { src: destination.image.src, alt: destination.image.alt },
+    image: { src: destination.image.src, alt: alt[destination.image.altKey] },
   });
 }
 
@@ -54,6 +56,7 @@ export default async function DestinationPage({
   const { locale, slug } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getDictionary(locale);
+  const alt = await getPhotoAlt(locale);
   const destination = await getDestination(locale, slug);
   if (!destination) notFound();
 
@@ -125,6 +128,7 @@ export default async function DestinationPage({
                         >
                           <Photo
                             photo={image}
+                            alt={alt[image.altKey]}
                             sizes={
                               lead
                                 ? "(max-width: 640px) 100vw, 56vw"

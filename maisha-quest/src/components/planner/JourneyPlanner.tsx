@@ -8,7 +8,9 @@ import {
   BUDGET_RANGES,
   DURATIONS,
   EMPTY_PLANNER,
-  PLANNER_STORAGE_KEY,
+  readPlannerDraft,
+  writePlannerDraft,
+  clearPlannerDraft,
   STEPS,
   TRIP_TYPES,
   toContactRequest,
@@ -66,6 +68,7 @@ export function JourneyPlanner({
   locale,
   t,
   requiredLabel,
+  hours,
   destinations,
   /** Safari preseleccionado al llegar desde "Customize" en una tarjeta. */
   initialSafari,
@@ -79,14 +82,22 @@ export function JourneyPlanner({
   t: Dictionary["planner"];
   /** `a11y.required`, ya traducido. */
   requiredLabel: string;
+  /** `t.company.hours`, ya traducido. Ver `Footer` sobre por qué llega así. */
+  hours: string;
   destinations: { slug: string; name: string; region: string }[];
   initialSafari?: { slug: string; name: string; destinationSlugs: string[] } | null;
 }) {
   const [stepIndex, setStepIndex] = useState(0);
-  const [state, setState] = useState<PlannerState>(EMPTY_PLANNER);
+  const [state, setState] = useState<PlannerState>({
+    ...EMPTY_PLANNER,
+    // Quien navega en alemán espera que le respondan en alemán sin decirlo.
+    preferredLanguage: locale,
+  });
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [restored, setRestored] = useState(false);
+  /** ¿Eligió el idioma de respuesta una persona? Ver `PlannerDraft`. */
+  const [languageTouched, setLanguageTouched] = useState(false);
 
   const headingRef = useRef<HTMLHeadingElement>(null);
   // Se rellena en el montaje: llamar a Date.now() durante el render sería
@@ -103,20 +114,27 @@ export function JourneyPlanner({
 
   useEffect(() => {
     startedAt.current = Date.now();
-    try {
-      const saved = localStorage.getItem(PLANNER_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved) as Partial<PlannerState>;
-        // Leer el borrador es sincronizar con un sistema externo en el
-        // montaje. No puede hacerse en el inicializador de useState porque el
-        // servidor no tiene localStorage y el HTML no coincidiría al hidratar,
-        // así que aquí la regla se salta a conciencia y solo en esta línea.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setState((current) => ({ ...current, ...parsed }));
-        setRestored(true);
-      }
-    } catch {
-      // localStorage bloqueado o JSON corrupto: se sigue con el formulario vacío.
+    const draft = readPlannerDraft();
+    if (draft) {
+      // Leer el borrador es sincronizar con un sistema externo en el montaje.
+      // No puede hacerse en el inicializador de useState porque el servidor no
+      // tiene localStorage y el HTML no coincidiría al hidratar, así que aquí
+      // la regla se salta a conciencia y solo en este bloque.
+      /* eslint-disable react-hooks/set-state-in-effect */
+      setState({
+        ...draft.state,
+        // El idioma de respuesta sigue al de la página salvo que lo haya
+        // cambiado una persona. Al cambiar de idioma a mitad del formulario,
+        // quien no lo tocó espera que le respondan en el idioma nuevo; quien
+        // sí lo eligió espera que se respete su elección.
+        preferredLanguage: draft.languageTouched ? draft.state.preferredLanguage : locale,
+      });
+      setLanguageTouched(draft.languageTouched);
+      // El paso también se restaura: sin esto, cambiar de idioma en el paso 2
+      // devolvía al visitante al paso 1 con las respuestas puestas.
+      setStepIndex(draft.step);
+      setRestored(true);
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
     if (initialSafari) {
       setState((current) => ({
@@ -126,23 +144,20 @@ export function JourneyPlanner({
           : initialSafari.destinationSlugs,
         specialRequests:
           current.specialRequests ||
-          `Starting point: ${initialSafari.name}. I'd like to adapt this journey.`,
+          fill(t.fields.prefilledNote, { name: initialSafari.name }),
       }));
     }
-  }, [initialSafari]);
+    // `locale` entra en las dependencias porque un cambio de idioma remonta el
+    // componente: es exactamente cuando hay que releer el borrador.
+  }, [initialSafari, locale, t.fields.prefilledNote]);
 
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    try {
-      localStorage.setItem(PLANNER_STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      // Sin almacenamiento disponible el formulario funciona igual, solo que
-      // sin recuperar el borrador.
-    }
-  }, [state]);
+    writePlannerDraft({ version: 2, step: stepIndex, state, languageTouched });
+  }, [state, stepIndex, languageTouched]);
 
   /* ---- Navegación entre pasos -------------------------------------------- */
 
@@ -224,7 +239,7 @@ export function JourneyPlanner({
 
       setStatus({ kind: "sent", reference: body.reference ?? "" });
       try {
-        localStorage.removeItem(PLANNER_STORAGE_KEY);
+        clearPlannerDraft();
       } catch {
         // Nada que hacer: el envío ya se completó.
       }
@@ -253,7 +268,11 @@ export function JourneyPlanner({
             </>
           )}
         </p>
-        <ContactFallback label={t.status.inTheMeantime} className="mt-9" />
+        <ContactFallback
+          label={t.status.inTheMeantime}
+          hours={hours}
+          className="mt-9"
+        />
       </Panel>
     );
   }
@@ -368,7 +387,13 @@ export function JourneyPlanner({
         </ol>
       </div>
 
-      <div className="px-6 py-10 sm:px-10 sm:py-12">
+      {/* `data-planner-step` lo lee la prueba de extremo a extremo para saber en
+          qué paso está el formulario sin depender de un texto traducido. Ver
+          `scripts/test-planner-locale.mjs`. */}
+      <div
+        data-planner-step={stepIndex}
+        className="px-6 py-10 sm:px-10 sm:py-12"
+      >
         {restored && stepIndex === 0 && (
           <p className="mb-7 border-l-2 border-gold pl-4 text-[0.88rem] text-ink-soft">
             {t.draftRestored}
@@ -503,6 +528,8 @@ export function JourneyPlanner({
                     value={state.adults}
                     min={1}
                     onChange={(value) => update("adults", value)}
+                    oneFewer={t.fields.oneFewer}
+                    oneMore={t.fields.oneMore}
                   />
                   <Counter
                     label={t.fields.children}
@@ -510,6 +537,8 @@ export function JourneyPlanner({
                     value={state.children}
                     min={0}
                     onChange={(value) => update("children", value)}
+                    oneFewer={t.fields.oneFewer}
+                    oneMore={t.fields.oneMore}
                   />
                 </div>
                 {errors.adults && <ErrorText>{t.errors[errors.adults]}</ErrorText>}
@@ -607,7 +636,10 @@ export function JourneyPlanner({
                   <select
                     id="preferredLanguage"
                     value={state.preferredLanguage}
-                    onChange={(event) => update("preferredLanguage", event.target.value)}
+                    onChange={(event) => {
+                      setLanguageTouched(true);
+                      update("preferredLanguage", event.target.value);
+                    }}
                     className="min-h-12 w-full border border-rule bg-white px-4 text-[0.95rem] text-forest"
                   >
                     {LOCALES.map((code) => (
@@ -638,8 +670,7 @@ export function JourneyPlanner({
                   onChange={(event) => update("consent", event.target.checked)}
                 />
                 <span>
-                  I agree that Maisha Quest may use these details to reply to my
-                  enquiry.
+                  {t.fields.consentLabel}
                   {errors.consent && <ErrorText>{errors.consent}</ErrorText>}
                 </span>
               </label>
@@ -876,12 +907,24 @@ function Counter({
   value,
   min,
   onChange,
+  oneFewer,
+  oneMore,
 }: {
   label: string;
   hint?: string;
   value: number;
   min: number;
   onChange: (value: number) => void;
+  /**
+   * Plantillas del nombre accesible de los dos botones.
+   *
+   * Eran `One fewer ${label}` escritas a mano, así que en las cinco lenguas no
+   * inglesas un lector de pantalla anunciaba «One fewer adultos». El plural y
+   * el orden de las palabras cambian por idioma, de ahí la plantilla con
+   * `{label}` en lugar de una concatenación.
+   */
+  oneFewer: string;
+  oneMore: string;
 }) {
   return (
     <div>
@@ -893,7 +936,7 @@ function Counter({
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
-          aria-label={`One fewer ${label.toLowerCase()}`}
+          aria-label={fill(oneFewer, { label: label.toLowerCase() })}
           className="flex size-11 items-center justify-center border border-rule text-forest transition-colors duration-300 hover:border-forest"
         >
           −
@@ -904,7 +947,7 @@ function Counter({
         <button
           type="button"
           onClick={() => onChange(value + 1)}
-          aria-label={`One more ${label.toLowerCase()}`}
+          aria-label={fill(oneMore, { label: label.toLowerCase() })}
           className="flex size-11 items-center justify-center border border-rule text-forest transition-colors duration-300 hover:border-forest"
         >
           +
@@ -1010,9 +1053,12 @@ function Review({
 
 function ContactFallback({
   label,
+  hours,
   className = "",
 }: {
   label: string;
+  /** Horario ya traducido. Ver `Footer` sobre por qué llega como prop. */
+  hours: string;
   className?: string;
 }) {
   return (
@@ -1026,7 +1072,7 @@ function ContactFallback({
           {COMPANY.email}
         </a>
         <p className="mt-1 text-[0.85rem] text-ink-faint">
-          {COMPANY.hours.label} · {COMPANY.hours.timezone}
+          {hours} · {COMPANY.hours.timezone}
         </p>
       </div>
     </div>

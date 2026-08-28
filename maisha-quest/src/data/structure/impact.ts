@@ -22,24 +22,24 @@ export const IMPACT_STRUCTURE: ImpactStructure[] = [
     slug: "education",
     area: "education",
     outcomes: [],
-    image: {"src":null,"alt":"Maisha Quest education support work"},
+    image: {"src":null},
   },
   {
     slug: "conservation",
     area: "conservation",
     outcomes: [],
-    image: {"src":null,"alt":"Conservation work supported by Maisha Quest"},
+    image: {"src":null},
   },
   {
     slug: "community",
     area: "community",
     outcomes: [],
-    image: {"src":null,"alt":"Community partnership work by Maisha Quest"},
+    image: {"src":null},
   },
   {
     slug: "local-employment",
     area: "employment",
     outcomes: [],
-    image: {"src":null,"alt":"The Maisha Quest team at work in Arusha"},
+    image: {"src":null},
   },
 ];

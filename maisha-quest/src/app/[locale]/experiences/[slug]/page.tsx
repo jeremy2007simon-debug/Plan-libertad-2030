@@ -16,6 +16,7 @@ import {
 } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 import type { Destination, Safari } from "@/types/content";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /** Quince experiencias × seis idiomas = 90 rutas estáticas. */
 export function generateStaticParams() {
@@ -36,12 +37,13 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const experience = await getExperience(locale, slug);
   if (!experience) return {};
+  const alt = await getPhotoAlt(locale);
   return pageMetadata({
     locale,
     path: `/experiences/${experience.slug}`,
     title: experience.name,
     description: experience.description.slice(0, 158),
-    image: { src: experience.image.src, alt: experience.image.alt },
+    image: { src: experience.image.src, alt: alt[experience.image.altKey] },
   });
 }
 

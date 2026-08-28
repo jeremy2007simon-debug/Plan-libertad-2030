@@ -242,7 +242,16 @@ export const zhCN: Dictionary = {
       email: "电子邮箱",
       phone: "电话或 WhatsApp",
       country: "国家或地区",
-      replyIn: "请用以下语言回复",
+      replyIn: "回复语言",
+      consentLabel:
+        "我同意 Maisha Quest 使用这些信息回复我的咨询。",
+      /** Nombre accesible de los botones del contador de viajeros. */
+      oneFewer: "{label}减少一位",
+      oneMore: "{label}增加一位",
+      /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
+      prefilledNote:
+        "出发点：{name}。我想在此基础上调整行程。",
+
       notes: "还有什么需要我们知道的吗？",
       notesPlaceholder:
         "纪念日、饮食需求、行动方面的考虑、摄影、希望看到的动物……",
@@ -665,11 +674,26 @@ export const zhCN: Dictionary = {
     French: "法语",
   },
 
+  /**
+   * Datos de la empresa que se muestran al visitante y por tanto se traducen.
+   *
+   * El horario vivía en `src/lib/site.ts` como una sola cadena en inglés y
+   * salía tal cual en el pie, en contacto, en el planificador y en el menú
+   * móvil de los seis idiomas. Los datos que no dependen del idioma
+   * —teléfono, correo, huso horario— siguen en `site.ts`.
+   */
+  company: {
+    hours: "周一至周六，8:00–18:00",
+    utcNote: "坦桑尼亚全年比协调世界时快三个小时。",
+    arushaCaption: "阿鲁沙，梅鲁山脚下——每一趟旅程的起点。",
+  },
+
   video: {
     play: "播放",
     pause: "暂停",
     unmute: "打开声音",
     mute: "关闭声音",
+    label: "视频",
   },
 
   team: {
@@ -685,6 +709,13 @@ export const zhCN: Dictionary = {
   },
 
   safari: {
+    sampleTitle: "参考行程。",
+    sampleBody:
+      "这条路线展示的是旅程的大致结构。具体时间、营地和最终的逐日安排都会在预订任何项目之前与您确认。",
+    mapScale: "距离按比例绘制；行车路线沿园区道路。",
+    /** Separador entre paradas dentro del nombre accesible del mapa. */
+    routeMapJoin: "，接着 ",
+    routeMapLabel: (stops: string) => `路线图：${stops}`,
     itineraryPending:
       "我们在阿鲁沙的团队正在敲定这条行程的逐日安排。向我们索取，我们会把当前版本发给您。",
     stay: "住宿",

@@ -18,10 +18,19 @@ export function Footer({
   locale,
   t,
   nav,
+  hours,
 }: {
   locale: Locale;
   t: Dictionary["footer"];
   nav: Dictionary["nav"];
+  /**
+   * Horario ya traducido (`t.company.hours`).
+   *
+   * Llega como prop y no desde una clave propia de esta sección: el texto vive
+   * en un solo sitio del diccionario y quien lo necesita lo recibe. Duplicarlo
+   * en tres secciones sería garantizar que un día digan cosas distintas.
+   */
+  hours: string;
 }) {
   const year = new Date().getFullYear();
   const socials = socialLinks();
@@ -66,7 +75,7 @@ export function Footer({
 
             <div className="mt-6 flex flex-col gap-1 text-[0.85rem] text-on-dark-faint">
               <p>
-                {COMPANY.hours.label}
+                {hours}
                 <span className="mx-2 opacity-50">·</span>
                 {COMPANY.hours.timezone}
               </p>

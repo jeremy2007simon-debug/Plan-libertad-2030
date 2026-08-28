@@ -27,7 +27,7 @@ export type Photo = ResolvedImage;
 export const PHOTOS = {
   arusha: {
     src: "/images/tanzania/arusha.webp",
-    alt: "The town of Arusha at the foot of Mount Meru, northern Tanzania",
+    altKey: "arusha",
     width: 2000,
     height: 1277,
     blurDataURL: "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwBACdASoUAA0APxl2s1EspySisAgBkCMJQBOgA+pr3sTrBntm2ml5BQAA/ltLCthC8UdP9FTBqVGtFIe+xCnLhZA0OM/PiG1RrkBACQda6Aq5XccskfTBsblsN0ETLciH7p13wE7xQjxAAAA=",
@@ -40,7 +40,7 @@ export const PHOTOS = {
   },
   "balloon-serengeti": {
     src: "/images/tanzania/balloon-serengeti.webp",
-    alt: "A hot air balloon drifting above the Serengeti at first light",
+    altKey: "balloon-serengeti",
     width: 1280,
     height: 720,
     blurDataURL: "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAwCdASoUAAsAPxl2slEspySisAgBkCMJZgCdABuM9NAG+eL9gAD+ryr7Mu2F2N2A+NkNcp5DgBc0YK6SP1aJ92cBJwG7xya4CSwl7kJwVZv98AA=",
@@ -53,7 +53,7 @@ export const PHOTOS = {
   },
   "kilimanjaro-climbers": {
     src: "/images/tanzania/kilimanjaro-climbers.webp",
-    alt: "Trekkers ascending the Barranco Wall on Mount Kilimanjaro",
+    altKey: "kilimanjaro-climbers",
     width: 1200,
     height: 1799,
     blurDataURL: "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAADwBACdASoUAB4APxl+sVOsqCQiqA1RkCMJZADM0EXe2hN+9fcf9TXAV+uipDe6ovAA/vYLfHbT5b2hOYxKXFNrViNGZVAgbrZocK+IURq8IFGid/9cZQ5GBYgyF+vPzk94lalaKVCBO+pRXymZlKw2yHm6yotK8znOzf8kGqXIp7dDSVdbVKH93Q0YyzKO6sUgAAAA",
@@ -66,7 +66,7 @@ export const PHOTOS = {
   },
   "kilimanjaro-kibo": {
     src: "/images/tanzania/kilimanjaro-kibo.webp",
-    alt: "The snow-capped Kibo summit of Mount Kilimanjaro above the clouds",
+    altKey: "kilimanjaro-kibo",
     width: 2000,
     height: 946,
     blurDataURL: "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoUAAkAPxl4tFGspyUisAgBkCMJbACdMoADT4oROmlklVYA94ngt5QS3zHYk4AAMwTQaHbbVuu3VqmJb2GRr06GeovOg4zv8O+NInSCMJ6wboAA",
@@ -79,7 +79,7 @@ export const PHOTOS = {
   },
   "kilimanjaro-shira": {
     src: "/images/tanzania/kilimanjaro-shira.webp",
-    alt: "The open moorland of the Shira Plateau on Mount Kilimanjaro",
+    altKey: "kilimanjaro-shira",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoUAA0APxl2slCspySisAgBkCMJZQC7ACHIzU4ZTaR8tcRgAP7nfOWjQ23dLrG4+sO+WjU54jePWOnjlsDnI3UQKhyVkQUMrz1N7u7VVvd1GBniGAi/h0dFw9soAA==",
@@ -92,7 +92,7 @@ export const PHOTOS = {
   },
   "lake-manyara": {
     src: "/images/tanzania/lake-manyara.webp",
-    alt: "Woodland and the shore of Lake Manyara National Park",
+    altKey: "lake-manyara",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACwAwCdASoUAA0APxl0sVCspqSisAgBkCMJQBbZBH/xoi+lLhs0QAD+vDs2uFKVgBbgk88HOg+pk0RJkz0Dt5XdWo5P0VbNMR/dGSgPkmclZkv1a33alVnU51DNDVhAAAA=",
@@ -105,7 +105,7 @@ export const PHOTOS = {
   },
   "lake-manyara-giraffe": {
     src: "/images/tanzania/lake-manyara-giraffe.webp",
-    alt: "Close portrait of a giraffe in Lake Manyara National Park",
+    altKey: "lake-manyara-giraffe",
     width: 1200,
     height: 1799,
     blurDataURL: "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAABQBQCdASoUAB4APxl0sVEspqSisAgBkCMJZACpJw7xNwL/R1L9CINkr6Ntwcuk1YYcr4AA/lgMHeLO+jDcwnssNWkfDOCGIMfQjrSi1rLAWSV3SzvTB95qdKEcrpt62lZjaBGaQTJoa3VJy53ZuJbhriCo3BPzvM0RUH4O9TwC3BlHfbtlcKj7h6Dq5W+kP2fcy5cN8VSWHA4blBVfKQtIRBL2+MiXphFmMZyzt1Deq+RCOQAAAA==",
@@ -118,7 +118,7 @@ export const PHOTOS = {
   },
   "maasai-boma": {
     src: "/images/tanzania/maasai-boma.webp",
-    alt: "A Maasai boma — a homestead of thatched houses inside a thorn enclosure",
+    altKey: "maasai-boma",
     width: 1280,
     height: 838,
     blurDataURL: "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoUAA0APxl0sVCspqSisAgBkCMJQBdmUABfDalAlBXEwAD+sjmAMM5efgEcu8/CPsJxaCn7FgkSaB+oFW9pPDWoysd89KHM141lMvJIHCp0lZjIlYg9Xb5EjxerAAAA",
@@ -131,7 +131,7 @@ export const PHOTOS = {
   },
   "ngorongoro-crater": {
     src: "/images/tanzania/ngorongoro-crater.webp",
-    alt: "The floor of the Ngorongoro Crater seen from the rim",
+    altKey: "ngorongoro-crater",
     width: 2000,
     height: 1334,
     blurDataURL: "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoUAA0APxl0sVCspqSisAgBkCMJQAAHizBnp00zMOIA1n2sHkS9HkSIggIt0oCmfOM3dsYWzj7vqwvUeYuvToKJQiAAAA==",
@@ -144,7 +144,7 @@ export const PHOTOS = {
   },
   "ngorongoro-zebras": {
     src: "/images/tanzania/ngorongoro-zebras.webp",
-    alt: "Zebras and buffalo grazing on the grasslands of the Ngorongoro Crater",
+    altKey: "ngorongoro-zebras",
     width: 1280,
     height: 853,
     blurDataURL: "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoUAA0APxl0sVCspqSisAgBkCMJZgC7ACHZh07+cmmgFwAA/lLYSyAfTD9kMMuXkn1kDEoLv/dh6gaW2SuGGdF7Qg50z0qPfbRN4PwRgAAAAA==",
@@ -157,7 +157,7 @@ export const PHOTOS = {
   },
   nyerere: {
     src: "/images/tanzania/nyerere.webp",
-    alt: "River and riverine forest in Nyerere National Park, southern Tanzania",
+    altKey: "nyerere",
     width: 1280,
     height: 1129,
     blurDataURL: "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUABIAPxl+sVQsqCQjKA1RkCMJZQC90BXzPZSVeMTGg4AA/tqN9vg8/Z8bmwb8PsE88QPTwwZ5lEF/JVFa6NMWcJgCWgAA",
@@ -170,7 +170,7 @@ export const PHOTOS = {
   },
   ruaha: {
     src: "/images/tanzania/ruaha.webp",
-    alt: "Dry season landscape in Ruaha National Park, southern Tanzania",
+    altKey: "ruaha",
     width: 2000,
     height: 1330,
     blurDataURL: "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoUAA0APxl0slCspqSisAgBkCMJaACdIA/DA3XQqllhjdHAAPelArRj/6lxSCAgi0z86SgznrTgMy2hYjmglbeuFr7SzfAy+c26H+vsF2AAAA==",
@@ -183,7 +183,7 @@ export const PHOTOS = {
   },
   "serengeti-cheetah": {
     src: "/images/tanzania/serengeti-cheetah.webp",
-    alt: "Close portrait of a cheetah in Serengeti National Park",
+    altKey: "serengeti-cheetah",
     width: 1280,
     height: 853,
     blurDataURL: "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoUAA0APxl2slEspySisAgBkCMJQBdgAxpWMXjbsKDwIAAA/sP5sqwmf6SKOh3Ob8KxSPXpyAPeb+kuha+oofgCgy4/Jhc+BFHg81kAAAA=",
@@ -196,7 +196,7 @@ export const PHOTOS = {
   },
   "serengeti-plains": {
     src: "/images/tanzania/serengeti-plains.webp",
-    alt: "Acacia trees scattered across the Serengeti plains under a wide sky",
+    altKey: "serengeti-plains",
     width: 2000,
     height: 1152,
     blurDataURL: "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAAwAPxl2slCspySisAgBkCMJZgCxDMgCZ3XRzrMAAPpr9YvY7gyReq0EiL3GbaF2A1byk3AD4C7L0pQGLiYAGD4Dy5RAAAA=",
@@ -209,7 +209,7 @@ export const PHOTOS = {
   },
   "serengeti-sunrise": {
     src: "/images/tanzania/serengeti-sunrise.webp",
-    alt: "Sunrise over the open grasslands of the Serengeti, Tanzania",
+    altKey: "serengeti-sunrise",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQBACdASoUAA0APxl2slEspySisAgBkCMJagCdL11s/wG1+p0T/VMF4E6AAP1CcAuUSuCZj6EJRNDJ9YgaVQcSevwOyfOGXu3Zu5NsOTjNrosNc4h9u5aBAliPFHo9phu29LtQAAA=",
@@ -222,7 +222,7 @@ export const PHOTOS = {
   },
   "serengeti-sunset": {
     src: "/images/tanzania/serengeti-sunset.webp",
-    alt: "The sun setting low over the Serengeti savannah",
+    altKey: "serengeti-sunset",
     width: 1280,
     height: 854,
     blurDataURL: "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACQAwCdASoUAA0APxl2slEspySisAgBkCMJaACdABLrLV5UprGAAKw71kLEIil27e2BEqwYj054Zd2ai6gEBsE+Q8+ArE70FAgW3jiO5hYU4QAA",
@@ -235,7 +235,7 @@ export const PHOTOS = {
   },
   "serengeti-sunset-wide": {
     src: "/images/tanzania/serengeti-sunset-wide.webp",
-    alt: "Sunbeams breaking through cloud above the Serengeti at dusk",
+    altKey: "serengeti-sunset-wide",
     width: 2000,
     height: 1125,
     blurDataURL: "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACQAwCdASoUAAsAPxl2s1EspySisAgBkCMJZQAAWRkSAs1y2RMAAN3tpWSilzbYVK0aD4Ae+x+3mZ5zwN5D2dx8HiN6KiwgiXK96LOPQR3YAAAA",
@@ -248,7 +248,7 @@ export const PHOTOS = {
   },
   "tarangire-baobab": {
     src: "/images/tanzania/tarangire-baobab.webp",
-    alt: "A baobab tree standing against clear sky in Tarangire National Park",
+    altKey: "tarangire-baobab",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAwCdASoUAA0APxl0slCspqSisAgBkCMJYgCsAB58ZO/6erngZ6CAAP5qcT7a9MNJQrvbjsl4cWmeOvYXtmPN4bvEXhbyNdnw4Gr4+LFaEPcBm+KlobRyBCnVH/hfl6+UTzPgRHRM2GtGfCgnwAAA",
@@ -261,7 +261,7 @@ export const PHOTOS = {
   },
   "wildebeest-migration": {
     src: "/images/tanzania/wildebeest-migration.webp",
-    alt: "Wildebeest moving in column across the northern Serengeti during the migration",
+    altKey: "wildebeest-migration",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAwCdASoUAA0APxl2slEspySisAgBkCMJQAAL1wk28ZgUwp7xmfEAAMsn5et9DroT7RKiBEhplLxgZ9wBxSUEd6aKclFoj9B8ZLrE7YeWKT+n6pU8U3FqGYGLJQhwEjTt2owxAAA=",
@@ -274,7 +274,7 @@ export const PHOTOS = {
   },
   "zanzibar-dhow-sunset": {
     src: "/images/tanzania/zanzibar-dhow-sunset.webp",
-    alt: "A traditional dhow sailing off Zanzibar at sunset",
+    altKey: "zanzibar-dhow-sunset",
     width: 2000,
     height: 1328,
     blurDataURL: "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAwBACdASoUAA0APxl0slCspqSisAgBkCMJbACdMoMh1Efs7kIFRT+3xAAA/oHy0v5xRAzgqL/r7Is5RB40BywzqYNLpUoFyPTyfmTBRQQq6v4X6UneAycUHTuThFV7+ET6OWnTFGjscz2YRangW/5APAAAAA==",
@@ -287,7 +287,7 @@ export const PHOTOS = {
   },
   "zanzibar-nungwi": {
     src: "/images/tanzania/zanzibar-nungwi.webp",
-    alt: "White sand and turquoise shallows at Nungwi, northern Zanzibar",
+    altKey: "zanzibar-nungwi",
     width: 1280,
     height: 960,
     blurDataURL: "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAACwAwCdASoUAA8APxl0slEspqSisAgBkCMJZQC/OB3u7WSqfKZAwAD+hlI9iYF//L3CpQg3J0FVLOTCm57f70IwpNpyAuM+Cbexzz1+ncFEGQaGrCTt5OI8cmS5fGexllNGKnaFx35acLzSkBA4sCeB9mIvs+d5qL/06wvqSJX9FMlDXCaAQO54AAA=",
@@ -300,7 +300,7 @@ export const PHOTOS = {
   },
   "zanzibar-stone-town": {
     src: "/images/tanzania/zanzibar-stone-town.webp",
-    alt: "Forodhani seafront in Stone Town, Zanzibar",
+    altKey: "zanzibar-stone-town",
     width: 2000,
     height: 1457,
     blurDataURL: "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAwCdASoUAA8APxl0sVCspqSisAgBkCMJYwC2yCKJmaV/yibeIYAAAP4FoEux3ERAE56xTcCEribN+u8maCB/W2z4WPG9NOCeRexz0vtMQCYul010x6PhTGt9d/SCAQaRn8tBUtAEMtDN0vJ4hN9kMcAAAA==",

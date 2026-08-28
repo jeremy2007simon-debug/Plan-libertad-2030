@@ -11,6 +11,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMetadata } from "@/lib/seo";
 import { COMPANY, HOME_COORDINATES, socialLinks, whatsappHref } from "@/lib/site";
+import { getPhotoAlt } from "@/i18n/alt";
 
 export async function generateMetadata({
   params,
@@ -36,6 +37,7 @@ export default async function ContactPage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getDictionary(locale);
+  const alt = await getPhotoAlt(locale);
   const socials = socialLinks();
 
   return (
@@ -90,10 +92,9 @@ export default async function ContactPage({
                 <div className="py-6">
                   <dt className="eyebrow text-ink-faint">{t.contact.hours}</dt>
                   <dd className="mt-2 text-[0.98rem] text-ink-soft">
-                    {COMPANY.hours.label}
+                    {t.company.hours}
                     <br />
-                    {COMPANY.hours.timezone} — Tanzania is three hours ahead of
-                    UTC, all year.
+                    {COMPANY.hours.timezone} — {t.company.utcNote}
                   </dd>
                 </div>
                 <div className="py-6">
@@ -152,11 +153,12 @@ export default async function ContactPage({
               <div className="relative mt-8 aspect-4/3 overflow-hidden">
                 <Photo
                   photo={PHOTOS.arusha}
+                  alt={alt.arusha}
                   sizes="(max-width: 1024px) 100vw, 34vw"
                 />
               </div>
               <p className="mt-3 text-[0.8rem] text-ink-faint">
-                Arusha, at the foot of Mount Meru — where every journey starts.
+                {t.company.arushaCaption}
               </p>
             </div>
           </div>

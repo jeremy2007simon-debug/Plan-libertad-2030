@@ -25,9 +25,19 @@ export const COMPANY = {
   whatsappNumber: "255672426411",
   email: "info@maishaquest.com",
   emailHref: "mailto:info@maishaquest.com",
+  /**
+   * Horario. Aquí solo lo que NO depende del idioma.
+   *
+   * La etiqueta legible («De lunes a sábado, de 8:00 a 18:00») estaba aquí en
+   * inglés y salía tal cual en el pie, en contacto, en el planificador y en el
+   * menú móvil de las seis lenguas. Ahora está en el diccionario, en
+   * `t.company.hours`. Lo de abajo son datos, no texto: el huso no se traduce
+   * y los dos campos en formato 24 h son los que consume schema.org.
+   */
   hours: {
-    label: "Monday – Saturday, 8:00 AM – 6:00 PM",
     timezone: "GMT+3",
+    /** Para `openingHours` de schema.org: días y horas en formato máquina. */
+    schema: { days: "Mo-Sa", opens: "08:00", closes: "18:00" },
   },
   /**
    * Perfiles sociales — ÚNICO sitio donde viven estas URLs.

@@ -64,6 +64,7 @@ export async function Testimonials({ t }: { locale: Locale; t: Dictionary }) {
                         <span className="relative size-11 shrink-0 overflow-hidden rounded-full">
                           <MediaFrame
                             media={testimonial.portrait}
+                            alt={testimonial.name}
                             sizes="44px"
                           />
                         </span>

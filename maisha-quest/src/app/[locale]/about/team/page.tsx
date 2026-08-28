@@ -64,6 +64,7 @@ export default async function TeamPage({
                       >
                         <MediaFrame
                           media={member.portrait}
+                          alt={member.name}
                           sizes="(max-width: 1024px) 100vw, 30vw"
                         />
                       </div>

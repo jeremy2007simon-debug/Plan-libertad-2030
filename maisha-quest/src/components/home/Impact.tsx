@@ -43,6 +43,7 @@ export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
                     pause: t.video.pause,
                     unmute: t.video.unmute,
                     mute: t.video.mute,
+                    label: t.video.label,
                   }}
                   className="relative aspect-9/16 w-full bg-canopy"
                 />

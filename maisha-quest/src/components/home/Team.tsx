@@ -46,6 +46,7 @@ function Member({
         <ImageReveal className="mb-6 aspect-4/5">
           <MediaFrame
             media={member.portrait}
+            alt={member.name}
             sizes="(max-width: 768px) 86vw, 30vw"
           />
         </ImageReveal>

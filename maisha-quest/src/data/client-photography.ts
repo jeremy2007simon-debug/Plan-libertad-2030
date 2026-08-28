@@ -43,7 +43,7 @@ export type ClientPhoto = ResolvedImage;
 export const CLIENT_PHOTOS = {
   "tanzania-wildlife-sunset-hero": {
     src: "/images/maisha-quest/optimized/tanzania-wildlife-sunset-hero.webp",
-    alt: "Wildlife crossing the horizon at sunset in Tanzania",
+    altKey: "tanzania-wildlife-sunset-hero",
     width: 2000,
     height: 1125,
     blurDataURL: "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAAsAPxl2slCspySisAgBkCMJbACdMoABw3AmU63rMtAAAP3SBDBju/vE5znZMi7CeOC/XnCfl8sEDZV3ONKb2LTSCa/wAAA=",
@@ -60,7 +60,7 @@ export const CLIENT_PHOTOS = {
   },
   "antelope-herd-grasslands": {
     src: "/images/maisha-quest/optimized/antelope-herd-grasslands.webp",
-    alt: "Herd of antelope gathering in green grasslands",
+    altKey: "antelope-herd-grasslands",
     width: 2000,
     height: 1090,
     blurDataURL: "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoUAAsAPxl2slEspySisAgBkCMJQBdgBERkK2LYhBA+gADNkKFNICpPnDybch8UM0ciU5GT4OL+YIyM4MGZhJHh4agAAA==",
@@ -76,7 +76,7 @@ export const CLIENT_PHOTOS = {
   },
   "elephant-herd-protecting-calf": {
     src: "/images/maisha-quest/optimized/elephant-herd-protecting-calf.webp",
-    alt: "Elephant herd surrounding a young calf",
+    altKey: "elephant-herd-protecting-calf",
     width: 2000,
     height: 1384,
     blurDataURL: "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoUAA4APxl0sVCspqSisAgBkCMJaQDLLBk6oblJAFn8fe9gAP7AU5uAkEcqHwonl2PQEQP6NKxOFksaQRlNLlVwilIVGNgSe2QiBSJubA8juF8MrGLuHAMFHzpFLebuSqn5atqAAAA=",
@@ -93,7 +93,7 @@ export const CLIENT_PHOTOS = {
   },
   "african-elephant-portrait": {
     src: "/images/maisha-quest/optimized/african-elephant-portrait.webp",
-    alt: "Portrait of an African elephant in the wilderness",
+    altKey: "african-elephant-portrait",
     width: 1400,
     height: 1750,
     blurDataURL: "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAACwBACdASoUABkAPxmCuFYsqCUjqAgBkCMJZwDI1A9FbNAXfwmWiSdtdhJqG1lQAP7e6JGHEe+FUEiqy7ezbTSmGJ0E/INYIOH0stZ4Q4vdzFspZ4mfk2V40+5YuilQVIIDgDerzhyZagv/T/1bbFkvoMvtjO/DKNgk279ZN4EI+0sZNRDC1AEyhPwEZJLlIrEBJukiKgAAAA==",
@@ -109,7 +109,7 @@ export const CLIENT_PHOTOS = {
   },
   "elephant-family-walking": {
     src: "/images/maisha-quest/optimized/elephant-family-walking.webp",
-    alt: "Family of elephants walking together across the savannah",
+    altKey: "elephant-family-walking",
     width: 2000,
     height: 1601,
     blurDataURL: "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUABAAPxl0slCspqSisAgBkCMJaQDLLBEGU/d+50Ve0AD+Ect12ldI8mfRGDk9Rzwjg9Jc6LrOqqLeKrNNwwst1Bvb2/C8b636QO0mUt9fW3AA",
@@ -126,7 +126,7 @@ export const CLIENT_PHOTOS = {
   },
   "savannah-acacia-sunset": {
     src: "/images/maisha-quest/optimized/savannah-acacia-sunset.webp",
-    alt: "Acacia tree silhouetted against a vivid Tanzanian sunset",
+    altKey: "savannah-acacia-sunset",
     width: 2000,
     height: 1334,
     blurDataURL: "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoUAA0APxl4slEspySisAgBkCMJYgCdACIAPI4MmpsUHAAA/r7yfOxHAoV9b9S+upEGABsiBcCwZVEgDSp8kVVpEKMMFPegrWdGbqFGolbQjMDsAAA=",
@@ -143,7 +143,7 @@ export const CLIENT_PHOTOS = {
   },
   "lion-pair-calling": {
     src: "/images/maisha-quest/optimized/lion-pair-calling.webp",
-    alt: "Lion and lioness calling across the grasslands",
+    altKey: "lion-pair-calling",
     width: 1600,
     height: 1600,
     blurDataURL: "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACQBACdASoUABQAPxmCt1YsqCUjqAgBkCMJZwDCCAshMF1zEZVteRn94HhQEAAA9vo6wCkMZCakZ8yqTsa5V7qmrh1rPMgfen9NiFPGiCInXN7nT93JEpJXD7WiAzdyHlK4Q7n2PhiOsDJ0WLC4+e/NUqZZgAAA",
@@ -160,7 +160,7 @@ export const CLIENT_PHOTOS = {
   },
   "giraffe-oxpecker-birds": {
     src: "/images/maisha-quest/optimized/giraffe-oxpecker-birds.webp",
-    alt: "Oxpecker birds perched on the patterned coat of a giraffe",
+    altKey: "giraffe-oxpecker-birds",
     width: 2000,
     height: 1000,
     blurDataURL: "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAAAQBACdASoUAAoAPxl0sVCspqSisAgBkCMJQBOmUDX/wDGd7KdN1tYlaADU26jZArwUvqrONFoMEyxRnFRKUJ2mjGoACYq9EO91mUDi6IhoN2jqyvKDPuLvQuwZqET58nytzntSk5qhdqFWCdKedtbuIql9UilR3GAAAA==",
@@ -176,7 +176,7 @@ export const CLIENT_PHOTOS = {
   },
   "flamingo-taking-flight": {
     src: "/images/maisha-quest/optimized/flamingo-taking-flight.webp",
-    alt: "Flamingo running across the water as it begins to take flight",
+    altKey: "flamingo-taking-flight",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABwAwCdASoUAA0APxl2slCspySisAgBkCMJQBOgAw9d3nn01wAA/nLv3aOU736Sm8uPylV3QOMRu4H9Mnj0uqbAO8Bj9NfDGFBZFqXDoJTxt0IcENAAAA==",
@@ -193,7 +193,7 @@ export const CLIENT_PHOTOS = {
   },
   "flamingos-tanzania-lake": {
     src: "/images/maisha-quest/optimized/flamingos-tanzania-lake.webp",
-    alt: "Flock of flamingos standing in the shallow waters of a Tanzanian lake",
+    altKey: "flamingos-tanzania-lake",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoUAA0APxl2s1EspySisAgBkCMJYwCsACIB1YzkytwAAP4l5oohO30rumYVk3CybiMBViG0adHa+sEC0uL42QqLbiymZQAA",
@@ -210,7 +210,7 @@ export const CLIENT_PHOTOS = {
   },
   "male-lions-together": {
     src: "/images/maisha-quest/optimized/male-lions-together.webp",
-    alt: "Two male lions standing together in the grasslands",
+    altKey: "male-lions-together",
     width: 2000,
     height: 1335,
     blurDataURL: "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQBACdASoUAA0APxl0slCspqSisAgBkCMJZAC7ACFfJBxiiSJ29odNQAD+3MrWJgUlk11kFKDaN9ED4Etmlzco67VUqWn/qv6VUvXEb3ascPI3KeL/wAAA",
@@ -227,7 +227,7 @@ export const CLIENT_PHOTOS = {
   },
   "giraffes-open-savannah": {
     src: "/images/maisha-quest/optimized/giraffes-open-savannah.webp",
-    alt: "Giraffes walking across an open Tanzanian savannah",
+    altKey: "giraffes-open-savannah",
     width: 2000,
     height: 1500,
     blurDataURL: "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwBACdASoUAA8APxl2sVCspySisAgBkCMJZACdMoADQ8sM5ympHLLFHOAA/lfmVCbZDDZiiI4lNUr9FwYwvGlVIFXMa1NbkIJ2K/Pogn0CpQexhak7n/4sZ+f15ZAA",
@@ -244,7 +244,7 @@ export const CLIENT_PHOTOS = {
   },
   "leopard-in-tree": {
     src: "/images/maisha-quest/optimized/leopard-in-tree.webp",
-    alt: "Leopard standing among the branches of a tree",
+    altKey: "leopard-in-tree",
     width: 1600,
     height: 1600,
     blurDataURL: "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAACwBACdASoUABQAPxmEuVYsqCWjqAgBkCMJQBhQtgATe8R1XEnMDdxGCzpJIFzgAP6fLSWqExwbvMPZHPCS4F/a3lxjRW3omVns7GZn+2E348NSAsJo/aijFAKZxYlQfDIAEB6ZgGhBnoWGK5Mo3llh4eV/MPjB6vEWmFAja6BafthxOfFF2Vzp+eALIC58QFZ84AAA",
@@ -260,7 +260,7 @@ export const CLIENT_PHOTOS = {
   },
   "zebra-herd-monochrome": {
     src: "/images/maisha-quest/optimized/zebra-herd-monochrome.webp",
-    alt: "Closely gathered herd of zebras in monochrome",
+    altKey: "zebra-herd-monochrome",
     width: 2000,
     height: 1000,
     blurDataURL: "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoUAAoAPxl2sVCspySisAgBkCMJaQDKABTsbrq8o0BbgADhTZqTiKYYX3PKZCGdwFrXtyWeMC2E5B4R7SqqqLxjA5F6VYKL6VB7KaVqqEIAAA==",
@@ -277,7 +277,7 @@ export const CLIENT_PHOTOS = {
   },
   "lion-open-savannah": {
     src: "/images/maisha-quest/optimized/lion-open-savannah.webp",
-    alt: "Lion walking alone across an open grassland",
+    altKey: "lion-open-savannah",
     width: 2000,
     height: 1000,
     blurDataURL: "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUAAoAPxl2slCspySisAgBkCMJaACdMoMulEHthW9oSWAA/nGY49sVDhdLYJ0ZmX0I0i4Q4nqaHEfHrZh9jNDSObwAAA==",
@@ -294,7 +294,7 @@ export const CLIENT_PHOTOS = {
   },
   "giraffe-patterns-monochrome": {
     src: "/images/maisha-quest/optimized/giraffe-patterns-monochrome.webp",
-    alt: "Monochrome detail of giraffes standing closely together",
+    altKey: "giraffe-patterns-monochrome",
     width: 2000,
     height: 1126,
     blurDataURL: "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASoUAAsAPxl2slEspySisAgBkCMJaQAAQyXFRPX8rHaGjVwA/bzwMVilr/yS8FOVy9qG90AcnKxecbvaCpLs2fays8ROIJT/Yxz9CmGPlbmtw+ZlJ7YveEsafoAAAA==",
@@ -310,7 +310,7 @@ export const CLIENT_PHOTOS = {
   },
   "safari-tent-accommodation": {
     src: "/images/maisha-quest/optimized/safari-tent-accommodation.webp",
-    alt: "Warmly furnished safari tent accommodation overlooking the landscape",
+    altKey: "safari-tent-accommodation",
     width: 2000,
     height: 1320,
     blurDataURL: "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABQBACdASoUAA0APxl2slEspySisAgBkCMJZgCdMoRwABy29raqDg3640nAAP7sTU/sI5qMquIGS6M4SosEeQzWM+kuZnEfTmftj+nRkqUyf/EplkKEZ9+hdbuX/nupVGTp+OPo32BXQzjGROBzzSzoOwAAAA==",
@@ -327,7 +327,7 @@ export const CLIENT_PHOTOS = {
   },
   "flamingo-low-flight": {
     src: "/images/maisha-quest/optimized/flamingo-low-flight.webp",
-    alt: "Flamingo flying low over the surface of a lake",
+    altKey: "flamingo-low-flight",
     width: 2000,
     height: 1125,
     blurDataURL: "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACQAwCdASoUAAsAPxl0sVCspqSisAgBkCMJZQC7ABrRnBLOhJ96APqYmITub1R4MMp/K+QHiAzHi3r5ZhOXbWbqMPEEhFhLVcS/bYFFhAJcAAAA",
@@ -344,7 +344,7 @@ export const CLIENT_PHOTOS = {
   },
   "flamingo-flock-in-motion": {
     src: "/images/maisha-quest/optimized/flamingo-flock-in-motion.webp",
-    alt: "Flamingos gathering and moving through shallow water",
+    altKey: "flamingo-flock-in-motion",
     width: 2000,
     height: 1333,
     blurDataURL: "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABQAwCdASoUAA0APxl0slCspqSisAgBkCMJQBYdgYVbIMviAAD+0GibVs75N1E3dX5m6YkwTs0tttihtXvRWuRmaXnEY/Tr/3qEoXioL4xLg4xOVJ7syqavxJE6n8XmQgrALqXxAhtxWDAAAAA=",

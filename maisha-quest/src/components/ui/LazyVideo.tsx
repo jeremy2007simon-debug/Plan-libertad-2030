@@ -44,6 +44,13 @@ export interface VideoStrings {
   unmute: string;
   /** "Silenciar". */
   mute: string;
+  /**
+   * Nombre accesible del reproductor.
+   *
+   * Salía del alt del póster, que era una sola cadena en inglés para las seis
+   * lenguas. Ahora viene del diccionario como el resto del reproductor.
+   */
+  label: string;
 }
 
 export function LazyVideo({
@@ -121,7 +128,7 @@ export function LazyVideo({
     setMuted(next);
   };
 
-  const label = video.poster.alt;
+  const label = t.label;
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden ${className}`}>

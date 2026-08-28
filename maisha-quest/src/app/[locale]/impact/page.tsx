@@ -110,6 +110,7 @@ export default async function ImpactPage({
                           <div className="relative mt-5 aspect-3/2 overflow-hidden">
                             <MediaFrame
                               media={project.image}
+                              alt={project.title}
                               sizes="(max-width: 640px) 100vw, 32vw"
                             />
                           </div>
@@ -134,6 +135,7 @@ export default async function ImpactPage({
                         pause: t.video.pause,
                         unmute: t.video.unmute,
                         mute: t.video.mute,
+                        label: t.video.label,
                       }}
                       className="relative aspect-9/16 w-full bg-canopy"
                     />

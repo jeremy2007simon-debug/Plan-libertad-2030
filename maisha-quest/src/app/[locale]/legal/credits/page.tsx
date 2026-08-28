@@ -7,6 +7,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternatesFor } from "@/lib/seo";
 import { allCredits } from "@/data/photography";
+import { getPhotoAlt } from "@/i18n/alt";
 
 export async function generateMetadata({
   params,
@@ -40,6 +41,7 @@ export default async function CreditsPage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getDictionary(locale);
+  const alt = await getPhotoAlt(locale);
   // Solo el material que EXIGE atribución por licencia. La fotografía del
   // cliente no aparece aquí: no lleva licencia Creative Commons y su autoría
   // está pendiente de confirmar — publicar un crédito inventado sería peor
@@ -71,7 +73,7 @@ export default async function CreditsPage({
                   <div className="relative aspect-3/2 overflow-hidden">
                     <Image
                       src={photo.src}
-                      alt={photo.alt}
+                      alt={alt[photo.altKey]}
                       fill
                       sizes="(max-width: 640px) 100vw, 30vw"
                       placeholder="blur"
@@ -80,7 +82,7 @@ export default async function CreditsPage({
                     />
                   </div>
                   <p className="mt-3 text-[0.9rem] leading-snug text-forest">
-                    {photo.alt}
+                    {alt[photo.altKey]}
                   </p>
                   <p className="mt-1.5 text-[0.82rem] text-ink-faint">
                     {photo.credit?.author} · {photo.credit?.license}

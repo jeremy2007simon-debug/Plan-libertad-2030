@@ -31,6 +31,6 @@ export const IMPACT_VIDEO: MediaVideo = {
   durationSeconds: 41,
   poster: {
     src: null,
-    alt: "Maisha Quest community work in Tanzania",
+    altKey: "impact-community",
   },
 };

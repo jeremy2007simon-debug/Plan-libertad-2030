@@ -114,7 +114,7 @@ export default async function PlanPage({
                   {COMPANY.email}
                 </a>
                 <p className="mt-3 text-[0.85rem] text-ink-faint">
-                  {COMPANY.hours.label}
+                  {t.company.hours}
                   <br />
                   {COMPANY.hours.timezone}
                 </p>
@@ -126,6 +126,7 @@ export default async function PlanPage({
                 locale={locale}
                 t={t.planner}
                 requiredLabel={t.a11y.required}
+                hours={t.company.hours}
                 destinations={destinations.map((destination) => ({
                   slug: destination.slug,
                   name: destination.name,

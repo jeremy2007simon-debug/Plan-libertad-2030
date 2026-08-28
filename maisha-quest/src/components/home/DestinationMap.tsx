@@ -8,6 +8,7 @@ import {
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { MapExplorer, type MapDestination } from "./MapExplorer";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /**
  * "Find your place in Tanzania".
@@ -24,6 +25,7 @@ export async function DestinationMap({
   t: Dictionary;
 }) {
   const destinations = await getDestinations(locale);
+  const alt = await getPhotoAlt(locale);
 
   const payload: MapDestination[] = await Promise.all(
     destinations.map(async (destination) => {
@@ -41,7 +43,7 @@ export async function DestinationMap({
         mapPosition: destination.mapPosition,
         image: {
           src: destination.image.src ?? "",
-          alt: destination.image.alt,
+          alt: alt[destination.image.altKey],
           width: destination.image.width ?? 1600,
           height: destination.image.height ?? 1067,
           blurDataURL:

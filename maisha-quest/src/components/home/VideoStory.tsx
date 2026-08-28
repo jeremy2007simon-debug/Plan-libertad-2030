@@ -47,7 +47,7 @@ export const JOURNEY_FILM: MediaVideo = {
   durationSeconds: 36,
   poster: {
     src: null,
-    alt: "A Maisha Quest journey through Tanzania",
+    altKey: "journey-film-poster",
   },
 };
 
@@ -87,6 +87,7 @@ export function VideoStory({ locale, t }: { locale: Locale; t: Dictionary }) {
                     pause: t.video.pause,
                     unmute: t.video.unmute,
                     mute: t.video.mute,
+                    label: t.video.label,
                   }}
                   className="relative aspect-9/16 w-full bg-charcoal"
                 />

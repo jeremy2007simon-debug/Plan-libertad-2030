@@ -11,6 +11,8 @@
  */
 
 /** Slug estable usado en URLs. Nunca se traduce. */
+import type { PhotoAltKey } from "@/i18n/alt/en";
+
 export type Slug = string;
 
 /** Marca de contenido pendiente de que el cliente facilite el dato real. */
@@ -63,8 +65,19 @@ export interface ClientPhotoProvenance {
 /** Referencia a un asset. `src === null` => hueco de imagen a la espera de foto real. */
 export interface MediaImage {
   src: Pending<string>;
-  /** Alt descriptivo. Obligatorio siempre que haya `src`. */
-  alt: string;
+  /**
+   * Clave del texto alternativo, NO la frase.
+   *
+   * La frase vive en `src/i18n/alt/<idioma>.ts` y se resuelve con el idioma
+   * de la página. Cuando aquí había una cadena, era una sola cadena en inglés
+   * para las seis lenguas: un lector de pantalla en ruso oía la descripción
+   * de cada fotografía en inglés.
+   *
+   * Opcional aquí y obligatorio en `ResolvedImage`: un hueco sin `src` no
+   * pinta nada, así que no hay nada que describir todavía. Qué mostrará esa
+   * foto cuando llegue está en `src/data/photography-wanted.ts`.
+   */
+  altKey?: PhotoAltKey;
   /** Ancho/alto reales del archivo; permiten reservar espacio y evitar CLS. */
   width?: number;
   height?: number;
@@ -97,6 +110,7 @@ export interface MediaImage {
  */
 export interface ResolvedImage extends MediaImage {
   src: string;
+  altKey: PhotoAltKey;
   width: number;
   height: number;
   blurDataURL: string;

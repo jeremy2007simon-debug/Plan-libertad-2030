@@ -151,7 +151,7 @@ export default async function AboutPage({
         <Container width="prose">
           <h2 className="text-h2 text-forest">{t.about.talkTitle}</h2>
           <p className="mt-5 text-[0.98rem] leading-relaxed text-ink-soft">
-            {t.about.talkBody(COMPANY.hours.timezone, COMPANY.hours.label)}
+            {t.about.talkBody(COMPANY.hours.timezone, t.company.hours)}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/plan" locale={locale} variant="primary">

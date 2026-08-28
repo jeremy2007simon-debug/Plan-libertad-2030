@@ -1,6 +1,7 @@
 import { CompassPoint } from "@/components/ui/Compass";
 import { Photo } from "@/components/ui/Photo";
 import type { Dictionary } from "@/i18n/messages/en";
+import type { PhotoAlt } from "@/i18n/alt/en";
 import type { ItineraryDay } from "@/types/content";
 
 /**
@@ -14,9 +15,12 @@ import type { ItineraryDay } from "@/types/content";
 export function Itinerary({
   days,
   t,
+  alt,
 }: {
   days: ItineraryDay[];
   t: Dictionary;
+  /** Texto alternativo ya resuelto en el idioma de la página. */
+  alt: PhotoAlt;
 }) {
   if (days.length === 0) {
     return (
@@ -96,7 +100,11 @@ export function Itinerary({
                 <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                   {day.images.map((image) => (
                     <li key={image.src} className="relative aspect-3/2 overflow-hidden">
-                      <Photo photo={image} sizes="(max-width: 640px) 100vw, 30vw" />
+                      <Photo
+                    photo={image}
+                    alt={alt[image.altKey]}
+                    sizes="(max-width: 640px) 100vw, 30vw"
+                  />
                     </li>
                   ))}
                 </ul>

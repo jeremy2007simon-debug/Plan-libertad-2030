@@ -25,6 +25,7 @@ import {
 } from "@/lib/content";
 import { alternatesFor } from "@/lib/seo";
 import type { Destination } from "@/types/content";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /** Siete safaris × seis idiomas = 42 rutas estáticas. */
 export function generateStaticParams() {
@@ -73,6 +74,7 @@ export default async function SafariPage({
   const { locale, slug } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getDictionary(locale);
+  const alt = await getPhotoAlt(locale);
   // Un slug que no existe devuelve `undefined` y cae en el 404 del idioma;
   // nunca revienta la página.
   const safari = await getSafariBySlug(locale, slug);
@@ -152,9 +154,10 @@ export default async function SafariPage({
       {safari.draft && (
         <Container width="wide" className="pt-10">
           <p className="border-l-2 border-gold bg-sand/12 py-4 pl-5 text-[0.92rem] leading-relaxed text-ink-soft">
-            <strong className="font-semibold text-forest">Sample itinerary.</strong>{" "}
-            This route shows the shape of the journey. Timings, camps and the
-            final day-by-day are confirmed with you before anything is booked.
+            <strong className="font-semibold text-forest">
+              {t.safari.sampleTitle}
+            </strong>{" "}
+            {t.safari.sampleBody}
           </p>
         </Container>
       )}
@@ -176,7 +179,7 @@ export default async function SafariPage({
               <Reveal className="mt-14">
                 <h2 className="text-h2 text-forest">{t.safari.dayByDay}</h2>
                 <div className="mt-7">
-                  <Itinerary days={safari.itinerary} t={t} />
+                  <Itinerary days={safari.itinerary} t={t} alt={alt} />
                 </div>
               </Reveal>
 
@@ -225,6 +228,7 @@ export default async function SafariPage({
                         >
                           <Photo
                             photo={image}
+                            alt={alt[image.altKey]}
                             sizes={
                               lead
                                 ? "(max-width: 640px) 100vw, 52vw"
@@ -247,7 +251,7 @@ export default async function SafariPage({
                     {t.safari.theRoute}
                   </h2>
                   <div className="mt-5">
-                    <RouteMap stops={stops} />
+                    <RouteMap stops={stops} t={t} />
                   </div>
                   <ul className="mt-6 flex flex-col divide-y divide-rule border-t border-rule">
                     {stops.map((stop) => (

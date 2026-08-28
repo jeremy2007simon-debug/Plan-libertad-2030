@@ -16,7 +16,6 @@ export function Photo({
   sizes = "100vw",
   preload = false,
   quality,
-  /** Alt alternativo cuando el contexto ya describe la imagen mejor. */
   alt,
 }: {
   photo: PhotoType;
@@ -34,12 +33,21 @@ export function Photo({
   preload?: boolean;
   /** Calidad de compresión. Por defecto la de Next (75). */
   quality?: number;
-  alt?: string;
+  /**
+   * Obligatorio, y en el idioma de la página.
+   *
+   * Ya no sale de los datos de la fotografía: allí solo hay una clave. Quien
+   * pinta la imagen resuelve la descripción con `getPhotoAlt(locale)`, o pasa
+   * cadena vacía si la imagen es decorativa y el texto de al lado ya la
+   * describe. No hay valor por defecto a propósito: un alt por defecto sería
+   * el inglés otra vez.
+   */
+  alt: string;
 }) {
   return (
     <Image
       src={photo.src}
-      alt={alt ?? photo.alt}
+      alt={alt}
       fill
       sizes={sizes}
       preload={preload}
@@ -70,12 +78,15 @@ export function Photo({
  */
 export function MediaFrame({
   media,
+  alt,
   className = "",
   sizes = "100vw",
   preload = false,
   quality,
 }: {
   media: MediaImage | PhotoType;
+  /** Ver `Photo`: obligatorio y en el idioma de la página. */
+  alt: string;
   className?: string;
   sizes?: string;
   /** Ver `Photo`: solo para el LCP. */
@@ -88,7 +99,7 @@ export function MediaFrame({
   return (
     <Image
       src={media.src}
-      alt={media.alt}
+      alt={alt}
       fill
       sizes={sizes}
       preload={preload}

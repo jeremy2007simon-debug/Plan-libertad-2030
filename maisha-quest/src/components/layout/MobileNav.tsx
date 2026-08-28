@@ -25,10 +25,19 @@ import { LocaleSelector } from "./LocaleSelector";
 export function MobileNav({
   locale,
   t,
+  hours,
   tone = "light",
 }: {
   locale: Locale;
   t: Dictionary["nav"];
+  /**
+   * Horario ya traducido (`t.company.hours`).
+   *
+   * Llega como prop y no desde una clave propia de esta sección: el texto vive
+   * en un solo sitio del diccionario y quien lo necesita lo recibe. Duplicarlo
+   * en tres secciones sería garantizar que un día digan cosas distintas.
+   */
+  hours: string;
   tone?: "light" | "dark";
 }) {
   const pathname = usePathname();
@@ -195,7 +204,7 @@ export function MobileNav({
                 {COMPANY.email}
               </a>
               <p className="mt-2 text-on-dark-faint">
-                {COMPANY.hours.label} · {COMPANY.hours.timezone}
+                {hours} · {COMPANY.hours.timezone}
               </p>
             </div>
           </nav>

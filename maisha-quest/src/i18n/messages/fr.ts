@@ -251,7 +251,16 @@ export const fr: Dictionary = {
       email: "E-mail",
       phone: "Téléphone ou WhatsApp",
       country: "Pays",
-      replyIn: "Répondez-moi en",
+      replyIn: "Langue de réponse",
+      consentLabel:
+        "J’accepte que Maisha Quest utilise ces informations pour répondre à ma demande.",
+      /** Nombre accesible de los botones del contador de viajeros. */
+      oneFewer: "Un {label} de moins",
+      oneMore: "Un {label} de plus",
+      /** Nota que se precarga al llegar desde una tarjeta con ?safari=. */
+      prefilledNote:
+        "Point de départ : {name}. Je souhaite adapter ce voyage.",
+
       notes: "Autre chose à nous signaler ?",
       notesPlaceholder:
         "Célébrations, régime alimentaire, mobilité, photographie, animaux que vous espérez voir…",
@@ -693,11 +702,26 @@ export const fr: Dictionary = {
     French: "Français",
   },
 
+  /**
+   * Datos de la empresa que se muestran al visitante y por tanto se traducen.
+   *
+   * El horario vivía en `src/lib/site.ts` como una sola cadena en inglés y
+   * salía tal cual en el pie, en contacto, en el planificador y en el menú
+   * móvil de los seis idiomas. Los datos que no dependen del idioma
+   * —teléfono, correo, huso horario— siguen en `site.ts`.
+   */
+  company: {
+    hours: "Du lundi au samedi, de 8h00 à 18h00",
+    utcNote: "La Tanzanie est en avance de trois heures sur l'UTC toute l'année.",
+    arushaCaption: "Arusha, au pied du mont Meru — là où commence chaque voyage.",
+  },
+
   video: {
     play: "Lire",
     pause: "Pause",
     unmute: "Activer le son",
     mute: "Couper le son",
+    label: "Vidéo",
   },
 
   team: {
@@ -713,6 +737,13 @@ export const fr: Dictionary = {
   },
 
   safari: {
+    sampleTitle: "Itinéraire indicatif.",
+    sampleBody:
+      "Cet itinéraire montre la structure générale du voyage. Les horaires, les hébergements et le programme définitif jour par jour sont confirmés avec vous avant toute réservation.",
+    mapScale: "Les distances sont à l’échelle ; les trajets routiers suivent les pistes du parc.",
+    /** Separador entre paradas dentro del nombre accesible del mapa. */
+    routeMapJoin: ", puis ",
+    routeMapLabel: (stops: string) => `Carte de l’itinéraire : ${stops}`,
     itineraryPending:
       "Notre équipe à Arusha finalise le programme jour par jour de ce voyage. Demandez-le-nous et nous vous enverrons la version actuelle.",
     stay: "Hébergement",
