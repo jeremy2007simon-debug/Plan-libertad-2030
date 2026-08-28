@@ -116,12 +116,18 @@ export function MapExplorer({
   return (
     <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
       {/* Mapa — solo escritorio */}
+      {/* El mapa se queda fijo mientras se recorre la ficha del destino: la
+          ficha es bastante más alta que la silueta y, sin esto, media columna
+          quedaba vacía. Las etiquetas van posicionadas en porcentaje sobre
+          este contenedor, así que debe seguir midiendo exactamente lo que
+          mide el SVG. */}
       <div className="hidden lg:col-span-6 lg:block xl:col-span-7">
+        <div className="lg:sticky lg:top-28">
         <div className="relative">
           <svg
             viewBox={`0 0 ${MAP_VIEWBOX.width} ${MAP_VIEWBOX.height}`}
             aria-hidden="true"
-            className="mx-auto h-auto max-h-[28rem] w-full overflow-visible"
+            className="h-auto w-full overflow-visible"
           >
             {/* Retícula de brújula, muy tenue */}
             <g stroke="currentColor" className="text-forest/12" strokeWidth="1">
@@ -212,13 +218,20 @@ export function MapExplorer({
                 type="button"
                 onClick={() => setActiveSlug(destination.slug)}
                 aria-pressed={isActive}
-                /* La etiqueta va a la derecha del punto salvo en el tercio
-                   oriental del mapa, donde se voltea a la izquierda: si no,
-                   Kilimanjaro y Arusha —que caen casi en el borde— escriben
-                   sus nombres encima del vecino. `flex-row-reverse` mantiene
-                   el mismo marcado y el mismo orden de lectura. */
+                /* La etiqueta va a la derecha del punto salvo en la mitad
+                   oriental del mapa, donde se voltea a la izquierda.
+
+                   El umbral está en el 55 % y no en el centro geométrico por
+                   una razón concreta: los cinco destinos del circuito norte
+                   —Ngorongoro, Lake Manyara, Tarangire, Arusha y
+                   Kilimanjaro— se apiñan en ese margen, y con las etiquetas a
+                   la derecha se escribían unas encima de otras. Volteadas,
+                   ocupan el interior vacío del país.
+
+                   `flex-row-reverse` mantiene el mismo marcado y el mismo
+                   orden de lectura para un lector de pantalla. */
                 className={`group absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 p-2 ${
-                  destination.mapPosition.x > MAP_VIEWBOX.width * 0.66
+                  destination.mapPosition.x > MAP_VIEWBOX.width * 0.55
                     ? "flex-row-reverse"
                     : ""
                 }`}
@@ -246,6 +259,7 @@ export function MapExplorer({
               </button>
             );
           })}
+          </div>
         </div>
       </div>
 
