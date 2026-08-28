@@ -537,7 +537,7 @@ export const zhCN: Dictionary = {
     impact: {
       title: "公益行动",
       description:
-        "Maisha Quest Cares——当地向导按当地薪资聘用，社区探访直接付费，并支持行程沿线的教育与自然保护工作。",
+        "Maisha Quest Cares——坦桑尼亚的向导与供应商、直接洽谈安排的社群走访，以及 Maisha Quest 正围绕其行程建立的教育与保育工作。",
     },
     journal: {
       title: "旅行手记",
@@ -578,7 +578,6 @@ export const zhCN: Dictionary = {
     ground:
       "一切都在阿鲁沙就地安排。我们的向导、车辆与供应商都是坦桑尼亚本地的，回复您第一封邮件的人，就是在机场接您的人。",
     meetTeam: "认识团队",
-    foundersSlot: "Maisha Quest 创始人在阿鲁沙",
     howWeWork: "我们如何工作",
     people: "我们的人",
     readStories: "读他们的故事",
@@ -667,9 +666,10 @@ export const zhCN: Dictionary = {
   },
 
   video: {
+    play: "播放",
     pause: "暂停",
-    pending: "影片即将上线",
-    filmToFollow: (poster: string) => `${poster} — 影片即将上线`,
+    unmute: "打开声音",
+    mute: "关闭声音",
   },
 
   team: {
@@ -680,7 +680,7 @@ export const zhCN: Dictionary = {
     pageTitle: "为您筹划行程的人",
     crewTitle: "向导、司机与团队",
     crewBody:
-      "每一次行程都由我们直接合作的坦桑尼亚向导和司机执行。在乞力马扎罗，挑夫的报酬与负重上限遵循 KPAP 的准则。团队其他成员的介绍将在此发布。",
+      "每一次行程都由我们直接合作的坦桑尼亚向导和司机执行。在乞力马扎罗，挑夫如何计酬、负重多少，是我们挑选登山团队时的一部分考量。团队其他成员的介绍将在此发布。",
     startPlanning: "开始规划",
   },
 
@@ -698,7 +698,6 @@ export const zhCN: Dictionary = {
     whereYouStay: "住在哪里",
     whereYouStayBody: (style: string) =>
       `这条行程以「${style}」为住宿基调。具体的营地与旅舍会随行程方案一并提出，依其在路线上的位置以及您日期内的可订情况来挑选，而不是在这里列出我们未必能保留的住处。`,
-    accommodationIn: (place: string) => `${place}的住宿`,
     gallery: "图片",
     theRoute: "路线",
     included: "费用包含",
@@ -729,7 +728,6 @@ export const zhCN: Dictionary = {
       body:
         "Maisha Quest 创立于阿鲁沙，位于梅鲁山脚下、北部环线的起点。我们是一支小团队：回复您第一封邮件的人，就是在机场接您的人。",
       cta: "了解 Maisha Quest",
-      teamSlot: "Maisha Quest 团队在阿鲁沙",
     },
     experiences: {
       eyebrow: "从这里开始",
@@ -749,7 +747,7 @@ export const zhCN: Dictionary = {
       eyebrow: "精选行程",
       title: "值得铭记的旅程",
       lede:
-        "这些是起点，不是固定出发团。每一条都会依您的日期、节奏和同行的人重新搭建。",
+        "这里没有固定发团。每一条都是我们确知行得通的行程形态。",
     },
     map: {
       eyebrow: "地图",
@@ -758,7 +756,6 @@ export const zhCN: Dictionary = {
         "九个地方、四条环线与一段海岸。选一个，看看何时前往、那里有什么动物，以及哪些行程会经过。",
       bestTime: "最佳季节",
       wildlife: "野生动物",
-      experiences: "体验",
       journeysHere: "途经此地的行程",
       chooseDestination: "选择一处目的地",
       dayCount: (n: number) => `${n} 天`,
@@ -768,7 +765,6 @@ export const zhCN: Dictionary = {
       eyebrow: "影片",
       title: "一个国度，无数种感受活着的方式。",
       watch: "观看影片",
-      posterLabel: "三十六秒的坦桑尼亚",
       cta: "浏览体验",
       threads: [
         { label: "野生动物", note: "草原，以及在其上迁徙的一切。" },
@@ -786,7 +782,7 @@ export const zhCN: Dictionary = {
       pillars: [
         {
           title: "扎根坦桑尼亚的团队",
-          body: "我们在阿鲁沙生活和工作。路线来自我们亲自开过，而不是来自宣传册。",
+          body: "路线来自我们亲自开过，而不是来自宣传册。",
         },
         {
           title: "量身定制的行程",
@@ -794,11 +790,11 @@ export const zhCN: Dictionary = {
         },
         {
           title: "多语言服务",
-          body: "我们以英语、斯瓦希里语、俄语和中文普通话规划与接待。",
+          body: "规划与沟通以英语和斯瓦希里语进行。Talisa 还能讲俄语和普通话。",
         },
         {
           title: "精挑细选的住宿",
-          body: "我们亲自住过的营地与旅舍，按位置、服务与性格挑选。",
+          body: "依所处位置、经营方式，以及从那里能看到什么来挑选的营地与旅舍。",
         },
         {
           title: "负责任的在地旅行",
@@ -806,7 +802,7 @@ export const zhCN: Dictionary = {
         },
         {
           title: "从抵达到离开的支持",
-          body: "从您的第一条讯息到回程航班，同一支团队全程可以联系到。",
+          body: "从您的第一条讯息到回程航班，由同一支团队负责——为您规划行程的人，就是回覆您的人。",
         },
       ],
     },
@@ -820,13 +816,12 @@ export const zhCN: Dictionary = {
     impact: {
       eyebrow: "Maisha Quest Cares",
       watch: "观看",
-      posterLabel: "Maisha Quest Cares，在现场",
       cta: "我们的公益如何运作",
       intro: {
         title: "回馈土地的旅行",
         lede: "您的旅行，应当让坦桑尼亚比您抵达时更好。",
         body:
-          "Maisha Quest Cares 让这句话不只是口号。它依托于您所参加的同一批行程：当地向导按当地薪资聘用、供应商来自阿鲁沙而非海外，并将每次行程收入的一部分投入我们指得出来的工作。",
+          "Maisha Quest Cares 是这句话不再是口号的地方。它就运行在您所走的这些行程上：坦桑尼亚的向导与供应商，以及直接与接待者洽谈安排的社群走访。",
       },
     },
     testimonials: {

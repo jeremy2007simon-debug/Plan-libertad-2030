@@ -86,7 +86,7 @@ export async function ExperienceSelector({
   );
 
   return (
-    <section className="on-olive texture-dust relative isolate bg-olive-deep py-12 sm:py-16">
+    <section className="on-olive texture-dust relative isolate bg-olive-deep py-10 sm:py-14">
       <Container width="wide">
         <SectionHeading
           tone="dark"
@@ -97,7 +97,7 @@ export async function ExperienceSelector({
       </Container>
 
       {/* Escritorio: rejilla de ocho con alturas alternas. */}
-      <Container width="wide" className="mt-12 hidden lg:block">
+      <Container width="wide" className="mt-10 hidden lg:block">
         <ul className="grid grid-cols-4 items-start gap-5">
           <Stagger as="li" step={0.07}>
             {categories.map((category, index) =>

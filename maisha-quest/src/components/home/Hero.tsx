@@ -49,7 +49,7 @@ export function Hero({
   const image = CLIENT_PHOTOS["tanzania-wildlife-sunset-hero"];
 
   return (
-    <section className="relative isolate flex min-h-[88svh] flex-col justify-end overflow-hidden bg-charcoal">
+    <section className="relative isolate flex min-h-[84svh] flex-col justify-end overflow-hidden bg-charcoal">
       {/* Fotografía */}
       <div className="absolute inset-0 -z-10">
         <ParallaxMedia strength={34} className="absolute -inset-y-12 inset-x-0">

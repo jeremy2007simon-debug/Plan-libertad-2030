@@ -28,7 +28,7 @@ import { HOME_COORDINATES } from "@/lib/site";
  */
 export function MaishaMeaning({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
-    <section className="texture-paper relative isolate overflow-hidden bg-page py-12 sm:py-20">
+    <section className="texture-paper relative isolate overflow-hidden bg-page py-10 sm:py-16">
       {/* Marca de agua tipográfica. Decorativa: `aria-hidden`. */}
       <span
         aria-hidden="true"

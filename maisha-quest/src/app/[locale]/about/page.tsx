@@ -4,8 +4,8 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { CompassDivider } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
-import { ImageSlot, Photo } from "@/components/ui/Photo";
-import { Reveal } from "@/components/ui/motion";
+import { Photo } from "@/components/ui/Photo";
+import { ImageReveal, Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -81,20 +81,18 @@ export default async function AboutPage({
               </Reveal>
             </div>
 
-            <Reveal className="lg:col-span-5 lg:col-start-8">
-              <div className="relative aspect-4/5 overflow-hidden">
-                {/* Hueco declarado: la foto del equipo es material propio y
-                    todavía no existe. Una imagen de stock aquí sería falsa. */}
-                <ImageSlot label={t.about.foundersSlot} />
-              </div>
-              <div className="relative mt-3 aspect-3/2 overflow-hidden">
-                <Photo
-                  photo={PHOTOS["serengeti-sunrise"]}
-                  alt=""
-                  sizes="(max-width: 1024px) 100vw, 34vw"
-                />
-              </div>
-            </Reveal>
+            {/* Aquí había un marco vertical reservado al retrato de los tres
+                fundadores, con la leyenda "fotografía pendiente" dentro. Sin
+                foto real no se reserva nada: la columna la ocupa el paisaje,
+                que sí existe. El retrato entra en cuanto llegue — ver
+                `src/data/photography-wanted.ts`, clave `founders.together`. */}
+            <ImageReveal className="aspect-4/5 lg:col-span-5 lg:col-start-8">
+              <Photo
+                photo={PHOTOS["serengeti-sunrise"]}
+                alt=""
+                sizes="(max-width: 1024px) 100vw, 34vw"
+              />
+            </ImageReveal>
           </div>
         </Container>
       </section>

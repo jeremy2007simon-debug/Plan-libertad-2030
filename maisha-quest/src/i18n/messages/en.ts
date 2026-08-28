@@ -568,7 +568,7 @@ export const en = {
     impact: {
       title: "Impact",
       description:
-        "Maisha Quest Cares — local guides on local wages, community visits paid directly, and support for education and conservation work near the places we travel.",
+        "Maisha Quest Cares — Tanzanian guides and suppliers, community visits arranged directly, and the education and conservation work Maisha Quest is building around its journeys.",
     },
     journal: {
       title: "Journal",
@@ -610,7 +610,6 @@ export const en = {
     ground:
       "Everything is arranged from Arusha, on the ground. Our guides, vehicles and suppliers are Tanzanian, and the people who answer your first email are the people who meet you at the airport.",
     meetTeam: "Meet the team",
-    foundersSlot: "The Maisha Quest founders in Arusha",
     howWeWork: "How we work",
     people: "The people",
     readStories: "Read their stories",
@@ -701,9 +700,10 @@ export const en = {
   },
 
   video: {
+    play: "Play",
     pause: "Pause",
-    pending: "Film to follow",
-    filmToFollow: (poster: string) => `${poster} — film to follow`,
+    unmute: "Turn sound on",
+    mute: "Turn sound off",
   },
 
   team: {
@@ -714,7 +714,7 @@ export const en = {
     pageTitle: "The people behind your journey",
     crewTitle: "Guides, drivers and crew",
     crewBody:
-      "Every journey is run by Tanzanian guides and drivers we work with directly. On Kilimanjaro, porter pay and load limits follow KPAP guidelines. Profiles of the wider team will be published here.",
+      "Every journey is run by Tanzanian guides and drivers we work with directly. On Kilimanjaro, how a mountain crew is paid and how much it carries is part of choosing one. Profiles of the wider team will be published here.",
     startPlanning: "Start planning",
   },
 
@@ -732,7 +732,6 @@ export const en = {
     whereYouStay: "Where you stay",
     whereYouStayBody: (style: string) =>
       `This journey is planned around ${style.toLowerCase()} accommodation. We propose specific camps and lodges with your itinerary, chosen for where they sit on the route and what is available on your dates — rather than naming properties here we may not be able to hold.`,
-    accommodationIn: (place: string) => `Accommodation in ${place}`,
     gallery: "Gallery",
     theRoute: "The route",
     included: "What is included",
@@ -766,7 +765,6 @@ export const en = {
       body:
         "Maisha Quest was founded in Arusha, at the foot of Mount Meru and the start of the northern circuit. We are a small team: the people who answer your first email are the people who meet you at the airport.",
       cta: "Meet Maisha Quest",
-      teamSlot: "The Maisha Quest team in Arusha",
     },
     experiences: {
       eyebrow: "Start here",
@@ -786,7 +784,7 @@ export const en = {
       eyebrow: "Featured journeys",
       title: "Journeys worth remembering",
       lede:
-        "Starting points, not fixed departures. Every one of these is rebuilt around your dates, your pace and the people you are travelling with.",
+        "Nothing here is a fixed departure. Each one is a shape of journey we know works.",
     },
     map: {
       eyebrow: "The map",
@@ -795,7 +793,6 @@ export const en = {
         "Nine places, four circuits and one coastline. Select one to see when to go, what lives there and which journeys pass through.",
       bestTime: "Best time",
       wildlife: "Wildlife",
-      experiences: "Experiences",
       journeysHere: "Journeys that go here",
       chooseDestination: "Choose a destination",
       dayCount: (n: number) => `${n} days`,
@@ -805,7 +802,6 @@ export const en = {
       eyebrow: "The film",
       title: "One country. Endless ways to feel alive.",
       watch: "Watch the Journey",
-      posterLabel: "Tanzania, in thirty-six seconds",
       cta: "Explore experiences",
       threads: [
         { label: "Wildlife", note: "The plains, and what moves across them." },
@@ -824,7 +820,7 @@ export const en = {
         {
           title: "Tanzania-based experts",
           body:
-            "We live and work in Arusha. Our routes come from driving them, not from a brochure.",
+            "Our routes come from driving them, not from a brochure.",
         },
         {
           title: "Tailor-made itineraries",
@@ -833,12 +829,12 @@ export const en = {
         },
         {
           title: "Multilingual service",
-          body: "We plan and host in English, Swahili, Russian and Mandarin Chinese.",
+          body: "Planning and correspondence in English and Swahili. Talisa also speaks Russian and Mandarin Chinese.",
         },
         {
           title: "Carefully selected stays",
           body:
-            "Camps and lodges we have visited ourselves, chosen for location, service and character.",
+            "Camps and lodges chosen for where they sit, how they are run and what you see from them.",
         },
         {
           title: "Responsible local travel",
@@ -848,7 +844,7 @@ export const en = {
         {
           title: "Support from arrival to departure",
           body:
-            "One team from your first message to your flight home, reachable throughout your trip.",
+            "One team from your first message to your flight home — the people who plan your journey are the people you write to.",
         },
       ],
     },
@@ -862,13 +858,12 @@ export const en = {
     impact: {
       eyebrow: "Maisha Quest Cares",
       watch: "Watch",
-      posterLabel: "Maisha Quest Cares, in the field",
       cta: "How our impact works",
       intro: {
         title: "Travel that gives back",
         lede: "Your journey should leave Tanzania better than you found it.",
         body:
-          "Maisha Quest Cares is how we keep that from being a slogan. It runs on the same trips you take: local guides on local wages, suppliers from Arusha rather than abroad, and a share of every journey going into work we can point at.",
+          "Maisha Quest Cares is where that stops being a slogan. It runs on the same trips you take: Tanzanian guides and suppliers, and community visits arranged directly with the people hosting them.",
       },
     },
     testimonials: {

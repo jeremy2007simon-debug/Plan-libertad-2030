@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { LazyVideo } from "@/components/ui/LazyVideo";
+import { hasPlayableVideo } from "@/lib/media";
 import { AnimatedLine, ImageReveal, Reveal, Stagger } from "@/components/ui/motion";
 import { type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
@@ -14,35 +15,43 @@ import { getImpact } from "@/lib/content";
  *
  * Sobre datos: `outcomes` está vacío en todos los proyectos y esta sección no
  * muestra ni una cifra. En cuanto el cliente facilite resultados reales, la
- * lista aparece sola. Ver `src/data/impact.ts` para la advertencia interna
- * sobre autorización de imagen de menores — no se muestra en la interfaz.
+ * lista aparece sola.
+ *
+ * EL VÍDEO NO SE PINTA. El material que hay grabado en un colegio muestra
+ * menores identificables y no consta autorización escrita de sus tutores ni
+ * del centro. Hasta tenerla no se publica, y no se deja en su lugar un marco
+ * vacío ni un aviso: la sección se recompone a dos columnas de texto y no se
+ * nota ningún hueco. Ver `src/data/impact.ts` y `src/data/claims.ts`.
  */
 export async function Impact({ locale, t }: { locale: Locale; t: Dictionary }) {
   const { projects, video } = await getImpact(locale);
   const intro = t.home.impact.intro;
+  const showVideo = hasPlayableVideo(video);
 
   return (
     <section className="dark-section texture-dust relative isolate bg-forest py-20 text-on-dark sm:py-24">
       <Container width="wide">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Vídeo vertical */}
-          <ImageReveal className="mx-auto w-full max-w-[17rem] lg:col-span-4 lg:max-w-[17rem]">
-            <div className="w-full">
-              <LazyVideo
-                video={video}
-                label={t.home.impact.watch}
-                posterLabel={t.home.impact.posterLabel}
-                pauseLabel={t.video.pause}
-                pendingLabel={t.video.pending}
-                filmToFollowLabel={t.video.filmToFollow(t.home.impact.posterLabel)}
-                tone="dark"
-                className="relative aspect-9/16 w-full bg-canopy"
-              />
-            </div>
-          </ImageReveal>
+          {/* Vídeo vertical. Solo existe si existe un archivo publicable. */}
+          {showVideo && (
+            <ImageReveal className="mx-auto w-full max-w-[15rem] sm:max-w-[17rem] lg:col-span-4 lg:max-w-[17rem]">
+              <div className="w-full">
+                <LazyVideo
+                  video={video}
+                  t={{
+                    play: t.home.impact.watch,
+                    pause: t.video.pause,
+                    unmute: t.video.unmute,
+                    mute: t.video.mute,
+                  }}
+                  className="relative aspect-9/16 w-full bg-canopy"
+                />
+              </div>
+            </ImageReveal>
+          )}
 
           {/* Texto y proyectos */}
-          <div className="lg:col-span-7 lg:col-start-6">
+          <div className={showVideo ? "lg:col-span-7 lg:col-start-6" : "lg:col-span-10 lg:col-start-2"}>
             <Reveal>
               <p className="eyebrow text-sand">{t.home.impact.eyebrow}</p>
               <h2 className="text-h1 mt-5 text-parchment">{intro.title}</h2>

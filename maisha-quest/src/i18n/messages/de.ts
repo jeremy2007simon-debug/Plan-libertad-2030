@@ -559,7 +559,7 @@ export const de: Dictionary = {
     impact: {
       title: "Engagement",
       description:
-        "Maisha Quest Cares — einheimische Guides zu einheimischen Löhnen, direkt bezahlte Gemeindebesuche und Unterstützung für Bildungs- und Naturschutzarbeit nahe unseren Reisezielen.",
+        "Maisha Quest Cares – tansanische Guides und Zulieferer, direkt vereinbarte Gemeindebesuche und die Bildungs- und Naturschutzarbeit, die Maisha Quest rund um seine Reisen aufbaut.",
     },
     journal: {
       title: "Journal",
@@ -601,7 +601,6 @@ export const de: Dictionary = {
     ground:
       "Alles wird aus Arusha organisiert, vor Ort. Unsere Guides, Fahrzeuge und Zulieferer sind tansanisch, und wer Ihre erste E-Mail beantwortet, holt Sie am Flughafen ab.",
     meetTeam: "Das Team kennenlernen",
-    foundersSlot: "Die Gründer von Maisha Quest in Arusha",
     howWeWork: "Wie wir arbeiten",
     people: "Die Menschen",
     readStories: "Ihre Geschichten lesen",
@@ -691,9 +690,10 @@ export const de: Dictionary = {
   },
 
   video: {
+    play: "Abspielen",
     pause: "Pause",
-    pending: "Film folgt",
-    filmToFollow: (poster: string) => `${poster} — Film folgt`,
+    unmute: "Ton einschalten",
+    mute: "Ton ausschalten",
   },
 
   team: {
@@ -704,7 +704,7 @@ export const de: Dictionary = {
     pageTitle: "Die Menschen hinter Ihrer Reise",
     crewTitle: "Guides, Fahrer und Crew",
     crewBody:
-      "Jede Reise wird von tansanischen Guides und Fahrern durchgeführt, mit denen wir direkt zusammenarbeiten. Am Kilimandscharo folgen Trägerlöhne und Traglastgrenzen den KPAP-Richtlinien. Profile des weiteren Teams erscheinen hier.",
+      "Jede Reise wird von tansanischen Guides und Fahrern durchgeführt, mit denen wir direkt zusammenarbeiten. Am Kilimandscharo gehört zur Auswahl einer Bergmannschaft, wie sie bezahlt wird und wie viel sie trägt. Profile des weiteren Teams erscheinen hier.",
     startPlanning: "Planung beginnen",
   },
 
@@ -722,7 +722,6 @@ export const de: Dictionary = {
     whereYouStay: "Wo Sie übernachten",
     whereYouStayBody: (style: string) =>
       `Diese Reise ist um Unterkünfte der Kategorie „${style}“ herum geplant. Die konkreten Camps und Lodges schlagen wir zusammen mit Ihrer Route vor — ausgewählt danach, wo sie auf der Strecke liegen und was zu Ihren Terminen verfügbar ist, statt hier Häuser zu nennen, die wir womöglich nicht halten können.`,
-    accommodationIn: (place: string) => `Unterkunft in ${place}`,
     gallery: "Galerie",
     theRoute: "Die Route",
     included: "Inbegriffen",
@@ -753,7 +752,6 @@ export const de: Dictionary = {
       body:
         "Maisha Quest wurde in Arusha gegründet, am Fuß des Mount Meru und am Anfang des nördlichen Circuits. Wir sind ein kleines Team: Wer Ihre erste E-Mail beantwortet, holt Sie am Flughafen ab.",
       cta: "Maisha Quest kennenlernen",
-      teamSlot: "Das Team von Maisha Quest in Arusha",
     },
     experiences: {
       eyebrow: "Hier beginnen",
@@ -773,7 +771,7 @@ export const de: Dictionary = {
       eyebrow: "Ausgewählte Reisen",
       title: "Reisen, an die man sich erinnert",
       lede:
-        "Ausgangspunkte, keine festen Abfahrten. Jede wird um Ihre Termine, Ihr Tempo und Ihre Mitreisenden herum neu gebaut.",
+        "Hier gibt es keine festen Abreisen. Jede ist eine Reiseform, von der wir wissen, dass sie funktioniert.",
     },
     map: {
       eyebrow: "Die Karte",
@@ -782,7 +780,6 @@ export const de: Dictionary = {
         "Neun Orte, vier Circuits und eine Küste. Wählen Sie einen aus, um zu sehen, wann es sich lohnt, was dort lebt und welche Reisen vorbeiführen.",
       bestTime: "Beste Zeit",
       wildlife: "Tierwelt",
-      experiences: "Erlebnisse",
       journeysHere: "Reisen, die hierher führen",
       chooseDestination: "Wählen Sie ein Ziel",
       dayCount: (n: number) => (n === 1 ? "1 Tag" : `${n} Tage`),
@@ -792,7 +789,6 @@ export const de: Dictionary = {
       eyebrow: "Der Film",
       title: "Ein Land. Unendlich viele Arten, sich lebendig zu fühlen.",
       watch: "Die Reise ansehen",
-      posterLabel: "Tansania, in sechsunddreißig Sekunden",
       cta: "Erlebnisse ansehen",
       threads: [
         { label: "Tierwelt", note: "Die Ebene und was sich über sie bewegt." },
@@ -811,7 +807,7 @@ export const de: Dictionary = {
         {
           title: "Experten mit Sitz in Tansania",
           body:
-            "Wir leben und arbeiten in Arusha. Unsere Routen entstehen daraus, dass wir sie fahren — nicht aus einem Prospekt.",
+            "Unsere Routen entstehen daraus, dass wir sie fahren — nicht aus einem Prospekt.",
         },
         {
           title: "Maßgeschneiderte Routen",
@@ -821,12 +817,12 @@ export const de: Dictionary = {
         {
           title: "Mehrsprachige Betreuung",
           body:
-            "Wir planen und begleiten auf Englisch, Suaheli, Russisch und Mandarin.",
+            "Planung und Korrespondenz auf Englisch und Suaheli. Talisa spricht zusätzlich Russisch und Mandarin.",
         },
         {
           title: "Sorgfältig gewählte Unterkünfte",
           body:
-            "Camps und Lodges, die wir selbst besucht haben, ausgewählt nach Lage, Service und Charakter.",
+            "Camps und Lodges, ausgewählt danach, wo sie liegen, wie sie geführt werden und was man von dort aus sieht.",
         },
         {
           title: "Verantwortungsvoll und lokal",
@@ -836,7 +832,7 @@ export const de: Dictionary = {
         {
           title: "Begleitung von Ankunft bis Abflug",
           body:
-            "Ein Team von Ihrer ersten Nachricht bis zum Rückflug, während der ganzen Reise erreichbar.",
+            "Ein Team von Ihrer ersten Nachricht bis zum Rückflug – wer Ihre Reise plant, ist auch wer Ihnen antwortet.",
         },
       ],
     },
@@ -850,14 +846,13 @@ export const de: Dictionary = {
     impact: {
       eyebrow: "Maisha Quest Cares",
       watch: "Ansehen",
-      posterLabel: "Maisha Quest Cares, vor Ort",
       cta: "Wie unser Engagement funktioniert",
       intro: {
         title: "Reisen, das etwas zurückgibt",
         lede:
           "Ihre Reise sollte Tansania besser zurücklassen, als Sie es vorgefunden haben.",
         body:
-          "Maisha Quest Cares sorgt dafür, dass das kein Slogan bleibt. Es läuft über genau die Reisen, die Sie machen: einheimische Guides zu einheimischen Löhnen, Zulieferer aus Arusha statt aus dem Ausland, und ein Anteil jeder Reise fließt in Arbeit, auf die wir zeigen können.",
+          "Bei Maisha Quest Cares hört das auf, ein Slogan zu sein. Es läuft über dieselben Reisen, die Sie machen: tansanische Guides und Zulieferer und Gemeindebesuche, die direkt mit den Gastgebenden vereinbart werden.",
       },
     },
     testimonials: {

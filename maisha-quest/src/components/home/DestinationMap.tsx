@@ -3,7 +3,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   formatRoute,
   getDestinations,
-  getExperienceForDestination,
   getSafarisByDestination,
 } from "@/lib/content";
 import type { Locale } from "@/i18n/config";
@@ -50,10 +49,6 @@ export async function DestinationMap({
               ? (destination.image.blurDataURL as string)
               : "",
         },
-        experiences: getExperienceForDestination(locale, destination.slug).map((e) => ({
-          slug: e.slug,
-          name: e.name,
-        })),
         safaris: safaris.map((safari) => ({
           slug: safari.slug,
           name: safari.name,
@@ -66,7 +61,7 @@ export async function DestinationMap({
   );
 
   return (
-    <section className="on-sand texture-paper relative isolate bg-sand py-12 sm:py-16">
+    <section className="on-sand texture-paper relative isolate bg-sand py-10 sm:py-14">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.map.eyebrow}
@@ -86,7 +81,6 @@ export async function DestinationMap({
               lede: t.home.map.lede,
               bestTime: t.home.map.bestTime,
               wildlife: t.home.map.wildlife,
-              experiences: t.home.map.experiences,
               journeysHere: t.home.map.journeysHere,
               chooseDestination: t.home.map.chooseDestination,
             }}

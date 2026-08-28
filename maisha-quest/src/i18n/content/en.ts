@@ -142,7 +142,7 @@ export const enContent = {
     overview: undefined,
     travellerProfile: "Trekkers — no technical climbing experience needed",
     bestTime: "January – March, and June – October",
-    included: ["Mountain crew: guides, cook and porters, paid to KPAP guidelines","All Kilimanjaro National Park fees and rescue fees","Camping equipment, meals and drinking water on the mountain","Two nights in Arusha, before and after the climb","Airport transfers"],
+    included: ["Mountain crew: guides, cook and porters, with pay and load limits agreed before the climb","All Kilimanjaro National Park fees and rescue fees","Camping equipment, meals and drinking water on the mountain","Two nights in Arusha, before and after the climb","Airport transfers"],
     notIncluded: ["International flights and Tanzanian visa","Travel and medical insurance covering trekking to 6,000 m","Personal trekking equipment and sleeping bag","Tips for the mountain crew"],
     practicalInfo: undefined,
     days: [
@@ -332,7 +332,7 @@ export const enContent = {
   },
   "enrich": {
     tagline: "For travellers who want to experience Tanzania more deeply.",
-    description: "Tanzania beyond the game drive. Days with communities and conservation teams, food and coffee where they are grown, and private access arranged through people we have worked with for years.",
+    description: "Tanzania beyond the game drive. Days with communities and conservation teams, food and coffee where they are grown, and private access arranged directly with the people who host it.",
     travellerProfile: "Curious travellers, families with older children, repeat visitors",
     traits: ["Culture","Cuisine","Communities","Conservation"],
   },
@@ -423,22 +423,22 @@ export const enContent = {
   impact: {
   "education": {
     title: "Education support",
-    description: "Working with schools near the communities we travel through — the practical things a classroom runs short of, and the costs that keep children out of one.",
+    description: "Schools near the communities these journeys pass through: the practical things a classroom runs short of, and the costs that keep children out of one.",
     location: null,
   },
   "conservation": {
     title: "Wildlife conservation",
-    description: "Supporting the conservation teams working in the ecosystems our journeys depend on, and giving travellers a way to spend a day with them rather than only reading about it.",
+    description: "The conservation teams working in the ecosystems these journeys depend on — and a way to spend a day with them rather than only read about it.",
     location: null,
   },
   "community": {
     title: "Community partnership",
-    description: "Community visits arranged directly with the people hosting them, at times that suit them, with fees paid to the community rather than to an intermediary.",
+    description: "Community visits arranged directly with the people hosting them, at times that suit them rather than at a time that suits a coach party.",
     location: null,
   },
   "local-employment": {
     title: "Local employment",
-    description: "Guides, drivers, cooks and office staff hired and trained in Tanzania. On Kilimanjaro, porter pay and load limits follow KPAP guidelines.",
+    description: "Guides, drivers, cooks and office staff hired in Tanzania. On Kilimanjaro, how a mountain crew is paid and how much it carries is part of choosing one.",
     location: "Arusha, Tanzania",
   },
   } satisfies Record<string, ImpactText>,

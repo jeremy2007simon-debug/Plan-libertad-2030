@@ -36,7 +36,7 @@ export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
               lede={t.home.why.lede}
             />
 
-            <ImageReveal className="mt-8 aspect-16/9 lg:aspect-square">
+            <ImageReveal className="mt-8 aspect-16/9 lg:aspect-3/2">
               <Photo
                 photo={CLIENT_PHOTOS["giraffe-patterns-monochrome"]}
                 alt=""
@@ -46,7 +46,7 @@ export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
           </div>
 
           <div className="lg:col-span-7">
-            <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+            <ul className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
               <Stagger as="li" step={0.07}>
                 {t.home.why.pillars.map((pillar) => (
                   <span key={pillar.title} className="block">
@@ -54,11 +54,11 @@ export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
                         tarjeta: marca el bloque sin dibujar una caja. */}
                     <span className="rule-gold block h-px w-14 origin-left" />
                     <CompassMark
-                      className="mt-5 size-6 text-[var(--gold)]"
+                      className="mt-4 size-6 text-[var(--gold)]"
                       needle={false}
                       strokeWidth={1.4}
                     />
-                    <span className="font-display mt-4 block text-[1.28rem] leading-tight text-parchment">
+                    <span className="font-display mt-3 block text-[1.28rem] leading-tight text-parchment">
                       {pillar.title}
                     </span>
                     <span className="mt-2.5 block text-[0.92rem] leading-relaxed text-on-dark-soft">

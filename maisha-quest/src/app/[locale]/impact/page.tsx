@@ -4,6 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { LazyVideo } from "@/components/ui/LazyVideo";
+import { hasPlayableVideo } from "@/lib/media";
 import { MediaFrame } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
@@ -109,7 +110,6 @@ export default async function ImpactPage({
                           <div className="relative mt-5 aspect-3/2 overflow-hidden">
                             <MediaFrame
                               media={project.image}
-                              label={project.title}
                               sizes="(max-width: 640px) 100vw, 32vw"
                             />
                           </div>
@@ -123,20 +123,22 @@ export default async function ImpactPage({
 
             <aside className="lg:col-span-4 lg:col-start-9">
               <Reveal>
-                <div className="mx-auto w-full max-w-[20rem] lg:max-w-none">
-                  <LazyVideo
-                    video={video}
-                    label={t.home.impact.watch}
-                    posterLabel={t.home.impact.posterLabel}
-                    pauseLabel={t.video.pause}
-                    pendingLabel={t.video.pending}
-                    filmToFollowLabel={t.video.filmToFollow(
-                      t.home.impact.posterLabel,
-                    )}
-                    tone="dark"
-                    className="relative aspect-9/16 w-full bg-canopy"
-                  />
-                </div>
+                {/* Sin autorización escrita para las imágenes de menores, el
+                    vídeo no se publica y aquí no queda ningún marco. */}
+                {hasPlayableVideo(video) && (
+                  <div className="mx-auto w-full max-w-[17rem] lg:max-w-none">
+                    <LazyVideo
+                      video={video}
+                      t={{
+                        play: t.home.impact.watch,
+                        pause: t.video.pause,
+                        unmute: t.video.unmute,
+                        mute: t.video.mute,
+                      }}
+                      className="relative aspect-9/16 w-full bg-canopy"
+                    />
+                  </div>
+                )}
                 <ButtonLink
                   href="/contact"
                   locale={locale}

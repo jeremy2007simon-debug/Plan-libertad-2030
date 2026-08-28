@@ -10,7 +10,7 @@
  *
  * NO se traduce: "Maisha Quest", los nombres del equipo, los nombres de las
  * colecciones (Explorer/Escape/Enrich), correos, teléfonos y las siglas de
- * organizaciones (KPAP).
+ * organizaciones.
  *
  * ⚠️ INTERNO: traducción completa a nivel técnico, PENDIENTE de revisión
  * final por un hablante nativo antes de publicar en producción. No se
@@ -95,7 +95,7 @@ export const esContent: ContentDictionary = {
       overview: undefined,
       travellerProfile: "Senderistas; no se necesita experiencia técnica de escalada",
       bestTime: "De enero a marzo, y de junio a octubre",
-      included: ["Equipo de montaña: guías, cocinero y porteadores, retribuidos según las pautas de KPAP","Todas las tasas del Parque Nacional del Kilimanjaro y de rescate","Equipo de acampada, comidas y agua potable en la montaña","Dos noches en Arusha, antes y después de la ascensión","Traslados de aeropuerto"],
+      included: ["Equipo de montaña: guías, cocinero y porteadores, con sueldo y límites de carga acordados antes de subir","Todas las tasas del Parque Nacional del Kilimanjaro y de rescate","Equipo de acampada, comidas y agua potable en la montaña","Dos noches en Arusha, antes y después de la ascensión","Traslados de aeropuerto"],
       notIncluded: ["Vuelos internacionales y visado de Tanzania","Seguro de viaje y médico con cobertura de trekking hasta 6.000 m","Equipo personal de trekking y saco de dormir","Propinas para el equipo de montaña"],
       practicalInfo: undefined,
       days: [],
@@ -291,7 +291,7 @@ export const esContent: ContentDictionary = {
     },
     "enrich": {
       tagline: "Para quien quiere vivir Tanzania con más profundidad.",
-      description: "Tanzania más allá del safari en vehículo. Días con comunidades y equipos de conservación, comida y café donde se cultivan, y accesos privados gestionados con gente con la que llevamos años trabajando.",
+      description: "Tanzania más allá del safari en vehículo. Días con comunidades y equipos de conservación, comida y café donde se cultivan, y acceso privado acordado directamente con quien lo acoge.",
       travellerProfile: "Viajeros curiosos, familias con hijos mayores y quienes vuelven",
       traits: ["Cultura","Cocina","Comunidades","Conservación"],
     },
@@ -382,22 +382,22 @@ export const esContent: ContentDictionary = {
   impact: {
     "education": {
       title: "Apoyo a la educación",
-      description: "Trabajo con colegios cercanos a las comunidades por las que viajamos: las cosas prácticas que faltan en un aula y los gastos que dejan a un niño fuera de ella.",
+      description: "Escuelas cercanas a las comunidades por las que pasan estos viajes: las cosas prácticas que le faltan a un aula y los gastos que dejan a los niños fuera de ella.",
       location: null,
     },
     "conservation": {
       title: "Conservación de la fauna",
-      description: "Apoyo a los equipos de conservación que trabajan en los ecosistemas de los que dependen nuestros viajes, y una forma de que el viajero pase un día con ellos en lugar de solo leer sobre ello.",
+      description: "Los equipos de conservación que trabajan en los ecosistemas de los que dependen estos viajes, y una forma de pasar un día con ellos en lugar de solo leer sobre el tema.",
       location: null,
     },
     "community": {
       title: "Alianza con las comunidades",
-      description: "Visitas acordadas directamente con quienes las acogen, en los horarios que les convienen y con el pago a la comunidad y no a un intermediario.",
+      description: "Visitas a comunidades acordadas directamente con quienes las acogen, en el momento que a ellos les conviene y no en el que le conviene a un autocar.",
       location: null,
     },
     "local-employment": {
       title: "Empleo local",
-      description: "Guías, conductores, cocineros y personal de oficina contratados y formados en Tanzania. En el Kilimanjaro, el sueldo de los porteadores y los límites de carga siguen las pautas de KPAP.",
+      description: "Guías, conductores, cocineros y personal de oficina contratados en Tanzania. En el Kilimanjaro, cómo se retribuye a una cuadrilla y cuánto carga forma parte de elegirla.",
       location: "Arusha, Tanzania",
     },
   },

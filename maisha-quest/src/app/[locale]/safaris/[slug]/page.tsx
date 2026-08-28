@@ -9,7 +9,7 @@ import { FaqSchema, SafariSchema } from "@/components/seo/StructuredData";
 import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark, CompassPoint } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
-import { ImageSlot, Photo } from "@/components/ui/Photo";
+import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/motion";
 import { SAFARI_STRUCTURE } from "@/data/structure/safaris";
 import { LOCALES, isLocale, localeHref } from "@/i18n/config";
@@ -187,13 +187,23 @@ export default async function SafariPage({
                     t.accommodation[safari.accommodationStyle],
                   )}
                 </p>
-                <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                  {stops.slice(0, 3).map((stop) => (
-                    <div key={stop.slug} className="relative aspect-4/3 overflow-hidden">
-                      <ImageSlot label={t.safari.accommodationIn(stop.name)} />
-                    </div>
+                {/* Aquí había tres marcos con la leyenda "fotografía
+                    pendiente", uno por parada. Los alojamientos concretos no
+                    están confirmados y sus fotos no son nuestras, así que en
+                    lugar de reservar el hueco se listan las paradas: es el dato
+                    que el visitante necesita y no aparenta nada que no haya.
+                    Ver `src/data/photography-wanted.ts`. */}
+                <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+                  {stops.map((stop) => (
+                    <li
+                      key={stop.slug}
+                      className="flex items-center gap-2.5 text-[0.92rem] text-forest"
+                    >
+                      <CompassPoint className="size-2 shrink-0 text-gold" />
+                      {stop.name}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </Reveal>
 
               {safari.gallery && safari.gallery.length > 0 && (

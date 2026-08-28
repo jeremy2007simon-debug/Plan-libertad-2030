@@ -54,7 +54,7 @@ export async function Collections({
   const collections = await getCollections(locale);
 
   return (
-    <section className="on-sand texture-paper relative isolate bg-sand py-12 sm:py-16">
+    <section className="on-sand texture-paper relative isolate bg-sand py-10 sm:py-14">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.collections.eyebrow}
@@ -66,7 +66,7 @@ export async function Collections({
           </ButtonLink>
         </SectionHeading>
 
-        <div className="mt-12 flex flex-col gap-12 sm:gap-16">
+        <div className="mt-10 flex flex-col gap-10 sm:gap-12">
           {collections.map((collection, index) => {
             const range = t.common.durationRange(collectionDurationRange(collection));
             const flipped = index % 2 === 1;
@@ -78,7 +78,7 @@ export async function Collections({
                 className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12"
               >
                   <ImageReveal
-                    className={`aspect-16/9 lg:col-span-6 lg:aspect-16/10 ${
+                    className={`aspect-16/9 lg:col-span-6 lg:aspect-2/1 ${
                       flipped ? "lg:order-2 lg:col-start-7" : ""
                     }`}
                   >
@@ -93,7 +93,7 @@ export async function Collections({
                           photo={collection.image}
                           alt=""
                           sizes="(max-width: 1024px) 100vw, 55vw"
-                          className="transition-transform duration-[1400ms] ease-[var(--ease-soft)] group-hover:scale-[1.04]"
+                          className="transition-transform duration-[1400ms] ease-[var(--ease-soft)] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
                         />
                       </ParallaxMedia>
                       {/* Velo del color de la colección, muy diluido: es lo que
@@ -146,25 +146,11 @@ export async function Collections({
                         {collection.description}
                       </p>
 
-                      <dl className="mt-5">
-                        <dt className="eyebrow text-ink-faint">{t.common.suits}</dt>
-                        <dd className="mt-1.5 text-[0.95rem] text-forest">
-                          {collection.travellerProfile}
-                        </dd>
-                      </dl>
-
-                      {/* Los rasgos van como una línea de texto: cuatro
-                          etiquetas con borde se partían en dos filas en móvil
-                          y sumaban altura sin aportar nada. */}
-                      <p className="mt-4 text-[0.85rem] leading-relaxed text-ink-faint">
-                        {collection.traits.join("  ·  ")}
-                      </p>
-
                       <Link
                         href={localeHref(locale, `/collections/${collection.id}`)}
                         className="group mt-6 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
                       >
-                        <span className="border-b border-forest/30 pb-1 transition-colors duration-[var(--dur-hover)] group-hover:border-terracotta-text group-hover:text-terracotta-text">
+                        <span className="border-b border-forest/30 pb-1 transition-colors duration-[var(--dur-hover)] group-hover:border-terracotta-text group-focus-visible:border-terracotta-text group-hover:text-terracotta-text group-focus-visible:text-terracotta-text">
                           {t.home.collections.explore(collection.name)}
                         </span>
                         <MagneticArrow className="text-terracotta-text" />

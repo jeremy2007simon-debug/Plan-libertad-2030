@@ -40,7 +40,7 @@ export async function PlannerSection({
   const showInvitation = testimonials.length === 0;
 
   return (
-    <section id="plan" className="texture-paper relative isolate bg-page py-12 sm:py-16">
+    <section id="plan" className="texture-paper relative isolate bg-page py-10 sm:py-14">
       <Container width="wide">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
@@ -50,7 +50,7 @@ export async function PlannerSection({
               lede={t.home.planner.lede}
             />
 
-            <ImageReveal className="mt-9 hidden aspect-4/5 lg:block">
+            <ImageReveal className="mt-8 hidden aspect-3/2 lg:block">
               <Photo
                 photo={CLIENT_PHOTOS["flamingo-flock-in-motion"]}
                 alt=""

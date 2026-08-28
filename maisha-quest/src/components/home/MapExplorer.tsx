@@ -30,7 +30,6 @@ export interface MapStrings {
   lede: string;
   bestTime: string;
   wildlife: string;
-  experiences: string;
   journeysHere: string;
   chooseDestination: string;
 }
@@ -55,7 +54,6 @@ export interface MapDestination {
   coordinates: string;
   mapPosition: { x: number; y: number };
   image: { src: string; alt: string; width: number; height: number; blurDataURL: string };
-  experiences: { slug: string; name: string }[];
   safaris: {
     slug: string;
     name: string;
@@ -241,17 +239,17 @@ export function MapExplorer({
                 }}
               >
                 <span
-                  className={`block size-2.5 rotate-45 border transition-all duration-500 ease-[var(--ease-out)] ${
+                  className={`block size-2.5 rotate-45 border transition-all duration-[var(--dur-base)] ease-[var(--ease-out)] ${
                     isActive
                       ? "animate-point-pulse scale-125 border-terracotta bg-terracotta"
-                      : "border-forest/60 bg-cream group-hover:border-terracotta group-hover:bg-terracotta/25"
+                      : "border-forest/60 bg-cream group-hover:scale-110 group-hover:border-terracotta group-hover:bg-terracotta/25 group-focus-visible:scale-110 group-focus-visible:border-terracotta group-focus-visible:bg-terracotta/25"
                   }`}
                 />
                 <span
-                  className={`text-[0.78rem] whitespace-nowrap transition-colors duration-300 ${
+                  className={`text-[0.78rem] whitespace-nowrap transition-colors duration-[var(--dur-hover)] ${
                     isActive
                       ? "font-semibold text-forest"
-                      : "text-ink-soft group-hover:text-forest"
+                      : "text-ink-soft group-hover:text-forest group-focus-visible:text-forest"
                   }`}
                 >
                   {destination.name}
@@ -294,15 +292,16 @@ export function MapExplorer({
         {/* `key` fuerza el remontaje: la ficha entra con una transición suave
             en lugar de cambiar el texto de golpe. */}
         <article key={active.slug} className="animate-panel-in">
-          <div className="relative aspect-3/2 overflow-hidden">
+          <div className="relative aspect-16/9 overflow-hidden">
             <Image
+              key={active.slug}
               src={active.image.src}
               alt={active.image.alt}
               fill
               sizes="(max-width: 1024px) 100vw, 42vw"
               placeholder="blur"
               blurDataURL={active.image.blurDataURL}
-              className="object-cover"
+              className="animate-crossfade object-cover"
             />
             <div className="absolute left-4 top-4 flex items-center gap-2 bg-parchment/92 px-3 py-1.5">
               <CompassMark className="size-3.5 text-gold" needle={false} />
@@ -329,27 +328,13 @@ export function MapExplorer({
                 {active.wildlife.join(", ")}
               </dd>
             </div>
-            <div className="sm:col-span-2">
-              <dt className="eyebrow text-ink-faint">{t.experiences}</dt>
-              <dd className="mt-2 flex flex-wrap gap-2">
-                {active.experiences.map((experience) => (
-                  <Link
-                    key={experience.slug}
-                    href={localeHref(locale, `/experiences/${experience.slug}`)}
-                    className="border border-rule px-3 py-1.5 text-[0.78rem] text-ink-soft transition-colors duration-300 hover:border-forest hover:text-forest"
-                  >
-                    {experience.name}
-                  </Link>
-                ))}
-              </dd>
-            </div>
           </dl>
 
           {active.safaris.length > 0 && (
             <div className="mt-7 border-t border-rule pt-6">
               <p className="eyebrow text-ink-faint">{t.journeysHere}</p>
               <ul className="mt-3 flex flex-col divide-y divide-rule">
-                {active.safaris.slice(0, 3).map((safari) => (
+                {active.safaris.slice(0, 2).map((safari) => (
                   <li key={safari.slug}>
                     <Link
                       href={localeHref(locale, `/safaris/${safari.slug}`)}

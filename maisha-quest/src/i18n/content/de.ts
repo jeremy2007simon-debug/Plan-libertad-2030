@@ -10,7 +10,7 @@
  *
  * NO se traduce: "Maisha Quest", los nombres del equipo, los nombres de las
  * colecciones (Explorer/Escape/Enrich), correos, teléfonos y las siglas de
- * organizaciones (KPAP).
+ * organizaciones.
  *
  * ⚠️ INTERNO: traducción completa a nivel técnico, PENDIENTE de revisión
  * final por un hablante nativo antes de publicar en producción. No se
@@ -95,7 +95,7 @@ export const deContent: ContentDictionary = {
       overview: undefined,
       travellerProfile: "Bergwanderer – technische Klettererfahrung ist nicht nötig",
       bestTime: "Januar – März sowie Juni – Oktober",
-      included: ["Bergmannschaft: Guides, Koch und Träger, bezahlt nach KPAP-Richtlinien","Sämtliche Gebühren des Kilimanjaro-Nationalparks und Rettungsgebühren","Campingausrüstung, Mahlzeiten und Trinkwasser am Berg","Zwei Nächte in Arusha, vor und nach dem Aufstieg","Flughafentransfers"],
+      included: ["Bergmannschaft: Guides, Koch und Träger, mit vor dem Aufstieg vereinbarter Bezahlung und Traglastgrenze","Sämtliche Gebühren des Kilimanjaro-Nationalparks und Rettungsgebühren","Campingausrüstung, Mahlzeiten und Trinkwasser am Berg","Zwei Nächte in Arusha, vor und nach dem Aufstieg","Flughafentransfers"],
       notIncluded: ["Internationale Flüge und Visum für Tansania","Reise- und Krankenversicherung mit Deckung für Trekking bis 6.000 m","Persönliche Trekkingausrüstung und Schlafsack","Trinkgelder für die Bergmannschaft"],
       practicalInfo: undefined,
       days: [],
@@ -291,7 +291,7 @@ export const deContent: ContentDictionary = {
     },
     "enrich": {
       tagline: "Für Reisende, die Tansania tiefer erleben möchten.",
-      description: "Tansania jenseits der Pirschfahrt. Tage mit Gemeinschaften und Naturschutzteams, Essen und Kaffee dort, wo sie wachsen, und private Zugänge über Menschen, mit denen wir seit Jahren arbeiten.",
+      description: "Tansania jenseits der Pirschfahrt. Tage bei Gemeinschaften und Naturschutzteams, Essen und Kaffee dort, wo sie wachsen, und privater Zugang, direkt mit den Gastgebenden vereinbart.",
       travellerProfile: "Neugierige Reisende, Familien mit älteren Kindern, Wiederkehrende",
       traits: ["Kultur","Küche","Gemeinschaften","Naturschutz"],
     },
@@ -382,22 +382,22 @@ export const deContent: ContentDictionary = {
   impact: {
     "education": {
       title: "Bildungsförderung",
-      description: "Zusammenarbeit mit Schulen nahe den Gemeinschaften, durch die wir reisen — das Praktische, das einem Klassenzimmer fehlt, und die Kosten, die Kinder davon fernhalten.",
+      description: "Schulen in der Nähe der Gemeinden, durch die diese Reisen führen: die praktischen Dinge, die einem Klassenzimmer fehlen, und die Kosten, die Kinder davon fernhalten.",
       location: null,
     },
     "conservation": {
       title: "Wildtierschutz",
-      description: "Unterstützung der Naturschutzteams in den Ökosystemen, von denen unsere Reisen abhängen — und die Möglichkeit, einen Tag mit ihnen zu verbringen, statt nur darüber zu lesen.",
+      description: "Die Naturschutzteams in den Ökosystemen, von denen diese Reisen leben – und die Möglichkeit, einen Tag mit ihnen zu verbringen, statt nur darüber zu lesen.",
       location: null,
     },
     "community": {
       title: "Partnerschaft mit Gemeinschaften",
-      description: "Besuche, direkt mit den Gastgebenden vereinbart, zu Zeiten, die ihnen passen, und mit einer Vergütung, die an die Gemeinschaft geht statt an einen Vermittler.",
+      description: "Gemeindebesuche, direkt mit den Gastgebenden vereinbart – zu Zeiten, die ihnen passen, und nicht zu Zeiten, die einem Reisebus passen.",
       location: null,
     },
     "local-employment": {
       title: "Arbeit vor Ort",
-      description: "Guides, Fahrer, Köchinnen und Büropersonal werden in Tansania eingestellt und ausgebildet. Am Kilimandscharo folgen Trägerlöhne und Traglastgrenzen den KPAP-Richtlinien.",
+      description: "Guides, Fahrer, Köche und Büropersonal werden in Tansania eingestellt. Am Kilimandscharo gehört zur Auswahl einer Bergmannschaft, wie sie bezahlt wird und wie viel sie trägt.",
       location: "Arusha, Tansania",
     },
   },

@@ -46,7 +46,6 @@ function Member({
         <ImageReveal className="mb-6 aspect-4/5">
           <MediaFrame
             media={member.portrait}
-            label={t.team.portraitOf(member.name)}
             sizes="(max-width: 768px) 86vw, 30vw"
           />
         </ImageReveal>
@@ -96,7 +95,7 @@ export async function Team({ locale, t }: { locale: Locale; t: Dictionary }) {
   const team = await getTeam(locale);
 
   return (
-    <section className="on-sand texture-paper relative isolate bg-sand py-12 sm:py-16">
+    <section className="on-sand texture-paper relative isolate bg-sand py-10 sm:py-14">
       <Container width="wide">
         <SectionHeading
           eyebrow={t.home.team.eyebrow}
@@ -108,7 +107,7 @@ export async function Team({ locale, t }: { locale: Locale; t: Dictionary }) {
           </ButtonLink>
         </SectionHeading>
 
-        <ul className="mt-12 hidden gap-8 md:grid md:grid-cols-3 md:gap-8">
+        <ul className="mt-10 hidden gap-8 md:grid md:grid-cols-3 md:gap-8">
           <Stagger as="li" step={0.1}>
             {team.map((member, index) => (
               <Member key={member.slug} member={member} index={index} t={t} />

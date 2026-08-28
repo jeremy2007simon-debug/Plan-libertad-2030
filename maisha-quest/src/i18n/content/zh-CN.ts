@@ -10,7 +10,7 @@
  *
  * NO se traduce: "Maisha Quest", los nombres del equipo, los nombres de las
  * colecciones (Explorer/Escape/Enrich), correos, teléfonos y las siglas de
- * organizaciones (KPAP).
+ * organizaciones.
  *
  * ⚠️ INTERNO: traducción completa a nivel técnico, PENDIENTE de revisión
  * final por un hablante nativo antes de publicar en producción. No se
@@ -95,7 +95,7 @@ export const zhCNContent: ContentDictionary = {
       overview: undefined,
       travellerProfile: "徒步者——无需技术攀登经验",
       bestTime: "1月至3月，以及6月至10月",
-      included: ["登山团队：向导、厨师与挑夫，依 KPAP 准则支薪","乞力马扎罗国家公园全部费用与救援费","山上的露营装备、餐食与饮用水","登山前后各一晚阿鲁沙住宿","机场接送"],
+      included: ["登山团队：向导、厨师与挑夫，报酬与负重上限于出发前议定","乞力马扎罗国家公园全部费用与救援费","山上的露营装备、餐食与饮用水","登山前后各一晚阿鲁沙住宿","机场接送"],
       notIncluded: ["国际航班与坦桑尼亚签证","涵盖 6,000 米以下徒步的旅行与医疗保险","个人徒步装备与睡袋","给登山团队的小费"],
       practicalInfo: undefined,
       days: [],
@@ -291,7 +291,7 @@ export const zhCNContent: ContentDictionary = {
     },
     "enrich": {
       tagline: "适合想更深入认识坦桑尼亚的旅行者。",
-      description: "乘车观兽之外的坦桑尼亚。与当地社区和自然保护团队相处的日子，在食物与咖啡生长的地方品尝它们，以及通过多年合作伙伴安排的私人探访。",
+      description: "游猎车之外的坦桑尼亚。与社群和保育团队共度的日子、在产地品尝的食物与咖啡，以及直接与接待方洽谈安排的私人接待。",
       travellerProfile: "好奇的旅行者、带大孩子的家庭、重复到访的旅客",
       traits: ["文化","饮食","社区","自然保护"],
     },
@@ -382,22 +382,22 @@ export const zhCNContent: ContentDictionary = {
   impact: {
     "education": {
       title: "教育支持",
-      description: "与我们行程沿线社区附近的学校合作——教室里短缺的实际用品，以及那些让孩子无法上学的花费。",
+      description: "这些行程沿途社群附近的学校：课堂上短缺的实际物资，以及让孩子无法走进课堂的那些开销。",
       location: null,
     },
     "conservation": {
       title: "野生动物保护",
-      description: "支持在我们行程所依赖的生态系统中工作的保护团队，并让旅客有机会与他们共度一天，而不只是从文字中了解。",
+      description: "在这些行程所依赖的生态系统中工作的保育团队——以及与他们共度一天的机会，而不只是从文字里读到。",
       location: null,
     },
     "community": {
       title: "社区合作",
-      description: "探访由接待方直接安排，时间由他们决定，费用支付给社区本身，而不是中间人。",
+      description: "直接与接待者洽谈安排的社群走访，时间由他们决定，而不是迁就旅游巴士的时刻。",
       location: null,
     },
     "local-employment": {
       title: "本地就业",
-      description: "向导、司机、厨师与办公室同事都在坦桑尼亚招聘和培训。在乞力马扎罗，挑夫报酬与负重上限遵循 KPAP 准则。",
+      description: "向导、司机、厨师与办公室人员均在坦桑尼亚聘用。在乞力马扎罗，挑夫如何计酬、负重多少，是我们挑选登山团队时的一部分考量。",
       location: "坦桑尼亚阿鲁沙",
     },
   },

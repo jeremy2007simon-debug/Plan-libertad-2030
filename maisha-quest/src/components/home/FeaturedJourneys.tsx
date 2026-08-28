@@ -102,7 +102,7 @@ export async function FeaturedJourneys({
           photo={safari.image}
           alt=""
           sizes="120px"
-          className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.05]"
+          className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.05] group-focus-visible:scale-[1.05]"
         />
       </span>
       <span className="flex-1">
@@ -112,7 +112,7 @@ export async function FeaturedJourneys({
         >
           {String(index + 2).padStart(2, "0")}
         </span>
-        <span className="font-display mt-1 block text-[1.15rem] leading-tight text-parchment transition-colors duration-[var(--dur-hover)] group-hover:text-sand">
+        <span className="font-display mt-1 block text-[1.15rem] leading-tight text-parchment transition-colors duration-[var(--dur-hover)] group-hover:text-sand group-focus-visible:text-sand">
           {safari.name}
         </span>
         <Meta safari={safari} locale={locale} t={t} className="mt-1.5" />
@@ -137,7 +137,7 @@ export async function FeaturedJourneys({
           alt=""
           sizes="84vw"
           priority={index === 0}
-          className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.04]"
+          className="transition-transform duration-[1200ms] ease-[var(--ease-soft)] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
         />
         <span className="media-scrim-soft absolute inset-0" />
         <span className="absolute inset-x-0 bottom-0 p-5">
@@ -175,7 +175,7 @@ export async function FeaturedJourneys({
         </SectionHeading>
 
         {/* Tableta y escritorio: uno grande y dos compactos. */}
-        <div className="mt-12 hidden gap-10 md:grid md:grid-cols-12 lg:gap-14">
+        <div className="mt-10 hidden gap-10 md:grid md:grid-cols-12 lg:gap-14">
           <ImageReveal className="md:col-span-7">
             <Link
               href={localeHref(locale, `/safaris/${lead.slug}`)}
@@ -187,7 +187,7 @@ export async function FeaturedJourneys({
                   alt=""
                   sizes="(max-width: 1024px) 58vw, 54vw"
                   priority
-                  className="transition-transform duration-[1400ms] ease-[var(--ease-soft)] group-hover:scale-[1.03]"
+                  className="transition-transform duration-[1400ms] ease-[var(--ease-soft)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
                 />
                 <span className="media-scrim absolute inset-0" />
                 <span className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
@@ -199,7 +199,7 @@ export async function FeaturedJourneys({
                   </span>
                   <span
                     aria-hidden="true"
-                    className="mt-2.5 block h-px w-10 origin-left bg-[var(--gold)]/70 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out)] group-hover:scale-x-[3]"
+                    className="mt-2.5 block h-px w-10 origin-left bg-[var(--gold)]/70 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out)] group-hover:scale-x-[3] group-focus-visible:scale-x-[3]"
                   />
                   <span className="font-display mt-3.5 block text-[1.9rem] leading-tight text-parchment sm:text-[2.25rem]">
                     {lead.name}

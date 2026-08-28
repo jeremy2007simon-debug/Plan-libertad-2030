@@ -67,39 +67,14 @@ export const HOME_COORDINATES = {
  * traducir el menú.
  */
 
-/** Beneficios de "Your journey, in trusted hands". Sin cifras: nada inventado. */
-export const TRUST_PILLARS = [
-  {
-    title: "Tanzania-based experts",
-    body: "We live and work in Arusha. Our routes come from driving them, not from a brochure.",
-    icon: "compass",
-  },
-  {
-    title: "Tailor-made itineraries",
-    body: "Every journey is built from scratch around your pace, your interests and your dates.",
-    icon: "route",
-  },
-  {
-    title: "Multilingual service",
-    body: "We plan and host in English, Swahili, Russian and Mandarin Chinese.",
-    icon: "languages",
-  },
-  {
-    title: "Carefully selected stays",
-    body: "Camps and lodges we have visited ourselves, chosen for location, service and character.",
-    icon: "lodge",
-  },
-  {
-    title: "Responsible local travel",
-    body: "Local guides, local suppliers, and communities involved rather than photographed.",
-    icon: "leaf",
-  },
-  {
-    title: "Support from arrival to departure",
-    body: "One team from your first message to your flight home, reachable throughout your trip.",
-    icon: "shield",
-  },
-] as const;
+/**
+ * Los seis motivos de "Your journey, in trusted hands" viven en el diccionario
+ * (`why.pillars`), traducidos a los seis idiomas. Aquí había una copia en
+ * inglés que ya no usaba nadie y que se quedó desincronizada en cuanto se
+ * revisaron las afirmaciones: se ha eliminado.
+ *
+ * Qué afirma cada motivo y qué está confirmado, en `src/data/claims.ts`.
+ */
 
 /**
  * Espacio reservado para acreditaciones comerciales (TALA, TATO, seguros,
@@ -148,6 +123,10 @@ export function whatsappHref(message?: string): string {
  * Lista viva de lo que hoy no se puede publicar porque no está verificado.
  * Nada de esto se inventa ni se sustituye por un sucedáneo: si no hay dato, el
  * elemento no se pinta.
+ *
+ * Esto son DATOS que faltan. Las AFIRMACIONES sobre el negocio —lo que la web
+ * dice de sí misma y qué parte de ello está confirmado— están clasificadas
+ * una a una en `src/data/claims.ts`.
  */
 export const CLIENT_DATA_PENDING = [
   {

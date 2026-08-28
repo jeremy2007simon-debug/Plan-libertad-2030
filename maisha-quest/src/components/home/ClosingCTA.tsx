@@ -21,7 +21,7 @@ import type { Dictionary } from "@/i18n/messages/en";
  */
 export function ClosingCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
-    <section className="relative isolate flex min-h-[70svh] items-center overflow-hidden bg-charcoal">
+    <section className="relative isolate flex min-h-[66svh] items-center overflow-hidden bg-charcoal">
       <div className="absolute inset-0 -z-10">
         <ParallaxMedia strength={26} className="absolute -inset-y-10 inset-x-0">
           <Photo
@@ -37,7 +37,7 @@ export function ClosingCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
         <div className="fade-to-canopy absolute inset-0" />
       </div>
 
-      <Container width="wide" className="py-12 sm:py-16">
+      <Container width="wide" className="py-10 sm:py-14">
         <div className="max-w-2xl">
           <Reveal from="none">
             <CompassMark className="size-9 text-sand" />

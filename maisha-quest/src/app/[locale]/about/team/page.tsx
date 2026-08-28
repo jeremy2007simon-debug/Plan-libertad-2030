@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { MediaFrame, PersonSlot } from "@/components/ui/Photo";
+import { MediaFrame } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import { isLocale } from "@/i18n/config";
@@ -52,27 +52,33 @@ export default async function TeamPage({
             {team.map((member, index) => (
               <li key={member.slug}>
                 <Reveal>
+                  {/* Sin retrato real no hay marco: la ficha pasa a ocupar
+                      todo el ancho y se sostiene sobre la tipografía. Ver
+                      `src/data/photography-wanted.ts`. */}
                   <article className="grid items-start gap-8 lg:grid-cols-12 lg:gap-14">
-                    <div
-                      className={`relative overflow-hidden lg:col-span-4 ${
-                        member.portrait.src ? "aspect-4/5" : "aspect-square"
-                      } ${index % 2 === 1 ? "lg:order-2 lg:col-start-9" : ""}`}
-                    >
-                      {member.portrait.src ? (
+                    {member.portrait.src && (
+                      <div
+                        className={`relative aspect-4/5 overflow-hidden lg:col-span-4 ${
+                          index % 2 === 1 ? "lg:order-2 lg:col-start-9" : ""
+                        }`}
+                      >
                         <MediaFrame
                           media={member.portrait}
-                          label={t.team.portraitOf(member.name)}
                           sizes="(max-width: 1024px) 100vw, 30vw"
                         />
-                      ) : (
-                        <PersonSlot name={member.name} />
-                      )}
-                    </div>
+                      </div>
+                    )}
 
                     <div
-                      className={`lg:col-span-7 ${
-                        index % 2 === 1 ? "lg:order-1 lg:col-start-1" : "lg:col-start-6"
-                      }`}
+                      className={
+                        member.portrait.src
+                          ? `lg:col-span-7 ${
+                              index % 2 === 1
+                                ? "lg:order-1 lg:col-start-1"
+                                : "lg:col-start-6"
+                            }`
+                          : "lg:col-span-10 lg:col-start-2"
+                      }
                     >
                       <p className="eyebrow text-terracotta-text">{member.role}</p>
                       <h2 className="text-h2 mt-3 text-forest">{member.name}</h2>

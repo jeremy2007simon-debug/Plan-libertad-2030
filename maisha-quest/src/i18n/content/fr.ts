@@ -10,7 +10,7 @@
  *
  * NO se traduce: "Maisha Quest", los nombres del equipo, los nombres de las
  * colecciones (Explorer/Escape/Enrich), correos, teléfonos y las siglas de
- * organizaciones (KPAP).
+ * organizaciones.
  *
  * ⚠️ INTERNO: traducción completa a nivel técnico, PENDIENTE de revisión
  * final por un hablante nativo antes de publicar en producción. No se
@@ -95,7 +95,7 @@ export const frContent: ContentDictionary = {
       overview: undefined,
       travellerProfile: "Randonneurs — aucune expérience d'escalade technique requise",
       bestTime: "De janvier à mars, et de juin à octobre",
-      included: ["Équipe de montagne : guides, cuisinier et porteurs, rémunérés selon les recommandations KPAP","Tous les droits du parc national du Kilimandjaro et frais de secours","Matériel de campement, repas et eau potable sur la montagne","Deux nuits à Arusha, avant et après l'ascension","Transferts aéroport"],
+      included: ["Équipe de montagne : guides, cuisinier et porteurs, rémunération et limites de charge convenues avant la montée","Tous les droits du parc national du Kilimandjaro et frais de secours","Matériel de campement, repas et eau potable sur la montagne","Deux nuits à Arusha, avant et après l'ascension","Transferts aéroport"],
       notIncluded: ["Vols internationaux et visa tanzanien","Assurance voyage et médicale couvrant le trekking jusqu'à 6 000 m","Matériel de trekking personnel et sac de couchage","Pourboires pour l'équipe de montagne"],
       practicalInfo: undefined,
       days: [],
@@ -291,7 +291,7 @@ export const frContent: ContentDictionary = {
     },
     "enrich": {
       tagline: "Pour les voyageurs qui veulent vivre la Tanzanie plus en profondeur.",
-      description: "La Tanzanie au-delà de la sortie en véhicule. Des journées avec les communautés et les équipes de conservation, la cuisine et le café là où ils poussent, et des accès privés obtenus grâce à des gens avec qui nous travaillons depuis des années.",
+      description: "La Tanzanie au-delà du safari en véhicule. Des journées auprès des communautés et des équipes de conservation, la cuisine et le café là où ils poussent, et des accès privés organisés directement avec celles et ceux qui les accueillent.",
       travellerProfile: "Voyageurs curieux, familles avec grands enfants, habitués",
       traits: ["Culture","Cuisine","Communautés","Conservation"],
     },
@@ -382,22 +382,22 @@ export const frContent: ContentDictionary = {
   impact: {
     "education": {
       title: "Soutien à l’éducation",
-      description: "Un travail avec les écoles proches des communautés que nous traversons — les choses concrètes qui manquent à une salle de classe, et les frais qui en tiennent des enfants éloignés.",
+      description: "Les écoles proches des communautés que traversent ces voyages : les choses concrètes qui manquent à une salle de classe, et les frais qui en tiennent les enfants éloignés.",
       location: null,
     },
     "conservation": {
       title: "Conservation de la faune",
-      description: "Un soutien aux équipes de conservation qui travaillent dans les écosystèmes dont dépendent nos voyages, et la possibilité pour les voyageurs de passer une journée avec elles plutôt que d’en lire seulement le récit.",
+      description: "Les équipes de conservation qui travaillent dans les écosystèmes dont dépendent ces voyages — et la possibilité de passer une journée avec elles plutôt que d’en lire seulement le récit.",
       location: null,
     },
     "community": {
       title: "Partenariat avec les communautés",
-      description: "Des visites organisées directement avec celles et ceux qui les accueillent, aux horaires qui leur conviennent, la rémunération allant à la communauté et non à un intermédiaire.",
+      description: "Des visites communautaires organisées directement avec celles et ceux qui les accueillent, au moment qui leur convient et non à celui qui arrange un autocar.",
       location: null,
     },
     "local-employment": {
       title: "Emploi local",
-      description: "Guides, chauffeurs, cuisiniers et personnel de bureau recrutés et formés en Tanzanie. Sur le Kilimandjaro, la rémunération des porteurs et les limites de charge suivent les recommandations du KPAP.",
+      description: "Guides, chauffeurs, cuisiniers et personnel de bureau recrutés en Tanzanie. Sur le Kilimandjaro, la façon dont une équipe de montagne est rémunérée et ce qu’elle porte fait partie du choix.",
       location: "Arusha, Tanzanie",
     },
   },

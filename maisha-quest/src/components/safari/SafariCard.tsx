@@ -40,7 +40,7 @@ export function SafariCard({
           alt=""
           sizes={sizes}
           priority={priority}
-          className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+          className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05] group-focus-visible:scale-[1.05]"
         />
         <span className="absolute left-4 top-4 bg-parchment/92 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.08em] text-forest uppercase">
           {t.common.dayCount(safari.durationDays)}

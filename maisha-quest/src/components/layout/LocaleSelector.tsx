@@ -134,9 +134,19 @@ export function LocaleSelector({
     };
   }, [open]);
 
+  /**
+   * Idioma que se acaba de pulsar.
+   *
+   * Cambiar de idioma es una navegación completa: hay un momento —corto, pero
+   * perceptible en una conexión lenta— en el que no ha pasado nada visible y
+   * el visitante no sabe si su clic ha contado. Marcar la opción elegida en
+   * cuanto se pulsa responde a eso sin esperar al servidor.
+   */
+  const [changingTo, setChangingTo] = useState<Locale | null>(null);
+
   const remember = (next: Locale) => {
     rememberLocale(next);
-    setOpen(false);
+    setChangingTo(next);
     router.refresh();
   };
 
@@ -183,13 +193,18 @@ export function LocaleSelector({
                 aria-current={active ? "true" : undefined}
                 href={`/${option}${path === "/" ? "" : path}${suffix}`}
                 onClick={() => remember(option)}
-                className={`flex min-h-11 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm transition-colors duration-200 hover:bg-sand/30 focus-visible:bg-sand/30 ${
-                  active ? "text-forest" : "text-ink"
+                aria-busy={changingTo === option || undefined}
+                className={`flex min-h-11 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm transition-colors duration-[var(--dur-hover)] hover:bg-sand/30 focus-visible:bg-sand/30 ${
+                  active || changingTo === option
+                    ? "bg-sand/25 text-forest"
+                    : "text-ink"
                 }`}
               >
                 <span>{meta.nativeName}</span>
                 {active ? (
                   <span className="eyebrow text-terracotta-text">{t.current}</span>
+                ) : changingTo === option ? (
+                  <CheckIcon className="size-3.5 text-terracotta-text" />
                 ) : (
                   <span className="eyebrow text-ink-faint">{meta.short}</span>
                 )}
@@ -199,6 +214,25 @@ export function LocaleSelector({
         </div>
       )}
     </div>
+  );
+}
+
+/** Marca de confirmación al elegir idioma. Decorativa: el estado lo anuncia
+    `aria-busy` en el propio enlace. */
+function CheckIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M3 8.5l3.5 3.5L13 4.5" />
+    </svg>
   );
 }
 

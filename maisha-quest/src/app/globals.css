@@ -335,15 +335,20 @@ p {
   /* La sección va sobre oliva profunda, no sobre la oliva de acento: sobre
      #62684A ni el pergamino llega a 4,5:1 y no queda margen para una escala
      de jerarquía. */
-  --on-dark: var(--cream);                 /* 5,91:1 */
-  --on-dark-soft: rgba(243, 237, 226, 0.9);  /* 5,13:1 */
-  --on-dark-faint: rgba(243, 237, 226, 0.82); /* 4,59:1 */
+  --on-dark: var(--cream);                    /* 5,91:1 */
+  --on-dark-soft: rgba(243, 237, 226, 0.96);  /* 5,60:1 */
+  --on-dark-faint: rgba(243, 237, 226, 0.88); /* 5,03:1 */
   --sand: var(--cream);       /* El antetítulo en arena daba 3,38:1 */
 }
 
 .on-earth {
-  --on-dark-soft: rgba(233, 223, 206, 0.84);  /* 5,21:1 */
-  --on-dark-faint: rgba(233, 223, 206, 0.76); /* 4,60:1 */
+  /* Tierra es un marrón cálido y medio, y sobre él un pergamino rebajado se
+     lee apagado aunque el número diga AA: el contraste matemático no
+     distingue un par frío de uno cálido, y aquí texto y fondo comparten
+     temperatura. Se sube el cuerpo casi a opacidad plena y se reserva el tono
+     tenue para las etiquetas cortas, que es donde no molesta. */
+  --on-dark-soft: rgba(233, 223, 206, 0.94);  /* 6,04:1 */
+  --on-dark-faint: rgba(233, 223, 206, 0.86); /* 5,38:1 */
 }
 
 /* --------------------------------------------------------------------------
@@ -655,6 +660,21 @@ p {
 
 .animate-point-pulse {
   animation: mq-point-pulse 1.6s var(--ease-out) 2;
+}
+
+/* Fundido cruzado de la fotografía del destino. Corto: es un cambio dentro de
+   la misma sección, no una transición de página. */
+@keyframes mq-crossfade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-crossfade {
+  animation: mq-crossfade 460ms var(--ease-soft) both;
 }
 
 /* Entrada lateral de la ficha de destino. */
