@@ -188,6 +188,12 @@ for (const vp of VIEWPORTS) {
         }
         // Hasta el final del documento: es donde ya no queda desplazamiento
         // con el que descubrir lo que haya quedado debajo.
+        // Dos veces: al llegar abajo todavía entran imágenes diferidas y
+        // entradas de scroll, y el documento crece. Con un solo salto se
+        // mediría a media página y cualquier enlace que cruce el borde
+        // inferior parecería tapado por la barra.
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.waitForTimeout(700);
         await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
         await page.waitForTimeout(700);
         const covered = await page.evaluate(COVERED);

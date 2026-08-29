@@ -96,30 +96,6 @@ export const CLIENT_PHOTOS = {
       creditText: null,
     },
   },
-  "elephant-herd-protecting-calf": {
-    src: "/images/maisha-quest/optimized/elephant-herd-protecting-calf.webp",
-    altKey: "elephant-herd-protecting-calf",
-    width: 2000,
-    height: 1384,
-    blurDataURL: "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoUAA4APxl0sVCspqSisAgBkCMJaQDLLBk6oblJAFn8fe9gAP7AU5uAkEcqHwonl2PQEQP6NKxOFksaQRlNLlVwilIVGNgSe2QiBSJubA8juF8MrGLuHAMFHzpFLebuSqn5atqAAAA=",
-    objectPosition: "center 58%",
-    provenance: {
-      sourceFilename: "image-X4-13.jpg",
-      publicationStatus: "published",
-      authorConfirmed: false,
-      photographer: null,
-      creditUrl: null,
-      license: null,
-      commercialUseConfirmed: true,
-      commercialUseSource:
-        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
-      commercialUseConfirmedAt: "2026-08-29",
-      locationConfirmed: false,
-      subjectConfirmed: true,
-      creditRequired: false,
-      creditText: null,
-    },
-  },
   "african-elephant-portrait": {
     src: "/images/maisha-quest/optimized/african-elephant-portrait.webp",
     altKey: "african-elephant-portrait",
@@ -405,29 +381,6 @@ export const CLIENT_PHOTOS = {
       creditText: null,
     },
   },
-  "giraffe-patterns-monochrome": {
-    src: "/images/maisha-quest/optimized/giraffe-patterns-monochrome.webp",
-    altKey: "giraffe-patterns-monochrome",
-    width: 2000,
-    height: 1126,
-    blurDataURL: "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASoUAAsAPxl2slEspySisAgBkCMJaQAAQyXFRPX8rHaGjVwA/bzwMVilr/yS8FOVy9qG90AcnKxecbvaCpLs2fays8ROIJT/Yxz9CmGPlbmtw+ZlJ7YveEsafoAAAA==",
-    provenance: {
-      sourceFilename: "image-X4-7.jpg",
-      publicationStatus: "published",
-      authorConfirmed: false,
-      photographer: null,
-      creditUrl: null,
-      license: null,
-      commercialUseConfirmed: true,
-      commercialUseSource:
-        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
-      commercialUseConfirmedAt: "2026-08-29",
-      locationConfirmed: false,
-      subjectConfirmed: true,
-      creditRequired: false,
-      creditText: null,
-    },
-  },
   "safari-tent-accommodation": {
     src: "/images/maisha-quest/optimized/safari-tent-accommodation.webp",
     altKey: "safari-tent-accommodation",
@@ -527,6 +480,46 @@ export function allClientPhotos(): (ClientPhoto & { id: string })[] {
  * `public/images/maisha-quest/originals/`.
  */
 export const EXCLUDED_CLIENT_PHOTOS: ClientPhotoProvenance[] = [
+  {
+    sourceFilename: "image-X4-13.jpg",
+    publicationStatus: "excluded-tone",
+    photographer: null,
+    authorConfirmed: false,
+    creditUrl: null,
+    license: null,
+    commercialUseConfirmed: true,
+    commercialUseSource:
+      "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+    commercialUseConfirmedAt: "2026-08-29",
+    locationConfirmed: false,
+    subjectConfirmed: false,
+    creditRequired: false,
+    creditText: null,
+    note:
+      "Manada de elefantes protegiendo a una cría, en blanco y negro. Era la única monocroma del carrusel de experiencias de la portada, entre siete fotografías en color. " +
+      "Se retira por tono, no por derechos: el original sigue intacto en " +
+      "`originals/` y volver a publicarla es cambiar una línea.",
+  },
+  {
+    sourceFilename: "image-X4-7.jpg",
+    publicationStatus: "excluded-tone",
+    photographer: null,
+    authorConfirmed: false,
+    creditUrl: null,
+    license: null,
+    commercialUseConfirmed: true,
+    commercialUseSource:
+      "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+    commercialUseConfirmedAt: "2026-08-29",
+    locationConfirmed: false,
+    subjectConfirmed: false,
+    creditRequired: false,
+    creditText: null,
+    note:
+      "Patas de jirafa en blanco y negro. Es la que señaló el cliente: rompía la continuidad cromática de la portada. " +
+      "Se retira por tono, no por derechos: el original sigue intacto en " +
+      "`originals/` y volver a publicarla es cambiar una línea.",
+  },
   {
     sourceFilename: "image-X4-18.jpg",
     publicationStatus: "excluded-watermark",

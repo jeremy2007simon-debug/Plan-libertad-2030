@@ -741,16 +741,176 @@ p {
   animation: mq-compass-line 1.5s var(--ease-soft) 700ms both;
 }
 
+/* --------------------------------------------------------------------------
+   Entradas al hacer scroll — editoriales, una sola vez
+   --------------------------------------------------------------------------
+
+   El estado oculto vive AQUÍ y solo bajo `:root[data-js]`, que pone el script
+   de movimiento y que no pone nunca si el visitante pide movimiento reducido.
+   Sin JavaScript no hay estado oculto: el HTML del servidor ya está visible.
+
+   Se anima únicamente `transform`, `opacity`, `filter` y `clip-path`. Ninguna
+   de estas reglas toca una propiedad que provoque reflow.
+
+   El observador revela cada elemento UNA VEZ y deja de mirarlo; volver a
+   animar al subir es lo que convierte una web en una feria.
+
+   Duraciones: título 780 ms, bloque 700 ms, fotografía 1,05 s. En móvil se
+   recortan un 20 % y el desplazamiento también, porque la misma distancia en
+   una pantalla de 390 px se lee como un salto.
+   -------------------------------------------------------------------------- */
+
+:root[data-js] [data-reveal=""] {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+:root[data-js] [data-reveal-from="left"] {
+  transform: translate3d(-20px, 0, 0);
+}
+
+:root[data-js] [data-reveal-from="right"] {
+  transform: translate3d(20px, 0, 0);
+}
+
+:root[data-js] [data-reveal-from="none"] {
+  transform: none;
+}
+
+:root[data-js] [data-reveal] {
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+}
+
+:root[data-js] [data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Título: cada línea sube desde su máscara, con desenfoque que se resuelve.
+   El escalonado sale de `--i`, el índice de la línea. */
+:root[data-js] [data-title-line] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  filter: blur(4px);
+  transition:
+    opacity 780ms var(--ease-out),
+    transform 780ms var(--ease-out),
+    filter 780ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 100ms);
+}
+
+:root[data-js] [data-reveal="in"] [data-title-line],
+:root[data-js] [data-title="in"] [data-title-line] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Antetítulo y entradilla: más cortos y más cerca que el título. Un antetítulo
+   que viaja lo mismo que un titular pesa más de lo que le corresponde. */
+:root[data-js] [data-eyebrow] {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity 560ms var(--ease-soft),
+    transform 560ms var(--ease-soft);
+}
+
+:root[data-js] [data-lede] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  filter: blur(2px);
+  transition:
+    opacity 700ms var(--ease-out) 120ms,
+    transform 700ms var(--ease-out) 120ms,
+    filter 700ms var(--ease-out) 120ms;
+}
+
+:root[data-js] [data-reveal="in"] [data-eyebrow],
+:root[data-js] [data-reveal="in"] [data-lede] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Fotografía: se descubre de abajo arriba y suelta una escala mínima. Más
+   lenta que el texto a propósito: una foto que entra como un párrafo se lee
+   como un elemento de interfaz. */
+:root[data-js] [data-image-reveal=""] {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1050ms var(--ease-soft);
+}
+
+:root[data-js] [data-image-reveal=""] > * {
+  transform: scale(1.06);
+  transition: transform 1400ms var(--ease-soft);
+}
+
+:root[data-js] [data-image-reveal="in"] {
+  clip-path: inset(0 0 0 0);
+}
+
+:root[data-js] [data-image-reveal="in"] > * {
+  transform: none;
+}
+
+/* Filete: se dibuja con `scaleX`, nunca con `width`. */
+:root[data-js] [data-line=""] {
+  transform: scaleX(0);
+  transition: transform 720ms var(--ease-out);
+}
+
+:root[data-js] [data-line="in"] {
+  transform: none;
+}
+
+/* Trazo de SVG. */
+:root[data-js] [data-draw=""] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+:root[data-js] [data-draw="in"] {
+  animation: mq-draw var(--draw-duration, 1.6s) var(--ease-soft) var(--draw-delay, 0s) forwards;
+}
+
+@media (max-width: 767px) {
+  :root[data-js] [data-reveal=""] {
+    transform: translate3d(0, 16px, 0);
+  }
+
+  :root[data-js] [data-reveal] {
+    transition-duration: 560ms;
+  }
+
+  :root[data-js] [data-title-line] {
+    transform: translate3d(0, 19px, 0);
+    transition-duration: 620ms;
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  :root[data-js] [data-image-reveal=""] {
+    transition-duration: 840ms;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   [data-reveal],
   [data-image-reveal],
-  [data-line] {
+  [data-line],
+  [data-title-line],
+  [data-eyebrow],
+  [data-lede] {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
     clip-path: none !important;
+    transition: none !important;
   }
   [data-image-reveal] > * {
     transform: none !important;
@@ -865,5 +1025,354 @@ p {
   /* La barra pegajosa de la ficha de safari se apoya encima, no debajo. */
   .mobile-action-bar-offset {
     bottom: calc(var(--mobile-action-bar-height) + env(safe-area-inset-bottom));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Introducción cinematográfica
+   --------------------------------------------------------------------------
+
+   Toda la secuencia es CSS. El JavaScript solo decide si se ejecuta y limpia
+   al final (ver `src/components/intro/Intro.tsx`).
+
+   Nada de esto existe sin `:root[data-intro]`, y ese atributo lo pone el
+   guardián únicamente en la portada, una vez por sesión y nunca con
+   `prefers-reduced-motion`. Sin JavaScript la capa NO se ve: la regla de
+   ocultación es la de por defecto.
+
+   Se anima `opacity`, `transform`, `clip-path` y `stroke-dashoffset`. Ninguna
+   propiedad de las que provocan reflow.
+
+   Fases (ms):
+     0–400      Dark Canopy a pantalla completa y el patrón entrando.
+     300–1000   La brújula se dibuja y gira un grado.
+     600–1500   Cuatro franjas cruzan la pantalla.
+     1100–2100  MAISHA QUEST y TANZANIA, revelados por máscara.
+     2000–2900  Las franjas vuelven a cruzar, el patrón se retira y aparece
+                el hero, que llevaba ahí desde el primer fotograma.
+   -------------------------------------------------------------------------- */
+
+#mq-intro {
+  display: none;
+}
+
+/* El fondo, desde el primer píxel pintado: el pseudoelemento de `:root` existe
+   antes de que el navegador llegue a la capa, así que no hay destello de la
+   portada. */
+:root[data-intro]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  background: var(--canopy);
+  animation: mq-intro-out 420ms var(--ease-soft) 2380ms both;
+}
+
+:root[data-intro] {
+  /* Nadie se desplaza durante la apertura, pero tampoco se bloquea la página:
+     la barra vuelve sola en cuanto termina. */
+  overflow: hidden;
+}
+
+:root[data-intro] #mq-intro {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  /* Cubre el viewport dinámico de Safari; `100vh` dejaría una franja. */
+  height: 100dvh;
+  min-height: 100vh;
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  animation: mq-intro-out 420ms var(--ease-soft) 2380ms both;
+}
+
+.mq-intro-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* --- Fase 1: el patrón ---------------------------------------------------- */
+
+.mq-intro-pattern {
+  position: absolute;
+  inset: -6%;
+  opacity: 0;
+  transform: scale(1.08);
+  animation:
+    mq-intro-pattern-in 900ms var(--ease-out) 60ms forwards,
+    mq-intro-pattern-out 620ms var(--ease-soft) 2060ms forwards;
+}
+
+.mq-intro-pattern svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mq-intro-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+}
+
+@keyframes mq-intro-pattern-in {
+  to {
+    opacity: 0.36;
+    transform: scale(1);
+  }
+}
+
+@keyframes mq-intro-pattern-out {
+  from {
+    opacity: 0.36;
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    opacity: 0.16;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+/* --- Fase 2: la brújula --------------------------------------------------- */
+
+.mq-intro-compass {
+  width: clamp(72px, 13vw, 132px);
+  height: clamp(72px, 13vw, 132px);
+  color: var(--sand);
+  opacity: 0;
+  animation:
+    mq-intro-compass-in 760ms var(--ease-out) 300ms forwards,
+    mq-intro-fade-out 380ms var(--ease-soft) 2180ms forwards;
+}
+
+.mq-intro-compass circle,
+.mq-intro-compass path {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: mq-intro-draw 900ms var(--ease-soft) 340ms forwards;
+}
+
+@keyframes mq-intro-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mq-intro-compass-in {
+  from {
+    opacity: 0;
+    transform: rotate(-6deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+/* --- Fase 3 y 5: las franjas ---------------------------------------------- */
+
+.mq-intro-band {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.mq-intro-band-1 {
+  inset: 0 auto 0 0;
+  width: 22vw;
+  background: linear-gradient(90deg, transparent, rgb(196 147 79 / 0.24), transparent);
+  transform: translate3d(-120%, 0, 0);
+  animation:
+    mq-intro-sweep-x 1100ms var(--ease-soft) 620ms forwards,
+    mq-intro-sweep-x 900ms var(--ease-out) 2020ms forwards;
+}
+
+.mq-intro-band-2 {
+  inset: 0 0 auto 0;
+  height: 14vh;
+  background: linear-gradient(180deg, transparent, rgb(233 223 206 / 0.14), transparent);
+  transform: translate3d(0, -140%, 0);
+  animation: mq-intro-sweep-y 1200ms var(--ease-soft) 760ms forwards;
+}
+
+.mq-intro-band-3 {
+  top: -30%;
+  bottom: -30%;
+  left: 34%;
+  width: 8vw;
+  background: linear-gradient(90deg, transparent, rgb(20 32 25 / 0.5), transparent);
+  transform: rotate(14deg) translate3d(0, -130%, 0);
+  animation: mq-intro-sweep-diagonal 1400ms var(--ease-soft) 700ms forwards;
+}
+
+.mq-intro-band-4 {
+  inset: auto 0 0 0;
+  height: 30vh;
+  background: linear-gradient(0deg, var(--canopy), transparent);
+  transform: translate3d(0, 100%, 0);
+  animation: mq-intro-sweep-up 900ms var(--ease-out) 2000ms forwards;
+}
+
+@keyframes mq-intro-sweep-x {
+  to {
+    transform: translate3d(560%, 0, 0);
+  }
+}
+
+@keyframes mq-intro-sweep-y {
+  to {
+    transform: translate3d(0, 760%, 0);
+  }
+}
+
+@keyframes mq-intro-sweep-diagonal {
+  to {
+    transform: rotate(14deg) translate3d(0, 130%, 0);
+  }
+}
+
+@keyframes mq-intro-sweep-up {
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* --- Fase 4: la marca ----------------------------------------------------- */
+
+.mq-intro-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.mq-intro-word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.7rem, 1.6vw, 1.1rem);
+}
+
+/* La máscara: el nombre no aparece con un fundido, se descubre. */
+.mq-intro-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.mq-intro-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 8vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+  color: var(--parchment);
+  white-space: nowrap;
+  transform: translate3d(0, 108%, 0);
+  animation:
+    mq-intro-rise 900ms var(--ease-out) 1100ms forwards,
+    mq-intro-fade-out 380ms var(--ease-soft) 2180ms forwards;
+}
+
+.mq-intro-country {
+  display: block;
+  font-size: clamp(0.62rem, 1.6vw, 0.8rem);
+  font-weight: 600;
+  letter-spacing: 0.44em;
+  text-indent: 0.44em;
+  text-transform: uppercase;
+  color: var(--sand);
+  transform: translate3d(0, 108%, 0);
+  animation:
+    mq-intro-rise 780ms var(--ease-out) 1320ms forwards,
+    mq-intro-fade-out 380ms var(--ease-soft) 2180ms forwards;
+}
+
+@keyframes mq-intro-rise {
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes mq-intro-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mq-intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* --- Saltar --------------------------------------------------------------- */
+
+.mq-intro-skip {
+  position: absolute;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 2;
+  min-height: 44px;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid rgb(233 223 206 / 0.34);
+  border-radius: 2px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--parchment);
+  background: rgb(20 32 25 / 0.4);
+  opacity: 0;
+  animation: mq-intro-skip-in 300ms var(--ease-out) 400ms forwards;
+}
+
+.mq-intro-skip:hover {
+  border-color: var(--sand);
+  color: var(--sand);
+}
+
+@keyframes mq-intro-skip-in {
+  to {
+    opacity: 1;
+  }
+}
+
+/* En móvil la secuencia se simplifica: menos franjas y una brújula que no
+   pasa de 96 px, como pide la revisión. */
+@media (max-width: 767px) {
+  .mq-intro-compass {
+    width: min(96px, 22vw);
+    height: min(96px, 22vw);
+  }
+
+  .mq-intro-band-3 {
+    display: none;
+  }
+
+  .mq-intro-pattern {
+    animation-duration: 700ms, 520ms;
+  }
+}
+
+/* Cinturón y tirantes: si alguien llega aquí con movimiento reducido —el
+   guardián ya no debería haber puesto el atributo—, no hay secuencia. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-intro]::before,
+  :root[data-intro] #mq-intro {
+    display: none;
+    animation: none;
+  }
+
+  :root[data-intro] {
+    overflow: visible;
   }
 }

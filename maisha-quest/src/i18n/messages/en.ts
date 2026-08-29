@@ -15,6 +15,7 @@ import type { PluralForms } from "@/i18n/format";
 
 export const en = {
   a11y: {
+    skipIntro: "Skip intro",
     skipToContent: "Skip to content",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -570,6 +571,9 @@ export const en = {
     ccBody:
       "None of these were taken by Maisha Quest, and none of them show Maisha Quest guests, guides, vehicles or camps. Each one keeps the attribution its licence requires.",
     sourceAndLicence: "Source and licence",
+    /* Aviso obligatorio de las licencias Creative Commons cuando la
+       fotografía se ha modificado. Ver `scripts/harmonize-photos.mjs`. */
+    adjusted: "colour adjusted",
   },
 
   meta: {
@@ -847,20 +851,20 @@ export const en = {
     },
     collections: {
       eyebrow: "The Maisha Collections",
-      title: "Three ways to travel Tanzania",
+      title: "Three ways\nto travel Tanzania",
       lede:
         "Not three price tiers — three temperaments. Most travellers know which one is theirs by the end of the first line.",
       explore: (name: string) => `Explore ${name}`,
     },
     featured: {
       eyebrow: "Featured journeys",
-      title: "Journeys worth remembering",
+      title: "Journeys worth\nremembering",
       lede:
         "Nothing here is a fixed departure. Each one is a shape of journey we know works.",
     },
     map: {
       eyebrow: "The map",
-      title: "Find your place in Tanzania",
+      title: "Find your place\nin Tanzania",
       lede:
         "Nine places, four circuits and one coastline. Select one to see when to go, what lives there and which journeys pass through.",
       bestTime: "Best time",
@@ -872,7 +876,7 @@ export const en = {
     },
     film: {
       eyebrow: "The film",
-      title: "One country. Endless ways to feel alive.",
+      title: "One country.\nEndless ways to feel alive.",
       watch: "Watch the Journey",
       cta: "Explore experiences",
       threads: [
@@ -885,7 +889,7 @@ export const en = {
     },
     why: {
       eyebrow: "Why Maisha Quest",
-      title: "Your journey, in trusted hands",
+      title: "Your journey,\nin trusted hands",
       lede:
         "We are a Tanzanian company. That is not a marketing line — it changes who answers the phone, who drives the vehicle and where the money goes.",
       pillars: [
@@ -962,7 +966,7 @@ export const en = {
       ratherTalk: "Rather just talk?",
     },
     closing: {
-      title: "Your story in Tanzania starts here.",
+      title: "Your story in Tanzania\nstarts here.",
       concept: "Guided by Tanzania. Designed around you.",
     },
   },

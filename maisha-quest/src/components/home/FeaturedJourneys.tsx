@@ -7,6 +7,7 @@ import {
   ImageReveal,
   MagneticArrow,
   Reveal,
+  plainTitle,
 } from "@/components/ui/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { type Locale, localeHref } from "@/i18n/config";
@@ -244,7 +245,7 @@ export async function FeaturedJourneys({
         <div className="mt-10 md:hidden">
           <Reveal>
             <Carousel
-              label={t.home.featured.title}
+              label={plainTitle(t.home.featured.title)}
               itemClassName="w-[84vw] max-w-[22rem]"
             >
               {safaris.map((safari, index) => tall(safari, index))}

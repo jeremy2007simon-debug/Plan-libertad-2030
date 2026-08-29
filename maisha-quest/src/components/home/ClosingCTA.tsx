@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
-import { ParallaxMedia, Reveal } from "@/components/ui/motion";
+import { ParallaxMedia, Reveal, TitleLines } from "@/components/ui/motion";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
 import { type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
@@ -44,7 +44,7 @@ export function ClosingCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
           </Reveal>
           <Reveal delay={0.08}>
             <h2 className="text-display mt-6 text-parchment">
-              {t.home.closing.title}
+              <TitleLines text={t.home.closing.title} />
             </h2>
           </Reveal>
           <Reveal delay={0.18}>

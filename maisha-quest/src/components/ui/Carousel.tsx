@@ -74,6 +74,10 @@ export function Carousel({
         ref={trackRef}
         onScroll={sync}
         aria-label={label}
+        // Lo lee el script de movimiento: lo que hay dentro de un carrusel
+        // horizontal no entra nunca en pantalla por sí solo, así que se
+        // revela en grupo cuando entra el carrusel.
+        data-hscroll=""
         className={`no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 sm:gap-6 ${
           bleed ? "-mr-5 pr-5 sm:-mr-8 sm:pr-8" : ""
         }`}

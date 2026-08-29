@@ -126,6 +126,54 @@ export function ImageReveal({
 }
 
 /**
+ * Título que entra línea a línea desde su propia máscara.
+ *
+ * Los cortes son EDITORIALES y viven en el diccionario: una barra de línea
+ * dentro de la cadena del título (`"Tres formas\nde viajar por Tanzania"`).
+ * No se parte por posición ni por número de caracteres, porque el corte que
+ * funciona en inglés cae en mitad de una palabra compuesta en alemán.
+ *
+ * Sin marca de corte el título entra en una sola línea, con el mismo
+ * movimiento. Nada se rompe si un idioma no la pone.
+ *
+ * El `overflow: hidden` va en el contenedor y el movimiento en el hijo, para
+ * que la máscara no recorte los descendentes ni los acentos —la ‘j’ del
+ * francés y la ‘Й’ del ruso bajan más de lo que parece—. De ahí el relleno
+ * inferior compensado con margen negativo: no ocupa espacio.
+ *
+ * Componente de SERVIDOR: cero JavaScript. El estado inicial vive en CSS bajo
+ * `:root[data-js]`, así que sin JavaScript el título ya está puesto.
+ */
+export function TitleLines({ text }: { text: string }) {
+  const lines = text.split("\n");
+  return (
+    <>
+      {lines.map((line, index) => (
+        <span key={line} className="block overflow-hidden pb-[0.12em] -mb-[0.12em]">
+          <span data-title-line="" className="block" style={{ "--i": index } as React.CSSProperties}>
+            {line}
+            {/* Espacio real entre líneas: sin él un lector de pantalla lee
+                «Tres formasde viajar». */}
+            {index < lines.length - 1 ? " " : ""}
+          </span>
+        </span>
+      ))}
+    </>
+  );
+}
+
+/**
+ * El mismo texto, en una sola línea y sin marcas.
+ *
+ * Para donde el título no se pinta como título: el `aria-label` de un
+ * carrusel, los datos estructurados, un atributo. Ahí la marca de corte
+ * sobraría.
+ */
+export function plainTitle(text: string): string {
+  return text.replace(/\n/g, " ");
+}
+
+/**
  * Fotografía con paralaje muy leve.
  *
  * El recorrido máximo es de 40 px y solo se aplica en escritorio con puntero
@@ -257,16 +305,67 @@ export function MotionScript() {
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   d.setAttribute('data-js','');
   var SEL='[data-reveal=""],[data-image-reveal=""],[data-line=""],[data-draw=""]';
+  function show(t){
+    if(t.hasAttribute('data-reveal'))t.setAttribute('data-reveal','in');
+    else if(t.hasAttribute('data-image-reveal'))t.setAttribute('data-image-reveal','in');
+    else if(t.hasAttribute('data-line'))t.setAttribute('data-line','in');
+    else if(t.hasAttribute('data-draw'))t.setAttribute('data-draw','in');
+  }
+  // Un carrusel horizontal se revela ENTERO cuando entra en pantalla: lo que
+  // está fuera por la derecha no interseca nunca con el viewport y se quedaría
+  // invisible hasta que alguien lo desplazara a mano.
+  function showGroup(g){
+    var ns=g.querySelectorAll(SEL);
+    for(var i=0;i<ns.length;i++){show(ns[i]);io.unobserve(ns[i]);}
+  }
   var io=new IntersectionObserver(function(es){
     for(var i=0;i<es.length;i++){var e=es[i];
-      if(!e.isIntersecting)continue;
       var t=e.target;
-      if(t.hasAttribute('data-reveal'))t.setAttribute('data-reveal','in');
-      else if(t.hasAttribute('data-image-reveal'))t.setAttribute('data-image-reveal','in');
-      else if(t.hasAttribute('data-line'))t.setAttribute('data-line','in');
-      else if(t.hasAttribute('data-draw'))t.setAttribute('data-draw','in');
+      if(!e.isIntersecting){
+        // Ya ha pasado por encima: durante un desplazamiento rápido el
+        // navegador puede entregar solo la salida, y sin esto el bloque se
+        // quedaría invisible para siempre.
+        if(e.boundingClientRect.bottom<0){show(t);io.unobserve(t);}
+        continue;
+      }
+      // Un umbral del 15 % no se alcanza nunca en un bloque más alto que la
+      // ventana: ahí basta con que haya entrado.
+      var alto=e.boundingClientRect.height>window.innerHeight*0.7;
+      if(e.intersectionRatio<0.15&&!alto)continue;
+      if(t.hasAttribute('data-hscroll')){showGroup(t);io.unobserve(t);continue;}
+      show(t);
       io.unobserve(t);}
-  },{rootMargin:'0px 0px -8% 0px'});
+  },{rootMargin:'0px 0px -10% 0px',threshold:[0,0.15]});
+
+  /*
+   * Barrido de seguridad.
+   *
+   * El observador es quien da la entrada bonita, pero no es infalible: un
+   * bloque que React monta DESPUÉS de que alguien ya haya pasado por su altura
+   * —el planificador, el mapa— se empieza a observar cuando ya está por encima
+   * de la ventana, y ahí no queda ningún umbral que cruzar. Sin esto se
+   * quedaría invisible para siempre, que es el peor fallo posible de un
+   * sistema de animación: texto que no se lee.
+   *
+   * Corre cuando el scroll se para, no en cada fotograma, y solo mira lo que
+   * todavía está sin revelar.
+   */
+  var sweepId;
+  function sweep(){
+    var vh=window.innerHeight;
+    var nodes=document.querySelectorAll(SEL);
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i],r=n.getBoundingClientRect();
+      if(r.width===0&&r.height===0)continue;
+      if(r.top<vh*0.9){show(n);io.unobserve(n);}
+    }
+  }
+  function scheduleSweep(){
+    clearTimeout(sweepId);
+    sweepId=setTimeout(sweep,260);
+  }
+  window.addEventListener('scroll',scheduleSweep,{passive:true});
+  window.addEventListener('resize',scheduleSweep,{passive:true});
 
   var px=[],ticking=false;
   var wantsParallax=window.matchMedia('(min-width:1024px) and (pointer:fine)').matches;
@@ -293,6 +392,9 @@ export function MotionScript() {
       var n=nodes[i];
       if(n.__mqSeen)continue;
       n.__mqSeen=1;
+      // Dentro de un carrusel se observa el carrusel, no cada tarjeta.
+      var g=n.closest('[data-hscroll]');
+      if(g){if(!g.__mqSeen){g.__mqSeen=1;io.observe(g);}continue;}
       io.observe(n);
     }
     if(!wantsParallax)return;

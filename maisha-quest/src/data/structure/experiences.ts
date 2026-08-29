@@ -48,7 +48,10 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "photographic-safari",
     category: "luxury",
-    image: CLIENT_PHOTOS["giraffe-patterns-monochrome"],
+    // Era la otra monocroma del carrusel. No se reutiliza el leopardo, que ya
+    // ilustra la tarjeta de fauna: dos veces la misma foto en la misma tira, y
+    // tampoco los leones en blanco y negro.
+    image: CLIENT_PHOTOS["male-lions-together"],
     destinationSlugs: ["serengeti","ngorongoro","ruaha"],
   },
   {
@@ -60,7 +63,12 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "family-safari",
     category: "family",
-    image: CLIENT_PHOTOS["elephant-herd-protecting-calf"],
+    // En color. Antes iba la manada de elefantes en blanco y negro, que era la
+    // única monocroma del carrusel de la portada; los elefantes caminando que
+    // parecían el relevo natural resultaron ser también monocromos —de las 19
+    // fotografías del cliente, cinco lo son—. Los flamencos del lago Manyara,
+    // que además es uno de los destinos de esta experiencia, sí tienen color.
+    image: CLIENT_PHOTOS["flamingos-tanzania-lake"],
     destinationSlugs: ["tarangire","lake-manyara","ngorongoro","zanzibar"],
   },
   {

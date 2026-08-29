@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { CompassPoint } from "./Compass";
-import { Reveal } from "./motion";
+import { Reveal, TitleLines } from "./motion";
 
 /**
  * Encabezado de sección.
@@ -44,6 +44,7 @@ export function SectionHeading({
         <div className={centered ? "flex flex-col items-center" : ""}>
           {eyebrow && (
             <p
+              data-eyebrow=""
               className={`eyebrow mb-4 flex items-center gap-2.5 ${
                 dark ? "text-sand" : "text-terracotta-text"
               }`}
@@ -57,10 +58,13 @@ export function SectionHeading({
               centered ? "text-balance" : ""
             }`}
           >
-            {title}
+            {/* Una cadena entra línea a línea desde su máscara; un nodo React
+                se pinta tal cual, porque puede traer su propio marcado. */}
+            {typeof title === "string" ? <TitleLines text={title} /> : title}
           </Tag>
           {lede && (
             <p
+              data-lede=""
               className={`text-lede measure mt-5 ${
                 dark ? "text-on-dark-soft" : "text-ink-soft"
               }`}

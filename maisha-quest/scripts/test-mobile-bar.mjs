@@ -48,7 +48,6 @@ const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromi
 
 /** Caja de la barra y del viewport, tal y como las ve el navegador. */
 const readBar = () =>
-  // eslint-disable-next-line no-undef
   ({
     ...(() => {
       const el = document.querySelector("[data-mobile-cta]");

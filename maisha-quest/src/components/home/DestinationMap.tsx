@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { plainTitle } from "@/components/ui/motion";
 import {
   formatRoute,
   getDestinations,
@@ -79,7 +80,7 @@ export async function DestinationMap({
                al construir `payload`. */
             t={{
               eyebrow: t.home.map.eyebrow,
-              title: t.home.map.title,
+              title: plainTitle(t.home.map.title),
               lede: t.home.map.lede,
               bestTime: t.home.map.bestTime,
               wildlife: t.home.map.wildlife,

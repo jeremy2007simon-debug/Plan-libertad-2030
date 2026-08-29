@@ -139,13 +139,13 @@ los seis idiomas sin cambiar su significado legal.
 
 ### Fuera de los legales, con la misma condición de bloqueo
 
-- [x] **Derechos comerciales de las 19 fotografías publicadas** — confirmados
+- [x] **Derechos comerciales de las fotografías publicadas** — confirmados
       por escrito el 29/08/2026: «Confirmo que Maisha Quest dispone de
       autorización para utilizar comercialmente en su página web las
       fotografías entregadas.» La declaración va copiada, con su fecha, en cada
       entrada de `src/data/client-photography.ts`.
       `MAISHA_QUEST_PRODUCTION=1 npm run build` ya la da por buena.
-- [ ] **Autoría de esas 19 fotografías** — no consta ninguna, y autorizar el uso
+- [ ] **Autoría de esas fotografías** — no consta ninguna, y autorizar el uso
       no es declarar la autoría. Hasta que conste, la web no nombra a ningún
       autor ni afirma que las tomara Maisha Quest.
 - [ ] **Autor y crédito de la leona con crías** (`image-X4-18.jpg`) — lleva la
@@ -167,29 +167,35 @@ los seis idiomas sin cambiar su significado legal.
 Generada con `node scripts/report-client-photos.mjs --markdown`. La tabla NO se
 escribe a mano: el script contrasta los archivos que hay en `originals/`, las
 entradas publicadas y las excluidas, y se queja si no cuadran. **22 entregadas
-= 19 publicadas + 3 excluidas.**
+= 17 publicadas + 5 excluidas.**
+
+De las 19 que llegaron a publicarse, dos se han retirado en la ronda visual de
+agosto por continuidad cromática: de las fotografías del cliente, cinco son en
+blanco y negro, y las dos que convivían con fotografías en color rompían la
+secuencia. No es un problema de derechos —el original sigue intacto— y volver a
+publicarlas es cambiar una línea. Ver `docs/homepage-image-tone-audit.md`.
 
 | # | Archivo original | Nombre web | Estado | Uso | Derechos comerciales | Motivo de exclusión |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `x-X4.jpg` | `tanzania-wildlife-sunset-hero` | Publicada | 1 sitio · 2000×1125 | Confirmados | — |
 | 2 | `image-X4.jpg` | `antelope-herd-grasslands` | Publicada | 3 sitios · 2000×1090 | Confirmados | — |
-| 3 | `image-X4-13.jpg` | `elephant-herd-protecting-calf` | Publicada | 1 sitio · 2000×1384 | Confirmados | — |
-| 4 | `image-X4-14.jpg` | `african-elephant-portrait` | Publicada | 1 sitio · 1400×1750 | Confirmados | — |
-| 5 | `image-X4-15.jpg` | `elephant-family-walking` | Publicada | 2 sitios · 2000×1601 | Confirmados | — |
-| 6 | `image-X4-16.jpg` | `savannah-acacia-sunset` | Publicada | 1 sitio · 2000×1334 | Confirmados | — |
-| 7 | `image-X4-17.jpg` | `lion-pair-calling` | Publicada | 1 sitio · 1600×1600 | Confirmados | — |
-| 8 | `image-X4-19.jpg` | `giraffe-oxpecker-birds` | Publicada | 1 sitio · 2000×1000 | Confirmados | — |
-| 9 | `Canon-2098745.jpg` | `flamingo-taking-flight` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
-| 10 | `image-X4-1.jpg` | `flamingos-tanzania-lake` | Publicada | 1 sitio · 2000×1333 | Confirmados | — |
-| 11 | `image-X4-2.jpg` | `male-lions-together` | Publicada | 3 sitios · 2000×1335 | Confirmados | — |
-| 12 | `image-X4-3.jpg` | `giraffes-open-savannah` | Publicada | 2 sitios · 2000×1500 | Confirmados | — |
-| 13 | `image-X4-4.jpg` | `leopard-in-tree` | Publicada | 1 sitio · 1600×1600 | Confirmados | — |
-| 14 | `image-X4-5.jpg` | `zebra-herd-monochrome` | Publicada | 2 sitios · 2000×1000 | Confirmados | — |
-| 15 | `image-X4-6.jpg` | `lion-open-savannah` | Publicada | 1 sitio · 2000×1000 | Confirmados | — |
-| 16 | `image-X4-7.jpg` | `giraffe-patterns-monochrome` | Publicada | 2 sitios · 2000×1126 | Confirmados | — |
-| 17 | `image-X4-8.jpg` | `safari-tent-accommodation` | Publicada | 1 sitio · 2000×1320 | Confirmados | — |
-| 18 | `image-X4-11.jpg` | `flamingo-low-flight` | Publicada | 1 sitio · 2000×1125 | Confirmados | — |
-| 19 | `image-X4-12.jpg` | `flamingo-flock-in-motion` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
+| 3 | `image-X4-14.jpg` | `african-elephant-portrait` | Publicada | 1 sitio · 1400×1750 | Confirmados | — |
+| 4 | `image-X4-15.jpg` | `elephant-family-walking` | Publicada | 2 sitios · 2000×1601 | Confirmados | — |
+| 5 | `image-X4-16.jpg` | `savannah-acacia-sunset` | Publicada | 1 sitio · 2000×1334 | Confirmados | — |
+| 6 | `image-X4-17.jpg` | `lion-pair-calling` | Publicada | 1 sitio · 1600×1600 | Confirmados | — |
+| 7 | `image-X4-19.jpg` | `giraffe-oxpecker-birds` | Publicada | 1 sitio · 2000×1000 | Confirmados | — |
+| 8 | `Canon-2098745.jpg` | `flamingo-taking-flight` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
+| 9 | `image-X4-1.jpg` | `flamingos-tanzania-lake` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
+| 10 | `image-X4-2.jpg` | `male-lions-together` | Publicada | 4 sitios · 2000×1335 | Confirmados | — |
+| 11 | `image-X4-3.jpg` | `giraffes-open-savannah` | Publicada | 3 sitios · 2000×1500 | Confirmados | — |
+| 12 | `image-X4-4.jpg` | `leopard-in-tree` | Publicada | 1 sitio · 1600×1600 | Confirmados | — |
+| 13 | `image-X4-5.jpg` | `zebra-herd-monochrome` | Publicada | 2 sitios · 2000×1000 | Confirmados | — |
+| 14 | `image-X4-6.jpg` | `lion-open-savannah` | Publicada | 1 sitio · 2000×1000 | Confirmados | — |
+| 15 | `image-X4-8.jpg` | `safari-tent-accommodation` | Publicada | 1 sitio · 2000×1320 | Confirmados | — |
+| 16 | `image-X4-11.jpg` | `flamingo-low-flight` | Publicada | 1 sitio · 2000×1125 | Confirmados | — |
+| 17 | `image-X4-12.jpg` | `flamingo-flock-in-motion` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
+| 18 | `image-X4-13.jpg` | — | No publicada | Original conservado | Confirmados | Blanco y negro: rompía la continuidad cromática |
+| 19 | `image-X4-7.jpg` | — | No publicada | Original conservado | Confirmados | Blanco y negro: rompía la continuidad cromática |
 | 20 | `image-X4-18.jpg` | — | No publicada | Original conservado | Confirmados | Marca de agua de un tercero impresa en la imagen |
 | 21 | `image-XL.jpg` | — | No publicada | Original conservado | Confirmados | Resolución por debajo del mínimo del diseño |
 | 22 | `image-X4-9.jpg` | — | No publicada | Original conservado | Confirmados | Duplicado exacto de otro archivo entregado |

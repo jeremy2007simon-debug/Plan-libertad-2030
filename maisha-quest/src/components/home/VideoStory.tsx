@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { LazyVideo } from "@/components/ui/LazyVideo";
 import { hasPlayableVideo } from "@/lib/media";
 import { Photo } from "@/components/ui/Photo";
-import { AnimatedLine, ImageReveal, Reveal, Stagger } from "@/components/ui/motion";
+import { AnimatedLine, ImageReveal, TitleLines, Reveal, Stagger } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
@@ -99,7 +99,9 @@ export function VideoStory({ locale, t }: { locale: Locale; t: Dictionary }) {
           <div className={showFilm ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-8 lg:col-start-3"}>
             <Reveal>
               <p className="eyebrow text-sand">{t.home.film.eyebrow}</p>
-              <h2 className="text-h1 mt-5 text-parchment">{t.home.film.title}</h2>
+              <h2 className="text-h1 mt-5 text-parchment">
+                <TitleLines text={t.home.film.title} />
+              </h2>
             </Reveal>
 
             <AnimatedLine tone="gold" className="mt-8 max-w-[12rem]" delay={0.12} />

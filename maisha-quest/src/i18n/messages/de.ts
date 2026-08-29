@@ -14,6 +14,7 @@ import type { Dictionary } from "./en";
  */
 export const de: Dictionary = {
   a11y: {
+    skipIntro: "Intro überspringen",
     skipToContent: "Zum Inhalt springen",
     openMenu: "Menü öffnen",
     closeMenu: "Menü schließen",
@@ -560,6 +561,9 @@ export const de: Dictionary = {
     ccBody:
       "Keine davon stammt von Maisha Quest, und auf keiner sind Gäste, Guides, Fahrzeuge oder Camps von Maisha Quest zu sehen. Jede behält den Nachweis, den ihre Lizenz verlangt.",
     sourceAndLicence: "Quelle und Lizenz",
+    /* Aviso obligatorio de las licencias Creative Commons cuando la
+       fotografía se ha modificado. Ver `scripts/harmonize-photos.mjs`. */
+    adjusted: "Farbe angepasst",
   },
 
   meta: {
@@ -833,20 +837,20 @@ export const de: Dictionary = {
     },
     collections: {
       eyebrow: "Die Maisha-Kollektionen",
-      title: "Drei Arten, Tansania zu bereisen",
+      title: "Drei Arten,\nTansania zu bereisen",
       lede:
         "Keine drei Preisklassen, sondern drei Temperamente. Die meisten wissen nach der ersten Zeile, welches ihres ist.",
       explore: (name: string) => `${name} entdecken`,
     },
     featured: {
       eyebrow: "Ausgewählte Reisen",
-      title: "Reisen, an die man sich erinnert",
+      title: "Reisen, an die man\nsich erinnert",
       lede:
         "Hier gibt es keine festen Abreisen. Jede ist eine Reiseform, von der wir wissen, dass sie funktioniert.",
     },
     map: {
       eyebrow: "Die Karte",
-      title: "Finden Sie Ihren Ort in Tansania",
+      title: "Finden Sie Ihren Ort\nin Tansania",
       lede:
         "Neun Orte, vier Circuits und eine Küste. Wählen Sie einen aus, um zu sehen, wann es sich lohnt, was dort lebt und welche Reisen vorbeiführen.",
       bestTime: "Beste Zeit",
@@ -858,7 +862,7 @@ export const de: Dictionary = {
     },
     film: {
       eyebrow: "Der Film",
-      title: "Ein Land. Unendlich viele Arten, sich lebendig zu fühlen.",
+      title: "Ein Land.\nUnendlich viele Arten, sich lebendig zu fühlen.",
       watch: "Die Reise ansehen",
       cta: "Erlebnisse ansehen",
       threads: [
@@ -871,7 +875,7 @@ export const de: Dictionary = {
     },
     why: {
       eyebrow: "Warum Maisha Quest",
-      title: "Ihre Reise, in guten Händen",
+      title: "Ihre Reise,\nin guten Händen",
       lede:
         "Wir sind ein tansanisches Unternehmen. Das ist keine Marketingzeile: Es ändert, wer ans Telefon geht, wer das Fahrzeug fährt und wohin das Geld fließt.",
       pillars: [
@@ -950,7 +954,7 @@ export const de: Dictionary = {
       ratherTalk: "Lieber sprechen?",
     },
     closing: {
-      title: "Ihre Geschichte in Tansania beginnt hier.",
+      title: "Ihre Geschichte in Tansania\nbeginnt hier.",
       concept: "Geführt von Tansania. Gestaltet um Sie herum.",
     },
   },

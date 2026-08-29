@@ -121,6 +121,10 @@ export default async function CreditsPage({
                     </p>
                     <p className="mt-1.5 text-[0.82rem] text-ink-faint">
                       {photo.credit?.author} · {photo.credit?.license}
+                      {/* Las licencias Creative Commons obligan a indicar si la
+                          obra se ha modificado. Aquí solo se ajusta el color,
+                          y aun así se dice. */}
+                      {photo.credit?.adjusted ? ` · ${t.credits.adjusted}` : ""}
                     </p>
                     <a
                       href={photo.credit?.source}

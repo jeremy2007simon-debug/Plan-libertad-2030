@@ -18,6 +18,7 @@ import type { Dictionary } from "./en";
  */
 export const zhCN: Dictionary = {
   a11y: {
+    skipIntro: "跳过开场",
     skipToContent: "跳至主要内容",
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",
@@ -539,6 +540,9 @@ export const zhCN: Dictionary = {
     ccBody:
       "这些都不是 Maisha Quest 拍摄的，也没有一张出现 Maisha Quest 的旅客、向导、车辆或营地。每一张都保留其许可所要求的署名。",
     sourceAndLicence: "来源与许可",
+    /* Aviso obligatorio de las licencias Creative Commons cuando la
+       fotografía se ha modificado. Ver `scripts/harmonize-photos.mjs`. */
+    adjusted: "已调整色调",
   },
 
   meta: {
@@ -823,7 +827,7 @@ export const zhCN: Dictionary = {
     },
     map: {
       eyebrow: "地图",
-      title: "在坦桑尼亚找到属于您的地方",
+      title: "在坦桑尼亚\n找到属于您的地方",
       lede:
         "九个地方、四条环线与一段海岸。选一个，看看何时前往、那里有什么动物，以及哪些行程会经过。",
       bestTime: "最佳季节",
@@ -835,7 +839,7 @@ export const zhCN: Dictionary = {
     },
     film: {
       eyebrow: "影片",
-      title: "一个国度，无数种感受活着的方式。",
+      title: "一个国度，\n无数种感受活着的方式。",
       watch: "观看影片",
       cta: "浏览体验",
       threads: [
@@ -919,7 +923,7 @@ export const zhCN: Dictionary = {
       ratherTalk: "更想直接聊聊？",
     },
     closing: {
-      title: "您的坦桑尼亚故事从这里开始。",
+      title: "您的坦桑尼亚故事\n从这里开始。",
       concept: "由坦桑尼亚引路，为您而设计。",
     },
   },

@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { OrganizationSchema } from "@/components/seo/StructuredData";
+import { IntroGate } from "@/components/intro/Intro";
 import { MotionScript } from "@/components/ui/motion";
 import { getDictionary } from "@/i18n/dictionaries";
 import { LOCALES, LOCALE_META, isLocale, localeHref } from "@/i18n/config";
@@ -112,6 +113,9 @@ export default async function LocaleLayout({
         {/* Dos caras recortadas, solo en chino: ver HanFonts. */}
         {han && <HanFonts />}
         <MotionScript />
+        {/* Decide si la portada abre con la introducción. Va aquí, en el
+            <head>, para que lo decida ANTES del primer fotograma. */}
+        <IntroGate />
       </head>
       <body>
         {/* Salto al contenido: primer elemento enfocable de la página. */}

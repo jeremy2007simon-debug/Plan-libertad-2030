@@ -36,9 +36,11 @@ export function WhyMaisha({ t }: { locale: Locale; t: Dictionary }) {
               lede={t.home.why.lede}
             />
 
+            {/* Jirafas en color, no las patas en blanco y negro: la monocroma
+                rompía la secuencia cromática de la portada. */}
             <ImageReveal className="mt-8 aspect-16/9 lg:aspect-3/2">
               <Photo
-                photo={CLIENT_PHOTOS["giraffe-patterns-monochrome"]}
+                photo={CLIENT_PHOTOS["giraffes-open-savannah"]}
                 alt=""
                 sizes="(max-width: 1024px) 100vw, 34vw"
               />

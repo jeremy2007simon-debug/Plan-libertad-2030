@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ClosingCTA } from "@/components/home/ClosingCTA";
+import { Intro, IntroScript } from "@/components/intro/Intro";
 import { Collections } from "@/components/home/Collections";
 import { DestinationMap } from "@/components/home/DestinationMap";
 import { ExperienceSelector } from "@/components/home/ExperienceSelector";
@@ -55,6 +56,9 @@ export default async function HomePage({
 
   return (
     <>
+      {/* Capa de apertura. Sale en el HTML del servidor pero solo se ve si el
+          guardián del <head> ha puesto `data-intro`. */}
+      <Intro t={t.a11y} />
       <Hero locale={locale} t={t} />
       <MaishaMeaning locale={locale} t={t} />
       <ExperienceSelector locale={locale} t={t} />
@@ -68,6 +72,7 @@ export default async function HomePage({
       <Testimonials locale={locale} t={t} />
       <PlannerSection locale={locale} t={t} />
       <ClosingCTA locale={locale} t={t} />
+      <IntroScript />
     </>
   );
 }

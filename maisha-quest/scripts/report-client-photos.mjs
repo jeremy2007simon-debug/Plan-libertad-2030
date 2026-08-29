@@ -97,6 +97,7 @@ const REASON = {
   "excluded-duplicate": "Duplicado exacto de otro archivo entregado",
   "excluded-watermark": "Marca de agua de un tercero impresa en la imagen",
   "excluded-resolution": "Resolución por debajo del mínimo del diseño",
+  "excluded-tone": "Blanco y negro: rompía la continuidad cromática",
   "excluded-rights": "Derechos que impiden publicarla",
 };
 

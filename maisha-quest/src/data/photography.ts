@@ -62,6 +62,7 @@ export const PHOTOS = {
     credit: {
       author: "Altezzatravel",
       license: "CC BY-SA 4.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:Climbers_Barranco_Wall_Kilimanjaro_Tanzania.jpg",
     },
   },
@@ -127,6 +128,7 @@ export const PHOTOS = {
     credit: {
       author: "Erasmus Kamugisha",
       license: "CC BY-SA 4.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:A_typical_Maasai_boma.jpg",
     },
   },
@@ -153,6 +155,7 @@ export const PHOTOS = {
     credit: {
       author: "Rasheedhrasheed",
       license: "CC BY-SA 4.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:Landscape_with_zebras_and_buffalos_in_ngorongoro_crater.jpg",
     },
   },
@@ -205,6 +208,7 @@ export const PHOTOS = {
     credit: {
       author: "Bjørn Christian Tørrissen",
       license: "CC BY-SA 3.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:Serengeti-Landscape-2012.JPG",
     },
   },
@@ -257,6 +261,7 @@ export const PHOTOS = {
     credit: {
       author: "Maximilian Staub",
       license: "CC BY 4.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:Baobab_Tree_in_Tarangire_National_Park_with_blue_sky.jpg",
     },
   },

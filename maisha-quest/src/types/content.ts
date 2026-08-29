@@ -29,6 +29,15 @@ export interface PhotoCredit {
   license: string;
   /** URL de la ficha original, para poder comprobar la licencia. */
   source: string;
+  /**
+   * ¿Se ha modificado la fotografía respecto del original?
+   *
+   * Las licencias Creative Commons obligan a indicar si se han hecho cambios.
+   * Aquí solo se ajusta el color —temperatura, saturación, negros y altas
+   * luces, ver `scripts/harmonize-photos.mjs`—, y aun así hay que decirlo: es
+   * una condición de la licencia, no una cortesía.
+   */
+  adjusted?: boolean;
 }
 
 /**
@@ -54,7 +63,16 @@ export type PhotoPublicationStatus =
   /** Resolución por debajo del mínimo de cualquier hueco del diseño. */
   | "excluded-resolution"
   /** Derechos que impiden publicarla, distintos de la marca de agua. */
-  | "excluded-rights";
+  | "excluded-rights"
+  /**
+   * Retirada de la web por continuidad cromática, no por derechos.
+   *
+   * De las 19 fotografías del cliente, cinco son en blanco y negro. Una sola,
+   * sola en su sección, funciona como decisión editorial; varias repartidas
+   * entre fotografías en color rompen la secuencia. El original sigue intacto
+   * y volver a publicarla es cambiar una línea.
+   */
+  | "excluded-tone";
 
 export interface ClientPhotoProvenance {
   /** Nombre del archivo tal y como lo entregó el cliente. Nunca se renombra. */
