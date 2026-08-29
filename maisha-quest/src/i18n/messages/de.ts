@@ -834,6 +834,7 @@ export const de: Dictionary = {
       lede:
         "Jede Reise, die wir bauen, beginnt mit dieser Frage — nicht mit einem Paket. Wählen Sie, was Ihnen am ähnlichsten klingt; kombinieren können Sie später.",
       carouselLabel: "Wege, Tansania zu erleben",
+      explore: "Dieses Erlebnis entdecken",
     },
     collections: {
       eyebrow: "Die Maisha-Kollektionen",

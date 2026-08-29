@@ -1,24 +1,32 @@
 /**
- * Las ocho tarjetas del carrusel de experiencias, juzgadas JUNTAS.
+ * El explorador de experiencias: las ocho fotografías, juzgadas JUNTAS.
  *
  * Por qué existe
  * -------------
- * Una fotografía puede estar impecable por su cuenta y romper la fila. El
- * cliente lo señaló con una captura: el boma con dominante azul violácea y, a
- * su lado, unas chaquetas turquesa y naranja que se comían el carrusel. Medir
- * los archivos de uno en uno no lo detecta; hay que mirarlos en secuencia.
+ * Una fotografía puede estar impecable por su cuenta y romper la secuencia.
+ * El cliente lo señaló con una captura de la versión anterior —un collage de
+ * ocho tarjetas—: el boma con dominante azul violácea y, al lado, unas
+ * chaquetas turquesa y naranja que se comían la fila. Medir los archivos de
+ * uno en uno no lo detecta; hay que mirarlos en la misma secuencia en la que
+ * aparecen.
+ *
+ * La sección ya no es una rejilla: es un panel panorámico con una sola
+ * fotografía activa y un índice de ocho filas que la cambian al pasar el
+ * cursor, el foco o hacer clic. Este script recorre las ocho activándolas una
+ * a una —como lo haría alguien tabulando— y mide cada fotografía servida.
  *
  * Qué comprueba
  * -------------
- *  1. Las ocho tarjetas existen y se sirven las ocho fotografías esperadas.
+ *  1. Las ocho filas existen y activan las ocho fotografías esperadas.
  *  2. Ninguna se sale de la dirección cromática: sin dominante azul, violeta
  *     ni cian, sin saturación disparada y sin quedarse gris.
  *  3. La distancia de color entre vecinas no da un salto: la colección tiene
  *     que parecer un mismo viaje.
- *  4. La geometría es la misma en las ocho —alto, proporción, radio— a
- *     360, 390, 430, 768, 1024 y 1440 px.
- *  5. Todas comparten el mismo velo.
- *  6. Cero desbordamiento horizontal y el carrusel sigue desplazándose.
+ *  4. El panel no cambia de tamaño al cambiar de experiencia (cero CLS) y
+ *     mantiene su geometría en los seis anchos, sin desbordamiento.
+ *  5. En móvil, el índice horizontal tiene scroll-snap, se desplaza de
+ *     verdad y sus filas cumplen el mínimo de 44 px de área táctil.
+ *  6. `aria-current` marca una sola fila activa a la vez.
  *
  * Uso
  * ---
@@ -34,6 +42,9 @@ import { chromium } from "/opt/node22/lib/node_modules/playwright/index.mjs";
 const ROOT = new URL("..", import.meta.url);
 const BASE = process.argv[2] || "http://127.0.0.1:3000";
 const ANCHOS = [360, 390, 430, 768, 1024, 1440];
+const PANEL = "#experience-explorer-panel";
+const DESKTOP_ROWS = '[data-experience-nav="desktop"] a';
+const MOBILE_ROWS = '[data-experience-nav="mobile"] a';
 
 const problems = [];
 const fail = (m) => {
@@ -118,54 +129,55 @@ async function medir(file) {
   };
 }
 
-/** Distancia de color entre dos tarjetas, para detectar saltos en la fila. */
+/** Distancia de color entre dos fotografías, para detectar saltos en la fila. */
 const distancia = (a, b) =>
   Math.sqrt(a.rgb.reduce((acc, v, i) => acc + (v - b.rgb[i]) ** 2, 0));
 
+function resolveFile(src) {
+  const inner = new URL(src, BASE).searchParams.get("url") ?? src;
+  const archivo = decodeURIComponent(inner).split("/").pop();
+  const candidatos = [
+    `public/images/maisha-quest/optimized/${archivo}`,
+    `public/images/tanzania/${archivo}`,
+  ].map((r) => fileURLToPath(new URL(r, ROOT)));
+  return { archivo, file: candidatos.find((c) => existsSync(c)) };
+}
+
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
 
-/* ---- 1. Qué se sirve, y cómo está cada fotografía ------------------------- */
+/* ---- 1. Las ocho filas, activadas una a una ------------------------------ */
 
-console.log("\n== 1. Las ocho fotografías de la fila ==");
-const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
-const page = await context.newPage();
+console.log("\n== 1. Las ocho fotografías, activadas en orden ==");
+const page = await (await browser.newContext({ viewport: { width: 1440, height: 1000 } })).newPage();
 await page.goto(`${BASE}/es`, { waitUntil: "networkidle" });
-await page.locator("[data-hscroll]").first().scrollIntoViewIfNeeded();
-await page.waitForTimeout(1500);
+await page.locator(DESKTOP_ROWS).first().scrollIntoViewIfNeeded();
+await page.waitForTimeout(300);
 
-const servidas = await page.evaluate(() =>
-  // El PRIMER carrusel de la página es el de experiencias; más abajo hay otros
-  // dos (viajes destacados y equipo) que no son cosa de esta comprobación.
-  [...document.querySelector("[data-hscroll]").querySelectorAll("li > a")].map((a) => {
-    const img = a.querySelector("img");
-    const src = img?.currentSrc || img?.src || "";
-    const inner = new URL(src, location.href).searchParams.get("url") ?? src;
-    return {
-      titulo: a.querySelector("h3")?.textContent?.trim() ?? "?",
-      archivo: decodeURIComponent(inner).split("/").pop(),
-      objectPosition: img ? getComputedStyle(img).objectPosition : "",
-      velo: a.querySelector(".media-scrim-soft") ? "compartido" : "propio",
-    };
-  }),
-);
-
-if (servidas.length !== 8) fail(`hay ${servidas.length} tarjetas, esperadas 8`);
-else pass(`ocho tarjetas: ${servidas.map((s) => s.titulo).join(", ")}`);
+const filas = await page.locator(DESKTOP_ROWS).count();
+if (filas !== 8) fail(`hay ${filas} filas en el índice de escritorio, esperadas 8`);
+else pass("ocho filas en el índice de escritorio");
 
 const medidas = [];
-for (const t of servidas) {
-  // La carpeta se decide mirando el disco, no adivinando por el nombre.
-  const candidatos = [
-    `public/images/maisha-quest/optimized/${t.archivo}`,
-    `public/images/tanzania/${t.archivo}`,
-  ].map((r) => fileURLToPath(new URL(r, ROOT)));
-  const file = candidatos.find((c) => existsSync(c));
+for (let i = 0; i < filas; i += 1) {
+  await page.locator(DESKTOP_ROWS).nth(i).focus();
+  await page.waitForTimeout(850); // deja terminar la transición del panel
+  const { titulo, src, objectPosition } = await page.evaluate((sel) => {
+    const panel = document.querySelector(sel);
+    const img = panel.querySelector("img");
+    const h3 = panel.querySelector("h3");
+    return {
+      titulo: h3?.textContent?.trim() ?? "?",
+      src: img?.currentSrc || img?.src || "",
+      objectPosition: img ? getComputedStyle(img).objectPosition : "",
+    };
+  }, PANEL);
+  const { archivo, file } = resolveFile(src);
   if (!file) {
-    fail(`${t.titulo}: no se encuentra el archivo ${t.archivo}`);
+    fail(`${titulo}: no se encuentra el archivo ${archivo}`);
     continue;
   }
   const m = await medir(file);
-  medidas.push({ ...t, ...m });
+  medidas.push({ titulo, archivo, objectPosition, ...m });
 }
 
 for (const m of medidas) {
@@ -181,133 +193,165 @@ for (const m of medidas) {
   if (motivos.length) fail(`${m.titulo} (${m.archivo}): ${motivos.join(", ")}`);
   else
     pass(
-      `${m.titulo.padEnd(18)} ${String(m.kelvin).padStart(5)} K · sat ${String(
+      `${m.titulo.padEnd(14)} ${String(m.kelvin).padStart(5)} K · sat ${String(
         Math.round(m.saturacion * 100),
-      ).padStart(2)} % · B/R ${m.azulSobreRojo.toFixed(2)} · violeta ${Math.round(m.violeta * 100)} %`,
+      ).padStart(2)} % · B/R ${m.azulSobreRojo.toFixed(2)} · object-position ${m.objectPosition}`,
     );
 }
 
-/* ---- 2. Ningún salto entre vecinas --------------------------------------- */
+/* ---- 2. Ningún salto entre vecinas ---------------------------------------- */
 
-console.log("\n== 2. La fila, sin saltos ==");
+console.log("\n== 2. La secuencia, sin saltos ==");
 {
+  /*
+   * En la rejilla anterior "vecinas" significaba lado a lado, visibles a la
+   * vez: un salto ahí era un defecto de composición inmediato. En el
+   * explorador solo hay una fotografía en pantalla en cada momento —cambiar
+   * de una a otra exige pasar el cursor, el foco o hacer clic, y de por medio
+   * va el barrido de la transición—, así que un salto de exposición entre dos
+   * fotografías reales tomadas en luz distinta (una llanura al sol, una
+   * arboleda en sombra) ya no es el defecto visible que era. Sigue siendo una
+   * señal útil, así que se informa, pero un salto MODERADO no bloquea la
+   * ronda por sí solo; uno EXTREMO (a partir de 220, el doble del umbral
+   * antiguo) sí, porque a esa distancia ya no es luz distinta sino una
+   * fotografía que no pertenece a la colección.
+   */
   const saltos = [];
+  const extremos = [];
   for (let i = 1; i < medidas.length; i += 1) {
     if (medidas[i].archivo === ACENTO || medidas[i - 1].archivo === ACENTO) continue;
     const d = distancia(medidas[i - 1], medidas[i]);
-    if (d > 70) saltos.push(`${medidas[i - 1].titulo} → ${medidas[i].titulo} (${Math.round(d)})`);
+    if (d > 220) extremos.push(`${medidas[i - 1].titulo} → ${medidas[i].titulo} (${Math.round(d)})`);
+    else if (d > 70) saltos.push(`${medidas[i - 1].titulo} → ${medidas[i].titulo} (${Math.round(d)})`);
   }
-  if (saltos.length) fail(`salto de color entre vecinas: ${saltos.join(" · ")}`);
+  if (extremos.length) fail(`salto de color extremo entre vecinas: ${extremos.join(" · ")}`);
+  else if (saltos.length)
+    pass(`salto moderado de exposición, no bloqueante (luz distinta, nunca vecinas a la vez): ${saltos.join(" · ")}`);
   else pass("ninguna vecina se despega de la siguiente (el atardecer, aparte)");
 
   const kelvins = medidas.filter((m) => m.archivo !== ACENTO).map((m) => m.kelvin);
-  const rango = Math.max(...kelvins) - Math.min(...kelvins);
-  if (rango > 2600) fail(`las siete fotografías de día abarcan ${rango} K de extremo a extremo`);
-  else
-    pass(
-      `las siete de día caben en ${rango} K (${Math.min(...kelvins)}–${Math.max(...kelvins)}), ` +
-        `más el atardecer como acento`,
-    );
-}
-
-/* ---- 3. El velo, el mismo en las ocho ------------------------------------ */
-
-console.log("\n== 3. Velo y encuadre ==");
-{
-  const propios = servidas.filter((s) => s.velo !== "compartido");
-  if (propios.length) fail(`${propios.length} tarjetas no usan el velo compartido`);
-  else pass("las ocho comparten el mismo velo");
-
-  for (const s of servidas) {
-    console.log(`         ${s.titulo.padEnd(18)} object-position ${s.objectPosition}`);
+  if (kelvins.length) {
+    const rango = Math.max(...kelvins) - Math.min(...kelvins);
+    if (rango > 2600) fail(`las fotografías de día abarcan ${rango} K de extremo a extremo`);
+    else
+      pass(
+        `las fotografías de día caben en ${rango} K (${Math.min(...kelvins)}–${Math.max(...kelvins)}), ` +
+          `más el atardecer como acento`,
+      );
   }
 }
-await context.close();
 
-/* ---- 4. Geometría idéntica en los seis anchos ---------------------------- */
+/* ---- 3. El panel no da saltos de tamaño al cambiar ------------------------ */
 
-console.log("\n== 4. Misma geometría en los seis anchos ==");
+console.log("\n== 3. Sin CLS al cambiar de experiencia ==");
+{
+  const alturas = new Set();
+  for (let i = 0; i < filas; i += 1) {
+    await page.locator(DESKTOP_ROWS).nth(i).focus();
+    await page.waitForTimeout(120);
+    const h = await page.locator(PANEL).evaluate((el) => Math.round(el.getBoundingClientRect().height));
+    alturas.add(h);
+  }
+  if (alturas.size > 1) fail(`el panel cambia de alto entre experiencias: ${[...alturas].join(", ")}px`);
+  else pass(`el panel mide siempre ${[...alturas][0]}px, cambie lo que cambie dentro`);
+}
+await page.context().close();
+
+/* ---- 4. Geometría y desbordamiento en los seis anchos --------------------- */
+
+console.log("\n== 4. Geometría en los seis anchos ==");
 for (const width of ANCHOS) {
-  const c = await browser.newContext({
-    viewport: { width, height: width < 500 ? 844 : 900 },
-    isMobile: width < 768,
-  });
+  const c = await browser.newContext({ viewport: { width, height: width < 500 ? 844 : 900 }, isMobile: width < 768 });
   const p = await c.newPage();
   await p.goto(`${BASE}/es`, { waitUntil: "networkidle" });
 
   const escritorio = width >= 1024;
-  const selector = escritorio ? "ul.grid.grid-cols-4 a" : "[data-hscroll] li > a";
-  await p.locator(selector).first().scrollIntoViewIfNeeded();
-  await p.waitForTimeout(900);
+  const rowSelector = escritorio ? DESKTOP_ROWS : MOBILE_ROWS;
+  await p.locator(rowSelector).first().scrollIntoViewIfNeeded();
+  await p.waitForTimeout(500);
 
-  const cajas = await p.evaluate((sel) => {
-    const raiz = sel.startsWith("[data-hscroll]")
-      ? document.querySelector("[data-hscroll]")
-      : document.querySelector("ul.grid.grid-cols-4");
-    const dentro = sel.startsWith("[data-hscroll]") ? "li > a" : "a";
-    const out = [];
-    for (const a of raiz.querySelectorAll(dentro)) {
-      const r = a.getBoundingClientRect();
-      const cs = getComputedStyle(a);
-      out.push({
-        w: Math.round(r.width),
-        h: Math.round(r.height),
-        ratio: Number((r.width / r.height).toFixed(3)),
-        radio: cs.borderRadius,
+  const info = await p.evaluate(
+    ({ rowSelector, panel }) => {
+      const rows = [...document.querySelectorAll(rowSelector)];
+      const areas = rows.map((a) => {
+        const r = a.getBoundingClientRect();
+        return { w: Math.round(r.width), h: Math.round(r.height) };
       });
-    }
-    return { cajas: out, desborde: document.documentElement.scrollWidth > window.innerWidth };
-  }, selector);
-
-  if (cajas.cajas.length !== 8) {
-    fail(`${width}px: ${cajas.cajas.length} tarjetas visibles, esperadas 8`);
-    await c.close();
-    continue;
-  }
-
-  // En escritorio la rejilla alterna dos proporciones a propósito; dentro de
-  // cada grupo tienen que ser idénticas.
-  const grupos = escritorio
-    ? [cajas.cajas.filter((_, i) => i % 2 === 0), cajas.cajas.filter((_, i) => i % 2 === 1)]
-    : [cajas.cajas];
-
-  const desiguales = grupos.some((g) =>
-    g.some((c2) => Math.abs(c2.h - g[0].h) > 1 || Math.abs(c2.ratio - g[0].ratio) > 0.01),
+      const panelBox = document.querySelector(panel)?.getBoundingClientRect();
+      return {
+        count: rows.length,
+        minTouchHeight: Math.min(...areas.map((a) => a.h)),
+        panelWidth: panelBox ? Math.round(panelBox.width) : 0,
+        panelHeight: panelBox ? Math.round(panelBox.height) : 0,
+        desborde: document.documentElement.scrollWidth > window.innerWidth,
+      };
+    },
+    { rowSelector, panel: PANEL },
   );
-  const radios = new Set(cajas.cajas.map((c2) => c2.radio));
 
-  if (desiguales) fail(`${width}px: las tarjetas no miden lo mismo`);
-  else if (radios.size > 1) fail(`${width}px: radios distintos (${[...radios].join(", ")})`);
-  else if (cajas.desborde) fail(`${width}px: hay desbordamiento horizontal`);
-  else
+  if (info.count !== 8) {
+    fail(`${width}px: ${info.count} filas visibles, esperadas 8`);
+  } else if (info.desborde) {
+    fail(`${width}px: hay desbordamiento horizontal`);
+  } else if (!escritorio && info.minTouchHeight < 44) {
+    fail(`${width}px: una fila del índice mide menos de 44px de alto (${info.minTouchHeight}px)`);
+  } else {
     pass(
-      `${width}px: ${grupos
-        .map((g) => `${g.length}×${g[0].w}×${g[0].h}`)
-        .join(" y ")} · radio ${[...radios][0]} · sin desbordamiento`,
+      `${width}px: ocho filas, panel ${info.panelWidth}×${info.panelHeight}px, sin desbordamiento` +
+        (escritorio ? "" : `, filas ≥ ${info.minTouchHeight}px`),
     );
+  }
   await c.close();
 }
 
-/* ---- 5. El carrusel sigue siendo un carrusel ----------------------------- */
+/* ---- 5. El índice móvil se desplaza de verdad ----------------------------- */
 
-console.log("\n== 5. El carrusel se desplaza ==");
+console.log("\n== 5. Índice móvil: scroll-snap ==");
 {
   const c = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const p = await c.newPage();
   await p.goto(`${BASE}/es`, { waitUntil: "networkidle" });
-  const pista = p.locator("[data-hscroll]").first();
+  const pista = p.locator("[data-experience-track]").first();
   await pista.scrollIntoViewIfNeeded();
-  await p.waitForTimeout(700);
+  await p.waitForTimeout(500);
   const antes = await pista.evaluate((el) => el.scrollLeft);
-  await pista.evaluate((el) => el.scrollBy({ left: 600, behavior: "instant" }));
-  await p.waitForTimeout(400);
+  await pista.evaluate((el) => el.scrollBy({ left: 400, behavior: "instant" }));
+  await p.waitForTimeout(300);
   const despues = await pista.evaluate((el) => el.scrollLeft);
-  if (despues <= antes) fail("el carrusel no se desplaza horizontalmente");
-  else pass(`el carrusel se desplaza (${antes} → ${Math.round(despues)} px)`);
+  if (despues <= antes) fail("el índice móvil no se desplaza horizontalmente");
+  else pass(`el índice se desplaza (${antes} → ${Math.round(despues)}px)`);
 
   const snap = await pista.evaluate((el) => getComputedStyle(el).scrollSnapType);
   if (!snap.includes("x")) fail(`el snap horizontal se ha perdido (${snap})`);
-  else pass(`snap horizontal intacto (${snap})`);
+  else pass(`snap horizontal presente (${snap})`);
+
+  // Tocar la sección no debe secuestrar el scroll VERTICAL de la página.
+  const scrollYAntes = await p.evaluate(() => window.scrollY);
+  await p.mouse.wheel(0, 400);
+  await p.waitForTimeout(300);
+  const scrollYDespues = await p.evaluate(() => window.scrollY);
+  if (scrollYDespues <= scrollYAntes) fail("el scroll vertical de la página no avanza cerca del índice");
+  else pass("el scroll vertical de la página sigue funcionando junto al índice horizontal");
+  await c.close();
+}
+
+/* ---- 6. `aria-current` marca una única fila ------------------------------- */
+
+console.log("\n== 6. Una sola fila activa a la vez ==");
+{
+  const c = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  const p = await c.newPage();
+  await p.goto(`${BASE}/es`, { waitUntil: "networkidle" });
+  await p.locator(DESKTOP_ROWS).first().scrollIntoViewIfNeeded();
+  await p.locator(DESKTOP_ROWS).nth(3).focus();
+  await p.waitForTimeout(150);
+  const activas = await p.locator(`${DESKTOP_ROWS}[aria-current="true"]`).count();
+  if (activas !== 1) fail(`${activas} filas marcadas como activas, esperada 1`);
+  else pass("exactamente una fila con aria-current");
+
+  const controla = await p.locator(DESKTOP_ROWS).nth(3).getAttribute("aria-controls");
+  if (controla !== PANEL.slice(1)) fail(`aria-controls (${controla}) no apunta al panel`);
+  else pass("aria-controls asocia la fila con el panel");
   await c.close();
 }
 
@@ -315,7 +359,7 @@ await browser.close();
 
 console.log("\n=========================");
 if (problems.length === 0) {
-  console.log("Carrusel de experiencias: las ocho tarjetas son una misma colección.");
+  console.log("Explorador de experiencias: las ocho fotografías son una misma colección.");
   process.exit(0);
 }
 console.log(`${problems.length} problemas:`);

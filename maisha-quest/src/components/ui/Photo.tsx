@@ -17,6 +17,7 @@ export function Photo({
   preload = false,
   quality,
   alt,
+  objectPosition,
 }: {
   photo: PhotoType;
   className?: string;
@@ -43,7 +44,17 @@ export function Photo({
    * el inglés otra vez.
    */
   alt: string;
+  /**
+   * Sustituye el encuadre por defecto de la fotografía para ESTE uso.
+   *
+   * El mismo original se recorta de formas distintas según el hueco —una
+   * miniatura 3:4 y un panel panorámico 16:10 casi nunca quieren el mismo
+   * punto de interés—, así que el encuadre por defecto de `photo` no siempre
+   * sirve para todos los sitios donde se usa la misma fotografía.
+   */
+  objectPosition?: string;
 }) {
+  const position = objectPosition ?? photo.objectPosition;
   return (
     <Image
       src={photo.src}
@@ -59,7 +70,7 @@ export function Photo({
       // El encuadre se define por fotografía: el centro geométrico casi nunca
       // es el centro de interés, y en recortes verticales un sujeto a un
       // tercio del cuadro desaparece.
-      style={photo.objectPosition ? { objectPosition: photo.objectPosition } : undefined}
+      style={position ? { objectPosition: position } : undefined}
       className={`object-cover ${className}`}
     />
   );

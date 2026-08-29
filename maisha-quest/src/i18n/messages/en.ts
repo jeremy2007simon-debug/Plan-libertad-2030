@@ -848,6 +848,7 @@ export const en = {
       lede:
         "Every journey we build starts with this question rather than with a package. Pick the one that sounds most like you — you can combine them later.",
       carouselLabel: "Ways to experience Tanzania",
+      explore: "Explore this experience",
     },
     collections: {
       eyebrow: "The Maisha Collections",

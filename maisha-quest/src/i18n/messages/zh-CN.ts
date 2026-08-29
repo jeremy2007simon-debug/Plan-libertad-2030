@@ -811,6 +811,7 @@ export const zhCN: Dictionary = {
       lede:
         "我们的每一条行程都从这个问题开始，而不是从一个套餐开始。选最像您的那一个——之后还可以组合。",
       carouselLabel: "体验坦桑尼亚的方式",
+      explore: "探索此体验",
     },
     collections: {
       eyebrow: "Maisha 系列",

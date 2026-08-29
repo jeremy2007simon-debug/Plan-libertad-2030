@@ -48,6 +48,25 @@ const page = await context.newPage();
 
 /** Nombre accesible de un elemento, siguiendo el orden que usa el navegador. */
 const AUDIT = () => {
+  /**
+   * Texto igual que lo vería un lector de pantalla: el `textContent` bruto de
+   * `<a>`/`<button>` no basta, porque incluye lo que lleva `aria-hidden`
+   * —números decorativos, flechas— y eso infla el nombre accesible con texto
+   * que nadie oye de verdad. Sin este filtro, un enlace con un «07» decorativo
+   * delante del nombre («07Kilimanjaro») se compara mal con el resto de
+   * comprobaciones de este script, que sí esperan el nombre limpio.
+   */
+  const visibleText = (el) => {
+    let text = "";
+    for (const node of el.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE) text += node.textContent;
+      else if (node.nodeType === Node.ELEMENT_NODE && node.getAttribute("aria-hidden") !== "true") {
+        text += visibleText(node);
+      }
+    }
+    return text;
+  };
+
   const accessibleName = (el) => {
     const labelledby = el.getAttribute("aria-labelledby");
     if (labelledby) {
@@ -67,7 +86,7 @@ const AUDIT = () => {
     if (wrapping?.textContent?.trim()) return wrapping.textContent.trim();
     const title = el.getAttribute("title");
     if (title?.trim()) return title.trim();
-    const own = (el.textContent || "").replace(/\s+/g, " ").trim();
+    const own = visibleText(el).replace(/\s+/g, " ").trim();
     if (own) return own;
     const img = el.querySelector("img[alt]");
     if (img?.getAttribute("alt")?.trim()) return img.getAttribute("alt").trim();

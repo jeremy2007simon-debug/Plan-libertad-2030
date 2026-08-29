@@ -835,6 +835,7 @@ export const es: Dictionary = {
       lede:
         "Cada viaje que construimos empieza por esta pregunta y no por un paquete. Elige el que más se te parezca: luego puedes combinarlos.",
       carouselLabel: "Formas de vivir Tanzania",
+      explore: "Explorar esta experiencia",
     },
     collections: {
       eyebrow: "Las colecciones Maisha",

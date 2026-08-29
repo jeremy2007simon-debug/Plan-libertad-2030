@@ -96,7 +96,16 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "safari-and-zanzibar",
     category: "safari-and-zanzibar",
-    image: PHOTOS["ngorongoro-zebras"],
+    // Antes era una fotografía de banco con los derechos pendientes
+    // (`ngorongoro-zebras`). Esta combinación no tiene una escena propia
+    // —es un safari clásico con una prolongación en la costa—, así que una
+    // fotografía del cliente ya autorizada la representa igual de bien sin
+    // dejar una licencia por confirmar. `lion-open-savannah` se probó
+    // primero, pero su franja de cielo despegaba del resto de la fila del
+    // explorador de experiencias (20 % de píxeles azules); esta es una
+    // composición más cerrada, sin cielo, y encaja con la dirección cálida
+    // de las otras siete.
+    image: CLIENT_PHOTOS["male-lions-together"],
     destinationSlugs: ["serengeti","ngorongoro","zanzibar"],
   },
   {

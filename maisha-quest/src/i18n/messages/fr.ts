@@ -838,6 +838,7 @@ export const fr: Dictionary = {
       lede:
         "Chaque voyage que nous composons commence par cette question, et non par un forfait. Choisissez celui qui vous ressemble le plus — vous pourrez les combiner ensuite.",
       carouselLabel: "Façons de vivre la Tanzanie",
+      explore: "Découvrir cette expérience",
     },
     collections: {
       eyebrow: "Les collections Maisha",

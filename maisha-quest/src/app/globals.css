@@ -753,6 +753,92 @@ p {
 }
 
 /* --------------------------------------------------------------------------
+   Explorador de experiencias
+   --------------------------------------------------------------------------
+   La fotografía protagonista no hace un simple fundido al cambiar: se
+   descubre con una máscara horizontal mientras se asienta desde un ligero
+   zoom, y un filete dorado la precede como un barrido de luz. El texto de
+   abajo (número, título, descripción, enlace) tiene su propio movimiento,
+   más simple, para no sumar más de dos tipos de movimiento a la vez sobre el
+   mismo elemento.
+
+   Todo va sobre un subárbol que React vuelve a montar con cada cambio de
+   experiencia (`key={activeSlug}`), así que el `animation: ... both` de
+   siempre es suficiente: no hace falta reiniciar nada a mano.
+   -------------------------------------------------------------------------- */
+
+@keyframes mq-explorer-mask {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes mq-explorer-zoom {
+  from {
+    transform: scale(1.035);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes mq-explorer-sweep {
+  0% {
+    transform: translate3d(-8%, 0, 0);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(108%, 0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes mq-explorer-caption {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.mq-explorer-mask {
+  animation: mq-explorer-mask 750ms var(--ease-soft) both;
+}
+
+.mq-explorer-zoom {
+  animation: mq-explorer-zoom 750ms var(--ease-soft) both;
+}
+
+.mq-explorer-sweep {
+  animation: mq-explorer-sweep 600ms var(--ease-out) both;
+}
+
+.mq-explorer-caption {
+  animation: mq-explorer-caption 480ms var(--ease-out) 120ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-explorer-mask,
+  .mq-explorer-zoom,
+  .mq-explorer-caption {
+    animation: none;
+  }
+
+  .mq-explorer-sweep {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Entradas al hacer scroll — editoriales, una sola vez
    --------------------------------------------------------------------------
 

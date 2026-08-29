@@ -4,7 +4,7 @@ import { ClosingCTA } from "@/components/home/ClosingCTA";
 import { Intro, IntroScript } from "@/components/intro/Intro";
 import { Collections } from "@/components/home/Collections";
 import { DestinationMap } from "@/components/home/DestinationMap";
-import { ExperienceSelector } from "@/components/home/ExperienceSelector";
+import { ExperienceExplorer } from "@/components/home/ExperienceExplorer";
 import { FeaturedJourneys } from "@/components/home/FeaturedJourneys";
 import { Hero } from "@/components/home/Hero";
 import { Impact } from "@/components/home/Impact";
@@ -61,7 +61,7 @@ export default async function HomePage({
       <Intro t={t.a11y} />
       <Hero locale={locale} t={t} />
       <MaishaMeaning locale={locale} t={t} />
-      <ExperienceSelector locale={locale} t={t} />
+      <ExperienceExplorer locale={locale} t={t} />
       <Collections locale={locale} t={t} />
       <FeaturedJourneys locale={locale} t={t} />
       <DestinationMap locale={locale} t={t} />
