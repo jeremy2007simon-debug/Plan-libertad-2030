@@ -77,6 +77,17 @@ export interface ClientPhotoProvenance {
   license: string | null;
   /** ¿Hay confirmación ESCRITA de uso comercial? */
   commercialUseConfirmed: boolean;
+  /**
+   * De dónde sale esa confirmación, palabra por palabra.
+   *
+   * Un booleano a `true` sin origen no vale nada: dentro de seis meses nadie
+   * recuerda quién dijo qué, y lo que hay detrás de estas fotografías es una
+   * responsabilidad legal. Aquí se guarda la declaración literal y quién la
+   * hizo; `null` mientras no haya ninguna.
+   */
+  commercialUseSource: string | null;
+  /** Fecha (ISO, AAAA-MM-DD) de esa declaración. `null` si no la hay. */
+  commercialUseConfirmedAt: string | null;
   /** ¿Está confirmado dónde se tomó la fotografía? */
   locationConfirmed: boolean;
   /** ¿Está confirmada la especie o el sujeto concreto? */

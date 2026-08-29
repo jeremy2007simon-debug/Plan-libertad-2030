@@ -3,17 +3,24 @@ import type { ClientPhotoProvenance, ResolvedImage } from "@/types/content";
 /**
  * Fotografía entregada por el cliente.
  *
- * ⚠️ DERECHOS PENDIENTES DE CONFIRMACIÓN ESCRITA ⚠️
+ * USO COMERCIAL: CONFIRMADO POR ESCRITO EL 29/08/2026
  *
- * Las 22 fotografías las entregó el cliente, pero NO hay confirmación escrita
- * de derechos de uso comercial. Por eso cada entrada lleva
- * `commercialUseConfirmed: false` y ni el autor ni la licencia se rellenan a
- * ojo: lo que no sabemos se declara `null`, no se inventa.
+ * «Confirmo que Maisha Quest dispone de autorización para utilizar
+ * comercialmente en su página web las fotografías entregadas.»
  *
- * Tampoco se afirma que las tomara Maisha Quest, ni dónde: las asignaciones a
- * destinos de este proyecto son TEMÁTICAS, y por eso
- * `locationConfirmed: false` en todas. `subjectConfirmed` es `false` cuando el
- * alt evita nombrar una especie que no está verificada.
+ * Esa declaración va copiada en cada entrada, en `commercialUseSource`, con su
+ * fecha. Un `true` sin origen no vale nada: dentro de seis meses nadie recuerda
+ * quién dijo qué, y esto es una responsabilidad legal.
+ *
+ * LO QUE ESA DECLARACIÓN NO DICE, y por tanto sigue sin constar:
+ *
+ * - **Quién hizo las fotografías.** Autorizar el uso no es declarar la autoría,
+ *   así que `authorConfirmed` sigue en `false` en las 22 y la web no nombra a
+ *   ningún autor ni afirma que las tomara Maisha Quest.
+ * - **Dónde se tomaron.** Las asignaciones a destinos son TEMÁTICAS:
+ *   `locationConfirmed: false` en todas.
+ * - **Qué especie aparece.** `subjectConfirmed` es `false` cuando el alt evita
+ *   nombrar una especie sin verificar.
  *
  * Nada de esto se muestra en la interfaz pública: es control interno para
  * saber qué se puede publicar y qué no.
@@ -31,8 +38,9 @@ import type { ClientPhotoProvenance, ResolvedImage } from "@/types/content";
  * publica ningún WebP para evitar archivos huérfanos en el despliegue:
  *
  * - `image-X4-18.jpg` (leona con crías): lleva la marca de agua de un tercero
- *   impresa en la propia imagen. No se puede publicar sin resolver antes esa
- *   autoría; recortarla sería peor.
+ *   impresa en la propia imagen. La autorización comercial del cliente no
+ *   resuelve eso; hace falta el nombre del autor y el crédito exacto, o una
+ *   copia sin marca. Recortarla sería peor.
  * - `image-XL.jpg` (flamencos en agua somera): 1024 px de ancho, insuficiente
  *   para cualquier hueco del diseño, y ampliarla está descartado.
  * - `image-X4-9.jpg`: duplicado exacto, ver arriba.
@@ -55,7 +63,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: false,
       creditRequired: false,
@@ -75,7 +86,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: false,
       creditRequired: false,
@@ -96,7 +110,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -116,7 +133,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -137,7 +157,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -158,7 +181,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -179,7 +205,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -199,7 +228,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -220,7 +252,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -241,7 +276,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -262,7 +300,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -283,7 +324,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -303,7 +347,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -324,7 +371,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -345,7 +395,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -365,7 +418,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -386,7 +442,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -407,7 +466,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -428,7 +490,10 @@ export const CLIENT_PHOTOS = {
       photographer: null,
       creditUrl: null,
       license: null,
-      commercialUseConfirmed: false,
+      commercialUseConfirmed: true,
+      commercialUseSource:
+        "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+      commercialUseConfirmedAt: "2026-08-29",
       locationConfirmed: false,
       subjectConfirmed: true,
       creditRequired: false,
@@ -469,15 +534,22 @@ export const EXCLUDED_CLIENT_PHOTOS: ClientPhotoProvenance[] = [
     authorConfirmed: false,
     creditUrl: null,
     license: null,
-    commercialUseConfirmed: false,
+    commercialUseConfirmed: true,
+    commercialUseSource:
+      "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+    commercialUseConfirmedAt: "2026-08-29",
     locationConfirmed: false,
     subjectConfirmed: false,
     creditRequired: true,
     creditText: null,
     note:
       "Leona con cachorros. Lleva impresa en la imagen la marca de agua de un " +
-      "tercero. No se publica: retirarla o recortarla sería peor que no " +
-      "publicarla, y la autoría no está resuelta.",
+      "tercero. La autorización de uso comercial del cliente no resuelve esto: " +
+      "una marca visible de otra persona exige saber QUIÉN es y con qué texto " +
+      "hay que acreditarla, y por eso la entrada mantiene `creditRequired: " +
+      "true` con `creditText: null`, que bloquea su publicación. Se desbloquea " +
+      "con el nombre del autor y el crédito exacto, o con una copia sin marca. " +
+      "Retirarla o recortarla no es una opción.",
   },
   {
     sourceFilename: "image-XL.jpg",
@@ -486,7 +558,10 @@ export const EXCLUDED_CLIENT_PHOTOS: ClientPhotoProvenance[] = [
     authorConfirmed: false,
     creditUrl: null,
     license: null,
-    commercialUseConfirmed: false,
+    commercialUseConfirmed: true,
+    commercialUseSource:
+      "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+    commercialUseConfirmedAt: "2026-08-29",
     locationConfirmed: false,
     subjectConfirmed: false,
     creditRequired: false,
@@ -502,7 +577,10 @@ export const EXCLUDED_CLIENT_PHOTOS: ClientPhotoProvenance[] = [
     authorConfirmed: false,
     creditUrl: null,
     license: null,
-    commercialUseConfirmed: false,
+    commercialUseConfirmed: true,
+    commercialUseSource:
+      "Declaración del cliente, 29/08/2026: «Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente en su página web las fotografías entregadas.»",
+    commercialUseConfirmedAt: "2026-08-29",
     locationConfirmed: false,
     subjectConfirmed: false,
     creditRequired: false,

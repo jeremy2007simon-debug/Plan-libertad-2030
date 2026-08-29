@@ -3,11 +3,14 @@
  *
  * Por qué existe
  * --------------
- * Las 22 fotografías que entregó el cliente están integradas y se ven en la
- * preview —es la única forma de que las revise—, pero NINGUNA tiene todavía
- * confirmación escrita de uso comercial. Eso hasta ahora era un comentario en
- * `src/data/client-photography.ts`, y un comentario no impide nada: bastaba con
- * que alguien apuntase el dominio a este despliegue.
+ * Las 22 fotografías que entregó el cliente están integradas, y desde el
+ * 29/08/2026 hay confirmación escrita de uso comercial para las entregadas
+ * (la declaración literal está copiada en cada entrada de
+ * `src/data/client-photography.ts`, en `commercialUseSource`).
+ *
+ * El guardián se queda: una foto nueva entra por defecto sin confirmar, y un
+ * comentario no impide nada —bastaría con que alguien apuntase el dominio a
+ * este despliegue—. Sigue bloqueando además la que exige crédito y no lo tiene.
  *
  * Con `MAISHA_QUEST_PRODUCTION=1`, este script recorre el registro y falla si
  * encuentra una sola fotografía publicada con `commercialUseConfirmed: false`,

@@ -82,7 +82,7 @@ coordenadas, temporadas y fauna) y la silueta del mapa (Natural Earth).
 | Testimonios | `src/data/testimonials.ts` está vacío **a propósito**. La sección detecta el vacío y muestra un estado alternativo honesto. |
 | Cifras de impacto | `outcomes` vacío en cada proyecto de `src/data/impact.ts`. |
 | Licencias y acreditaciones | `TRUST_CREDENTIALS` en `src/lib/site.ts`. La franja no se pinta si está vacío. |
-| Derechos de la fotografía del cliente | Sin confirmación escrita de uso comercial. Ver la sección siguiente. |
+| Autoría de la fotografía del cliente | El uso comercial está confirmado por escrito (29/08/2026); la autoría no. La web no nombra a ningún autor. Ver la sección siguiente. |
 | Fotografía de relleno | 22 fotos documentales de Wikimedia Commons cubren los huecos que las 22 del cliente no alcanzan. Ver `public/images/CREDITS.md`. |
 | Los dos vídeos | Ver `public/video/README.md`. Uno está entregado y revisado, y **bloqueado por consentimiento de menores**; el otro no se ha entregado. Ninguno se publica. |
 | Textos legales | Borrador. Salen con `noindex, nofollow` y fuera del sitemap. Lo que hace falta para cerrarlos está en el cuadro de abajo. |
@@ -139,11 +139,18 @@ los seis idiomas sin cambiar su significado legal.
 
 ### Fuera de los legales, con la misma condición de bloqueo
 
-- [ ] **Derechos comerciales de las 19 fotografías publicadas** — ninguna
-      confirmada por escrito. `MAISHA_QUEST_PRODUCTION=1 npm run build` falla
-      mientras siga habiendo una sola sin confirmar.
-- [ ] **Autoría de esas 19 fotografías** — no consta ninguna. Hasta que conste,
-      la web no nombra a ningún autor.
+- [x] **Derechos comerciales de las 19 fotografías publicadas** — confirmados
+      por escrito el 29/08/2026: «Confirmo que Maisha Quest dispone de
+      autorización para utilizar comercialmente en su página web las
+      fotografías entregadas.» La declaración va copiada, con su fecha, en cada
+      entrada de `src/data/client-photography.ts`.
+      `MAISHA_QUEST_PRODUCTION=1 npm run build` ya la da por buena.
+- [ ] **Autoría de esas 19 fotografías** — no consta ninguna, y autorizar el uso
+      no es declarar la autoría. Hasta que conste, la web no nombra a ningún
+      autor ni afirma que las tomara Maisha Quest.
+- [ ] **Autor y crédito de la leona con crías** (`image-X4-18.jpg`) — lleva la
+      marca de agua de un tercero. No se publica hasta saber quién es y con qué
+      texto acreditarlo, o hasta tener una copia sin marca.
 - [ ] **`JOURNEY_REQUEST_WEBHOOK`** — sin configurar. Comprobado, no deducido:
       `GET /api/journey-requests` responde `{"configured": false}`.
 - [ ] **Autorización de los menores del vídeo entregado** — el archivo
@@ -164,36 +171,44 @@ entradas publicadas y las excluidas, y se queja si no cuadran. **22 entregadas
 
 | # | Archivo original | Nombre web | Estado | Uso | Derechos comerciales | Motivo de exclusión |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `x-X4.jpg` | `tanzania-wildlife-sunset-hero` | Publicada | 1 sitio · 2000×1125 | **Sin confirmar** | — |
-| 2 | `image-X4.jpg` | `antelope-herd-grasslands` | Publicada | 3 sitios · 2000×1090 | **Sin confirmar** | — |
-| 3 | `image-X4-13.jpg` | `elephant-herd-protecting-calf` | Publicada | 1 sitio · 2000×1384 | **Sin confirmar** | — |
-| 4 | `image-X4-14.jpg` | `african-elephant-portrait` | Publicada | 1 sitio · 1400×1750 | **Sin confirmar** | — |
-| 5 | `image-X4-15.jpg` | `elephant-family-walking` | Publicada | 2 sitios · 2000×1601 | **Sin confirmar** | — |
-| 6 | `image-X4-16.jpg` | `savannah-acacia-sunset` | Publicada | 1 sitio · 2000×1334 | **Sin confirmar** | — |
-| 7 | `image-X4-17.jpg` | `lion-pair-calling` | Publicada | 1 sitio · 1600×1600 | **Sin confirmar** | — |
-| 8 | `image-X4-19.jpg` | `giraffe-oxpecker-birds` | Publicada | 1 sitio · 2000×1000 | **Sin confirmar** | — |
-| 9 | `Canon-2098745.jpg` | `flamingo-taking-flight` | Publicada | 2 sitios · 2000×1333 | **Sin confirmar** | — |
-| 10 | `image-X4-1.jpg` | `flamingos-tanzania-lake` | Publicada | 1 sitio · 2000×1333 | **Sin confirmar** | — |
-| 11 | `image-X4-2.jpg` | `male-lions-together` | Publicada | 3 sitios · 2000×1335 | **Sin confirmar** | — |
-| 12 | `image-X4-3.jpg` | `giraffes-open-savannah` | Publicada | 2 sitios · 2000×1500 | **Sin confirmar** | — |
-| 13 | `image-X4-4.jpg` | `leopard-in-tree` | Publicada | 1 sitio · 1600×1600 | **Sin confirmar** | — |
-| 14 | `image-X4-5.jpg` | `zebra-herd-monochrome` | Publicada | 2 sitios · 2000×1000 | **Sin confirmar** | — |
-| 15 | `image-X4-6.jpg` | `lion-open-savannah` | Publicada | 1 sitio · 2000×1000 | **Sin confirmar** | — |
-| 16 | `image-X4-7.jpg` | `giraffe-patterns-monochrome` | Publicada | 2 sitios · 2000×1126 | **Sin confirmar** | — |
-| 17 | `image-X4-8.jpg` | `safari-tent-accommodation` | Publicada | 1 sitio · 2000×1320 | **Sin confirmar** | — |
-| 18 | `image-X4-11.jpg` | `flamingo-low-flight` | Publicada | 1 sitio · 2000×1125 | **Sin confirmar** | — |
-| 19 | `image-X4-12.jpg` | `flamingo-flock-in-motion` | Publicada | 2 sitios · 2000×1333 | **Sin confirmar** | — |
-| 20 | `image-X4-18.jpg` | — | No publicada | Original conservado | **Sin confirmar** | Marca de agua de un tercero impresa en la imagen |
-| 21 | `image-XL.jpg` | — | No publicada | Original conservado | **Sin confirmar** | Resolución por debajo del mínimo del diseño |
-| 22 | `image-X4-9.jpg` | — | No publicada | Original conservado | **Sin confirmar** | Duplicado exacto de otro archivo entregado |
+| 1 | `x-X4.jpg` | `tanzania-wildlife-sunset-hero` | Publicada | 1 sitio · 2000×1125 | Confirmados | — |
+| 2 | `image-X4.jpg` | `antelope-herd-grasslands` | Publicada | 3 sitios · 2000×1090 | Confirmados | — |
+| 3 | `image-X4-13.jpg` | `elephant-herd-protecting-calf` | Publicada | 1 sitio · 2000×1384 | Confirmados | — |
+| 4 | `image-X4-14.jpg` | `african-elephant-portrait` | Publicada | 1 sitio · 1400×1750 | Confirmados | — |
+| 5 | `image-X4-15.jpg` | `elephant-family-walking` | Publicada | 2 sitios · 2000×1601 | Confirmados | — |
+| 6 | `image-X4-16.jpg` | `savannah-acacia-sunset` | Publicada | 1 sitio · 2000×1334 | Confirmados | — |
+| 7 | `image-X4-17.jpg` | `lion-pair-calling` | Publicada | 1 sitio · 1600×1600 | Confirmados | — |
+| 8 | `image-X4-19.jpg` | `giraffe-oxpecker-birds` | Publicada | 1 sitio · 2000×1000 | Confirmados | — |
+| 9 | `Canon-2098745.jpg` | `flamingo-taking-flight` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
+| 10 | `image-X4-1.jpg` | `flamingos-tanzania-lake` | Publicada | 1 sitio · 2000×1333 | Confirmados | — |
+| 11 | `image-X4-2.jpg` | `male-lions-together` | Publicada | 3 sitios · 2000×1335 | Confirmados | — |
+| 12 | `image-X4-3.jpg` | `giraffes-open-savannah` | Publicada | 2 sitios · 2000×1500 | Confirmados | — |
+| 13 | `image-X4-4.jpg` | `leopard-in-tree` | Publicada | 1 sitio · 1600×1600 | Confirmados | — |
+| 14 | `image-X4-5.jpg` | `zebra-herd-monochrome` | Publicada | 2 sitios · 2000×1000 | Confirmados | — |
+| 15 | `image-X4-6.jpg` | `lion-open-savannah` | Publicada | 1 sitio · 2000×1000 | Confirmados | — |
+| 16 | `image-X4-7.jpg` | `giraffe-patterns-monochrome` | Publicada | 2 sitios · 2000×1126 | Confirmados | — |
+| 17 | `image-X4-8.jpg` | `safari-tent-accommodation` | Publicada | 1 sitio · 2000×1320 | Confirmados | — |
+| 18 | `image-X4-11.jpg` | `flamingo-low-flight` | Publicada | 1 sitio · 2000×1125 | Confirmados | — |
+| 19 | `image-X4-12.jpg` | `flamingo-flock-in-motion` | Publicada | 2 sitios · 2000×1333 | Confirmados | — |
+| 20 | `image-X4-18.jpg` | — | No publicada | Original conservado | Confirmados | Marca de agua de un tercero impresa en la imagen |
+| 21 | `image-XL.jpg` | — | No publicada | Original conservado | Confirmados | Resolución por debajo del mínimo del diseño |
+| 22 | `image-X4-9.jpg` | — | No publicada | Original conservado | Confirmados | Duplicado exacto de otro archivo entregado |
 
-**Ninguna de las 19 publicadas tiene los derechos comerciales confirmados por
-escrito, y de ninguna consta la autoría.** Se ven en la preview porque es la
-única forma de que el cliente las revise; para producción,
-`MAISHA_QUEST_PRODUCTION=1 npm run build` falla mientras siga siendo así.
+**Uso comercial: confirmado por escrito el 29/08/2026.** La declaración es:
 
-Por eso la página de créditos **no** dice que sean «material propio de la
-empresa» —eso afirmaría una titularidad que no consta— sino:
+> Confirmo que Maisha Quest dispone de autorización para utilizar comercialmente
+> en su página web las fotografías entregadas.
+
+Va copiada literalmente, con su fecha, en cada entrada de
+`src/data/client-photography.ts` (`commercialUseSource` y
+`commercialUseConfirmedAt`): un `true` sin origen no vale nada.
+`MAISHA_QUEST_PRODUCTION=1 npm run build` ya pasa esta comprobación.
+
+**Lo que esa declaración no dice: quién hizo las fotografías.** Autorizar el uso
+no es declarar la autoría, así que `authorConfirmed` sigue en `false` en las 22
+y la web no nombra a ningún autor. Por eso la página de créditos sigue sin decir
+que sean «material propio de la empresa» —eso afirmaría una titularidad que no
+consta— y dice:
 
 > Fotografías suministradas por Maisha Quest. La titularidad, autoría y
 > condiciones de uso se mantienen según la documentación facilitada por la
@@ -201,9 +216,17 @@ empresa» —eso afirmaría una titularidad que no consta— sino:
 
 Cada entrada de `src/data/client-photography.ts` lleva seis campos de derechos:
 `sourceFilename`, `publicationStatus`, `commercialUseConfirmed`,
-`authorConfirmed`, `creditRequired` y `creditText`, más `locationConfirmed` y
-`subjectConfirmed`. Lo que no se sabe se declara `null` o `false`; no se
+`authorConfirmed`, `creditRequired` y `creditText`, más `locationConfirmed`,
+`subjectConfirmed` y, desde la confirmación, `commercialUseSource` y
+`commercialUseConfirmedAt`. Lo que no se sabe se declara `null` o `false`; no se
 inventa ni un fotógrafo ni una licencia.
+
+La leona con crías (`image-X4-18.jpg`) sigue sin publicarse aunque el uso
+comercial esté confirmado: lleva impresa la marca de agua de un tercero, y eso
+es otra pregunta —quién es y con qué texto hay que acreditarlo—. Su entrada
+mantiene `creditRequired: true` con `creditText: null`, que bloquea la
+publicación por sí solo. Se desbloquea con el nombre y el crédito exacto, o con
+una copia sin marca.
 
 ## Detalle por archivo de los 22 originales
 
@@ -244,8 +267,9 @@ derivados WebP, 6,1 MB. Los 22 originales completos ocupan 17,3 MB.
 pero todo lo que cuelga de `public/` lo sirve Next.js: los originales quedan
 accesibles por URL directa. Ningún componente los enlaza y no aparecen en
 sitemap ni en `srcset`, así que no se descargan al navegar, pero **conviene
-sacarlos del despliegue —o moverlos fuera de `public/`— antes del lanzamiento**,
-precisamente porque los derechos siguen sin confirmar.
+sacarlos del despliegue —o moverlos fuera de `public/`— antes del lanzamiento**:
+son los archivos de cámara completos, sin recortar y con su metadata, y no hay
+ninguna razón para servirlos.
 
 ### Por qué hay derivados y no se sirven los originales
 
