@@ -1,39 +1,88 @@
 # Vídeo — assets pendientes
 
-**Estado: los dos archivos NO existen.** Comprobado en esta carpeta, en todo el
-repositorio y en el entorno de trabajo:
+**Estado: uno de los dos archivos ya se ha entregado y está revisado; el otro
+sigue sin existir. Ninguno de los dos se publica, y el entregado tampoco está
+en el repositorio.** El motivo está abajo, y no es técnico.
 
-```
-$ ls public/video/
-README.md
+La web sirve **cero elementos `<video>`**, y hoy eso es correcto. El módulo del
+reproductor está escrito y probado, y consulta `hasPlayableVideo()` antes de
+pintarse; sin archivo no pinta nada. La sección «La película» se recompone y no
+queda hueco, ni marco vacío, ni «Film to follow», ni «Próximamente».
 
-$ find / -iname "*WhatsApp Video 2026-08-27*"
-(sin resultados)
+## Los dos archivos
 
-$ find . -type f \( -iname '*.mp4' -o -iname '*.mov' -o -iname '*.webm' \)
-(sin resultados)
-```
-
-La web sirve **cero elementos `<video>`**, y eso es correcto: no hay nada que
-reproducir. El módulo del reproductor está escrito y probado, y consulta
-`hasPlayableVideo()` antes de pintarse; sin archivo no pinta nada. La sección
-«La película» se recompone y no queda hueco, ni marco vacío, ni «Film to
-follow», ni «Próximamente».
-
-## Los dos archivos que faltan
-
-| Archivo que el cliente debe entregar | Dónde se sube | Para qué |
+| Archivo | Estado | Para qué |
 | --- | --- | --- |
-| `WhatsApp Video 2026-08-27 at 16.07.30.mp4` | `public/video/originals/` | Candidato a «La película» de la portada |
-| `WhatsApp Video 2026-08-27 at 16.07.30 (1).mp4` | `public/video/originals/` | Candidato al módulo de impacto |
+| `WhatsApp Video 2026-08-27 at 16.07.30.mp4` | **No entregado.** No existe en el repositorio ni en el entorno | Candidato a «La película» de la portada |
+| `WhatsApp Video 2026-08-27 at 16.07.30 (1).mp4` | **Entregado y revisado el 29/08. BLOQUEADO: menores identificables** | Candidato al módulo de impacto |
 
-Los originales **no se tocan nunca**: se conservan con su nombre y sus bytes,
-igual que la fotografía. Los derivados se generan aparte, en
-`public/video/optimized/`.
+## El archivo entregado
+
+Ficha técnica, medida con `ffprobe` sobre el original:
+
+| | |
+| --- | --- |
+| Resolución | 576 × 1024 — **vertical** |
+| Duración | 41,1 s |
+| Peso | 6,89 MB |
+| Vídeo | H.264, perfil Baseline, 29,97 fps, ~1,27 Mbps |
+| Audio | AAC-LC, 44,1 kHz, estéreo, ~63 kbps. Sonido continuo: ni un silencio de más de 0,8 s por debajo de −35 dB |
+| Rotación | Sin metadatos de rotación: es vertical de origen, no un horizontal girado |
+| SHA-256 | `b3a1a9962dbb509d1922bec0785dc500eb2e2f93a56df515cc1abff19a849a39` |
+
+Contenido, visto fotograma a fotograma: una carretera con el monte Meru al
+fondo, el interior en obra de una construcción, **un aula con niñas y niños de
+primaria en uniforme**, una fuente de agua donde beben y se lavan las manos, y
+dos planos finales en el patio con **una mujer adulta identificable rodeada de
+una decena de menores**, todos de cara y a plena luz.
+
+### Por qué no se publica
+
+**Aparecen menores identificables, en un centro escolar, con la cara
+perfectamente reconocible.** No se publica sin **autorización escrita de sus
+tutores legales y del centro**. Difuminar o recortar las caras no es una
+alternativa: el consentimiento es sobre grabar y publicar, no sobre reconocer
+una cara. La mujer adulta que aparece necesita además su propia autorización.
+
+### Por qué tampoco está en el repositorio
+
+Este repositorio es **público** en GitHub, y todo lo que cuelga de `public/` lo
+sirve Next.js en una URL directa. Meter el archivo en `public/video/originals/`
+—aunque ningún componente lo enlazara— sería publicarlo dos veces: en el
+repositorio y en el despliegue. Así que el original **no se ha añadido**. Con
+las autorizaciones firmadas se sube entonces, y no antes.
+
+Mientras tanto el archivo vive únicamente donde lo dejó quien lo entregó. El
+contenedor de trabajo es efímero: **quien tenga el original debe conservarlo,
+aquí no queda copia**.
+
+### Compresión medida sobre este archivo
+
+Los comandos de abajo son los correctos, pero este archivo concreto ya viene
+comprimido por WhatsApp y es pequeño (576 px de ancho), así que el `-crf 24`
+que sirve para un original de cámara **lo engorda**. Medido:
+
+| Receta | Peso | |
+| --- | --- | --- |
+| Original entregado | 6,89 MB | — |
+| `-c copy -movflags +faststart` | 6,91 MB | Solo mueve el índice al principio; no recodifica |
+| `-crf 24` | 8,82 MB | **Peor que el original**: no usar con una fuente ya comprimida |
+| `-crf 28` | 5,59 MB | Recomendado para este archivo |
+| `-crf 30` | 4,49 MB | Si hace falta bajar más |
+
+`scale='min(1080,iw)'` se queda en 576 px: **ninguna imagen se amplía**, que es
+justo lo que se busca. El vertical se mantiene; en escritorio va en un marco
+vertical junto al texto y en móvil a ancho completo con altura acotada. **No se
+estira como hero horizontal.**
+
+Y hay sonido de principio a fin. Si lleva voz, **no se publica sin subtítulos**
+(ver más abajo).
 
 ## Antes de integrarlos: inspección obligatoria
 
-Con el archivo delante, antes de comprimir nada:
+Para el archivo que falta —y como registro de lo que ya se hizo con el
+entregado, cuyas tres respuestas son **sí, sí y sí**—. Con el archivo delante,
+antes de comprimir nada:
 
 ```bash
 ffprobe -v error -show_entries \
@@ -44,14 +93,15 @@ ffprobe -v error -show_entries \
 Eso da duración, peso, resolución, orientación y códec. Después hay que mirar
 el contenido y responder por escrito a tres preguntas:
 
-1. **¿Aparecen menores identificables?** Uno de los dos está grabado en un
-   colegio. **Si aparecen menores, no se publica sin autorización escrita de
+1. **¿Aparecen menores identificables?** En el entregado, sí: un aula entera.
+   El otro también está grabado en un colegio. **Si aparecen menores, no se publica sin autorización escrita de
    sus tutores y del centro.** Difuminar o recortar a los menores para esquivar
    el consentimiento no es una alternativa: el consentimiento es sobre grabar y
    publicar, no sobre reconocer una cara.
 2. **¿Aparecen personas adultas identificables?** Misma regla, con su propia
    autorización.
-3. **¿Es vertical?** Los dos vienen de WhatsApp, así que casi seguro sí. Se
+3. **¿Es vertical?** El entregado lo es (576 × 1024) y el otro viene de
+   WhatsApp, así que casi seguro también. Se
    mantiene el formato: en escritorio va en un marco vertical junto al texto y
    en móvil a ancho completo con altura acotada. **No se estira como hero
    horizontal.**

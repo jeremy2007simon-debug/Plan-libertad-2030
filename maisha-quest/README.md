@@ -84,7 +84,7 @@ coordenadas, temporadas y fauna) y la silueta del mapa (Natural Earth).
 | Licencias y acreditaciones | `TRUST_CREDENTIALS` en `src/lib/site.ts`. La franja no se pinta si está vacío. |
 | Derechos de la fotografía del cliente | Sin confirmación escrita de uso comercial. Ver la sección siguiente. |
 | Fotografía de relleno | 22 fotos documentales de Wikimedia Commons cubren los huecos que las 22 del cliente no alcanzan. Ver `public/images/CREDITS.md`. |
-| Los dos vídeos | Ver `public/video/README.md`. **Uno tiene una condición de consentimiento previa.** |
+| Los dos vídeos | Ver `public/video/README.md`. Uno está entregado y revisado, y **bloqueado por consentimiento de menores**; el otro no se ha entregado. Ninguno se publica. |
 | Textos legales | Borrador. Salen con `noindex, nofollow` y fuera del sitemap. Lo que hace falta para cerrarlos está en el cuadro de abajo. |
 | Envío del formulario | `JOURNEY_REQUEST_WEBHOOK` sin configurar. Comprobado, no deducido: `GET /api/journey-requests` responde `{"configured": false}`. Sin él el formulario responde 501, lo dice y ofrece correo y WhatsApp. |
 
@@ -146,9 +146,14 @@ los seis idiomas sin cambiar su significado legal.
       la web no nombra a ningún autor.
 - [ ] **`JOURNEY_REQUEST_WEBHOOK`** — sin configurar. Comprobado, no deducido:
       `GET /api/journey-requests` responde `{"configured": false}`.
-- [ ] **Los dos vídeos** — no existen en el repositorio. Ver
-      `public/video/README.md`. El grabado en un colegio necesita además
-      autorización escrita de tutores y centro.
+- [ ] **Autorización de los menores del vídeo entregado** — el archivo
+      `WhatsApp Video 2026-08-27 at 16.07.30 (1).mp4` se entregó el 29/08 y está
+      revisado: 41 s, vertical, con **un aula de menores identificables y una
+      adulta identificable**. No se publica sin autorización escrita de tutores,
+      centro y de la adulta, y **no se ha añadido al repositorio**, que es
+      público. Ver `public/video/README.md`.
+- [ ] **El segundo vídeo** — `WhatsApp Video 2026-08-27 at 16.07.30.mp4` sigue
+      sin entregarse.
 
 ## Las 22 fotografías entregadas por el cliente
 
