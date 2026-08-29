@@ -25,7 +25,7 @@
 import { chromium, devices } from "/opt/node22/lib/node_modules/playwright/index.mjs";
 
 const BASE = process.argv[2] || "http://127.0.0.1:3000";
-const KEY = "maisha-intro-seen-v1";
+const KEY = "maisha-cinematic-intro-v2";
 
 const problems = [];
 const fail = (m) => {

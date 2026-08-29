@@ -56,8 +56,13 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
 
         <div className="mq-intro-center">
           {/* La brújula OFICIAL, la misma del resto de la web. No hay logotipo
-              nuevo: sus trazos se dibujan con stroke-dasharray. */}
-          <CompassMark className="mq-intro-compass" strokeWidth={0.9} />
+              nuevo: sus trazos se dibujan con stroke-dasharray. El envoltorio
+              es quien avanza hacia quien mira y supera el viewport al final;
+              el SVG conserva su propio dibujado y pequeño giro de llegada,
+              sin que ambas animaciones compitan por la misma propiedad. */}
+          <span className="mq-intro-compass-portal">
+            <CompassMark className="mq-intro-compass" strokeWidth={0.9} />
+          </span>
 
           <p className="mq-intro-word">
             <span className="mq-intro-mask">
@@ -89,7 +94,7 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
  *
  * No se ejecuta si:
  *  · el visitante pide movimiento reducido;
- *  · ya se ha visto en esta sesión (`maisha-intro-seen-v1`);
+ *  · ya se ha visto en esta sesión (`maisha-cinematic-intro-v2`);
  *  · no es la portada;
  *  · el navegador dice que se ahorren datos (`saveData`);
  *  · no hay `sessionStorage` accesible (navegación privada muy restrictiva);
@@ -118,7 +123,7 @@ export function IntroGate() {
   // tabulación, desbordamiento, texto visible—. El parámetro intro=1 la fuerza
   // igual, que es como se prueba la propia introducción.
   if(!forced&&navigator.webdriver)return;
-  var K='maisha-intro-seen-v1';
+  var K='maisha-cinematic-intro-v2';
   if(!forced&&sessionStorage.getItem(K))return;
   sessionStorage.setItem(K,'1');
   d.setAttribute('data-intro','');
@@ -159,7 +164,7 @@ export function IntroScript() {
   // El temporizador es la garantía; el evento solo adelanta el desmontaje.
   setTimeout(end,3000);
   if(node)node.addEventListener('animationend',function(e){
-    if(e.animationName==='mq-intro-out')end();
+    if(e.animationName==='mq-intro-portal-out')end();
   });
 })();`;
   return <script dangerouslySetInnerHTML={{ __html: source }} />;

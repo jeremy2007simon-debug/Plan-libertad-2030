@@ -1067,8 +1067,12 @@ p {
      300–1000   La brújula se dibuja y gira un grado.
      600–1500   Cuatro franjas cruzan la pantalla.
      1100–2100  MAISHA QUEST y TANZANIA, revelados por máscara.
-     2000–2900  Las franjas vuelven a cruzar, el patrón se retira y aparece
-                el hero, que llevaba ahí desde el primer fotograma.
+     2000–2560  La brújula avanza hacia quien mira y supera el viewport:
+                el envoltorio la escala hasta ×11 mientras se apaga.
+     2150–2800  El aro se convierte en portal: toda la capa se recorta con
+                un círculo que se cierra sobre su propio centro
+                (`clip-path`) y descubre el hero, que llevaba ahí desde el
+                primer fotograma.
    -------------------------------------------------------------------------- */
 
 #mq-intro {
@@ -1084,7 +1088,7 @@ p {
   inset: 0;
   z-index: 89;
   background: var(--canopy);
-  animation: mq-intro-out 420ms var(--ease-soft) 2380ms both;
+  animation: mq-intro-portal-out 650ms var(--ease-soft) 2150ms both;
 }
 
 :root[data-intro] {
@@ -1102,7 +1106,7 @@ p {
   height: 100dvh;
   min-height: 100vh;
   padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-  animation: mq-intro-out 420ms var(--ease-soft) 2380ms both;
+  animation: mq-intro-portal-out 650ms var(--ease-soft) 2150ms both;
 }
 
 .mq-intro-stage {
@@ -1118,9 +1122,7 @@ p {
   inset: -6%;
   opacity: 0;
   transform: scale(1.08);
-  animation:
-    mq-intro-pattern-in 900ms var(--ease-out) 60ms forwards,
-    mq-intro-pattern-out 620ms var(--ease-soft) 2060ms forwards;
+  animation: mq-intro-pattern-in 900ms var(--ease-out) 60ms forwards;
 }
 
 .mq-intro-pattern svg {
@@ -1141,27 +1143,32 @@ p {
   }
 }
 
-@keyframes mq-intro-pattern-out {
-  from {
-    opacity: 0.36;
-    clip-path: inset(0 0 0 0);
-  }
-  to {
-    opacity: 0.16;
-    clip-path: inset(0 0 100% 0);
-  }
+/* --- Fase 2: la brújula --------------------------------------------------- */
+
+/* El envoltorio que avanza hacia quien mira: escala la brújula hasta que su
+   aro supera el viewport, y se apaga en el tramo final para que el trazo
+   agrandado no deje un borde duro justo antes de que el portal la recorte. */
+.mq-intro-compass-portal {
+  animation: mq-intro-compass-advance 560ms var(--ease-out) 2000ms forwards;
 }
 
-/* --- Fase 2: la brújula --------------------------------------------------- */
+@keyframes mq-intro-compass-advance {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(11);
+    opacity: 0;
+  }
+}
 
 .mq-intro-compass {
   width: clamp(72px, 13vw, 132px);
   height: clamp(72px, 13vw, 132px);
   color: var(--sand);
   opacity: 0;
-  animation:
-    mq-intro-compass-in 760ms var(--ease-out) 300ms forwards,
-    mq-intro-fade-out 380ms var(--ease-soft) 2180ms forwards;
+  animation: mq-intro-compass-in 760ms var(--ease-out) 300ms forwards;
 }
 
 .mq-intro-compass circle,
@@ -1326,10 +1333,19 @@ p {
   }
 }
 
-@keyframes mq-intro-out {
+/* El portal: toda la capa se recorta con un círculo que se cierra sobre su
+   propio centro. Fuera del círculo se ve lo que hay detrás —el hero, pintado
+   desde el primer fotograma—, así que la revelación empieza por los bordes y
+   termina en el punto donde estaba la brújula. `clip-path` también deja sin
+   área interactiva la zona recortada, así que al llegar a 0% la capa ya no
+   puede recibir foco ni clics aunque el desmontaje del DOM llegue un instante
+   después. */
+@keyframes mq-intro-portal-out {
+  from {
+    clip-path: circle(150% at 50% 50%);
+  }
   to {
-    opacity: 0;
-    visibility: hidden;
+    clip-path: circle(0% at 50% 50%);
   }
 }
 
@@ -1378,7 +1394,7 @@ p {
   }
 
   .mq-intro-pattern {
-    animation-duration: 700ms, 520ms;
+    animation-duration: 700ms;
   }
 }
 
