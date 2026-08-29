@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { type Locale, localeHref, stripLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
@@ -10,8 +10,13 @@ import { whatsappHref } from "@/lib/site";
 /**
  * Barra de acción persistente en móvil.
  *
- * Aparece al pasar el hero para no tapar la primera pantalla, y desaparece en
- * el propio planificador —donde estorbaría al formulario— y en el pie.
+ * Está clavada al borde inferior de la pantalla y no se mueve: ni al empezar
+ * la página, ni durante el scroll, ni al llegar al pie, ni cuando Safari
+ * pliega y despliega sus barras. Toda la mecánica —y por qué antes sí se
+ * movía— está en `.mobile-action-bar`, en `globals.css`.
+ *
+ * Sigue sin aparecer en el planificador: allí estorbaría a un formulario de
+ * siete pasos que ya tiene sus propios botones abajo.
  *
  * WhatsApp va aquí, integrado: mismo peso tipográfico que el resto de la
  * barra, sin burbuja verde flotante. Es el canal que de verdad usa un viajero
@@ -25,29 +30,76 @@ export function MobileCTABar({
   t: Dictionary["nav"];
 }) {
   const pathname = usePathname();
-  const [visible, setVisible] = useState(false);
+  const bar = useRef<HTMLDivElement>(null);
+  /**
+   * ¿Hay un campo de texto con el foco?
+   *
+   * Con el teclado del móvil abierto, la barra se quedaría flotando sobre el
+   * campo o sobre los botones del formulario. Mientras alguien escribe se
+   * esconde, y vuelve en cuanto suelta el campo. No hay salto de maquetación:
+   * el hueco que reserva el pie sale de una variable CSS y no cambia.
+   */
+  const [typing, setTyping] = useState(false);
+
+  /**
+   * Publica la altura REAL de la barra en `--mobile-action-bar-height`.
+   *
+   * El valor por defecto del CSS es el correcto para las seis lenguas, pero
+   * una etiqueta larga puede partir los botones en dos líneas y entonces el
+   * hueco del pie se queda corto. Se ignora una altura de 0: es lo que mide
+   * mientras está oculta, y escribirla dejaría el pie pegado a la barra.
+   */
+  const measure = useCallback(() => {
+    const height = bar.current?.offsetHeight ?? 0;
+    if (height > 0) {
+      document.documentElement.style.setProperty(
+        "--mobile-action-bar-height",
+        `${height}px`,
+      );
+    }
+  }, []);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.7);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const node = bar.current;
+    if (!node) return;
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [measure]);
+
+  useEffect(() => {
+    const isField = (target: EventTarget | null) =>
+      target instanceof HTMLElement &&
+      target.matches("input, textarea, select, [contenteditable='true']");
+
+    const onFocusIn = (event: FocusEvent) => {
+      if (isField(event.target)) setTyping(true);
+    };
+    const onFocusOut = (event: FocusEvent) => {
+      if (isField(event.target)) setTyping(false);
+    };
+
+    document.addEventListener("focusin", onFocusIn);
+    document.addEventListener("focusout", onFocusOut);
+    return () => {
+      document.removeEventListener("focusin", onFocusIn);
+      document.removeEventListener("focusout", onFocusOut);
+    };
   }, []);
 
   if (stripLocale(pathname).path === "/plan") return null;
 
   return (
     <div
+      ref={bar}
       // Lo lee `scripts/check-responsive.mjs` para comprobar que la barra no
       // tapa ningún control alcanzable.
       data-mobile-cta=""
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-rule-on-dark/30 bg-forest/97 backdrop-blur-md transition-transform duration-500 ease-out lg:hidden ${
-        visible ? "translate-y-0" : "translate-y-full"
-      }`}
-      // Fuera de pantalla no debe ser alcanzable con el tabulador.
-      {...(visible ? {} : { inert: "" as unknown as boolean })}
+      hidden={typing}
+      className="mobile-action-bar border-t border-rule-on-dark/30 bg-forest"
     >
-      <div className="flex items-stretch gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      <div className="flex items-stretch gap-3">
         <Link
           href={localeHref(locale, "/plan")}
           className="flex min-h-12 flex-1 items-center justify-center rounded-[2px] bg-terracotta-deep px-5 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"

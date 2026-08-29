@@ -409,8 +409,9 @@ export default async function SafariPage({
         </section>
       )}
 
-      {/* Barra de acción fija. En móvil se apoya sobre la barra global. */}
-      <div className="dark-section sticky bottom-0 z-30 border-t border-rule-on-dark bg-forest/97 backdrop-blur-md">
+      {/* Barra de acción fija. En móvil se apoya SOBRE la barra global: sin el
+          desplazamiento, la barra global la taparía entera. */}
+      <div className="dark-section mobile-action-bar-offset sticky bottom-0 z-30 border-t border-rule-on-dark bg-forest/97 backdrop-blur-md">
         <Container width="wide">
           <div className="flex flex-wrap items-center justify-between gap-4 py-4">
             <div className="flex items-center gap-4">

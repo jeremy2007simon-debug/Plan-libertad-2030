@@ -36,7 +36,12 @@ export function Footer({
   const socials = socialLinks();
 
   return (
-    <footer className="dark-section texture-dust relative isolate bg-canopy text-on-dark">
+    <footer
+      // `mobile-action-bar-gap` reserva abajo, solo en móvil, exactamente la
+      // altura de la barra de acción: el último enlace del pie tiene que poder
+      // subir por encima de ella. Ver `globals.css`.
+      className="dark-section texture-dust mobile-action-bar-gap relative isolate bg-canopy text-on-dark"
+    >
       <Container width="wide" className="py-14 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[1.15fr_2fr]">
           {/* Marca y contacto */}

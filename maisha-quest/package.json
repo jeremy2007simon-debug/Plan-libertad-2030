@@ -14,6 +14,7 @@
     "test:planner": "node scripts/test-planner-locale.mjs",
     "test:delivery": "node scripts/test-journey-delivery.mjs",
     "test:labels": "node scripts/test-counter-labels.mjs",
+    "test:mobile-bar": "node scripts/test-mobile-bar.mjs",
     "report:photos": "node scripts/report-client-photos.mjs",
     "check:rights": "node scripts/check-photo-rights.mjs",
     "check:links": "node scripts/check-links-seo.mjs",

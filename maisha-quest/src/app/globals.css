@@ -69,6 +69,17 @@
   /* Altura de la cabecera; la usan el scroll-margin y los heros. */
   --header-h: 76px;
   --header-h-scrolled: 62px;
+
+  /*
+   * Altura de la barra de acción móvil.
+   *
+   * 48 px de botón + 12 px de aire arriba y abajo + el filete = 73 px. La
+   * separación que reserva el pie y el desplazamiento de la barra de la ficha
+   * de safari salen de aquí, no de una cifra copiada tres veces. La barra
+   * remide su altura real al montarse y actualiza esta variable, por si una
+   * etiqueta larga (alemán, ruso) hace que los botones ocupen dos líneas.
+   */
+  --mobile-action-bar-height: 73px;
 }
 
 @theme inline {
@@ -158,7 +169,24 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Ninguna sección debe provocar scroll horizontal. */
+}
+
+/*
+ * Contención horizontal: aquí y NO en el `body`.
+ *
+ * Con `overflow-x: clip` en el `body`, Safari de iOS deja de anclar los
+ * elementos `position: fixed` al viewport y los ata a la caja recortada: la
+ * barra de acción móvil bajaba con el contenido y aparecía a media pantalla al
+ * llegar al pie. Es el fallo que se reportó, y se reproduce en cuanto el
+ * recorte vuelve al `body`.
+ *
+ * `overflow-x: clip` sí puede vivir en `#main`, que es donde están las
+ * secciones que podrían desbordar: no crea contenedor de scroll —`clip` es el
+ * único valor que convive con `overflow-y: visible`—, no afecta a la cabecera
+ * fija ni a la barra de acción, que son hermanos suyos, y sigue garantizando
+ * lo de antes: ninguna sección provoca scroll horizontal.
+ */
+#main {
   overflow-x: clip;
 }
 
@@ -783,5 +811,59 @@ p {
 @media (pointer: fine) {
   .tap-44::after {
     display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Barra de acción móvil
+   ---------------------------------------------------------------------------
+   Las tres reglas de abajo son una sola idea: la barra está anclada al borde
+   inferior de la pantalla y NADA la mueve.
+
+   Qué falló antes, y por qué esto es así:
+
+   1. `overflow-x: clip` en el `body` (ya retirado, ver arriba) desanclaba los
+      `position: fixed` en Safari de iOS.
+   2. La barra se mostraba y se escondía con `translate-y-full` y una
+      transición de 500 ms disparada por el evento `scroll`. iOS no emite
+      `scroll` durante el desplazamiento por inercia, así que el cambio de
+      clase llegaba tarde y la animación se ejecutaba con la página aún en
+      movimiento y las barras de Safari plegándose: la barra quedaba a media
+      pantalla.
+   3. `backdrop-filter` la promovía a una capa compuesta que Safari recoloca
+      con retraso. El verde es ahora opaco —el mismo color— y no hay capa.
+
+   De ahí que aquí no haya `transform`, ni `transition`, ni animación, ni
+   `sticky`, ni `absolute`, ni alturas en `vh`.
+   -------------------------------------------------------------------------- */
+
+.mobile-action-bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 50;
+  transform: none;
+  transition: none;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+}
+
+/* Solo móvil: en escritorio desaparece del todo, también del orden de foco. */
+@media (min-width: 1024px) {
+  .mobile-action-bar {
+    display: none;
+  }
+}
+
+/* El hueco que la barra reserva para que no tape nada. Lo lleva el pie, que es
+   el último bloque de todas las páginas, y sale de la misma variable. */
+@media (max-width: 1023.98px) {
+  .mobile-action-bar-gap {
+    padding-bottom: calc(var(--mobile-action-bar-height) + env(safe-area-inset-bottom));
+  }
+
+  /* La barra pegajosa de la ficha de safari se apoya encima, no debajo. */
+  .mobile-action-bar-offset {
+    bottom: calc(var(--mobile-action-bar-height) + env(safe-area-inset-bottom));
   }
 }
