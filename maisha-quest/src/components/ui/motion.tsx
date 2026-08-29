@@ -102,8 +102,18 @@ export function Stagger({
  * a propósito: una fotografía que aparece a la misma velocidad que un párrafo
  * se lee como un elemento de interfaz, no como una imagen.
  *
- * `overflow: hidden` va en el contenedor y la escala en la imagen, de modo que
- * la máscara nunca recorta el layout ni provoca desplazamiento.
+ * El recorte vive en `.mq-mask`, un envoltorio interno, y NUNCA en el propio
+ * nodo que observa el sistema de movimiento (el de fuera, con
+ * `data-image-reveal`): un `clip-path` puesto directamente sobre el nodo
+ * observado deja de reportar intersección en algún navegador, y entonces el
+ * `IntersectionObserver` no llega a dispararse nunca — la fotografía se
+ * quedaría oculta para siempre. Un nivel más de anidamiento no cuesta nada.
+ *
+ * `size-full` en el envoltorio es lo que hace que esto funcione con o sin
+ * altura propia: donde el llamador fija una proporción en el nodo exterior
+ * (`aspect-*`), el 100 % se resuelve contra esa altura; donde no la fija —los
+ * vídeos, el enlace de «Viajes destacados»— la altura sigue viniendo del
+ * contenido, exactamente como antes de añadir este envoltorio.
  */
 export function ImageReveal({
   children,
@@ -117,10 +127,10 @@ export function ImageReveal({
   return (
     <div
       data-image-reveal=""
-      className={`relative overflow-hidden ${className}`}
+      className={`relative ${className}`}
       style={delay ? { transitionDelay: `${delay}s` } : undefined}
     >
-      {children}
+      <div className="mq-mask size-full overflow-hidden">{children}</div>
     </div>
   );
 }
