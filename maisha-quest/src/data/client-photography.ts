@@ -243,8 +243,9 @@ export const CLIENT_PHOTOS = {
     altKey: "flamingos-tanzania-lake",
     width: 2000,
     height: 1333,
-    blurDataURL: "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoUAA0APxl2s1EspySisAgBkCMJYwCsACIB1YzkytwAAP4l5oohO30rumYVk3CybiMBViG0adHa+sEC0uL42QqLbiymZQAA",
-    objectPosition: "center 65%",
+    blurDataURL: "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoUAA0APwlwsFArpiSisAgBcCEJZQDG9CHVfPd7yOQAAP1SjwWOD+AfeWXY9Y0y6yWCGdJ+dfOya5oYR6dlNsj0ZkAAAA==",
+    // Los flamencos, no la franja de árboles: en el recorte 3:4 de la tarjeta el encuadre centrado partía la foto en dos bandas.
+    objectPosition: "center 80%",
     provenance: {
       sourceFilename: "image-X4-1.jpg",
       publicationStatus: "published",

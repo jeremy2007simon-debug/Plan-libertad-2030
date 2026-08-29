@@ -49,6 +49,7 @@ export const PHOTOS = {
     credit: {
       author: "Eric Kilby",
       license: "CC BY-SA 2.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:Serengeti_Balloon.jpg",
     },
   },
@@ -76,6 +77,7 @@ export const PHOTOS = {
     credit: {
       author: "Ray in Manila",
       license: "CC BY 2.0",
+      adjusted: true,
       source: "https://commons.wikimedia.org/wiki/File:Kibo_Summit,_Mount_Kilimanjaro,_Tanzania_(30819102678).jpg",
     },
   },
@@ -118,12 +120,21 @@ export const PHOTOS = {
       source: "https://commons.wikimedia.org/wiki/File:006_Giraffe_portrait_in_the_Lake_Manyara_National_Park_Photo_by_Giles_Laurent.jpg",
     },
   },
-  "maasai-boma": {
-    src: "/images/tanzania/maasai-boma.webp",
+  /**
+   * La misma boma, corregida para la tarjeta de Cultura de la portada.
+   *
+   * El archivo original de Commons no se toca; este es un derivado aparte con
+   * el azul violáceo del tejado y de la colina reducido a un tercio de su
+   * saturación y el conjunto calentado —ver `scripts/harmonize-photos.mjs`—.
+   * Comparte alt y crédito con el archivo del que sale: es la misma
+   * fotografía, y la licencia obliga a declarar que se ha modificado.
+   */
+  "maasai-boma-warm": {
+    src: "/images/tanzania/maasai-boma-warm.webp",
     altKey: "maasai-boma",
     width: 1280,
     height: 838,
-    blurDataURL: "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoUAA0APxl0sVCspqSisAgBkCMJQBdmUABfDalAlBXEwAD+sjmAMM5efgEcu8/CPsJxaCn7FgkSaB+oFW9pPDWoysd89KHM141lMvJIHCp0lZjIlYg9Xb5EjxerAAAA",
+    blurDataURL: "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoUAA0APwlur0+rpiQiMAgBcCEJYwC7AB6JA46rntoIGfAA/t/ta8zzGhxUwlmeLjZnR5uaLmv0S5kkiBv6ZVo1fjIX4SadbA1SPAzs4YYjd3YbvRsETAoAAAA=",
     provisional: true,
     credit: {
       author: "Erasmus Kamugisha",
@@ -150,7 +161,9 @@ export const PHOTOS = {
     altKey: "ngorongoro-zebras",
     width: 1280,
     height: 853,
-    blurDataURL: "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoUAA0APxl0sVCspqSisAgBkCMJZgC7ACHZh07+cmmgFwAA/lLYSyAfTD9kMMuXkn1kDEoLv/dh6gaW2SuGGdF7Qg50z0qPfbRN4PwRgAAAAA==",
+    blurDataURL: "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAwCdASoUAA0APwlur0+rpiQiMAgBcCEJZAAAW+Gh+FOytlP4twAA/sOJbWvAgYDEERpvzc50d/nZnPm3xe8zwA4bK3q+JGx7P8jQEIGAAA==",
+    // La pradera con las cebras por delante de la bruma del cráter.
+    objectPosition: "center 64%",
     provisional: true,
     credit: {
       author: "Rasheedhrasheed",

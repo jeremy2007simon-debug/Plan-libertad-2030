@@ -123,7 +123,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     accommodationStyle: "Boutique lodge",
     price: PRICE_ON_REQUEST,
     image: PHOTOS["zanzibar-stone-town"],
-    gallery: [PHOTOS["maasai-boma"], PHOTOS["kilimanjaro-shira"], CLIENT_PHOTOS["zebra-herd-monochrome"]],
+    gallery: [PHOTOS["maasai-boma-warm"], PHOTOS["kilimanjaro-shira"], CLIENT_PHOTOS["zebra-herd-monochrome"]],
     itinerary: [
 
     ],

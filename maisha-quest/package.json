@@ -19,6 +19,7 @@
     "test:intro": "node scripts/test-intro.mjs",
     "test:motion": "node scripts/test-scroll-motion.mjs",
     "audit:tone": "node scripts/audit-image-tone.mjs",
+    "check:cards": "node scripts/check-experience-cards.mjs",
     "harmonize:photos": "node scripts/harmonize-photos.mjs",
     "check:rights": "node scripts/check-photo-rights.mjs",
     "check:links": "node scripts/check-links-seo.mjs",

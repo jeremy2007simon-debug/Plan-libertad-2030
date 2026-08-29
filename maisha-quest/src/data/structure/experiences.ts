@@ -74,7 +74,9 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "cultural-encounters",
     category: "culture",
-    image: PHOTOS["maasai-boma"],
+    // Derivado corregido: el original tenía una dominante azul violácea que no
+    // pegaba con ninguna de las otras siete tarjetas del carrusel.
+    image: PHOTOS["maasai-boma-warm"],
     destinationSlugs: ["ngorongoro","arusha","zanzibar","kilimanjaro"],
   },
   {
@@ -86,7 +88,9 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "kilimanjaro-trek",
     category: "kilimanjaro",
-    image: PHOTOS["kilimanjaro-climbers"],
+    // El Kibo desde la llanura, no los escaladores: sus chaquetas turquesa y
+    // naranja eran el punto de atención de todo el carrusel.
+    image: PHOTOS["kilimanjaro-kibo"],
     destinationSlugs: ["kilimanjaro"],
   },
   {

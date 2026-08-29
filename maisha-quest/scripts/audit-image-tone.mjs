@@ -240,7 +240,14 @@ const pct = (n) => `${Math.round(n * 100)} %`;
 const dec = (n) => n.toFixed(2);
 
 const OBJETIVO = {
-  kelvinMin: 4800,
+  /*
+   * El extremo cálido está muy abajo a PROPÓSITO. La dirección fotográfica es
+   * cálida: una foto a 4.100 K —un leopardo sobre corteza ocre— es lo que se
+   * busca, no un defecto. Por debajo de 2.600 K sí hay problema, porque eso ya
+   * es un filtro naranja. Lo que hay que cazar está al otro lado: lo frío, lo
+   * azul y lo que se ha quedado gris.
+   */
+  kelvinMin: 2600,
   kelvinMax: 7200,
   saturacionMin: 0.14,
   saturacionMax: 0.42,
@@ -334,6 +341,12 @@ const ACEPTADAS = {
   "african-elephant-portrait":
     "Blanco y negro DELIBERADO: va sola en «‘Maisha’ significa vida», sin ninguna fotografía en color al lado con la que chocar. Las otras monocromas, que sí convivían con fotografías en color, se han retirado.",
   "serengeti-plains": "Ya armonizada; el 45 % restante es hierba verde de verdad.",
+  "kilimanjaro-kibo":
+    "Hierba dorada de la llanura de Amboseli a última hora. Es la tarjeta de Kilimanjaro del carrusel y su calidez es la que la mete en la colección.",
+  "ngorongoro-zebras":
+    "El 19 % de altas luces es la bruma pálida del cráter, ya desaturada. Comprimirla más aplastaría el fondo.",
+  "flamingos-tanzania-lake":
+    "13 % de saturación: es un lago pálido a mediodía. Se le quitó el cian del agua sin tocar el rosa de los flamencos, que es lo que hay que ver.",
   "tarangire-baobab": "Ya armonizada: de 38 % a 13 % de altas luces.",
   "flamingos-tanzania-lake": "Ya armonizada, de 9.128 K a 7.422 K. Más allá, el agua deja de ser agua.",
   "maasai-boma": "Ya armonizada, de 11.579 K a 8.597 K. Más allá, el cielo se vuelve crema.",
