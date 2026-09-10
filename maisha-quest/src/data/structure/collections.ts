@@ -18,19 +18,22 @@ import { CLIENT_PHOTOS } from "../client-photography";
 export const COLLECTION_STRUCTURE: CollectionStructure[] = [
   {
     id: "explorer",
-    typicalDurationDays: [7,12],
+    // Actualizado a los 6 paquetes reales de /explorer-tanzania-safaris (2-7 días).
+    typicalDurationDays: [2,7],
     accent: "sand",
     image: CLIENT_PHOTOS["lion-open-savannah"],
   },
   {
     id: "escape",
+    // Coincide con los 6 paquetes reales de /escape-tanzania-safaris (7-14 días).
     typicalDurationDays: [7,14],
     accent: "terracotta",
     image: PHOTOS["serengeti-sunset"],
   },
   {
     id: "enrich",
-    typicalDurationDays: [8,14],
+    // Actualizado a los 6 paquetes reales de /enrich-tanzania-safaris (5-12 días).
+    typicalDurationDays: [5,12],
     accent: "gold",
     image: CLIENT_PHOTOS["giraffe-oxpecker-birds"],
   },

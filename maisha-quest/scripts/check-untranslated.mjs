@@ -39,7 +39,7 @@ const LOCALES = ["es", "de", "fr", "ru", "zh-CN"];
 const PATHS = [
   "",
   "/safaris",
-  "/safaris/serengeti-ngorongoro-journey",
+  "/safaris/safari-zanzibar-escape",
   "/destinations",
   "/destinations/serengeti",
   "/experiences",

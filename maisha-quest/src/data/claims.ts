@@ -241,10 +241,14 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     claim: "En el Kilimanjaro se siguen las pautas de KPAP sobre sueldo y carga de porteadores.",
     status: "pending",
     needsClientReview: true,
+    // `kilimanjaro-lemosho` (el único paquete de ascensión al Kilimanjaro)
+    // se retiró al migrar al catálogo real de 18 paquetes de maishaquest.com:
+    // ninguno de los 18 reales es una ascensión al Kilimanjaro. La afirmación
+    // sigue pendiente por si el cliente confirma que sí ofrece ascensiones
+    // (no listadas como "safari" en su web) y quiere publicarla en otro sitio.
     usedIn: [
       "content impact.local-employment.description",
       "team.note",
-      "content safaris.kilimanjaro-lemosho.included[0]",
     ],
     publishedAs:
       "Que el trato a la cuadrilla de montaña —sueldo, cargas y equipo— pesa al " +

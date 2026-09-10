@@ -21,7 +21,7 @@ import { chromium, devices } from "/opt/node22/lib/node_modules/playwright/index
 
 const BASE = process.argv[2] || "http://127.0.0.1:3000";
 const LOCALES = ["en", "es", "de", "fr", "ru", "zh-CN"];
-const PATHS = ["", "/safaris", "/safaris/serengeti-ngorongoro-journey", "/destinations", "/plan", "/contact", "/impact", "/about/team"];
+const PATHS = ["", "/safaris", "/safaris/safari-zanzibar-escape", "/destinations", "/plan", "/contact", "/impact", "/about/team"];
 
 const VIEWPORTS = [
   { name: "360", width: 360, height: 740 },
@@ -232,7 +232,7 @@ console.log("\n== 2. Perfiles de iPhone y Android ==");
     const page = await context.newPage();
     let bad = 0;
     for (const locale of ["en", "de", "ru", "zh-CN"]) {
-      for (const path of ["", "/plan", "/safaris/serengeti-ngorongoro-journey"]) {
+      for (const path of ["", "/plan", "/safaris/safari-zanzibar-escape"]) {
         await page.goto(`${BASE}/${locale}${path}`, { waitUntil: "networkidle" });
         const x = await page.evaluate(OVERFLOW);
         if (x > 0) {

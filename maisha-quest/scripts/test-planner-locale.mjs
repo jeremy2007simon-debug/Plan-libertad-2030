@@ -160,11 +160,11 @@ console.log("\n== 4. Una elección manual se respeta ==");
 
 console.log("\n== 5-6. ?safari= y slugs inexistentes ==");
 {
-  await page.goto(`${BASE}/es/plan?safari=serengeti-under-canvas`, {
+  await page.goto(`${BASE}/es/plan?safari=northern-circuit-camping-safari`, {
     waitUntil: "networkidle",
   });
   await switchLocale("de");
-  if (!page.url().includes("safari=serengeti-under-canvas"))
+  if (!page.url().includes("safari=northern-circuit-camping-safari"))
     fail(`?safari= se perdió al cambiar de idioma: ${page.url()}`);
   else pass("?safari= sobrevive al cambio de idioma");
 

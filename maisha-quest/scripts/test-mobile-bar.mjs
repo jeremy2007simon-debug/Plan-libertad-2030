@@ -339,7 +339,7 @@ console.log("\n== 7. Planificador y escritorio ==");
 console.log("\n== 8. Otras rutas, idiomas y orientación ==");
 {
   const RUTAS = [
-    "/safaris/serengeti-ngorongoro-journey",
+    "/safaris/safari-zanzibar-escape",
     "/contact",
     "/destinations/serengeti",
     "/faq",
