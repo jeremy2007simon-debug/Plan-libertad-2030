@@ -640,22 +640,41 @@ export const enContent = {
   },
   } satisfies Record<CollectionId, CollectionText>,
 
+  /**
+   * The 3 real articles from maishaquest.com/blog, by Talisa Tufts,
+   * published 29 April 2025. Reproduced faithfully, including the fact
+   * that two of the three explicitly discuss the site's own move to Wix —
+   * that is genuinely what these articles say, not an editorial choice.
+   */
   journal: {
-  "when-to-see-the-great-migration": {
-    title: "Where the migration actually is, month by month",
-    excerpt: "There is no migration season — there is a place the herds should be in the month you travel. A straight answer for each one, and what it means for where you sleep.",
-    category: "Planning",
-  },
-  "choosing-a-kilimanjaro-route": {
-    title: "Choosing a Kilimanjaro route",
-    excerpt: "Lemosho, Machame, Rongai or Marangu. The differences that matter are acclimatisation profile and how many days you can give the mountain — not difficulty ratings.",
-    category: "Kilimanjaro",
-  },
-  "green-season-tanzania": {
-    title: "In defence of the green season",
-    excerpt: "November to May gets written off as the wet months. What you actually get: empty parks, extraordinary skies, newborn animals and the best birding of the year.",
-    category: "Planning",
-  },
+    "elevate-your-safari-experience": {
+      title: "Elevate Your Safari Experience: Maisha Quest's Tailored Adventures",
+      excerpt: "A look at Maisha Quest's Explorer, Escape and Enrich packages, and at the move to a new Wix-built website with tailored safari forms and a full company profile.",
+      category: "Company news",
+      body: [
+        "Are you dreaming of an unforgettable safari experience that goes beyond the ordinary? Look no further than Maisha Quest, a premier safari company based in Arusha, Tanzania, that specializes in creating tailored adventures that cater to your every desire.",
+        "Maisha Quest is on a mission to redefine the safari experience by offering unique, authentic, and sustainable journeys that not only showcase the stunning landscapes of Tanzania but also delve deep into its rich history and diverse cultures. With a focus on sustainable destination development, Maisha Quest ensures that every journey contributes to the preservation of wildlife, the enrichment of local communities, and the promotion of Tanzania as a vibrant and dynamic destination. Whether you're an adventurous explorer, a relaxation seeker, or a cultural enthusiast, Maisha Quest has the perfect package for you. Their Explorer Packages are designed for thrill-seekers who crave adrenaline-pumping experiences in the heart of the wilderness. If you're looking to unwind and bask in the beauty of nature, the Escape Packages offer a serene retreat amidst breathtaking scenery. And for those who want to immerse themselves in the vibrant culture and urban life of Tanzania, the Enrich Packages provide a deep dive into the local customs and traditions. In addition to their carefully curated safari experiences, Maisha Quest is also dedicated to providing top-notch customer service and ensuring that every aspect of your journey is seamlessly taken care of. The company is in the process of transitioning to Wix, a move that will enhance website monitoring, improve SEO capabilities, boost performance, facilitate easier management, and provide access to advanced design tools. The new website will feature an elegant and classy design reminiscent of top-tier wilderness destinations, as well as a user-friendly section where you can fill out tailored safari forms and explore the company's profile. So, if you're ready to elevate your safari experience to new heights and embark on a journey of a lifetime, trust Maisha Quest to craft a bespoke adventure that exceeds all your expectations. Book your tailored safari today and get ready to immerse yourself in the magic of Tanzania like never before.",
+      ],
+    },
+    "unleash-your-wanderlust": {
+      title: "Unleash Your Wanderlust: Maisha Quest Safari Adventures Await",
+      excerpt: "Why Maisha Quest frames its Explorer, Escape and Enrich packages around sustainable tourism — and what's changing with the company's move to a new website.",
+      category: "Company news",
+      body: [
+        "Are you ready to embark on a once-in-a-lifetime safari adventure that will not only ignite your wanderlust but also contribute to the preservation of wildlife and the enrichment of local communities? Look no further than Maisha Quest Safari Adventures based in the breathtaking landscapes of Arusha, Tanzania.",
+        "Maisha Quest is not your typical safari company. They are on a mission to challenge stereotypes and showcase the rich history, diverse cultures, and stunning landscapes of Africa. With a commitment to sustainable tourism, Maisha Quest offers a range of carefully crafted safari experiences that cater to various types of travelers. For the adventure seekers, the Explorer Packages are perfect for those looking to immerse themselves in the untamed wilderness and get up close and personal with the majestic wildlife of Tanzania. If relaxation and scenic beauty are more your style, the Escape Packages offer a tranquil retreat into the heart of nature. And for those eager to delve deep into the cultural tapestry of Tanzania, the Enrich Packages provide a truly immersive and eye-opening experience.",
+        "In addition to offering unforgettable safari experiences, Maisha Quest is dedicated to the sustainable development of Tanzania as a destination. By choosing Maisha Quest for your next adventure, you are not only embarking on an incredible journey but also contributing to the conservation of wildlife and the empowerment of local communities. Exciting news is on the horizon for Maisha Quest as they are gearing up to launch a new and improved website on Wix. This move will enable better monitoring, SEO optimization, enhanced performance, easier management, and access to top-notch design tools. The sleek and classy website design will mirror the elegance of leading travel sites, providing a seamless user experience for visitors. One of the key features of the new website will be a section where travelers can fill out tailored safari forms to customize their experience. Additionally, a comprehensive company profile will be available for visitors to learn more about Maisha Quest's values, mission, and commitment to sustainable tourism. So, if you are ready to unleash your wanderlust and embark on a safari adventure like no other, Maisha Quest Safari Adventures awaits. Get ready to explore the untamed beauty of Tanzania, immerse yourself in its vibrant cultures, and make a positive impact on the world.",
+      ],
+    },
+    "discover-tanzanias-hidden-gems": {
+      title: "Discover Tanzania's Hidden Gems: Maisha Quest Safari Experiences",
+      excerpt: "Maisha Quest's Explorer, Escape and Enrich packages, and a first look at the company's move to a redesigned, Wix-built website.",
+      category: "Company news",
+      body: [
+        "Are you an adventurous traveler on the lookout for a safari experience like no other? Look no further than Maisha Quest, a premier safari company based in Arusha, Tanzania, offering a range of unique and sustainable safari experiences.",
+        "Maisha Quest is on a mission to challenge stereotypes and showcase the rich history, diverse cultures, and breathtaking landscapes of Africa. With a commitment to sustainable destination development, this company envisions a world where every journey contributes to wildlife preservation, uplifts local communities, and highlights Tanzania as an exciting and vibrant destination. Whether you're an adventure seeker, a relaxation enthusiast, or a cultural explorer, Maisha Quest has the perfect safari package for you. From Explorer Packages for the thrill-seekers to Escape Packages for those craving serenity and natural beauty, and Enrich Packages for travelers longing for immersive cultural experiences, there's something for everyone. In a bid to enhance user experience and streamline operations, the owner of Maisha Quest is planning to transition the website to Wix. This move will not only improve monitoring, SEO performance, and management but will also provide better design tools, giving visitors a more elegant and classy browsing experience similar to the renowned Wilderness Destinations website. One standout feature of the upcoming website will be the inclusion of tailored safari forms, allowing visitors to customize their safari experience and make their trip truly unforgettable. Additionally, the website will showcase the company profile, giving insight into Maisha Quest's ethos, values, and commitment to sustainable tourism. So, if you're ready to embark on a safari journey like never before, keep an eye out for Maisha Quest's revamped website, where adventure, relaxation, and cultural immersion await. It's time to discover Tanzania's hidden gems and create memories that will last a lifetime.",
+      ],
+    },
   } satisfies Record<string, JournalText>,
 
   faq: {
