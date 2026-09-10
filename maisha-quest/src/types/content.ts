@@ -246,16 +246,23 @@ export interface Destination {
 export interface Experience {
   slug: Slug;
   name: string;
-  /** Categoría del selector "How do you want to experience Tanzania?". */
+  /**
+   * Categoría del selector "How do you want to experience Tanzania?".
+   *
+   * Las cinco categorías reales de la sección Experiences de maishaquest.com
+   * (Thrill Seeker Adventure, Water Activities, Tours & Safaris, Shopping
+   * and Leisure, Nightlife). Sustituyen a las ocho inventadas para la
+   * primera versión del sitio (wildlife/adventure/luxury/honeymoon/family/
+   * culture/kilimanjaro/safari-and-zanzibar), que no existen como tales en
+   * el sitio real: la observación de fauna es parte de los paquetes de
+   * safari, no una "experiencia" independiente reservable por separado.
+   */
   category:
-    | "wildlife"
-    | "adventure"
-    | "luxury"
-    | "honeymoon"
-    | "family"
-    | "culture"
-    | "kilimanjaro"
-    | "safari-and-zanzibar";
+    | "thrill-seeker-adventure"
+    | "water-activities"
+    | "tours-and-safaris"
+    | "shopping-and-leisure"
+    | "nightlife";
   shortDescription: string;
   description: string;
   image: ResolvedImage;

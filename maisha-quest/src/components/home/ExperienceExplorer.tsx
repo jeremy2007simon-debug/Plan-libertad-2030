@@ -15,14 +15,11 @@ import { ExperienceExplorerPanel, type ExplorerItem } from "./ExperienceExplorer
  * suyo en lugar de heredar el de la fotografía.
  */
 const OBJECT_POSITION: Record<string, string> = {
-  wildlife: "50% 30%",
-  adventure: "center 58%",
-  luxury: "center 42%",
-  honeymoon: "center 56%",
-  family: "center 68%",
-  culture: "center 46%",
-  kilimanjaro: "center 40%",
-  "safari-and-zanzibar": "center 42%",
+  "thrill-seeker-adventure": "center 42%",
+  "water-activities": "center 56%",
+  "tours-and-safaris": "center 46%",
+  "shopping-and-leisure": "center 50%",
+  nightlife: "center 62%",
 };
 
 /**

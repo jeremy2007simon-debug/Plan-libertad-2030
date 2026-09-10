@@ -7,7 +7,32 @@
  * safari de siete días si la francesa dice ocho: la duración solo existe en
  * este archivo.
  *
- * Generado a partir de los datos originales; a partir de aquí se edita a mano.
+ * MIGRACIÓN WIX — sustituye las 8 categorías inventadas por las 5 reales.
+ * ---------------------------------------------------------------------
+ * La sección "Experiences" de maishaquest.com no es un catálogo de
+ * actividades de safari (eso vive en los paquetes): son cinco páginas de
+ * categoría — Thrill Seeker Adventure, Water Activities, Tours & Safaris,
+ * Shopping and Leisure, Nightlife — cada una con una lista de actividades
+ * reservables por libre en Arusha, Zanzíbar, Moshi, Dar es Salaam y Mwanza
+ * (paracaidismo, submarinismo, mercados, vida nocturna...). El sitio real NO
+ * tiene una página propia por actividad individual, así que replicar aquí
+ * quince o cincuenta slugs de detalle habría sido inventar una arquitectura
+ * de contenido que maishaquest.com no tiene. En su lugar, cada una de las
+ * cinco categorías reales es una única `Experience`, y su `description`
+ * enumera con fidelidad las actividades reales listadas en su página de
+ * origen — nada inventado, nada resumido hasta perder el nombre o el lugar.
+ *
+ * Las 15 "experiencias" anteriores (game-drives, great-migration,
+ * mobile-camping, walking-safari, balloon-safari, photographic-safari,
+ * beach-and-ocean, family-safari, cultural-encounters, coffee-and-cuisine,
+ * kilimanjaro-trek, safari-and-zanzibar, boat-safari, birdwatching,
+ * conservation) desaparecen: no existen como tales en maishaquest.com.
+ *
+ * Ninguna fotografía del pool actual (fauna y paisaje) representa de verdad
+ * paracaidismo, tirolina, un mercado o una discoteca. Las cinco imágenes de
+ * abajo son sustitutos provisionales por temática/tono, marcados aquí como
+ * pendientes de reemplazo real — ver el inventario de recursos del bloque de
+ * Fase 2 (paso 7, medios pendientes de Wix).
  */
 
 import type { ExperienceStructure, Experience } from "@/types/content";
@@ -16,134 +41,59 @@ import { CLIENT_PHOTOS } from "../client-photography";
 
 export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
-    slug: "game-drives",
-    category: "wildlife",
-    image: CLIENT_PHOTOS["leopard-in-tree"],
-    destinationSlugs: ["serengeti","ngorongoro","tarangire","lake-manyara","ruaha","nyerere"],
-  },
-  {
-    slug: "great-migration",
-    category: "wildlife",
-    image: PHOTOS["wildebeest-migration"],
-    destinationSlugs: ["serengeti"],
-  },
-  {
-    slug: "mobile-camping",
-    category: "adventure",
-    image: PHOTOS["serengeti-sunrise"],
-    destinationSlugs: ["serengeti","ngorongoro"],
-  },
-  {
-    slug: "walking-safari",
-    category: "adventure",
-    image: CLIENT_PHOTOS["antelope-herd-grasslands"],
-    destinationSlugs: ["tarangire","nyerere","ruaha","kilimanjaro"],
-  },
-  {
-    slug: "balloon-safari",
-    category: "luxury",
+    slug: "thrill-seeker-adventure",
+    category: "thrill-seeker-adventure",
+    // Provisional: no hay en el pool ninguna foto de paracaidismo, tirolina
+    // o parapente. Sustituye por una fotografía real de aventura en cuanto
+    // esté descargada del panel de Wix.
     image: PHOTOS["balloon-serengeti"],
-    destinationSlugs: ["serengeti"],
+    destinationSlugs: ["arusha", "kilimanjaro", "zanzibar"],
   },
   {
-    slug: "photographic-safari",
-    category: "luxury",
-    // Era la otra monocroma del carrusel. No se reutiliza el leopardo, que ya
-    // ilustra la tarjeta de fauna: dos veces la misma foto en la misma tira, y
-    // tampoco los leones en blanco y negro.
-    image: CLIENT_PHOTOS["male-lions-together"],
-    destinationSlugs: ["serengeti","ngorongoro","ruaha"],
-  },
-  {
-    slug: "beach-and-ocean",
-    category: "honeymoon",
+    slug: "water-activities",
+    category: "water-activities",
+    // Provisional: sin fotos propias de buceo, kitesurf o motos acuáticas.
     image: PHOTOS["zanzibar-dhow-sunset"],
-    destinationSlugs: ["zanzibar"],
+    destinationSlugs: ["arusha", "zanzibar"],
   },
   {
-    slug: "family-safari",
-    category: "family",
-    // En color. Antes iba la manada de elefantes en blanco y negro, que era la
-    // única monocroma del carrusel de la portada; los elefantes caminando que
-    // parecían el relevo natural resultaron ser también monocromos —de las 19
-    // fotografías del cliente, cinco lo son—. Los flamencos del lago Manyara,
-    // que además es uno de los destinos de esta experiencia, sí tienen color.
-    image: CLIENT_PHOTOS["flamingos-tanzania-lake"],
-    destinationSlugs: ["tarangire","lake-manyara","ngorongoro","zanzibar"],
-  },
-  {
-    slug: "cultural-encounters",
-    category: "culture",
-    // Derivado corregido: el original tenía una dominante azul violácea que no
-    // pegaba con ninguna de las otras siete tarjetas del carrusel.
+    slug: "tours-and-safaris",
+    category: "tours-and-safaris",
     image: PHOTOS["maasai-boma-warm"],
-    destinationSlugs: ["ngorongoro","arusha","zanzibar","kilimanjaro"],
+    destinationSlugs: ["arusha", "kilimanjaro", "zanzibar"],
   },
   {
-    slug: "coffee-and-cuisine",
-    category: "culture",
+    slug: "shopping-and-leisure",
+    category: "shopping-and-leisure",
+    // La única del grupo con encaje real: Stone Town es, literalmente, uno
+    // de los lugares de compras que lista la página de origen.
     image: PHOTOS["zanzibar-stone-town"],
-    destinationSlugs: ["arusha","kilimanjaro","zanzibar"],
+    destinationSlugs: ["arusha", "zanzibar"],
   },
   {
-    slug: "kilimanjaro-trek",
-    category: "kilimanjaro",
-    // El Kibo desde la llanura, no los escaladores: sus chaquetas turquesa y
-    // naranja eran el punto de atención de todo el carrusel.
-    image: PHOTOS["kilimanjaro-kibo"],
-    destinationSlugs: ["kilimanjaro"],
-  },
-  {
-    slug: "safari-and-zanzibar",
-    category: "safari-and-zanzibar",
-    // Antes era una fotografía de banco con los derechos pendientes
-    // (`ngorongoro-zebras`). Esta combinación no tiene una escena propia
-    // —es un safari clásico con una prolongación en la costa—, así que una
-    // fotografía del cliente ya autorizada la representa igual de bien sin
-    // dejar una licencia por confirmar. `lion-open-savannah` se probó
-    // primero, pero su franja de cielo despegaba del resto de la fila del
-    // explorador de experiencias (20 % de píxeles azules); esta es una
-    // composición más cerrada, sin cielo, y encaja con la dirección cálida
-    // de las otras siete.
-    image: CLIENT_PHOTOS["male-lions-together"],
-    destinationSlugs: ["serengeti","ngorongoro","zanzibar"],
-  },
-  {
-    slug: "boat-safari",
-    category: "adventure",
-    image: PHOTOS["nyerere"],
-    destinationSlugs: ["nyerere"],
-  },
-  {
-    slug: "birdwatching",
-    category: "wildlife",
-    image: CLIENT_PHOTOS["flamingo-taking-flight"],
-    destinationSlugs: ["lake-manyara","nyerere","tarangire"],
-  },
-  {
-    slug: "conservation",
-    category: "culture",
-    image: PHOTOS["ruaha"],
-    destinationSlugs: ["ngorongoro","serengeti","ruaha"],
+    slug: "nightlife",
+    category: "nightlife",
+    // Provisional: sin fotos propias de vida nocturna; un atardecer es lo
+    // más cercano al "night" que ofrece el pool actual.
+    image: CLIENT_PHOTOS["savannah-acacia-sunset"],
+    destinationSlugs: ["arusha", "zanzibar"],
   },
 ];
 
 export const EXPERIENCE_SLUGS = EXPERIENCE_STRUCTURE.map((e) => e.slug);
 
 /**
- * Las ocho categorías del selector de la home, en orden. La etiqueta sale del
- * diccionario; aquí solo vive qué experiencia representa a cada categoría.
+ * Las cinco categorías reales del selector de la home, en el orden en que
+ * aparecen en la página /experiences de maishaquest.com. Con una sola
+ * `Experience` por categoría, `leadExperienceSlug` coincide con `id`.
  */
 export const EXPERIENCE_CATEGORIES: {
   id: Experience["category"];
   leadExperienceSlug: string;
 }[] = [
-  { id: "wildlife", leadExperienceSlug: "game-drives" },
-  { id: "adventure", leadExperienceSlug: "walking-safari" },
-  { id: "luxury", leadExperienceSlug: "balloon-safari" },
-  { id: "honeymoon", leadExperienceSlug: "beach-and-ocean" },
-  { id: "family", leadExperienceSlug: "family-safari" },
-  { id: "culture", leadExperienceSlug: "cultural-encounters" },
-  { id: "kilimanjaro", leadExperienceSlug: "kilimanjaro-trek" },
-  { id: "safari-and-zanzibar", leadExperienceSlug: "safari-and-zanzibar" },
+  { id: "thrill-seeker-adventure", leadExperienceSlug: "thrill-seeker-adventure" },
+  { id: "water-activities", leadExperienceSlug: "water-activities" },
+  { id: "tours-and-safaris", leadExperienceSlug: "tours-and-safaris" },
+  { id: "shopping-and-leisure", leadExperienceSlug: "shopping-and-leisure" },
+  { id: "nightlife", leadExperienceSlug: "nightlife" },
 ];

@@ -733,14 +733,11 @@ export const en = {
     payment: "Payment",
   },
   categories: {
-    wildlife: "Wildlife",
-    adventure: "Adventure",
-    luxury: "Luxury",
-    honeymoon: "Honeymoon",
-    family: "Family",
-    culture: "Culture",
-    kilimanjaro: "Kilimanjaro",
-    "safari-and-zanzibar": "Safari & Zanzibar",
+    "thrill-seeker-adventure": "Thrill Seeker Adventure",
+    "water-activities": "Water Activities",
+    "tours-and-safaris": "Tours & Safaris",
+    "shopping-and-leisure": "Shopping and Leisure",
+    nightlife: "Nightlife",
   },
   /** Idiomas que habla el equipo — dato comercial real, no adorno. */
   languageNames: {

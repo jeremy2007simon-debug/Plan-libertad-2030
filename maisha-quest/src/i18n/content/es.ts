@@ -538,81 +538,40 @@ export const esContent: ContentDictionary = {
     },
   },
 
+  /**
+   * Las 5 categorías reales de la sección Experiences de maishaquest.com,
+   * cada una con su propia página allí (/thrill-seaker-adventures,
+   * /water-activities, /tours, /shopping-and-leisure, /nightlife). La
+   * `description` de cada una enumera con fidelidad las actividades o
+   * locales publicados en esa página — nada inventado, nada resumido hasta
+   * perder el nombre o el lugar. Ninguna de estas actividades o locales
+   * tiene un precio publicado.
+   */
   experiences: {
-    "game-drives": {
-      name: "Safaris en vehículo",
-      shortDescription: "Vehículo privado, techo abierto y un guía que lee el terreno.",
-      description: "El corazón de un safari en Tanzania. Viajas en tu propio vehículo con tu propio guía, lo que significa que marcas el ritmo: quedarte dos horas con un leopardo si la luz acompaña, o seguir. Las primeras horas y el final de la tarde son cuando la llanura está más viva.",
+    "thrill-seeker-adventure": {
+      name: "Aventura Extrema",
+      shortDescription: "«Safari» significa «viaje» en suajili: explore fronteras llenas de aventura en cada rincón de Tanzania con los mejores operadores.",
+      description: "Salto en paracaídas sobre la playa de Kendwa, en Zanzíbar. Tirolina entre plantaciones de plátano y bosques de Mto wa Mbu, a dos horas de Arusha. Parapente en tándem sobre el Valle del Rift, en Monduli, a hora y media de Arusha (de temporada). Ciclismo de montaña entre plantaciones de café y aldeas cerca de Usa River y el bosque de Rau, junto a Moshi y Arusha, con vistas al Kilimanjaro. Paseos a caballo por las playas de Nungwi, en Zanzíbar. Trekking de montaña en el Kilimanjaro, el monte Meru o las montañas Usambara. Senderismo hasta las cascadas de Materuni y Napuru, cerca de Moshi y Arusha, con visitas culturales a las comunidades chagga y meru. Natación con delfines en Kizimkazi, Zanzíbar. Y, de temporada entre noviembre y marzo, natación con tiburones ballena frente a la isla de Mafia. Según se indica en la página Thrill Seeker Adventure de maishaquest.com.",
     },
-    "great-migration": {
-      name: "La Gran Migración",
-      shortDescription: "Seguir a las manadas, ajustado a dónde están de verdad.",
-      description: "Casi dos millones de ñus y cebras recorren el ecosistema del Serengeti en un lento círculo anual. No hay una única «temporada de migración»: hay un lugar donde deberían estar las manadas el mes en que viajas, y construimos la ruta alrededor de eso y no de un itinerario fijo.",
+    "water-activities": {
+      name: "Actividades Acuáticas",
+      shortDescription: "El agua es el origen de toda vida: deje la tierra firme y disfrute de una variedad de deportes acuáticos en la costa y más allá.",
+      description: "Buceo de superficie en el atolón de Mnemba, Zanzíbar. Submarinismo con centros certificados PADI en Zanzíbar y la isla de Mafia. Kitesurf en la playa de Paje, Zanzíbar, una de las mejores playas del mundo para este deporte (de temporada, clases diarias). Piragüismo en el lago Duluti, un lago de cráter a veinte minutos de Arusha. Motos acuáticas en Kendwa y Nungwi, Zanzíbar. Pesca en el lago Victoria y la costa de Zanzíbar, desde salidas tradicionales con pescadores locales hasta pesca de altura. Paseos en barco por el lago Victoria y el océano Índico, desde cruceros al atardecer hasta salidas tradicionales en dhow. Excursiones de un día a la isla Bongoyo y la isla Mbudya, ambas cerca de Dar es Salaam, para bucear y hacer picnic en la playa. Alquiler de yates privados desde Dar es Salaam y Zanzíbar. Y visitas guiadas a las cuevas de agua dulce de Zanzíbar. Según se indica en la página Water Activities de maishaquest.com.",
     },
-    "mobile-camping": {
-      name: "Campamento móvil",
-      shortDescription: "Un campamento que se mueve con la fauna, no contra ella.",
-      description: "Lona, una cama de verdad, una ducha de cubo bajo las estrellas y un campamento que se recoge y sigue a las manadas. Es lo más cerca que se está de cómo se viajaba originalmente en safari, sin nada de la incomodidad que quizá te estés imaginando.",
+    "tours-and-safaris": {
+      name: "Tours y Safaris",
+      shortDescription: "Descubra rincones ocultos en un recorrido por lugares con su propia historia que contar.",
+      description: "Visitas a museos en Dar es Salaam y Arusha, incluidos el Museo Nacional, el Museo de la Declaración de Arusha y el Museo de Historia Natural. Recorridos urbanos por Arusha, Dar es Salaam, Zanzíbar y Mwanza. Visitas a aldeas en Mto wa Mbu y en poblados masái. Visitas a galerías de arte en el Nafasi Art Space de Dar es Salaam y el Centro del Patrimonio Cultural de Arusha. Una caminata hasta las cascadas de Materuni, cerca de Moshi, con una experiencia tradicional de elaboración de café junto a la comunidad chagga. Las cascadas de Napuru, a veinte minutos de Arusha, para senderismo, cuatriciclos y picnics. El lago Duluti, también a veinte minutos de Arusha, para piragüismo, pesca y observación de aves. El Parque de Serpientes de Meserani y el Museo Masái, a media hora de Arusha. El Centro de Jirafas de Arusha. Visitas a fincas de café y de plátano en Moshi y Arusha. Y visitas a minas y talleres de gemas y tanzanita en Arusha y las minas de Mererani. Según se indica en la página Tours de maishaquest.com.",
     },
-    "walking-safari": {
-      name: "Safari a pie",
-      shortDescription: "El mismo paisaje, a tres kilómetros por hora.",
-      description: "A pie, con un ranger armado y un guía de caminata, el safari cambia de escala: rastros, excrementos, cantos de aves, el olor del monte. Ves menos animales y entiendes muchísimo más. Disponible en Tarangire, Nyerere y Ruaha, y en las faldas del Kilimanjaro.",
+    "shopping-and-leisure": {
+      name: "Compras y Ocio",
+      shortDescription: "La mejor forma de aprovechar el tiempo libre: recupere energía con las mejores ofertas al alcance de la mano.",
+      description: "El Mercado Masái de Arusha, mejor visitarlo en sábado. El Centro del Patrimonio Cultural de Arusha, con arte, piezas artesanales, joyería y una cafetería. El AIM Mall de Arusha, con boutiques, cine y restauración. El Slipway Shopping Centre de Dar es Salaam, para comprar y comer frente al mar. Las tiendas de Stone Town, en Zanzíbar, con artesanía suajili tradicional, especias y ropa. El Mlimani City Mall, el centro comercial más grande de Tanzania, en Dar es Salaam. El Rock City Mall de Mwanza. Y jornadas de spa en el Lemon Spa de Arusha, el Ocean Spa de Dar es Salaam y Zanzíbar, o el Honey Spa de Moshi. Según se indica en la página Shopping and Leisure de maishaquest.com.",
     },
-    "balloon-safari": {
-      name: "Safari en globo",
-      shortDescription: "La primera luz sobre el Serengeti, desde trescientos metros.",
-      description: "Despegue al amanecer, una hora de deriva casi silenciosa sobre la llanura y desayuno sobre la hierba donde aterrizas. Es el añadido del que casi nadie se arrepiente, y hay que reservarlo con mucha antelación.",
-    },
-    "photographic-safari": {
-      name: "Safari fotográfico",
-      shortDescription: "Construido en torno a la luz, la posición y la paciencia.",
-      description: "Rutas y horarios pensados para la hora dorada, colocación del vehículo respecto al sol, sacos de arena en lugar de trípodes y guías acostumbrados a trabajar con fotógrafos. Días más lentos, menos parques, mejores fotos.",
-    },
-    "beach-and-ocean": {
-      name: "Playa y océano",
-      shortDescription: "El Índico, después del polvo de la llanura.",
-      description: "Zanzíbar y las islas menores de la costa: agua cálida y poco profunda, velas de dhow al atardecer, arrecifes para bucear con tubo o con botella. Es la segunda mitad natural de un safari, y aquella en torno a la que la mayoría de las parejas monta su luna de miel.",
-    },
-    "family-safari": {
-      name: "Safari en familia",
-      shortDescription: "Al ritmo de los niños, sin restarle nada a los adultos.",
-      description: "Trayectos más cortos, unidades familiares en lugar de habitaciones separadas, guías que saben mantener la atención de un niño de siete años y parques lo bastante cerca como para que nadie pase un día entero en el coche. La edad mínima varía según el campamento: la comprobamos antes de proponer nada.",
-    },
-    "cultural-encounters": {
-      name: "Encuentros culturales",
-      shortDescription: "Tiempo con las comunidades, en sus términos.",
-      description: "Visitas acordadas directamente con las comunidades implicadas, en los horarios que les convienen y con una parte justa de lo que pagas quedándose en el lugar. Comunidades masái y datoga cerca de las tierras altas del Ngorongoro, aldeas chagga en las laderas del Kilimanjaro y la Stone Town suajili de Zanzíbar.",
-    },
-    "coffee-and-cuisine": {
-      name: "Café y cocina",
-      shortDescription: "Tanzania a través de lo que cultiva y cocina.",
-      description: "Café en las laderas donde se cultiva, fincas de especias a las afueras de Stone Town, una cocina suajili, un mercado en Arusha. Medias jornadas pequeñas y sin prisa que cuentan más del país que otro safari en vehículo.",
-    },
-    "kilimanjaro-trek": {
-      name: "Ascensión al Kilimanjaro",
-      shortDescription: "Cinco climas, una montaña, una semana.",
-      description: "Machame, Lemosho, Rongai o Marangu: la ruta correcta depende del tiempo que tengas, de cómo aclimates y de cómo quieras que se sienta la caminata. Planificamos el día extra de aclimatación como estándar, no como un extra que vender.",
-    },
-    "safari-and-zanzibar": {
-      name: "Safari y Zanzíbar",
-      shortDescription: "Primero la llanura, después el océano. La combinación clásica.",
-      description: "La forma de viaje por Tanzania que más se pide: el circuito norte y después un vuelo corto hacia el este, a la costa. Días suficientes en cada mitad para que ninguna se sienta apresurada, y un solo equipo ocupándose del enlace en medio.",
-    },
-    "boat-safari": {
-      name: "Safari en barca",
-      shortDescription: "Seguir la fauna desde el agua, en el Rufiji.",
-      description: "En Nyerere el río es la carretera. El final de la tarde en el Rufiji trae hipopótamos, cocodrilos, elefantes bajando a beber y una lista de aves de tres cifras, desde una barca y a la altura de los ojos.",
-    },
-    "birdwatching": {
-      name: "Observación de aves",
-      shortDescription: "Más de mil especies y guías que reconocen los cantos.",
-      description: "La lista de aves de Tanzania es de las más largas de África. Lake Manyara, los lagos del Valle del Rift y los parques del sur en la estación verde son el mejor terreno, y los meses de noviembre a abril traen a las migratorias.",
-    },
-    "conservation": {
-      name: "Jornadas de conservación",
-      shortDescription: "Un día con quienes hacen el trabajo.",
-      description: "Tiempo con rangers, investigadores y proyectos comunitarios de conservación: entender qué implica de verdad proteger estos ecosistemas, en lugar de verlo desde un vehículo.",
+    nightlife: {
+      name: "Vida Nocturna",
+      shortDescription: "La música no se detiene: los mejores locales de la ciudad, allá donde le lleve el viaje.",
+      description: "En Arusha: Via Via, para música en vivo al aire libre y noches culturales; Rafiki Juice Bar, para cócteles y DJ; Kesho Café, para jazz y poesía; Pillars, para bandas en vivo; y discotecas como Aces, Club D, The Hub y El Toro, con Bongo Flava y éxitos internacionales. En Dar es Salaam: Samaki Samaki, para cenar y bailar; Elements, para cócteles en una azotea; Tips Lounge, para hip-hop y Bongo Flava; Wavuvi Camp, para fiestas en la playa; Coco Beach Strip; Cocktails & Dreams; The Reef; y discotecas como Uncles, Kitamba Cheupe, Havoc y Warehouse. En Zanzíbar: Sky Bar, con vistas a Stone Town; Jambo Beach; la Full Moon Party de Kendwa Rocks; y locales como 6 Degrees South, Garage Club y Tatu. En Mwanza: Cask n Grill y Tilapia Lounge. Según se indica en la página Nightlife de maishaquest.com.",
     },
   },
 

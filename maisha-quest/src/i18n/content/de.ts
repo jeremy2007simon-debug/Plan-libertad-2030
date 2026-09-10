@@ -539,81 +539,40 @@ export const deContent: ContentDictionary = {
     },
   },
 
+  /**
+   * Die 5 realen Kategorien des Experiences-Bereichs von maishaquest.com,
+   * jede mit einer eigenen Seite dort (/thrill-seaker-adventures,
+   * /water-activities, /tours, /shopping-and-leisure, /nightlife). Die
+   * `description` jeder Kategorie listet originalgetreu die auf jener Seite
+   * veröffentlichten Aktivitäten bzw. Adressen auf — nichts erfunden, nichts
+   * so zusammengefasst, dass Name oder Ort verloren gehen. Für keine dieser
+   * Aktivitäten oder Adressen ist ein Preis veröffentlicht.
+   */
   experiences: {
-    "game-drives": {
-      name: "Pirschfahrten",
-      shortDescription: "Eigenes Fahrzeug, offenes Dach und ein Guide, der die Spuren liest.",
-      description: "Das Herz einer Safari in Tansania. Sie fahren im eigenen Fahrzeug mit Ihrem eigenen Guide — Sie bestimmen also das Tempo: zwei Stunden bei einem Leoparden bleiben, wenn das Licht stimmt, oder weiterfahren. Früh am Morgen und am späten Nachmittag ist auf der Ebene am meisten los.",
+    "thrill-seeker-adventure": {
+      name: "Nervenkitzel-Abenteuer",
+      shortDescription: "„Safari“ bedeutet auf Suaheli „Reise“ – erkunden Sie abenteuerliche Grenzen in jeder Ecke Tansanias mit den besten Anbietern.",
+      description: "Fallschirmspringen über dem Kendwa Beach auf Sansibar. Seilrutschen durch die Bananenplantagen und Wälder von Mto wa Mbu, zwei Stunden von Arusha entfernt. Tandem-Gleitschirmfliegen über dem Rift Valley bei Monduli, anderthalb Stunden von Arusha entfernt (saisonal). Mountainbiken durch Kaffeeplantagen und Dörfer bei Usa River und dem Rau-Wald, nahe Moshi und Arusha, mit Blick auf den Kilimandscharo. Reiten am Strand von Nungwi auf Sansibar. Bergtrekking am Kilimandscharo, am Mount Meru oder in den Usambara-Bergen. Wanderungen zu den Wasserfällen von Materuni und Napuru bei Moshi und Arusha, mit kulturellen Begegnungen mit den Chagga- und Meru-Gemeinschaften. Schwimmen mit Delfinen bei Kizimkazi auf Sansibar. Und saisonal von November bis März Schwimmen mit Walhaien vor Mafia Island. Wie auf der Seite Thrill Seeker Adventure von maishaquest.com aufgeführt.",
     },
-    "great-migration": {
-      name: "Die Große Tierwanderung",
-      shortDescription: "Den Herden folgen, abgestimmt darauf, wo sie wirklich sind.",
-      description: "Fast zwei Millionen Gnus und Zebras ziehen in einem langsamen Jahreskreis durch das Serengeti-Ökosystem. Es gibt keine einzelne „Migrationssaison“ — es gibt einen Ort, an dem die Herden in Ihrem Reisemonat sein sollten, und wir bauen die Route darum herum statt um ein festes Programm.",
+    "water-activities": {
+      name: "Wasseraktivitäten",
+      shortDescription: "Wasser ist der Ursprung allen Lebens – verlassen Sie das Festland für eine Vielfalt an Wassersportarten an der Küste und darüber hinaus.",
+      description: "Schnorcheln am Mnemba-Atoll, Sansibar. Gerätetauchen mit PADI-zertifizierten Zentren auf Sansibar und Mafia Island. Kitesurfen am Paje Beach, Sansibar, einem der besten Kitesurf-Strände der Welt (saisonal, tägliche Kurse). Kanufahren auf dem Duluti-See, einem Kratersee zwanzig Minuten von Arusha entfernt. Jetski bei Kendwa und Nungwi, Sansibar. Angeln auf dem Viktoriasee und an der Küste Sansibars, von traditionellen Ausflügen mit einheimischen Fischern bis zum Hochseeangeln. Bootsfahrten auf dem Viktoriasee und im Indischen Ozean, von Sonnenuntergangsfahrten bis zu traditionellen Dhau-Ausflügen. Tagesausflüge zur Bongoyo-Insel und zur Mbudya-Insel, beide nahe Daressalam, zum Schnorcheln und für Strandpicknicks. Private Yachtcharter ab Daressalam und Sansibar. Und geführte Besichtigungen der Süßwasserhöhlen Sansibars. Wie auf der Seite Water Activities von maishaquest.com aufgeführt.",
     },
-    "mobile-camping": {
-      name: "Mobiles Camping",
-      shortDescription: "Ein Camp, das sich mit den Tieren bewegt, nicht gegen sie.",
-      description: "Zeltdach, ein richtiges Bett, eine Eimerdusche unter Sternen und ein Camp, das zusammenpackt und den Herden folgt. Näher kommt man der ursprünglichen Art zu reisen nicht — ohne jede Unbequemlichkeit, die Sie sich vielleicht vorstellen.",
+    "tours-and-safaris": {
+      name: "Touren & Safaris",
+      shortDescription: "Entdecken Sie verborgene Schätze auf einer Reise zu Orten mit eigenen Geschichten.",
+      description: "Museumsbesuche in Daressalam und Arusha, darunter das Nationalmuseum, das Arusha-Declaration-Museum und das Naturkundemuseum. Stadtrundgänge durch Arusha, Daressalam, Sansibar und Mwanza. Dorfbesuche in Mto wa Mbu und in Massai-Dörfern. Kunstgalerien im Nafasi Art Space in Daressalam und im Cultural Heritage Centre in Arusha. Eine Wanderung zu den Materuni-Wasserfällen bei Moshi mit traditioneller Kaffeezubereitung bei der Chagga-Gemeinschaft. Die Napuru-Wasserfälle, zwanzig Minuten von Arusha entfernt, für Wanderungen, Quad-Touren und Picknicks. Der Duluti-See, ebenfalls zwanzig Minuten von Arusha entfernt, zum Kanufahren, Angeln und für die Vogelbeobachtung. Der Meserani-Schlangenpark und das Massai-Museum, eine halbe Stunde von Arusha entfernt. Das Giraffenzentrum von Arusha. Kaffee- und Bananenfarmtouren in Moshi und Arusha. Und Edelstein- und Tansanit-Touren in Arusha und den Mererani-Minen. Wie auf der Seite Tours von maishaquest.com aufgeführt.",
     },
-    "walking-safari": {
-      name: "Walking-Safari",
-      shortDescription: "Dieselbe Landschaft, mit drei Kilometern pro Stunde.",
-      description: "Zu Fuß, mit bewaffnetem Ranger und Walking-Guide, ändert die Safari den Maßstab: Spuren, Dung, Vogelstimmen, der Geruch des Busches. Sie sehen weniger Tiere und verstehen sehr viel mehr. Möglich in Tarangire, Nyerere und Ruaha sowie am Fuß des Kilimandscharo.",
+    "shopping-and-leisure": {
+      name: "Shopping und Freizeit",
+      shortDescription: "Die beste Art, Freizeit zu verbringen: neue Energie tanken bei den besten Angeboten vor Ort.",
+      description: "Der Massai-Markt in Arusha, am besten samstags zu besuchen. Das Cultural Heritage Centre in Arusha mit Kunst, Artefakten, Schmuck und einem Café. Das AIM Mall in Arusha mit Boutiquen, Kino und Gastronomie. Das Slipway Shopping Centre in Daressalam für Einkaufen und Essen direkt am Meer. Die Geschäfte von Stone Town auf Sansibar mit traditionellem Suaheli-Kunsthandwerk, Gewürzen und Kleidung. Das Mlimani City Mall, das größte Einkaufszentrum Tansanias, in Daressalam. Das Rock City Mall in Mwanza. Und Spa-Tage im Lemon Spa in Arusha, im Ocean Spa in Daressalam und auf Sansibar oder im Honey Spa in Moshi. Wie auf der Seite Shopping and Leisure von maishaquest.com aufgeführt.",
     },
-    "balloon-safari": {
-      name: "Ballonsafari",
-      shortDescription: "Das erste Licht über der Serengeti, aus dreihundert Metern.",
-      description: "Start im Morgengrauen, eine Stunde fast lautloses Treiben über der Ebene und Frühstück im Gras dort, wo Sie landen. Es ist der eine Zusatz, den fast niemand bereut — und er will lange im Voraus gebucht sein.",
-    },
-    "photographic-safari": {
-      name: "Fotosafari",
-      shortDescription: "Gebaut um Licht, Position und Geduld.",
-      description: "Routen und Tageszeiten rund um die goldene Stunde, Fahrzeugposition zur Sonne, Bohnensäcke statt Stative und Guides, die es gewohnt sind, mit Fotografierenden zu arbeiten. Langsamere Tage, weniger Parks, bessere Bilder.",
-    },
-    "beach-and-ocean": {
-      name: "Strand & Ozean",
-      shortDescription: "Der Indische Ozean, nach dem Staub der Ebene.",
-      description: "Sansibar und die kleineren Inseln vor der Küste: warmes flaches Wasser, Dhau-Segel im Sonnenuntergang, Riffe zum Schnorcheln oder Tauchen. Es ist die natürliche zweite Hälfte einer Safari — und diejenige, um die die meisten Paare ihre Hochzeitsreise bauen.",
-    },
-    "family-safari": {
-      name: "Familiensafari",
-      shortDescription: "Im Tempo der Kinder, ohne für Erwachsene langweilig zu werden.",
-      description: "Kürzere Fahrten, Familieneinheiten statt getrennter Zimmer, Guides, die die Aufmerksamkeit einer Siebenjährigen halten können, und Parks nah genug beieinander, dass niemand einen ganzen Tag im Auto sitzt. Mindestalter unterscheiden sich je nach Camp — wir prüfen sie, bevor wir etwas vorschlagen.",
-    },
-    "cultural-encounters": {
-      name: "Kulturelle Begegnungen",
-      shortDescription: "Zeit mit Gemeinschaften, zu ihren Bedingungen.",
-      description: "Besuche, direkt mit den beteiligten Gemeinschaften vereinbart, zu Zeiten, die ihnen passen, und mit einem fairen Anteil dessen, was Sie zahlen, der vor Ort bleibt. Maasai- und Datoga-Gemeinschaften nahe dem Ngorongoro-Hochland, Chagga-Dörfer an den Hängen des Kilimandscharo und die Swahili-Altstadt Stone Town auf Sansibar.",
-    },
-    "coffee-and-cuisine": {
-      name: "Kaffee & Küche",
-      shortDescription: "Tansania über das, was es anbaut und kocht.",
-      description: "Kaffee an den Hängen, wo er wächst, Gewürzfarmen vor Stone Town, eine Swahili-Küche, ein Markt in Arusha. Kleine, unaufgeregte halbe Tage, die mehr über das Land erzählen als eine weitere Pirschfahrt.",
-    },
-    "kilimanjaro-trek": {
-      name: "Kilimandscharo-Besteigung",
-      shortDescription: "Fünf Klimazonen, ein Berg, eine Woche.",
-      description: "Machame, Lemosho, Rongai oder Marangu — die richtige Route hängt davon ab, wie viel Zeit Sie haben, wie Sie sich akklimatisieren und wie sich der Aufstieg anfühlen soll. Den zusätzlichen Akklimatisierungstag planen wir standardmäßig ein, nicht als Aufpreis.",
-    },
-    "safari-and-zanzibar": {
-      name: "Safari & Sansibar",
-      shortDescription: "Erst die Ebene, dann das Meer. Die klassische Kombination.",
-      description: "Die meistgefragte Form einer Tansania-Reise: der nördliche Circuit und danach ein kurzer Flug nach Osten an die Küste. Genug Tage auf beiden Seiten, damit keine Hälfte gehetzt wirkt, und ein Team, das den Übergang dazwischen übernimmt.",
-    },
-    "boat-safari": {
-      name: "Bootssafari",
-      shortDescription: "Tiere vom Wasser aus, auf dem Rufiji.",
-      description: "In Nyerere ist der Fluss die Straße. Der späte Nachmittag auf dem Rufiji bringt Flusspferde, Krokodile, Elefanten, die zum Trinken herunterkommen, und eine dreistellige Vogelliste — vom Boot aus, auf Augenhöhe.",
-    },
-    "birdwatching": {
-      name: "Vogelbeobachtung",
-      shortDescription: "Über tausend Arten und Guides, die die Rufe kennen.",
-      description: "Tansanias Vogelliste ist eine der längsten Afrikas. Der Lake Manyara, die Seen des Rift Valley und die südlichen Parks in der grünen Saison sind das stärkste Terrain, und die Monate November bis April bringen die Zugvögel.",
-    },
-    "conservation": {
-      name: "Naturschutztage",
-      shortDescription: "Ein Tag mit denen, die die Arbeit machen.",
-      description: "Zeit mit Rangern, Forschenden und gemeindebasierten Schutzprojekten — verstehen, was der Schutz dieser Ökosysteme tatsächlich bedeutet, statt ihn aus dem Fahrzeug zu betrachten.",
+    nightlife: {
+      name: "Nachtleben",
+      shortDescription: "Die Musik hört nicht auf – die coolsten Adressen der Stadt, wohin die Reise Sie auch führt.",
+      description: "In Arusha: Via Via für Live-Musik unter freiem Himmel und kulturelle Abende, Rafiki Juice Bar für Cocktails und DJs, Kesho Café für Jazz und Poesie, Pillars für Live-Bands sowie Clubs wie Aces, Club D, The Hub und El Toro für Bongo Flava und internationale Hits. In Daressalam: Samaki Samaki zum Essen und Tanzen, Elements für Cocktails auf der Dachterrasse, Tips Lounge für Hip-Hop und Bongo Flava, Wavuvi Camp für Strandpartys, Coco Beach Strip, Cocktails & Dreams, The Reef sowie Clubs wie Uncles, Kitamba Cheupe, Havoc und Warehouse. Auf Sansibar: die Sky Bar mit Blick auf Stone Town, Jambo Beach, die Full-Moon-Party im Kendwa Rocks sowie Lounges wie 6 Degrees South, Garage Club und Tatu. In Mwanza: Cask n Grill und Tilapia Lounge. Wie auf der Seite Nightlife von maishaquest.com aufgeführt.",
     },
   },
 

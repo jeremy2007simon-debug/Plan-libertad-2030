@@ -18,7 +18,7 @@ import { pageMetadata } from "@/lib/seo";
 import type { Destination, Safari } from "@/types/content";
 import { getPhotoAlt } from "@/i18n/alt";
 
-/** Quince experiencias × seis idiomas = 90 rutas estáticas. */
+/** Cinco categorías reales × seis idiomas = 30 rutas estáticas. */
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) =>
     EXPERIENCE_STRUCTURE.map((experience) => ({

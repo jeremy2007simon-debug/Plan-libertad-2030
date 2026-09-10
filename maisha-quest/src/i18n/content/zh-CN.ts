@@ -534,81 +534,38 @@ export const zhCNContent: ContentDictionary = {
     },
   },
 
+  /**
+   * maishaquest.com 的 Experiences 板块的 5 个真实类别，各自拥有独立页面
+   * （/thrill-seaker-adventures、/water-activities、/tours、
+   * /shopping-and-leisure、/nightlife）。每一项的 `description` 忠实列出
+   * 该页面所公布的真实活动或场所——没有任何编造，也没有为了精简而丢失名称
+   * 或地点。以上活动或场所均未公布价格。
+   */
   experiences: {
-    "game-drives": {
-      name: "乘车观兽",
-      shortDescription: "专属车辆、可开顶棚，以及一位读得懂地面痕迹的向导。",
-      description: "坦桑尼亚野生动物之旅的核心。您乘坐自己的车、由自己的向导带领，节奏由您决定：光线好的时候在一头豹旁边待上两小时，或者继续前行。清晨与傍晚是草原最热闹的时候。",
+    "thrill-seeker-adventure": {
+      name: "极限冒险",
+      shortDescription: "「Safari」在斯瓦希里语中意为「旅程」——与最优秀的运营商一起，探索坦桑尼亚各个角落里充满冒险精神的边界。",
+      description: "在桑给巴尔肯德瓦海滩上空高空跳伞。穿越姆托瓦姆布香蕉种植园与森林的滑索体验，距阿鲁沙两小时车程。在蒙杜利体验俯瞰裂谷的双人滑翔伞飞行，距阿鲁沙约一个半小时车程（季节性开放）。在乌萨河与劳森林附近骑山地自行车，穿过咖啡种植园与村庄，邻近莫希与阿鲁沙，可远眺乞力马扎罗山。在桑给巴尔努格威海滩骑马。在乞力马扎罗山、梅鲁山或乌桑巴拉山进行登山徒步。前往莫希与阿鲁沙附近的马特鲁尼瀑布与纳普鲁瀑布徒步，并与查加与梅鲁社群进行文化交流。在桑给巴尔基济姆卡齐与海豚共游。以及每年11月至3月季节性开放，在马菲亚岛海域与鲸鲨共游。以上内容与 maishaquest.com 的 Thrill Seeker Adventure 页面所列一致。",
     },
-    "great-migration": {
-      name: "动物大迁徙",
-      shortDescription: "跟随兽群，按它们真正所在的位置安排。",
-      description: "近两百万头角马和斑马沿着一年一度的缓慢循环穿越塞伦盖蒂生态系统。并不存在单一的「迁徙季」——只有在您出行那个月兽群应当在的位置，我们围绕这一点安排路线，而不是套用固定行程。",
+    "water-activities": {
+      name: "水上活动",
+      shortDescription: "水是一切生命之源——离开陆地，尽情享受沿海及周边地区丰富多样的水上运动。",
+      description: "在桑给巴尔姆内姆巴环礁浮潜。在桑给巴尔与马菲亚岛的 PADI 认证潜水中心进行水肺潜水。在桑给巴尔帕杰海滩风筝冲浪，这里是全球最佳风筝冲浪海滩之一（季节性开放，提供每日课程）。在距阿鲁沙二十分钟车程的火山口湖——杜鲁提湖划独木舟。在桑给巴尔肯德瓦与努格威骑摩托艇。在维多利亚湖与桑给巴尔海岸垂钓，既有与当地渔民同行的传统垂钓，也有深海大物垂钓。在维多利亚湖与印度洋乘船游览，从日落巡游到传统三角帆船之旅皆有。前往同样靠近达累斯萨拉姆的邦戈约岛与姆布迪亚岛进行一日游，浮潜与海滩野餐。从达累斯萨拉姆与桑给巴尔出发租赁私人游艇。以及探访桑给巴尔的淡水洞穴，需向导带领。以上内容与 maishaquest.com 的 Water Activities 页面所列一致。",
     },
-    "mobile-camping": {
-      name: "移动营地",
-      shortDescription: "随动物迁徙而移动的营地，而不是与之相悖。",
-      description: "帆布、一张真正的床、星空下的桶式淋浴，以及一座随时收起、跟着兽群走的营地。这最接近野生动物之旅最初的旅行方式，却没有您可能想象中的任何不适。",
+    "tours-and-safaris": {
+      name: "游览与游猎",
+      shortDescription: "在一段穿越各具故事的地方的旅程中，发现隐秘的瑰宝。",
+      description: "在达累斯萨拉姆与阿鲁沙参观博物馆，包括国家博物馆、阿鲁沙宣言博物馆与自然历史博物馆。游览阿鲁沙、达累斯萨拉姆、桑给巴尔与姆万扎的市区。走访姆托瓦姆布及马赛人村庄。参观达累斯萨拉姆的 Nafasi 艺术空间与阿鲁沙的文化遗产中心等艺术画廊。徒步前往莫希附近的马特鲁尼瀑布，并与查加社群一同体验传统咖啡制作。距阿鲁沙二十分钟车程的纳普鲁瀑布，适合徒步、骑四驱越野车与野餐。同样距阿鲁沙二十分钟车程的杜鲁提湖，适合划独木舟、垂钓与观鸟。距阿鲁沙半小时车程的梅塞拉尼蛇园与马赛博物馆。阿鲁沙长颈鹿中心。在莫希与阿鲁沙参观咖啡与香蕉农场。以及在阿鲁沙与梅雷拉尼矿区参观宝石与坦桑石之旅。以上内容与 maishaquest.com 的 Tours 页面所列一致。",
     },
-    "walking-safari": {
-      name: "徒步观兽",
-      shortDescription: "同一片风景，以每小时三公里的速度。",
-      description: "由持枪护林员和徒步向导带领，步行让这趟旅程换了尺度：足迹、粪便、鸟鸣、灌木丛的气味。看到的动物更少，理解的东西多得多。可在塔兰吉雷、尼雷尔、鲁阿哈以及乞力马扎罗山麓进行。",
+    "shopping-and-leisure": {
+      name: "购物与休闲",
+      shortDescription: "打发闲暇时光的最佳方式：借助触手可及的超值优惠，恢复活力与精神。",
+      description: "阿鲁沙的马赛市场，最适合在周六前往。阿鲁沙的文化遗产中心，展示艺术品、手工艺品、珠宝，并设有咖啡馆。阿鲁沙的 AIM 购物中心，设有精品店、影院与餐饮。达累斯萨拉姆的 Slipway 购物中心，可在海边购物用餐。桑给巴尔石头城的店铺，售卖传统斯瓦希里手工艺品、香料与服饰。坦桑尼亚最大的购物中心——达累斯萨拉姆的 Mlimani City 购物中心。姆万扎的 Rock City 购物中心。以及在阿鲁沙的 Lemon Spa、达累斯萨拉姆与桑给巴尔的 Ocean Spa，或莫希的 Honey Spa 享受水疗时光。以上内容与 maishaquest.com 的 Shopping and Leisure 页面所列一致。",
     },
-    "balloon-safari": {
-      name: "热气球之旅",
-      shortDescription: "从三百米高空，看塞伦盖蒂的第一缕光。",
-      description: "黎明升空，在草原上空近乎无声地漂浮一小时，然后在降落处的草地上用早餐。这是几乎没人后悔的一个加项——而且需要提前很久预订。",
-    },
-    "photographic-safari": {
-      name: "摄影主题行程",
-      shortDescription: "围绕光线、机位与耐心来安排。",
-      description: "路线与每日时间围绕黄金时刻规划，车辆按太阳方向停位，用豆袋而非三脚架，向导也习惯与摄影师合作。节奏更慢、园区更少、画面更好。",
-    },
-    "beach-and-ocean": {
-      name: "海滩与海洋",
-      shortDescription: "草原的尘土之后，是印度洋。",
-      description: "桑给巴尔与近海的小岛：温暖的浅水、夕阳下的三角帆船、可浮潜或深潜的珊瑚礁。这是野生动物之旅自然的下半程，也是多数情侣蜜月行程的核心。",
-    },
-    "family-safari": {
-      name: "家庭出行",
-      shortDescription: "按孩子的节奏安排，也不会让大人觉得无趣。",
-      description: "更短的车程、家庭套房而非分开的房间、懂得抓住七岁孩子注意力的向导，以及彼此距离足够近的园区，让没有人需要在车上待一整天。各营地的最低年龄不同——我们会在提出任何建议之前先核实。",
-    },
-    "cultural-encounters": {
-      name: "文化交流",
-      shortDescription: "与当地社区相处，按他们的方式。",
-      description: "探访由相关社区直接安排，时间由他们决定，您所付费用中有合理的一部分留在当地。恩戈罗恩戈罗高地附近的马赛与达托加社区、乞力马扎罗山坡上的查加村落，以及桑给巴尔的斯瓦希里石头城。",
-    },
-    "coffee-and-cuisine": {
-      name: "咖啡与美食",
-      shortDescription: "从种植与烹饪认识坦桑尼亚。",
-      description: "在咖啡生长的山坡上喝咖啡、石头城外的香料农场、一间斯瓦希里厨房、阿鲁沙的市集。这些从容的半日行程，比再多一次乘车观兽更能让您认识这个国家。",
-    },
-    "kilimanjaro-trek": {
-      name: "乞力马扎罗登山",
-      shortDescription: "五种气候、一座山、一周时间。",
-      description: "马查梅、莱莫绍、荣盖或马兰古——合适的路线取决于您有多少时间、如何适应海拔，以及您希望这段路走起来是什么感觉。额外的适应日我们按标准安排，而不是当作加价项目。",
-    },
-    "safari-and-zanzibar": {
-      name: "野生动物之旅与桑给巴尔",
-      shortDescription: "先草原，后海洋。经典组合。",
-      description: "最常被要求的坦桑尼亚行程形态：先走北部环线，再向东短途飞行到海岸。两段各有足够天数，都不会显得匆忙，中间的衔接由同一支团队负责。",
-    },
-    "boat-safari": {
-      name: "乘船观兽",
-      shortDescription: "在鲁菲吉河上，从水面追踪动物。",
-      description: "在尼雷尔，河流就是道路。傍晚的鲁菲吉河会带来河马、鳄鱼、下来饮水的大象，以及一份三位数的鸟类名单——在船上，与它们平视。",
-    },
-    "birdwatching": {
-      name: "观鸟",
-      shortDescription: "一千多个物种，以及听得懂鸟鸣的向导。",
-      description: "坦桑尼亚的鸟类名录是非洲最长的之一。曼雅拉湖、东非大裂谷的湖泊，以及绿季的南部国家公园是最好的地点，十一月至四月还会迎来候鸟。",
-    },
-    "conservation": {
-      name: "自然保护日",
-      shortDescription: "与真正在做这件事的人待上一天。",
-      description: "与护林员、研究人员和社区保护项目相处的时间——真正理解守护这些生态系统意味着什么，而不是从车里看着它发生。",
+    nightlife: {
+      name: "夜生活",
+      shortDescription: "音乐永不停歇——无论旅程带您去向何处，都能找到城中最酷的去处。",
+      description: "在阿鲁沙：Via Via 提供露天现场音乐与文化之夜，Rafiki Juice Bar 供应鸡尾酒与 DJ 演出，Kesho Café 有爵士乐与诗歌朗诵，Pillars 有现场乐队，以及 Aces、Club D、The Hub 和 El Toro 等夜店，播放邦戈弗拉瓦（Bongo Flava）与国际热门金曲。在达累斯萨拉姆：Samaki Samaki 可用餐跳舞，Elements 提供屋顶鸡尾酒，Tips Lounge 主打嘻哈与邦戈弗拉瓦音乐，Wavuvi Camp 举办海滩派对，此外还有 Coco Beach Strip、Cocktails & Dreams、The Reef，以及 Uncles、Kitamba Cheupe、Havoc 和 Warehouse 等夜店。在桑给巴尔：可俯瞰石头城的 Sky Bar、Jambo Beach、肯德瓦岩（Kendwa Rocks）的满月派对，以及 6 Degrees South、Garage Club 和 Tatu 等酒吧。在姆万扎：Cask n Grill 与 Tilapia Lounge。以上内容与 maishaquest.com 的 Nightlife 页面所列一致。",
     },
   },
 
