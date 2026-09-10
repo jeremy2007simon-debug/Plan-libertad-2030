@@ -246,10 +246,11 @@ export const PENDING_CLAIMS: BusinessClaim[] = [
     // ninguno de los 18 reales es una ascensión al Kilimanjaro. La afirmación
     // sigue pendiente por si el cliente confirma que sí ofrece ascensiones
     // (no listadas como "safari" en su web) y quiere publicarla en otro sitio.
-    usedIn: [
-      "content impact.local-employment.description",
-      "team.note",
-    ],
+    // La frase de `impact.local-employment` que mencionaba la cuadrilla de
+    // montaña se retiró al migrar `/impact` a los dos programas reales de
+    // maishaquest.com (Maisha Quest Cares y Empowerment, ninguno específico
+    // del Kilimanjaro): esta afirmación ya no tiene dónde publicarse.
+    usedIn: ["team.note"],
     publishedAs:
       "Que el trato a la cuadrilla de montaña —sueldo, cargas y equipo— pesa al " +
       "elegirla. Sin nombrar KPAP.",

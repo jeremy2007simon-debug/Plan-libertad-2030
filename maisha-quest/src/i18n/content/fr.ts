@@ -693,24 +693,14 @@ export const frContent: ContentDictionary = {
   },
 
   impact: {
-    "education": {
-      title: "Soutien à l’éducation",
-      description: "Les écoles proches des communautés que traversent ces voyages : les choses concrètes qui manquent à une salle de classe, et les frais qui en tiennent les enfants éloignés.",
+    "maisha-quest-cares": {
+      title: "Maisha Quest Cares — Programme pour adolescents en difficulté",
+      description: "Un programme destiné aux adolescents qui ont perdu leurs repères — après la perte de leurs parents, à cause de foyers brisés ou de circonstances difficiles — et qui, pour beaucoup, finissent à la rue, exposés à la délinquance et à la toxicomanie. Il offre un foyer sûr avec repas et hébergement ; une formation professionnelle avec des partenaires dans des secteurs comme la mécanique, la menuiserie, la couture, l’artisanat, l’hôtellerie et l’agriculture ; un parrainage éducatif et un mentorat couvrant les frais de formation et de scolarité ; et un accompagnement continu pour aider chaque jeune à construire son estime de soi, un sentiment d’utilité et l’espoir en l’avenir.",
       location: null,
     },
-    "conservation": {
-      title: "Conservation de la faune",
-      description: "Les équipes de conservation qui travaillent dans les écosystèmes dont dépendent ces voyages — et la possibilité de passer une journée avec elles plutôt que d’en lire seulement le récit.",
-      location: null,
-    },
-    "community": {
-      title: "Partenariat avec les communautés",
-      description: "Des visites communautaires organisées directement avec celles et ceux qui les accueillent, au moment qui leur convient et non à celui qui arrange un autocar.",
-      location: null,
-    },
-    "local-employment": {
-      title: "Emploi local",
-      description: "Guides, chauffeurs, cuisiniers et personnel de bureau recrutés en Tanzanie. Sur le Kilimandjaro, la façon dont une équipe de montagne est rémunérée et ce qu’elle porte fait partie du choix.",
+    empowerment: {
+      title: "Empowerment — un emploi équitable pour les jeunes Tanzaniens",
+      description: "L’équipe de Maisha Quest elle-même — guides, chauffeurs, cuisiniers et personnel de bureau — est recrutée et formée en Tanzanie. L’entreprise présente l’emploi équitable, le développement des compétences et un environnement de travail bienveillant pour son personnel comme une mesure de son action tout aussi importante que les voyages qu’elle conçoit pour ses clients, et affirme investir dans de jeunes Tanzaniens appelés à devenir des leaders du tourisme bien au-delà de Maisha Quest.",
       location: "Arusha, Tanzanie",
     },
   },

@@ -748,10 +748,8 @@ export const ru: Dictionary = {
     dinner: "Ужин",
   },
   impactAreas: {
-    education: "Образование",
-    conservation: "Охрана природы",
-    community: "Местные сообщества",
-    employment: "Занятость на месте",
+    "youth-cares": "Maisha Quest Cares",
+    empowerment: "Empowerment",
   },
   faqTopics: {
     planning: "Планирование",

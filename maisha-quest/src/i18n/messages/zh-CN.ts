@@ -702,10 +702,8 @@ export const zhCN: Dictionary = {
     dinner: "晚餐",
   },
   impactAreas: {
-    education: "教育",
-    conservation: "自然保护",
-    community: "社区",
-    employment: "本地就业",
+    "youth-cares": "Maisha Quest Cares",
+    empowerment: "Empowerment",
   },
   faqTopics: {
     planning: "行前规划",

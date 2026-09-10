@@ -693,24 +693,14 @@ export const deContent: ContentDictionary = {
   },
 
   impact: {
-    "education": {
-      title: "Bildungsförderung",
-      description: "Schulen in der Nähe der Gemeinden, durch die diese Reisen führen: die praktischen Dinge, die einem Klassenzimmer fehlen, und die Kosten, die Kinder davon fernhalten.",
+    "maisha-quest-cares": {
+      title: "Maisha Quest Cares — Programm für gefährdete Jugendliche",
+      description: "Ein Programm für Jugendliche, die vom Weg abgekommen sind – nach dem Verlust der Eltern, durch zerrüttete Familien oder schwierige Umstände –, von denen viele auf der Straße landen und Kriminalität und Drogenmissbrauch ausgesetzt sind. Es bietet ein sicheres Zuhause mit Verpflegung und Unterkunft; Ausbildung in Handwerksberufen mit Partnern aus Bereichen wie Kfz-Technik, Schreinerei, Schneiderei, Kunsthandwerk, Gastgewerbe und Landwirtschaft; gesponserte Ausbildung und Mentoring, das Ausbildungskosten und Schulgebühren abdeckt; sowie fortlaufende Unterstützung, damit jeder junge Mensch Selbstwertgefühl, ein Gefühl von Sinn und Hoffnung für die Zukunft aufbauen kann.",
       location: null,
     },
-    "conservation": {
-      title: "Wildtierschutz",
-      description: "Die Naturschutzteams in den Ökosystemen, von denen diese Reisen leben – und die Möglichkeit, einen Tag mit ihnen zu verbringen, statt nur darüber zu lesen.",
-      location: null,
-    },
-    "community": {
-      title: "Partnerschaft mit Gemeinschaften",
-      description: "Gemeindebesuche, direkt mit den Gastgebenden vereinbart – zu Zeiten, die ihnen passen, und nicht zu Zeiten, die einem Reisebus passen.",
-      location: null,
-    },
-    "local-employment": {
-      title: "Arbeit vor Ort",
-      description: "Guides, Fahrer, Köche und Büropersonal werden in Tansania eingestellt. Am Kilimandscharo gehört zur Auswahl einer Bergmannschaft, wie sie bezahlt wird und wie viel sie trägt.",
+    empowerment: {
+      title: "Empowerment — faire Beschäftigung für junge Tansanier",
+      description: "Das eigene Team von Maisha Quest – Guides, Fahrer, Köche und Büropersonal – wird in Tansania eingestellt und ausgebildet. Das Unternehmen beschreibt faire Beschäftigung, Kompetenzentwicklung und ein unterstützendes Arbeitsumfeld für seine Mitarbeitenden als ebenso wichtigen Maßstab seiner Arbeit wie die Reisen, die es für seine Gäste gestaltet, und erklärt, in junge Tansanier zu investieren, die im Tourismus über Maisha Quest hinaus Führungsrollen übernehmen werden.",
       location: "Arusha, Tansania",
     },
   },

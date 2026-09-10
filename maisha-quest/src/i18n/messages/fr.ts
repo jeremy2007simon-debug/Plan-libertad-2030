@@ -729,10 +729,8 @@ export const fr: Dictionary = {
     dinner: "Dîner",
   },
   impactAreas: {
-    education: "Éducation",
-    conservation: "Conservation",
-    community: "Communauté",
-    employment: "Emploi local",
+    "youth-cares": "Maisha Quest Cares",
+    empowerment: "Empowerment",
   },
   faqTopics: {
     planning: "Préparation",

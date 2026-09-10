@@ -631,7 +631,17 @@ export interface TeamText {
 
 export interface ImpactStructure {
   slug: Slug;
-  area: "education" | "conservation" | "community" | "employment";
+  /**
+   * Los dos programas sociales reales publicados en maishaquest.com: Maisha
+   * Quest Cares (el "Teenage Troubled Youth Program") y Empowerment (empleo
+   * justo y desarrollo de talento joven tanzano). Sustituyen a los cuatro
+   * pilares genéricos (education/conservation/community/employment) usados
+   * antes de la migración, que no correspondían a ningún programa nombrado
+   * por el cliente. "Travel with Purpose", mencionado en la auditoría, no
+   * tiene página propia ni contenido publicado en maishaquest.com — no se
+   * incluye aquí por no existir información verificable que migrar.
+   */
+  area: "youth-cares" | "empowerment";
   /** Vacío mientras el cliente no facilite cifras reales. */
   outcomes: string[];
   image: MediaImage;

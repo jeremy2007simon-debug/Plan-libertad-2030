@@ -692,24 +692,14 @@ export const esContent: ContentDictionary = {
   },
 
   impact: {
-    "education": {
-      title: "Apoyo a la educación",
-      description: "Escuelas cercanas a las comunidades por las que pasan estos viajes: las cosas prácticas que le faltan a un aula y los gastos que dejan a los niños fuera de ella.",
+    "maisha-quest-cares": {
+      title: "Maisha Quest Cares — Programa para Adolescentes en Riesgo",
+      description: "Un programa para adolescentes que han perdido el rumbo —tras la pérdida de sus padres, por hogares rotos o circunstancias difíciles— y que en muchos casos acaban viviendo en la calle, expuestos a la delincuencia y al abuso de sustancias. Ofrece un hogar seguro con alimentación y alojamiento; formación en oficios con socios de sectores como mecánica, carpintería, costura, artesanía, hostelería y agricultura; patrocinio educativo y mentoría que cubre los costes de la formación y la matrícula escolar; y acompañamiento continuo para ayudar a cada joven a construir su autoestima, un sentido de propósito y esperanza en el futuro.",
       location: null,
     },
-    "conservation": {
-      title: "Conservación de la fauna",
-      description: "Los equipos de conservación que trabajan en los ecosistemas de los que dependen estos viajes, y una forma de pasar un día con ellos en lugar de solo leer sobre el tema.",
-      location: null,
-    },
-    "community": {
-      title: "Alianza con las comunidades",
-      description: "Visitas a comunidades acordadas directamente con quienes las acogen, en el momento que a ellos les conviene y no en el que le conviene a un autocar.",
-      location: null,
-    },
-    "local-employment": {
-      title: "Empleo local",
-      description: "Guías, conductores, cocineros y personal de oficina contratados en Tanzania. En el Kilimanjaro, cómo se retribuye a una cuadrilla y cuánto carga forma parte de elegirla.",
+    empowerment: {
+      title: "Empowerment — empleo justo para jóvenes tanzanos",
+      description: "El propio equipo de Maisha Quest —guías, conductores, cocineros y personal de oficina— se contrata y se forma en Tanzania. La empresa describe el empleo justo, el desarrollo de competencias y un entorno de trabajo de apoyo para su personal como una medida de su labor tan importante como los viajes que diseña para sus clientes, y afirma estar invirtiendo en jóvenes tanzanos que llegarán a liderar el sector turístico más allá de Maisha Quest.",
       location: "Arusha, Tanzania",
     },
   },

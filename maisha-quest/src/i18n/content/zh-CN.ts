@@ -686,24 +686,14 @@ export const zhCNContent: ContentDictionary = {
   },
 
   impact: {
-    "education": {
-      title: "教育支持",
-      description: "这些行程沿途社群附近的学校：课堂上短缺的实际物资，以及让孩子无法走进课堂的那些开销。",
+    "maisha-quest-cares": {
+      title: "Maisha Quest Cares——问题青少年帮扶计划",
+      description: "该计划面向误入歧途的青少年——他们或因失去父母、或因家庭破裂、或因生活境遇艰难，许多人最终流落街头，容易受到犯罪与药物滥用的侵害。该计划提供有饮食与住宿保障的安全居所；与机械维修、木工、裁缝、手工艺、酒店服务与农业等行业的合作伙伴开展技能培训；资助教育并提供导师辅导，涵盖培训费用与学费；以及持续的支持，帮助每一位青少年建立自我价值感、目标感与对未来的希望。",
       location: null,
     },
-    "conservation": {
-      title: "野生动物保护",
-      description: "在这些行程所依赖的生态系统中工作的保育团队——以及与他们共度一天的机会，而不只是从文字里读到。",
-      location: null,
-    },
-    "community": {
-      title: "社区合作",
-      description: "直接与接待者洽谈安排的社群走访，时间由他们决定，而不是迁就旅游巴士的时刻。",
-      location: null,
-    },
-    "local-employment": {
-      title: "本地就业",
-      description: "向导、司机、厨师与办公室人员均在坦桑尼亚聘用。在乞力马扎罗，挑夫如何计酬、负重多少，是我们挑选登山团队时的一部分考量。",
+    empowerment: {
+      title: "Empowerment——为坦桑尼亚青年提供公平就业",
+      description: "Maisha Quest 自己的团队——向导、司机、厨师与办公室人员——均在坦桑尼亚招募并培训。公司表示，为员工提供公平的就业机会、技能发展与支持性的工作环境，与为旅客打造的行程同样重要，都是衡量其工作的标准，并表示正在投资于坦桑尼亚青年，他们未来将在 Maisha Quest 之外的旅游业中成长为领导者。",
       location: "坦桑尼亚阿鲁沙",
     },
   },

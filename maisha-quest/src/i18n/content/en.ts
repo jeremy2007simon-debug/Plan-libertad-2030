@@ -741,27 +741,23 @@ export const enContent = {
   },
   } satisfies Record<string, TeamText>,
 
+  /**
+   * The 2 real social programmes named on maishaquest.com — replacing the 4
+   * generic pillars (education/conservation/community/employment) that
+   * didn't correspond to anything the client names on its own site. See the
+   * note at the top of `src/data/structure/impact.ts`.
+   */
   impact: {
-  "education": {
-    title: "Education support",
-    description: "Schools near the communities these journeys pass through: the practical things a classroom runs short of, and the costs that keep children out of one.",
-    location: null,
-  },
-  "conservation": {
-    title: "Wildlife conservation",
-    description: "The conservation teams working in the ecosystems these journeys depend on — and a way to spend a day with them rather than only read about it.",
-    location: null,
-  },
-  "community": {
-    title: "Community partnership",
-    description: "Community visits arranged directly with the people hosting them, at times that suit them rather than at a time that suits a coach party.",
-    location: null,
-  },
-  "local-employment": {
-    title: "Local employment",
-    description: "Guides, drivers, cooks and office staff hired in Tanzania. On Kilimanjaro, how a mountain crew is paid and how much it carries is part of choosing one.",
-    location: "Arusha, Tanzania",
-  },
+    "maisha-quest-cares": {
+      title: "Maisha Quest Cares — Teenage Troubled Youth Program",
+      description: "A programme for teenagers who have lost their way — after losing parents, through broken homes, or difficult circumstances — many of whom end up living on the street, vulnerable to crime and substance abuse. It provides a safe home with food and shelter; skills training with partners across trades including mechanics, carpentry, tailoring, craft arts, hospitality and agriculture; sponsored education and mentorship covering training costs and school fees; and ongoing support to help each young person build self-worth, a sense of purpose and hope for the future.",
+      location: null,
+    },
+    empowerment: {
+      title: "Empowerment — fair employment for young Tanzanians",
+      description: "Maisha Quest's own team — guides, drivers, cooks and office staff — is hired and trained in Tanzania. The company describes fair employment, skill development and a supportive environment for its people as being as much a measure of its work as the journeys it builds for travellers, and says it is investing in young Tanzanians who will go on to lead in tourism beyond Maisha Quest itself.",
+      location: "Arusha, Tanzania",
+    },
   } satisfies Record<string, ImpactText>,
 
   /**

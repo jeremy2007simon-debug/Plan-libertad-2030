@@ -735,10 +735,8 @@ export const en = {
     dinner: "Dinner",
   },
   impactAreas: {
-    education: "Education",
-    conservation: "Conservation",
-    community: "Community",
-    employment: "Local employment",
+    "youth-cares": "Maisha Quest Cares",
+    empowerment: "Empowerment",
   },
   faqTopics: {
     planning: "Planning",
