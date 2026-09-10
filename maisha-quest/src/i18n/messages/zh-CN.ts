@@ -59,6 +59,7 @@ export const zhCN: Dictionary = {
       enrich: "Enrich 系列",
       destinations: "目的地",
       experiences: "体验",
+      learn: "了解坦桑尼亚",
       about: "关于我们",
       ourStory: "我们的故事",
       team: "团队",
@@ -141,6 +142,15 @@ export const zhCN: Dictionary = {
     whereYouDoThis: "在哪里体验",
     addToJourney: "加入我的行程",
     journeysIncluding: "包含此项的行程",
+  },
+
+  learn: {
+    lede: "六大主题、五个地区——忠实而精炼地介绍游猎背后的这个国家。",
+    topicsTitle: "了解坦桑尼亚",
+    regionsTitle: "各个地区",
+    regionsLede: "Maisha Quest 如何划分这个国家，以及我们的哪些目的地属于哪个地区。",
+    destinationsInRegion: "该地区的目的地",
+    noDestinationYet: "此处暂无专属目的地页面",
   },
 
   planner: {
@@ -577,6 +587,11 @@ export const zhCN: Dictionary = {
       title: "体验",
       description:
         "乘车观兽、徒步观兽、热气球、文化日、乞力马扎罗与桑给巴尔海岸——坦桑尼亚的一天可以这样度过。",
+    },
+    learn: {
+      title: "了解坦桑尼亚",
+      description:
+        "地理、文化、历史、野生动物与保护、经济与节庆——以及构成坦桑尼亚的五个地区。",
     },
     about: {
       title: "关于我们",

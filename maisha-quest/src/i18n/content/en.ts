@@ -24,6 +24,8 @@ import type {
   FaqText,
   ImpactText,
   JournalText,
+  LearnTopicText,
+  RegionText,
   SafariText,
   TeamText,
 } from "@/types/content";
@@ -742,6 +744,69 @@ export const enContent = {
     location: "Arusha, Tanzania",
   },
   } satisfies Record<string, ImpactText>,
+
+  /**
+   * The 6 real topics from maishaquest.com's Learn page. Each description
+   * is a faithful, condensed summary of the source page — every fact named
+   * is verifiable there, though the real page carries more detail than is
+   * reproduced here.
+   */
+  learnTopics: {
+    geography: {
+      name: "Geography & Nature",
+      description: "Tanzania holds an unusual range of ecosystems in one country: the snow-capped summit of Mount Kilimanjaro, the open plains of the Serengeti, the deep waters of Lake Tanganyika and the coral reefs off Zanzibar. The Ngorongoro Crater, the largest unbroken volcanic caldera in the world, is sometimes called Africa's Garden of Eden for the density of wildlife its floor supports, including all of the Big Five. In the north, Lake Natron's highly alkaline water is inhospitable to most life but a breeding ground for millions of flamingos.",
+    },
+    culture: {
+      name: "Culture",
+      description: "Swahili and English are Tanzania's official languages, but the country is home to more than 120 ethnic groups, each with its own language and traditions. Tanzanian art is known internationally for the Tinga Tinga painting style — bright, stylised depictions of animals and daily life — and for Makonde wood carving. The Maasai are recognised by their brightly coloured shuka cloth, worn draped over the shoulders.",
+    },
+    history: {
+      name: "History",
+      description: "Olduvai Gorge, sometimes called the Cradle of Mankind, is one of the world's most important paleoanthropological sites. In 1871, the explorer Henry Morton Stanley met the missionary Dr David Livingstone in Ujiji, on the shore of Lake Tanganyika. Between 1905 and 1907, the Maji Maji Rebellion united several ethnic groups against German colonial rule — one of the most significant uprisings of that period in East Africa.",
+    },
+    "wildlife-and-conservation": {
+      name: "Wildlife & Conservation",
+      description: "Thousands of elephants move each year between the Serengeti and Tarangire National Park, part of one of the largest elephant migrations in Africa. Tanzania has also made real progress on conservation of the black rhino and the African wild dog. At Gombe Stream National Park, on the shore of Lake Tanganyika, Dr Jane Goodall began her research on wild chimpanzees in the 1960s — research that continues there today.",
+    },
+    economy: {
+      name: "Economy & Development",
+      description: "Agriculture is the backbone of Tanzania's economy and employs most of the population; the country is among the world's largest producers of cloves and sisal. Tanzania is also the only place on Earth where Tanzanite is found — mined in the Mererani Hills, near Mount Kilimanjaro, and prized for its deep blue-violet colour.",
+    },
+    festivals: {
+      name: "Cultural Events & Festivals",
+      description: "The Wanyambo Festival, held annually in Bukoba near Lake Victoria, celebrates the culture of the Haya people with traditional dance, music and food. The Karibu Music Festival in Bagamoyo is one of the largest music events in East Africa, mixing traditional and contemporary African music.",
+    },
+  } satisfies Record<string, LearnTopicText>,
+
+  /**
+   * The 5 official regions of maishaquest.com. `description` condenses the
+   * real People/Culture/Place/History sections of each region's own page —
+   * faithful, not exhaustive. Two regions (Lake Zone & Western, Coastal)
+   * have no destination page on this site yet, noted honestly rather than
+   * invented.
+   */
+  regions: {
+    northern: {
+      name: "Northern Region",
+      description: "Home to more than 120 ethnic groups, including the Maasai, the Chagga of the Kilimanjaro slopes and the Hadzabe, one of Africa's last hunter-gatherer peoples. This is Tanzania's best-known safari ground: Mount Kilimanjaro, Africa's highest peak, rises here in five distinct climate zones; the Serengeti hosts the annual Great Migration; and Olduvai Gorge, the Cradle of Mankind, has yielded human-ancestor fossils dating back 3.6 million years. Northern Tanzania was under German colonial rule until the First World War, then a British mandate until independence in 1961 under Julius Nyerere.",
+    },
+    "central-southern": {
+      name: "Central & Southern Region",
+      description: "The Gogo people are the dominant group around the capital, Dodoma, traditionally pastoralists and farmers; further south live the Yao, the Makonde — famous for their wood carving — the Ngoni and the Hehe. Dodoma became Tanzania's capital in 1973, part of a plan to develop the country's interior. To the south, the Selous Game Reserve (now largely Nyerere National Park) is one of the largest game reserves in the world and a UNESCO World Heritage Site, home to large elephant and African wild dog populations along the Rufiji River; Ruaha National Park, Tanzania's largest, is known for its lion prides. The offshore city-state of Kilwa Kisiwani, also a UNESCO World Heritage Site, traded gold, ivory and slaves across the Indian Ocean from the 9th to the 15th century.",
+    },
+    "lake-zone-western": {
+      name: "Lake Zone & Western Region",
+      description: "Around Lake Victoria, Africa's largest lake, live the Sukuma — Tanzania's largest ethnic group — alongside the Haya, known for banana and coffee farming, and fishing communities that depend on Nile perch and tilapia. Along Lake Tanganyika, one of the world's oldest and deepest lakes, communities still fish at night from dugout canoes using lanterns. Mwanza, the 'Rock City' on Lake Victoria's shore, is the region's economic hub; Gombe Stream and Mahale Mountains National Parks, both on Lake Tanganyika, are among Africa's best places for chimpanzee trekking. Maisha Quest does not yet publish a destination page for this region.",
+    },
+    coastal: {
+      name: "Coastal Region",
+      description: "The Swahili people have lived along Tanzania's mainland coast for centuries, a culture blending African, Arab and Persian influences, expressed in Taarab music and in dishes like pilau and mandazi. Dar es Salaam, the country's largest city, is its economic centre; Bagamoyo, once the capital of German East Africa, and Kilwa Kisiwani, a UNESCO World Heritage Swahili city-state, are rich in history. Saadani National Park, on the coast north of Dar es Salaam, is Tanzania's only wildlife reserve directly on the ocean. Maisha Quest does not yet publish a destination page for this region.",
+    },
+    "zanzibar-island": {
+      name: "Zanzibar Island",
+      description: "Known as the Spice Island, Zanzibar comprises two main islands, Unguja and Pemba, some 25 to 50 kilometres off the Tanzanian mainland. Its population is predominantly Swahili-speaking and Muslim, with African, Arab, Persian and Indian roots reflected in its Taarab music and in Stone Town's Arabesque architecture and carved wooden doors — Stone Town is a UNESCO World Heritage Site. Arab traders settled here from the 8th century; the islands became a centre of the spice trade under the Sultanate of Oman in the 19th century and a British protectorate soon after, gaining independence in 1963 and uniting with Tanganyika in 1964 to form Tanzania. Jozani Forest is home to the endemic Zanzibar red colobus monkey.",
+    },
+  } satisfies Record<string, RegionText>,
 };
 
 /** Forma que deben cumplir los otros cinco idiomas. */

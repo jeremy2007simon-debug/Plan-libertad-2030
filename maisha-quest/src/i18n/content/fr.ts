@@ -701,4 +701,54 @@ export const frContent: ContentDictionary = {
       location: "Arusha, Tanzanie",
     },
   },
+
+  learnTopics: {
+    geography: {
+      name: "Géographie et nature",
+      description: "La Tanzanie réunit dans un seul pays une gamme d’écosystèmes peu commune : le sommet enneigé du Kilimandjaro, les plaines ouvertes du Serengeti, les eaux profondes du lac Tanganyika et les récifs coralliens au large de Zanzibar. Le cratère du Ngorongoro, la plus grande caldeira volcanique intacte au monde, est parfois appelé le « jardin d’Éden » de l’Afrique pour la densité de faune que porte son sol, dont les Big Five. Au nord, les eaux très alcalines du lac Natron sont hostiles à presque toute vie, mais servent de site de reproduction à des millions de flamants roses.",
+    },
+    culture: {
+      name: "Culture",
+      description: "Le swahili et l’anglais sont les langues officielles de la Tanzanie, mais le pays compte plus de 120 groupes ethniques, chacun avec sa propre langue et ses propres traditions. L’art tanzanien est connu internationalement pour le style de peinture Tinga Tinga — des représentations vives et stylisées d’animaux et de la vie quotidienne — et pour la sculpture sur bois makonde. Les Maasaï se reconnaissent à leur shuka aux couleurs vives, drapé sur les épaules.",
+    },
+    history: {
+      name: "Histoire",
+      description: "La gorge d’Olduvai, parfois appelée le berceau de l’humanité, est l’un des sites paléoanthropologiques les plus importants au monde. En 1871, l’explorateur Henry Morton Stanley rencontra le missionnaire David Livingstone à Ujiji, au bord du lac Tanganyika. Entre 1905 et 1907, la révolte des Maji Maji unit plusieurs groupes ethniques contre la domination coloniale allemande — l’un des soulèvements les plus importants de cette période en Afrique de l’Est.",
+    },
+    "wildlife-and-conservation": {
+      name: "Faune et conservation",
+      description: "Chaque année, des milliers d’éléphants se déplacent entre le Serengeti et le parc national du Tarangire, dans le cadre de l’une des plus grandes migrations d’éléphants d’Afrique. La Tanzanie a aussi réalisé de réels progrès dans la conservation du rhinocéros noir et du lycaon. Au parc national de Gombe Stream, au bord du lac Tanganyika, la Dre Jane Goodall a commencé dans les années 1960 ses recherches sur les chimpanzés sauvages, qui s’y poursuivent encore aujourd’hui.",
+    },
+    economy: {
+      name: "Économie et développement",
+      description: "L’agriculture est l’épine dorsale de l’économie tanzanienne et emploie l’essentiel de la population ; le pays est l’un des plus grands producteurs mondiaux de girofle et de sisal. La Tanzanie est aussi le seul endroit au monde où l’on trouve la tanzanite, extraite dans les collines de Mererani, près du Kilimandjaro, prisée pour sa couleur bleu-violet profond.",
+    },
+    festivals: {
+      name: "Événements culturels et festivals",
+      description: "Le festival Wanyambo, organisé chaque année à Bukoba, près du lac Victoria, célèbre la culture du peuple haya avec danses traditionnelles, musique et repas. Le Karibu Music Festival, à Bagamoyo, est l’un des plus grands événements musicaux d’Afrique de l’Est, mêlant musique africaine traditionnelle et contemporaine.",
+    },
+  },
+
+  regions: {
+    northern: {
+      name: "Région du Nord",
+      description: "Foyer de plus de 120 groupes ethniques, dont les Maasaï, les Chagga sur les pentes du Kilimandjaro et les Hadzabe, l’un des derniers peuples chasseurs-cueilleurs d’Afrique. C’est le terrain de safari le plus connu de Tanzanie : le Kilimandjaro, plus haut sommet d’Afrique, s’y élève à travers cinq zones climatiques distinctes ; le Serengeti accueille la Grande Migration annuelle ; et la gorge d’Olduvai, le berceau de l’humanité, a livré des fossiles d’ancêtres humains vieux de 3,6 millions d’années. Le nord de la Tanzanie fut sous domination coloniale allemande jusqu’à la Première Guerre mondiale, puis mandat britannique jusqu’à l’indépendance en 1961 sous Julius Nyerere.",
+    },
+    "central-southern": {
+      name: "Région Centre et Sud",
+      description: "Le peuple gogo domine autour de la capitale, Dodoma, traditionnellement pasteur et agriculteur ; plus au sud vivent les Yao, les Makonde — réputés pour leur sculpture sur bois —, les Ngoni et les Hehe. Dodoma est devenue la capitale de la Tanzanie en 1973, dans le cadre d’un plan de développement de l’intérieur du pays. Plus au sud, la réserve de chasse du Selous (aujourd’hui en grande partie le parc national de Nyerere) est l’une des plus grandes réserves de chasse au monde et un site du patrimoine mondial de l’UNESCO, abritant d’importantes populations d’éléphants et de lycaons le long de la rivière Rufiji ; le parc national de Ruaha, le plus grand de Tanzanie, est réputé pour ses prides de lions. La cité-État insulaire de Kilwa Kisiwani, également classée à l’UNESCO, a commercé de l’or, de l’ivoire et des esclaves à travers l’océan Indien du 9ᵉ au 15ᵉ siècle.",
+    },
+    "lake-zone-western": {
+      name: "Région des Lacs et de l’Ouest",
+      description: "Autour du lac Victoria, le plus grand d’Afrique, vivent les Sukuma — le plus grand groupe ethnique de Tanzanie — aux côtés des Haya, connus pour la culture de la banane et du café, et de communautés de pêcheurs qui dépendent de la perche du Nil et du tilapia. Sur les rives du lac Tanganyika, l’un des plus anciens et des plus profonds lacs du monde, certaines communautés pêchent encore la nuit depuis des pirogues, à la lanterne. Mwanza, la « ville de roc » au bord du lac Victoria, est le centre économique de la région ; les parcs nationaux de Gombe Stream et des monts Mahale, tous deux sur le lac Tanganyika, comptent parmi les meilleurs endroits d’Afrique pour le trekking avec les chimpanzés. Maisha Quest ne publie pas encore de page de destination propre pour cette région.",
+    },
+    coastal: {
+      name: "Région Côtière",
+      description: "Le peuple swahili vit le long de la côte continentale de la Tanzanie depuis des siècles, une culture mêlant influences africaines, arabes et perses, exprimée dans la musique taarab et dans des plats comme le pilau et le mandazi. Dar es Salaam, la plus grande ville du pays, en est le centre économique ; Bagamoyo, ancienne capitale de l’Afrique orientale allemande, et Kilwa Kisiwani, cité-État swahilie classée à l’UNESCO, sont riches d’histoire. Le parc national de Saadani, sur la côte au nord de Dar es Salaam, est la seule réserve faunique de Tanzanie directement sur l’océan. Maisha Quest ne publie pas encore de page de destination propre pour cette région.",
+    },
+    "zanzibar-island": {
+      name: "Île de Zanzibar",
+      description: "Connue comme l’île aux Épices, Zanzibar comprend deux îles principales, Unguja et Pemba, à 25 à 50 kilomètres au large de la Tanzanie continentale. Sa population, majoritairement swahiliphone et musulmane, a des racines africaines, arabes, persanes et indiennes, que l’on retrouve dans la musique taarab et dans l’architecture arabisante et les portes en bois sculpté de Stone Town — classée au patrimoine mondial de l’UNESCO. Des marchands arabes s’y sont installés dès le 8ᵉ siècle ; les îles sont devenues au 19ᵉ siècle un centre du commerce des épices sous le sultanat d’Oman, puis rapidement un protectorat britannique, avant d’accéder à l’indépendance en 1963 et de s’unir au Tanganyika en 1964 pour former la Tanzanie. La forêt de Jozani abrite le colobe rouge de Zanzibar, une espèce endémique.",
+    },
+  },
 };

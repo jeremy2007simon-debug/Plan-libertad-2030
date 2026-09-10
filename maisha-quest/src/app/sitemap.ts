@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/plan", 0.9, new Date()],
     ["/destinations", 0.8, new Date()],
     ["/experiences", 0.8, new Date()],
+    ["/learn", 0.6, new Date()],
     ["/about", 0.7, new Date()],
     ["/contact", 0.7, new Date()],
     ["/about/team", 0.6, new Date()],

@@ -54,6 +54,7 @@ export const es: Dictionary = {
       enrich: "Colección Enrich",
       destinations: "Destinos",
       experiences: "Experiencias",
+      learn: "Aprende",
       about: "Nosotros",
       ourStory: "Nuestra historia",
       team: "El equipo",
@@ -137,6 +138,15 @@ export const es: Dictionary = {
     whereYouDoThis: "Dónde se vive",
     addToJourney: "Añadir a mi viaje",
     journeysIncluding: "Viajes que la incluyen",
+  },
+
+  learn: {
+    lede: "Seis temas y cinco regiones: una introducción fiel y resumida al país que hay detrás del safari.",
+    topicsTitle: "Descubre Tanzania",
+    regionsTitle: "Las regiones",
+    regionsLede: "Cómo agrupa Maisha Quest el país, y qué destinos nuestros caen en cada región.",
+    destinationsInRegion: "Destinos en esta región",
+    noDestinationYet: "Todavía sin página de destino propia",
   },
 
   planner: {
@@ -599,6 +609,11 @@ export const es: Dictionary = {
       title: "Experiencias",
       description:
         "Salidas en vehículo, safaris a pie, vuelos en globo, jornadas culturales, el Kilimanjaro y la costa de Zanzíbar: las formas de vivir un día en Tanzania.",
+    },
+    learn: {
+      title: "Aprende",
+      description:
+        "Geografía, cultura, historia, fauna y conservación, economía y festivales, y las cinco regiones que forman Tanzania.",
     },
     about: {
       title: "Sobre nosotros",

@@ -270,6 +270,46 @@ export interface Experience {
   destinationSlugs: Slug[];
 }
 
+/**
+ * Los 6 temas reales de la sección Learn de maishaquest.com (Geography &
+ * Nature, Culture, History, Wildlife & Conservation, Economy & Development,
+ * Cultural Events & Festivals). Cada uno resume con fidelidad el contenido
+ * real de su página de origen — no es el texto completo (cada página real
+ * tiene bastante más detalle), pero cada dato citado es verificable en
+ * maishaquest.com, nada inventado.
+ */
+export interface LearnTopicStructure {
+  slug: Slug;
+  image: ResolvedImage;
+}
+
+export interface LearnTopicText {
+  name: string;
+  description: string;
+}
+
+export type LearnTopic = LearnTopicStructure & LearnTopicText;
+
+/**
+ * Las 5 regiones oficiales de maishaquest.com: Northern, Central & Southern,
+ * Lake Zone & Western, Coastal y Zanzibar Island (esta última tratada en el
+ * sitio real como "Special Feature", no como una región más, pero se agrupa
+ * aquí junto a las demás por simplicidad de navegación).
+ */
+export interface RegionStructure {
+  slug: Slug;
+  /** Destinos actuales del sitio que caen dentro de esta región real. */
+  destinationSlugs: Slug[];
+  image: ResolvedImage;
+}
+
+export interface RegionText {
+  name: string;
+  description: string;
+}
+
+export type Region = RegionStructure & RegionText;
+
 export type AccommodationStyle =
   | "Mobile camp"
   | "Tented camp"

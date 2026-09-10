@@ -53,6 +53,7 @@ export const fr: Dictionary = {
       enrich: "Collection Enrich",
       destinations: "Destinations",
       experiences: "Expériences",
+      learn: "Découvrir",
       about: "À propos",
       ourStory: "Notre histoire",
       team: "L’équipe",
@@ -138,6 +139,15 @@ export const fr: Dictionary = {
     whereYouDoThis: "Où la vivre",
     addToJourney: "Ajouter à mon voyage",
     journeysIncluding: "Voyages qui l’incluent",
+  },
+
+  learn: {
+    lede: "Six thèmes et cinq régions : une introduction fidèle et condensée au pays derrière le safari.",
+    topicsTitle: "Découvrir la Tanzanie",
+    regionsTitle: "Les régions",
+    regionsLede: "Comment Maisha Quest découpe le pays, et quelles destinations relèvent de chaque région.",
+    destinationsInRegion: "Destinations dans cette région",
+    noDestinationYet: "Pas encore de page de destination ici",
   },
 
   planner: {
@@ -602,6 +612,11 @@ export const fr: Dictionary = {
       title: "Expériences",
       description:
         "Sorties en véhicule, safaris à pied, vols en montgolfière, journées culturelles, le Kilimandjaro et la côte de Zanzibar — les façons de vivre une journée en Tanzanie.",
+    },
+    learn: {
+      title: "Découvrir",
+      description:
+        "Géographie, culture, histoire, faune et conservation, économie et festivals — et les cinq régions qui composent la Tanzanie.",
     },
     about: {
       title: "À propos de nous",

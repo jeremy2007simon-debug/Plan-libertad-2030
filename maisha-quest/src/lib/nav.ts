@@ -29,6 +29,7 @@ export const MAIN_NAV: NavNode[] = [
   },
   { key: "destinations", href: "/destinations" },
   { key: "experiences", href: "/experiences" },
+  { key: "learn", href: "/learn" },
   {
     key: "about",
     href: "/about",
@@ -51,6 +52,7 @@ export const FOOTER_NAV: { titleKey: string; items: NavNode[] }[] = [
       { key: "enrich", href: "/collections/enrich" },
       { key: "destinations", href: "/destinations" },
       { key: "experiences", href: "/experiences" },
+      { key: "learn", href: "/learn" },
     ],
   },
   {

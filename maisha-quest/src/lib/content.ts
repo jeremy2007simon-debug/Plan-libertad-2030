@@ -28,6 +28,7 @@ import {
 import { FAQ_STRUCTURE } from "@/data/structure/faq";
 import { IMPACT_STRUCTURE } from "@/data/structure/impact";
 import { JOURNAL_STRUCTURE } from "@/data/structure/journal";
+import { LEARN_TOPIC_STRUCTURE, REGION_STRUCTURE } from "@/data/structure/learn";
 import { SAFARI_STRUCTURE } from "@/data/structure/safaris";
 import { TEAM_STRUCTURE } from "@/data/structure/team";
 import { IMPACT_VIDEO } from "@/data/impact";
@@ -41,6 +42,8 @@ import type {
   Experience,
   FAQ,
   JournalPost,
+  LearnTopic,
+  Region,
   Safari,
   Slug,
   TeamMember,
@@ -500,6 +503,16 @@ export async function getFaqsBySlugs(locale: Locale, slugs: Slug[]): Promise<FAQ
     .map((slug) => FAQ_BY_SLUG.get(slug))
     .filter((f): f is NonNullable<typeof f> => Boolean(f))
     .map((f) => ({ ...f, ...t[f.slug as keyof typeof t] }));
+}
+
+export async function getLearnTopics(locale: Locale): Promise<LearnTopic[]> {
+  const t = getContent(locale).learnTopics;
+  return LEARN_TOPIC_STRUCTURE.map((s) => ({ ...s, ...t[s.slug as keyof typeof t] }));
+}
+
+export async function getRegions(locale: Locale): Promise<Region[]> {
+  const t = getContent(locale).regions;
+  return REGION_STRUCTURE.map((s) => ({ ...s, ...t[s.slug as keyof typeof t] }));
 }
 
 /** Fecha larga en el formato del idioma: "14 July 2026", "14 de julio de 2026", "2026年7月14日". */

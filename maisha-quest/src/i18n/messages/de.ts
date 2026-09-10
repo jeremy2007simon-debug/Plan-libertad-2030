@@ -55,6 +55,7 @@ export const de: Dictionary = {
       enrich: "Kollektion Enrich",
       destinations: "Reiseziele",
       experiences: "Erlebnisse",
+      learn: "Wissenswertes",
       about: "Über uns",
       ourStory: "Unsere Geschichte",
       team: "Das Team",
@@ -138,6 +139,15 @@ export const de: Dictionary = {
     whereYouDoThis: "Wo Sie das erleben",
     addToJourney: "Zu meiner Reise hinzufügen",
     journeysIncluding: "Reisen, die das enthalten",
+  },
+
+  learn: {
+    lede: "Sechs Themen und fünf Regionen — eine originalgetreue, verdichtete Einführung in das Land hinter der Safari.",
+    topicsTitle: "Tansania entdecken",
+    regionsTitle: "Die Regionen",
+    regionsLede: "Wie Maisha Quest das Land einteilt, und welche unserer Reiseziele in welche Region fallen.",
+    destinationsInRegion: "Reiseziele in dieser Region",
+    noDestinationYet: "Noch keine eigene Zielseite",
   },
 
   planner: {
@@ -598,6 +608,11 @@ export const de: Dictionary = {
       title: "Erlebnisse",
       description:
         "Pirschfahrten, Walking-Safaris, Ballonflüge, Kulturtage, der Kilimandscharo und die Küste Sansibars — so lässt sich ein Tag in Tansania verbringen.",
+    },
+    learn: {
+      title: "Wissenswertes",
+      description:
+        "Geografie, Kultur, Geschichte, Tierwelt und Naturschutz, Wirtschaft und Feste — sowie die fünf Regionen Tansanias.",
     },
     about: {
       title: "Über uns",

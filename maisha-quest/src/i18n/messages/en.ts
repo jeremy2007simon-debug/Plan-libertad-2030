@@ -56,6 +56,7 @@ export const en = {
       enrich: "Enrich Collection",
       destinations: "Destinations",
       experiences: "Experiences",
+      learn: "Learn",
       about: "About",
       ourStory: "Our story",
       team: "The team",
@@ -143,6 +144,15 @@ export const en = {
     whereYouDoThis: "Where you do this",
     addToJourney: "Add this to my journey",
     journeysIncluding: "Journeys that include it",
+  },
+
+  learn: {
+    lede: "Six subjects and five regions — a faithful, condensed introduction to the country behind the safari.",
+    topicsTitle: "Discover Tanzania",
+    regionsTitle: "The regions",
+    regionsLede: "How Maisha Quest groups the country, and which of our destinations fall in each region.",
+    destinationsInRegion: "Destinations in this region",
+    noDestinationYet: "No destination page here yet",
   },
 
   planner: {
@@ -608,6 +618,11 @@ export const en = {
       title: "Experiences",
       description:
         "Game drives, walking safaris, balloon flights, cultural days, Kilimanjaro and the Zanzibar coast — the ways a day in Tanzania can be spent.",
+    },
+    learn: {
+      title: "Learn",
+      description:
+        "Geography, culture, history, wildlife and conservation, economy and festivals — and the five regions that make up Tanzania.",
     },
     about: {
       title: "About us",

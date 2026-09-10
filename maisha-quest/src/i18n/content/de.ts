@@ -701,4 +701,54 @@ export const deContent: ContentDictionary = {
       location: "Arusha, Tansania",
     },
   },
+
+  learnTopics: {
+    geography: {
+      name: "Geografie & Natur",
+      description: "Tansania vereint in einem Land eine ungewöhnliche Bandbreite an Ökosystemen: den schneebedeckten Gipfel des Kilimandscharo, die offenen Ebenen der Serengeti, die tiefen Gewässer des Tanganjikasees und die Korallenriffe vor Sansibar. Der Ngorongoro-Krater, die größte intakte Vulkancaldera der Welt, wird manchmal „Afrikas Garten Eden“ genannt – wegen der Wildtierdichte, die sein Boden trägt, einschließlich der Big Five. Im Norden ist das stark alkalische Wasser des Natronsees für fast alles Leben lebensfeindlich, dient aber Millionen Flamingos als Brutstätte.",
+    },
+    culture: {
+      name: "Kultur",
+      description: "Suaheli und Englisch sind Tansanias Amtssprachen, doch das Land ist Heimat von mehr als 120 ethnischen Gruppen, jede mit eigener Sprache und eigenen Traditionen. Tansanische Kunst ist international für den Tinga-Tinga-Malstil bekannt – leuchtende, stilisierte Darstellungen von Tieren und Alltag – sowie für die Holzschnitzkunst der Makonde. Die Massai erkennt man an ihrem leuchtend bunten Shuka-Tuch, das über den Schultern getragen wird.",
+    },
+    history: {
+      name: "Geschichte",
+      description: "Die Olduvai-Schlucht, manchmal „Wiege der Menschheit“ genannt, ist eine der bedeutendsten paläoanthropologischen Fundstätten der Welt. 1871 traf der Forscher Henry Morton Stanley den Missionar Dr. David Livingstone in Ujiji, am Ufer des Tanganjikasees. Zwischen 1905 und 1907 vereinte der Maji-Maji-Aufstand mehrere ethnische Gruppen gegen die deutsche Kolonialherrschaft – einer der bedeutendsten Aufstände jener Zeit in Ostafrika.",
+    },
+    "wildlife-and-conservation": {
+      name: "Tierwelt & Naturschutz",
+      description: "Jedes Jahr ziehen Tausende Elefanten zwischen der Serengeti und dem Tarangire-Nationalpark – Teil einer der größten Elefantenwanderungen Afrikas. Tansania hat auch beim Schutz des Spitzmaulnashorns und des Afrikanischen Wildhundes echte Fortschritte gemacht. Im Gombe-Stream-Nationalpark am Ufer des Tanganjikasees begann Dr. Jane Goodall in den 1960er-Jahren ihre Forschung an wildlebenden Schimpansen – Forschung, die dort bis heute fortgesetzt wird.",
+    },
+    economy: {
+      name: "Wirtschaft & Entwicklung",
+      description: "Landwirtschaft ist das Rückgrat der tansanischen Wirtschaft und beschäftigt den Großteil der Bevölkerung; das Land zählt zu den weltweit größten Produzenten von Gewürznelken und Sisal. Tansania ist zudem der einzige Ort der Erde, an dem Tansanit gefunden wird – abgebaut in den Mererani-Hügeln nahe dem Kilimandscharo und geschätzt für seine tiefblau-violette Farbe.",
+    },
+    festivals: {
+      name: "Kulturelle Veranstaltungen & Feste",
+      description: "Das Wanyambo-Festival, jährlich in Bukoba am Viktoriasee ausgerichtet, feiert die Kultur der Haya mit traditionellem Tanz, Musik und Speisen. Das Karibu-Musikfestival in Bagamoyo ist eines der größten Musikereignisse Ostafrikas und mischt traditionelle mit zeitgenössischer afrikanischer Musik.",
+    },
+  },
+
+  regions: {
+    northern: {
+      name: "Nordregion",
+      description: "Heimat von mehr als 120 ethnischen Gruppen, darunter die Massai, die Chagga an den Hängen des Kilimandscharo und die Hadza, eines der letzten Jäger-und-Sammler-Völker Afrikas. Dies ist Tansanias bekanntestes Safari-Gebiet: Hier erhebt sich der Kilimandscharo, Afrikas höchster Berg, mit fünf verschiedenen Klimazonen; die Serengeti ist Schauplatz der jährlichen Großen Tierwanderung; und die Olduvai-Schlucht, die Wiege der Menschheit, hat Fossilien menschlicher Vorfahren von bis zu 3,6 Millionen Jahren hervorgebracht. Nordtansania stand bis zum Ersten Weltkrieg unter deutscher Kolonialherrschaft, danach bis zur Unabhängigkeit 1961 unter Julius Nyerere als britisches Mandatsgebiet.",
+    },
+    "central-southern": {
+      name: "Zentral- & Südregion",
+      description: "Die Gogo sind die dominierende Gruppe rund um die Hauptstadt Dodoma, traditionell Viehhirten und Bauern; weiter südlich leben die Yao, die Makonde – berühmt für ihre Holzschnitzkunst –, die Ngoni und die Hehe. Dodoma wurde 1973 Tansanias Hauptstadt, Teil eines Plans zur Entwicklung des Landesinneren. Weiter südlich ist das Selous-Wildreservat (heute größtenteils Nyerere-Nationalpark) eines der größten Wildreservate der Welt und UNESCO-Weltkulturerbe, Heimat großer Elefanten- und Wildhundpopulationen entlang des Rufiji-Flusses; der Ruaha-Nationalpark, Tansanias größter, ist für seine Löwenrudel bekannt. Die vorgelagerte Stadtrepublik Kilwa Kisiwani, ebenfalls UNESCO-Weltkulturerbe, handelte vom 9. bis 15. Jahrhundert über den Indischen Ozean mit Gold, Elfenbein und Sklaven.",
+    },
+    "lake-zone-western": {
+      name: "Seenregion & Westregion",
+      description: "Rund um den Viktoriasee, Afrikas größten See, leben die Sukuma – Tansanias größte ethnische Gruppe – neben den Haya, bekannt für Bananen- und Kaffeeanbau, sowie Fischergemeinschaften, die von Nilbarsch und Tilapia leben. Am Tanganjikasee, einem der ältesten und tiefsten Seen der Welt, fischen manche Gemeinschaften nachts noch immer von Einbaumkanus aus mit Laternen. Mwanza, die „Felsenstadt“ am Ufer des Viktoriasees, ist das wirtschaftliche Zentrum der Region; die Nationalparks Gombe Stream und Mahale Mountains, beide am Tanganjikasee, zählen zu den besten Orten Afrikas für Schimpansen-Trekking. Maisha Quest veröffentlicht für diese Region noch keine eigene Zielseite.",
+    },
+    coastal: {
+      name: "Küstenregion",
+      description: "Die Suaheli leben seit Jahrhunderten an Tansanias Festlandküste, eine Kultur, die afrikanische, arabische und persische Einflüsse verbindet und sich in der Taarab-Musik sowie in Gerichten wie Pilau und Mandazi ausdrückt. Daressalam, die größte Stadt des Landes, ist sein wirtschaftliches Zentrum; Bagamoyo, einst Hauptstadt Deutsch-Ostafrikas, und Kilwa Kisiwani, eine Suaheli-Stadtrepublik und UNESCO-Weltkulturerbe, sind geschichtsträchtige Orte. Der Saadani-Nationalpark, an der Küste nördlich von Daressalam, ist Tansanias einziges direkt am Ozean gelegenes Wildreservat. Maisha Quest veröffentlicht für diese Region noch keine eigene Zielseite.",
+    },
+    "zanzibar-island": {
+      name: "Insel Sansibar",
+      description: "Bekannt als Gewürzinsel, besteht Sansibar aus den beiden Hauptinseln Unguja und Pemba, rund 25 bis 50 Kilometer vor der tansanischen Festlandküste. Die Bevölkerung ist überwiegend suaheli-sprachig und muslimisch, mit afrikanischen, arabischen, persischen und indischen Wurzeln, die sich in der Taarab-Musik sowie in der arabesken Architektur und den geschnitzten Holztüren von Stone Town widerspiegeln – Stone Town ist UNESCO-Weltkulturerbe. Arabische Händler ließen sich hier ab dem 8. Jahrhundert nieder; im 19. Jahrhundert wurden die Inseln unter dem Sultanat Oman zu einem Zentrum des Gewürzhandels und kurz darauf britisches Protektorat, bevor sie 1963 unabhängig wurden und sich 1964 mit Tanganjika zu Tansania vereinigten. Im Jozani-Wald lebt der endemische Sansibar-Stummelaffe.",
+    },
+  },
 };
