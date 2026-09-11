@@ -117,15 +117,70 @@ export const WANTED_PHOTOGRAPHY: WantedPhoto[] = [
     priority: "media",
   },
   {
-    key: "impact.projects",
+    key: "impact.programs",
     subject:
-      "Los proyectos de Maisha Quest Cares. SIN MENORES IDENTIFICABLES mientras " +
-      "no haya autorización escrita de tutores y del centro.",
+      "Maisha Quest Cares y Empowerment, los dos programas reales (ver " +
+      "maishaquest.com/cares y /empowerment). SIN MENORES IDENTIFICABLES " +
+      "mientras no haya autorización escrita de tutores y del centro, y " +
+      "NUNCA la fotografía del tigre del pie de la página real de Cares: no " +
+      "es de Maisha Quest y es incoherente con Tanzania.",
     placement: "Home (impacto), /impact",
     ratio: "3:2",
-    fillIn: "image en src/data/structure/impact.ts",
-    meanwhile: "Los cuatro proyectos se presentan solo con texto.",
+    fillIn: "image.src en las dos entradas de src/data/structure/impact.ts",
+    meanwhile: "Los dos programas se presentan solo con texto.",
     priority: "media",
+  },
+  {
+    key: "safaris.packages",
+    subject:
+      "Foto de portada y galería de cada uno de los 18 paquetes reales " +
+      "(6 Explorer, 6 Escape, 6 Enrich), tal y como aparecen en " +
+      "/explorer-tanzania-safaris, /escape-tanzania-safaris y " +
+      "/enrich-tanzania-safaris y en la ficha de cada paquete.",
+    placement: "Ficha de cada safari (imagen de cabecera y galería)",
+    ratio: "3:2 (cabecera), variable (galería)",
+    fillIn: "image y gallery en las 18 entradas de src/data/structure/safaris.ts",
+    meanwhile:
+      "Fotografías del pool existente reasignadas por coherencia temática " +
+      "(destino y tipo de alojamiento), no las fotografías reales de Wix.",
+    priority: "media",
+  },
+  {
+    key: "experiences.categories",
+    subject:
+      "Foto de portada de cada una de las 5 categorías reales: " +
+      "/thrill-seaker-adventures, /water-activities, /tours, " +
+      "/shopping-and-leisure, /nightlife.",
+    placement: "Explorador de experiencias (home), ficha de cada categoría",
+    ratio: "4:5 (explorador) y 16:9 (cabecera de ficha)",
+    fillIn: "image en las 5 entradas de src/data/structure/experiences.ts",
+    meanwhile:
+      "Fotografías de fauna/paisaje reasignadas por tono: ninguna representa " +
+      "de verdad paracaidismo, un mercado o vida nocturna.",
+    priority: "media",
+  },
+  {
+    key: "learn.topicsAndRegions",
+    subject:
+      "Foto de portada de /learn y de sus 6 temas, y de las 5 páginas de " +
+      "región (Northern, Central & Southern, Lake Zone & Western, Coastal, " +
+      "Zanzibar Island).",
+    placement: "/learn (tarjetas de tema y de región)",
+    ratio: "4:3",
+    fillIn: "image en LEARN_TOPIC_STRUCTURE y REGION_STRUCTURE, src/data/structure/learn.ts",
+    meanwhile: "Fotografías del pool existente reasignadas por región/tema.",
+    priority: "baja",
+  },
+  {
+    key: "journal.posts",
+    subject:
+      "Imagen de cabecera de los 3 artículos reales del blog, tal y como " +
+      "aparecen en maishaquest.com/blog.",
+    placement: "Listado de journal y cabecera de cada artículo",
+    ratio: "16:9",
+    fillIn: "image en las 3 entradas de src/data/structure/journal.ts",
+    meanwhile: "Fotografías del pool existente reasignadas provisionalmente.",
+    priority: "baja",
   },
   {
     key: "video.journey",

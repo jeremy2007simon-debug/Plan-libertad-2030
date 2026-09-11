@@ -171,7 +171,21 @@ console.log("\n== 2. Contacto y perfiles externos ==");
 
 console.log("\n== 3. Canonical, hreflang y Open Graph ==");
 {
-  const samples = ["", "/safaris", "/destinations/serengeti", "/contact", "/legal/terms"];
+  const samples = [
+    "",
+    "/safaris",
+    "/safaris/wildlife-leisure-culture",
+    "/collections/explorer",
+    "/destinations/serengeti",
+    "/experiences",
+    "/experiences/nightlife",
+    "/learn",
+    "/journal",
+    "/journal/elevate-your-safari-experience",
+    "/impact",
+    "/contact",
+    "/legal/terms",
+  ];
   let checked = 0;
   for (const path of samples) {
     for (const locale of LOCALES) {

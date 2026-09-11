@@ -486,31 +486,165 @@ Ningún dato de este bloque incluye contraseñas ni credenciales de acceso al
 panel de Wix — solo qué páginas/elementos del **Media Manager** de Wix hay
 que localizar y descargar. El Media Manager de Wix es una biblioteca plana,
 no por carpetas, así que se indica la página real donde vive cada imagen en
-vez de una ruta de carpeta.
+vez de una ruta de carpeta. Salvo las 22 fotografías del cliente ya
+catalogadas más arriba (con su nombre de archivo exacto), **ningún nombre de
+archivo de Wix se ha capturado todavía** para el contenido nuevo de la Fase
+2: hay que abrir la página real y localizar la imagen ahí (clic derecho →
+"Ver información de la imagen", o el panel de medios de esa página en el
+editor de Wix). Inventarlo no es más que suponer un nombre, así que aquí no
+se inventa ninguno.
 
-| Sección | Qué descargar | Dónde está en Wix |
-| --- | --- | --- |
-| Logo | Logotipo e icono de marca | Cualquier página — aparece en la cabecera y el pie de todo el sitio |
-| 18 paquetes de safari | Foto de portada + galería de cada paquete | Cada una de las 18 páginas de paquete (ver el mapa de redirecciones para la URL de cada una) |
-| 5 categorías de experiencias | Foto de portada de cada categoría | `/thrill-seaker-adventures`, `/water-activities`, `/tours`, `/shopping-and-leisure`, `/nightlife` |
-| Learn (6 temas) y regiones (5) | Foto de portada de `/learn` y de cada una de las 5 páginas de región | `/learn`, `/northern-region`, `/central-and-southern-region`, `/lake-zone-and-western-zone`, `/coastal-region`, `/zanzibar-island` |
-| 3 artículos del blog | Imagen de cabecera de cada post | Los 3 posts en `/blog` (URLs en la tabla de artículos, arriba) |
-| Impacto social | Fotografía propia y coherente con Tanzania para Cares y Empowerment — **nunca la foto del tigre** de `/cares` | `/cares`, `/empowerment` |
-| Equipo | Retratos de Talisa Tufts, Frank Lyatuu y Tina Ngabo | **No existen ni en el sitio real** — `/about-maisha-quest-item` tampoco muestra fotos de ninguno de los tres. No es un recurso que descargar de Wix: hacen falta fotografías nuevas del cliente. |
-| Galería general | — | maishaquest.com **no tiene página de galería** (404 comprobado). No hay nada que migrar aquí; si el cliente quiere una, es contenido nuevo, no una migración. |
-| Vídeos | Cualquier vídeo promocional publicado en el sitio de Wix, si existe | Revisar cada página de paquete/experiencia — no se ha confirmado ninguno en la auditoría |
+Registrado también como código en `src/data/photography-wanted.ts`
+(`WANTED_PHOTOGRAPHY`), que es la fuente de qué campo de qué archivo hay que
+rellenar en cuanto llegue cada imagen — esta tabla añade lo que ese registro
+interno no lleva: dónde localizarlo en Wix, tipo de archivo, resolución y
+texto alternativo propuesto.
 
-### Mapa de redirecciones 301 (planificación — no implementado)
+#### Prioridad alta
 
-**Solo documentación.** Ninguna redirección se ha añadido a `next.config.js`
-ni se ha tocado el dominio o el DNS — es lo que pide la decisión 9: preparar
-el mapa, no implementarlo todavía.
+**1. Retratos del equipo — Talisa Tufts, Frank Lyatuu, Tina Ngabo**
+
+- Dónde está en Wix: **no existen ni en el sitio real** — `/about-maisha-quest-item`
+  no muestra fotografía de ninguno de los tres. No es un recurso que
+  descargar: hace falta que el cliente encargue o entregue fotografías
+  nuevas. Es la entrada de mayor prioridad de todo el inventario precisamente
+  por eso — es la única que no se resuelve descargando algo ya existente.
+- Tipo: fotografía, JPEG
+- Resolución mínima: 1400 × 1750 px
+- Proporción: 4:5, vertical, retrato individual, luz natural
+- Nombre definitivo: `team-talisa-tufts.jpg`, `team-frank-lyatuu.jpg`, `team-tina-ngabo.jpg`
+- Carpeta destino: `public/images/maisha-quest/originals/` (el pipeline de
+  `sharp` genera el derivado WebP en `optimized/`)
+- Alt text propuesto: el nombre completo de cada persona (ya es el valor por
+  defecto que usa `/about/team`)
+- ¿Imprescindible?: sustituible sin fecha límite — la ficha ya funciona a
+  ancho completo sin retrato
+
+**2. Logotipo e icono de marca**
+
+- Dónde está en Wix: cualquier página — cabecera y pie de todo el sitio
+- Tipo: SVG si existe el original vectorial; si no, PNG con fondo transparente
+- Resolución mínima: 512 × 512 px (icono cuadrado); 800 px de ancho (logotipo horizontal)
+- Proporción: 1:1 (icono); libre (logotipo horizontal)
+- Nombre definitivo: `logo.svg` / `icon.svg`
+- Carpeta destino: `public/` (sustituiría al icono en `src/app/icon.svg` y a
+  la brújula dibujada en `Header.tsx`)
+- Alt text propuesto: "Maisha Quest" (o vacío si queda junto al nombre en texto)
+- ¿Imprescindible?: sustituible — hoy es una brújula vectorial dibujada en
+  código, sin dependencia de ningún archivo, así que la web funciona sin esto
+  indefinidamente
+
+#### Prioridad media
+
+**3. 18 paquetes de safari — foto de portada y galería**
+
+- Dónde está en Wix: la página de cada paquete (ver el mapa de
+  redirecciones más abajo para la URL exacta de cada uno)
+- Tipo: fotografía, JPEG
+- Resolución mínima: 2000 px de ancho (1400 px si es vertical), igual que el
+  resto de fotografía ya publicada
+- Proporción: 3:2 (portada); libre en la galería
+- Nombre definitivo: `safari-<slug>-cover.jpg` y `safari-<slug>-gallery-1.jpg`,
+  `-2.jpg`... — por ejemplo `safari-wildlife-leisure-culture-cover.jpg`
+- Carpeta destino: `public/images/maisha-quest/originals/`
+- Alt text propuesto: el nombre del paquete + el elemento fotografiado
+  (p. ej. "Grand Safari & Zanzibar — atardecer en dhow frente a Stone Town")
+- ¿Imprescindible?: sustituible — cada paquete ya muestra una fotografía
+  provisional coherente con su destino y tipo de alojamiento
+
+**4. 5 categorías de experiencias — foto de portada**
+
+- Dónde está en Wix: `/thrill-seaker-adventures`, `/water-activities`,
+  `/tours`, `/shopping-and-leisure`, `/nightlife`
+- Tipo: fotografía, JPEG
+- Resolución mínima: 2000 px de ancho
+- Proporción: 4:5 (explorador de la home); 16:9 (cabecera de la ficha de categoría)
+- Nombre definitivo: `experience-<slug>-cover.jpg` (p. ej. `experience-nightlife-cover.jpg`)
+- Carpeta destino: `public/images/maisha-quest/originals/`
+- Alt text propuesto: el nombre de la categoría + qué se ve (p. ej. "Vida
+  nocturna en Tanzania — terraza con música en directo")
+- ¿Imprescindible?: sustituible — las cinco tienen ya una fotografía
+  provisional; ninguna de las cinco representa de verdad su tema
+  (paracaidismo, buceo, compras o vida nocturna), así que son las que más se
+  benefician de una sustitución real
+
+**5. Impacto social — Maisha Quest Cares y Empowerment**
+
+- Dónde está en Wix: `/cares`, `/empowerment`
+- Tipo: fotografía, JPEG
+- Resolución mínima: 2000 px de ancho
+- Proporción: 3:2
+- Nombre definitivo: `impact-maisha-quest-cares.jpg`, `impact-empowerment.jpg`
+- Carpeta destino: `public/images/maisha-quest/originals/`
+- Alt text propuesto: el nombre del programa + qué representa, sin nombrar a
+  menores identificables sin autorización
+- ¿Imprescindible?: sustituible — hoy `image.src` está en `null` a
+  propósito y la interfaz ya sabe mostrar un proyecto sin fotografía
+- **Restricción explícita: nunca la fotografía del tigre** del pie de la
+  página real de `/cares` — no es de Maisha Quest y es incoherente con
+  Tanzania
+
+#### Prioridad baja
+
+**6. Learn (6 temas) y regiones (5) — foto de portada**
+
+- Dónde está en Wix: `/learn`, `/northern-region`,
+  `/central-and-southern-region`, `/lake-zone-and-western-zone`,
+  `/coastal-region`, `/zanzibar-island`
+- Tipo: fotografía, JPEG
+- Resolución mínima: 1600 px de ancho
+- Proporción: 4:3
+- Nombre definitivo: `learn-<slug>.jpg` (temas) y `region-<slug>.jpg` (regiones)
+- Carpeta destino: `public/images/maisha-quest/originals/`
+- Alt text propuesto: el nombre del tema o la región
+- ¿Imprescindible?: sustituible — las once ya tienen fotografía provisional
+  coherente por temática
+
+**7. 3 artículos del blog — imagen de cabecera**
+
+- Dónde está en Wix: los 3 posts listados en `/blog` (URLs exactas en la
+  tabla de artículos migrados, más arriba)
+- Tipo: fotografía, JPEG
+- Resolución mínima: 1600 px de ancho
+- Proporción: 16:9
+- Nombre definitivo: `journal-<slug>.jpg` (p. ej. `journal-elevate-your-safari-experience.jpg`)
+- Carpeta destino: `public/images/maisha-quest/originals/`
+- Alt text propuesto: el titular del artículo
+- ¿Imprescindible?: sustituible — ninguna de las tres páginas originales
+  tenía imagen descargable con atribución clara, así que ya llevan
+  fotografía provisional
+
+**8. Galería general** — maishaquest.com **no tiene página de galería**
+(404 comprobado). No hay nada que migrar aquí; si el cliente la quiere, es
+contenido nuevo, no una migración, y no se inventa qué fotografías debería
+llevar.
+
+**9. Vídeos** — revisar cada página de paquete y de experiencia por si Wix
+publica algún vídeo promocional; no se ha confirmado ninguno en la
+auditoría. Si aparece alguno, sigue el mismo circuito de consentimiento que
+ya rige `public/video/README.md`: ningún vídeo con menores identificables se
+publica sin autorización escrita de tutores y del centro.
+
+### Mapa de redirecciones 301 (implementado en `next.config.ts`)
+
+Fase 2 preparó este mapa solo como documentación. En la Fase 3 se hizo el
+spot-check contra las páginas en vivo — las 44 rutas del sitemap una por una,
+más los 3 artículos por separado — y, al confirmarse cada destino, se
+implementaron como redirecciones reales en `WIX_REDIRECTS` dentro de
+`next.config.ts`. **Sigue sin tocarse el dominio o el DNS**: esto solo
+redirige rutas dentro de la propia aplicación Next, en la preview.
+
+Next.js emite `permanent: true` como **308** (redirección permanente que
+conserva el método HTTP), el reemplazo moderno del 301 clásico — mismo
+efecto para buscadores y navegadores, sin el problema del 301 con peticiones
+que no son `GET`.
 
 Las 44 rutas vienen de `https://www.maishaquest.com/pages-sitemap.xml`
-(comprobado por completo, no una muestra). Los 18 paquetes se emparejan por
-duración + palabra clave de la URL (p. ej. `12days-enrich-...` → la única
-etiquetada `Enrich`); son de alta confianza pero piden un **spot-check final**
-contra las páginas en vivo antes de implementar la redirección real.
+(comprobado por completo, no una muestra, dos veces: en la Fase 2 y de nuevo
+en el spot-check de la Fase 3). Los 17 paquetes de safari con URL propia se
+emparejaron por duración + palabra clave de la URL (p. ej. `12days-enrich-...`
+→ la única etiquetada `Enrich`) y se verificó cada destino con una petición
+real antes de escribir la redirección — no queda ninguno por confirmar.
 
 | Ruta original (maishaquest.com) | Ruta nueva | Nota |
 | --- | --- | --- |

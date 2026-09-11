@@ -5,10 +5,12 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CompassDivider } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { JOURNAL_STRUCTURE } from "@/data/structure/journal";
-import { LOCALES, isLocale } from "@/i18n/config";
+import { LOCALES, LOCALE_META, isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { formatDate, getJournalPost } from "@/lib/content";
 import { alternatesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
+import { getPhotoAlt } from "@/i18n/alt";
 
 /** Las tres entradas × los seis idiomas: dieciocho rutas estáticas. */
 export function generateStaticParams() {
@@ -24,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!isLocale(locale)) return {};
-  const post = await getJournalPost(locale, slug);
+  const [post, alt] = await Promise.all([getJournalPost(locale, slug), getPhotoAlt(locale)]);
   if (!post) return {};
   return {
     title: post.title,
@@ -32,10 +34,18 @@ export async function generateMetadata({
     alternates: alternatesFor(locale, `/journal/${post.slug}`),
     openGraph: {
       type: "article",
+      locale: LOCALE_META[locale].intl.replace("-", "_"),
+      url: `${SITE_URL}${localeHref(locale, `/journal/${post.slug}`)}`,
       title: post.title,
       description: post.excerpt,
       publishedTime: post.date,
-      images: [{ url: post.image.src }],
+      images: [{ url: post.image.src, alt: alt[post.image.altKey] }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image.src],
     },
   };
 }

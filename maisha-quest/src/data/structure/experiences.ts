@@ -37,7 +37,6 @@
 
 import type { ExperienceStructure, Experience } from "@/types/content";
 import { PHOTOS } from "../photography";
-import { CLIENT_PHOTOS } from "../client-photography";
 
 export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
@@ -73,9 +72,13 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "nightlife",
     category: "nightlife",
-    // Provisional: sin fotos propias de vida nocturna; un atardecer es lo
-    // más cercano al "night" que ofrece el pool actual.
-    image: CLIENT_PHOTOS["savannah-acacia-sunset"],
+    // Provisional: sin fotos propias de vida nocturna. `savannah-acacia-sunset`
+    // era la primera opción por tema, pero a 2264 K, 63% de saturación y fuera
+    // de rango cromático rompía la comprobación del explorador
+    // (check-experience-cards.mjs exige 2600-7000 K, saturación hasta 45% y
+    // menos de 16% de píxeles azul/violeta entre las cinco fotografías). Esta
+    // pasa las tres comprobaciones — sigue sin representar vida nocturna real.
+    image: PHOTOS["lake-manyara-giraffe"],
     destinationSlugs: ["arusha", "zanzibar"],
   },
 ];

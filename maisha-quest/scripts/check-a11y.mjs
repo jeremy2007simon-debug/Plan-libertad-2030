@@ -29,7 +29,7 @@ import { dictionaryFor, isAllowed } from "./lib/translation-exceptions.mjs";
 
 const BASE = process.argv[2] || "http://127.0.0.1:3000";
 const LOCALES = ["en", "es", "de", "fr", "ru", "zh-CN"];
-const PATHS = ["", "/safaris", "/destinations/serengeti", "/plan", "/contact", "/impact"];
+const PATHS = ["", "/safaris", "/safaris/wildlife-leisure-culture", "/collections/explorer", "/experiences", "/experiences/nightlife", "/learn", "/journal", "/journal/elevate-your-safari-experience", "/destinations/serengeti", "/plan", "/contact", "/impact"];
 
 const problems = [];
 const fail = (m) => {

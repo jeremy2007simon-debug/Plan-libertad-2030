@@ -21,7 +21,7 @@ import { chromium, devices } from "/opt/node22/lib/node_modules/playwright/index
 
 const BASE = process.argv[2] || "http://127.0.0.1:3000";
 const LOCALES = ["en", "es", "de", "fr", "ru", "zh-CN"];
-const PATHS = ["", "/safaris", "/safaris/safari-zanzibar-escape", "/destinations", "/plan", "/contact", "/impact", "/about/team"];
+const PATHS = ["", "/safaris", "/safaris/safari-zanzibar-escape", "/safaris/wildlife-leisure-culture", "/collections/explorer", "/experiences", "/experiences/nightlife", "/learn", "/journal", "/journal/elevate-your-safari-experience", "/destinations", "/plan", "/contact", "/impact", "/about/team"];
 
 const VIEWPORTS = [
   { name: "360", width: 360, height: 740 },

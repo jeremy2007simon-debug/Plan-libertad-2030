@@ -1,5 +1,5 @@
 /**
- * El explorador de experiencias: las ocho fotografías, juzgadas JUNTAS.
+ * El explorador de experiencias: las cinco fotografías, juzgadas JUNTAS.
  *
  * Por qué existe
  * -------------
@@ -11,13 +11,13 @@
  * aparecen.
  *
  * La sección ya no es una rejilla: es un panel panorámico con una sola
- * fotografía activa y un índice de ocho filas que la cambian al pasar el
- * cursor, el foco o hacer clic. Este script recorre las ocho activándolas una
+ * fotografía activa y un índice de cinco filas que la cambian al pasar el
+ * cursor, el foco o hacer clic. Este script recorre las cinco activándolas una
  * a una —como lo haría alguien tabulando— y mide cada fotografía servida.
  *
  * Qué comprueba
  * -------------
- *  1. Las ocho filas existen y activan las ocho fotografías esperadas.
+ *  1. Las cinco filas existen y activan las cinco fotografías esperadas.
  *  2. Ninguna se sale de la dirección cromática: sin dominante azul, violeta
  *     ni cian, sin saturación disparada y sin quedarse gris.
  *  3. La distancia de color entre vecinas no da un salto: la colección tiene
@@ -145,17 +145,17 @@ function resolveFile(src) {
 
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
 
-/* ---- 1. Las ocho filas, activadas una a una ------------------------------ */
+/* ---- 1. Las cinco filas, activadas una a una ------------------------------ */
 
-console.log("\n== 1. Las ocho fotografías, activadas en orden ==");
+console.log("\n== 1. Las cinco fotografías, activadas en orden ==");
 const page = await (await browser.newContext({ viewport: { width: 1440, height: 1000 } })).newPage();
 await page.goto(`${BASE}/es`, { waitUntil: "networkidle" });
 await page.locator(DESKTOP_ROWS).first().scrollIntoViewIfNeeded();
 await page.waitForTimeout(300);
 
 const filas = await page.locator(DESKTOP_ROWS).count();
-if (filas !== 8) fail(`hay ${filas} filas en el índice de escritorio, esperadas 8`);
-else pass("ocho filas en el índice de escritorio");
+if (filas !== 5) fail(`hay ${filas} filas en el índice de escritorio, esperadas 5`);
+else pass("cinco filas en el índice de escritorio");
 
 const medidas = [];
 for (let i = 0; i < filas; i += 1) {
@@ -289,15 +289,15 @@ for (const width of ANCHOS) {
     { rowSelector, panel: PANEL },
   );
 
-  if (info.count !== 8) {
-    fail(`${width}px: ${info.count} filas visibles, esperadas 8`);
+  if (info.count !== 5) {
+    fail(`${width}px: ${info.count} filas visibles, esperadas 5`);
   } else if (info.desborde) {
     fail(`${width}px: hay desbordamiento horizontal`);
   } else if (!escritorio && info.minTouchHeight < 44) {
     fail(`${width}px: una fila del índice mide menos de 44px de alto (${info.minTouchHeight}px)`);
   } else {
     pass(
-      `${width}px: ocho filas, panel ${info.panelWidth}×${info.panelHeight}px, sin desbordamiento` +
+      `${width}px: cinco filas, panel ${info.panelWidth}×${info.panelHeight}px, sin desbordamiento` +
         (escritorio ? "" : `, filas ≥ ${info.minTouchHeight}px`),
     );
   }
@@ -359,7 +359,7 @@ await browser.close();
 
 console.log("\n=========================");
 if (problems.length === 0) {
-  console.log("Explorador de experiencias: las ocho fotografías son una misma colección.");
+  console.log("Explorador de experiencias: las cinco fotografías son una misma colección.");
   process.exit(0);
 }
 console.log(`${problems.length} problemas:`);

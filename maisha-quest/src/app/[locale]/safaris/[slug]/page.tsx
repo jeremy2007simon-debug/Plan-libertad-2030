@@ -23,11 +23,11 @@ import {
   getSafariBySlug,
   getTestimonials,
 } from "@/lib/content";
-import { alternatesFor } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 import type { Destination } from "@/types/content";
 import { getPhotoAlt } from "@/i18n/alt";
 
-/** Siete safaris × seis idiomas = 42 rutas estáticas. */
+/** Dieciocho safaris × seis idiomas = 108 rutas estáticas. */
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) =>
     SAFARI_STRUCTURE.map((safari) => ({ locale, slug: safari.slug })),
@@ -41,21 +41,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!isLocale(locale)) return {};
-  const [t, safari] = await Promise.all([
+  const [t, safari, alt] = await Promise.all([
     getDictionary(locale),
     getSafariBySlug(locale, slug),
+    getPhotoAlt(locale),
   ]);
   if (!safari) return {};
-  return {
+  return pageMetadata({
+    locale,
+    path: `/safaris/${safari.slug}`,
     title: `${safari.name} · ${t.common.dayCount(safari.durationDays)}`,
     description: safari.summary,
-    alternates: alternatesFor(locale, `/safaris/${safari.slug}`),
-    openGraph: {
-      title: `${safari.name} — ${t.common.dayCount(safari.durationDays)}`,
-      description: safari.summary,
-      images: [{ url: safari.image.src }],
-    },
-  };
+    image: { src: safari.image.src, alt: alt[safari.image.altKey] },
+  });
 }
 
 /**
