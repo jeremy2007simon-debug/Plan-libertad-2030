@@ -49,6 +49,20 @@
  * (destino y tipo de alojamiento), no las fotografías reales de cada paquete
  * de Wix. Ver el inventario de medios pendientes para la lista exacta de lo
  * que hay que descargar del admin de Wix para sustituirlas.
+ *
+ * FASE 4 — REVISIÓN DEL CLIENTE (draft: false en 16 de los 18)
+ * ---------------------------------------------------------------
+ * Tras la auditoría de Fase 3, el cliente aprobó publicar los 16 paquetes
+ * cuyo itinerario no presenta contradicciones ni días sin confirmar —el
+ * precio pendiente ("bajo consulta" en los seis idiomas) no es motivo para
+ * mantenerlos en borrador. Siguen en `draft: true` únicamente los dos casos
+ * documentados arriba: `six-day-camping-safari` (día 6 sin confirmar) y
+ * `wildlife-leisure-culture` (contradicción sobre Zanzíbar). Ninguno de los
+ * 18 presenta un alojamiento concreto como confirmado: `accommodationSlug`
+ * sigue en `null` en los 18, y `accommodationStyle`/`practicalInfo` solo
+ * declaran el tipo genérico (Tented camp / Lodge) y el aviso de niveles
+ * "luxury, mid-range or budget", igual que la ficha real de Wix — ningún
+ * nombre de lodge ni de hotel aparece en ningún idioma.
  */
 
 import type { SafariStructure } from "@/types/content";
@@ -84,7 +98,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["tarangire-manyara-ngorongoro-safari", "serengeti-ngorongoro-manyara-safari"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "tarangire-manyara-ngorongoro-safari",
@@ -103,7 +117,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["manyara-ngorongoro-safari", "serengeti-ngorongoro-manyara-safari"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "serengeti-ngorongoro-manyara-safari",
@@ -123,7 +137,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["tarangire-manyara-ngorongoro-safari", "northern-circuit-camping-safari"],
     featured: true,
-    draft: true,
+    draft: false,
   },
   {
     slug: "northern-circuit-camping-safari",
@@ -144,7 +158,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["serengeti-ngorongoro-manyara-safari", "six-day-camping-safari"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "six-day-camping-safari",
@@ -191,7 +205,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["six-day-camping-safari", "serengeti-ngorongoro-manyara-safari"],
     featured: false,
-    draft: true,
+    draft: false,
   },
 
   /* ==================== ESCAPE — lodge + Zanzíbar ======================= */
@@ -216,7 +230,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["serengeti-zanzibar", "big-three-zanzibar"],
     featured: true,
-    draft: true,
+    draft: false,
   },
   {
     slug: "serengeti-zanzibar",
@@ -240,7 +254,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["safari-zanzibar-escape", "big-three-zanzibar"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "big-three-zanzibar",
@@ -265,7 +279,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["serengeti-zanzibar", "safari-culture-zanzibar"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "safari-culture-zanzibar",
@@ -293,7 +307,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["big-three-zanzibar", "luxury-safari-zanzibar"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "luxury-safari-zanzibar",
@@ -322,7 +336,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["safari-culture-zanzibar", "grand-safari-zanzibar"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "grand-safari-zanzibar",
@@ -352,7 +366,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["luxury-safari-zanzibar", "safari-culture-zanzibar"],
     featured: false,
-    draft: true,
+    draft: false,
   },
 
   /* ============== ENRICH — lodge, fauna + cultura, sin Zanzíbar ========= */
@@ -376,7 +390,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["manyara-serengeti-ngorongoro-enrich", "tarangire-manyara-serengeti-ngorongoro-enrich"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "manyara-serengeti-ngorongoro-enrich",
@@ -399,7 +413,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["tarangire-serengeti-ngorongoro-enrich", "tarangire-manyara-serengeti-ngorongoro-enrich"],
     featured: true,
-    draft: true,
+    draft: false,
   },
   {
     slug: "tarangire-manyara-serengeti-ngorongoro-enrich",
@@ -423,7 +437,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["manyara-serengeti-ngorongoro-enrich", "cultural-safari-combo"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "cultural-safari-combo",
@@ -451,7 +465,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["tarangire-manyara-serengeti-ngorongoro-enrich", "extended-safari-cultural-immersion"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "extended-safari-cultural-immersion",
@@ -479,7 +493,7 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     faqSlugs: ["best-time-to-visit", "how-far-in-advance", "single-travellers"],
     relatedSafariSlugs: ["cultural-safari-combo", "wildlife-leisure-culture"],
     featured: false,
-    draft: true,
+    draft: false,
   },
   {
     slug: "wildlife-leisure-culture",

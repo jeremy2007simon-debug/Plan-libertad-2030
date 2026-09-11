@@ -45,8 +45,27 @@ import type { NextConfig } from "next";
  *   - `six-day-camping-safari`: su tarjeta de origen en Wix no enlaza a una
  *     URL propia (enlaza, erróneamente, a la de 5 días), así que no tiene
  *     origen del que redirigir.
+ *
+ * `WIX_EXCLUDED_ROUTES` deja esas exclusiones como datos, no solo como
+ * comentario, para que `scripts/test-redirects.mjs` pueda comprobar que
+ * ninguna aparece por accidente en `WIX_REDIRECTS` y que siguen documentadas.
  */
-const WIX_REDIRECTS: { source: string; destination: string }[] = [
+export const WIX_EXCLUDED_ROUTES: { source: string; reason: string }[] = [
+  {
+    source: "/4days-midrange-tanzania-safaris",
+    reason: "Página huérfana en el propio Wix — no corresponde a ninguno de los 18 paquetes reales.",
+  },
+  {
+    source: "/7days-tanzania-safaris",
+    reason: "Página huérfana en el propio Wix — no corresponde a ninguno de los 18 paquetes reales.",
+  },
+  {
+    source: "/english-refund-policy",
+    reason: "Sin página equivalente todavía — pendiente de decisión del cliente o su asesor legal.",
+  },
+];
+
+export const WIX_REDIRECTS: { source: string; destination: string }[] = [
   // Learn y regiones
   { source: "/northern-region", destination: "/learn" },
   { source: "/central-and-southern-region", destination: "/learn" },

@@ -78,7 +78,7 @@ coordenadas, temporadas y fauna) y la silueta del mapa (Natural Earth).
 | Qué falta | Dónde se rellena |
 | --- | --- |
 | Precios reales | `price` en `src/data/safaris.ts`. Sin ellos la ficha dice "Price on request", nunca una cifra. |
-| Itinerarios validados | Los siete safaris llevan `draft: true`; la interfaz muestra el sello "Sample itinerary" y desaparece solo al quitar la marca. |
+| Itinerarios sin confirmar | 2 de los 18 safaris (`six-day-camping-safari` y `wildlife-leisure-culture`) llevan `draft: true` por un hallazgo concreto de la auditoría de Wix, no por falta de revisión; ver "Migración de contenido desde Wix" más abajo. La interfaz muestra el sello "Sample itinerary" y desaparece solo al quitar la marca. |
 | Testimonios | `src/data/testimonials.ts` está vacío **a propósito**. La sección detecta el vacío y muestra un estado alternativo honesto. |
 | Cifras de impacto | `outcomes` vacío en cada proyecto de `src/data/impact.ts`. |
 | Licencias y acreditaciones | `TRUST_CREDENTIALS` en `src/lib/site.ts`. La franja no se pinta si está vacío. |
@@ -339,8 +339,11 @@ inventarlo — el mismo principio que ya regía el resto de la web.
 
 Sustituyen a los 7 de demostración, conservados sin usarse en
 `src/data/structure/safaris.legacy.ts`. Precio siempre "bajo consulta"
-(ningún paquete de Wix publica precio) y los siete itinerarios llevan
-`draft: true` con el sello "Sample itinerary" hasta validarlos con el cliente.
+(ningún paquete de Wix publica precio, y así se traduce en los seis
+idiomas). Tras la revisión de Fase 3 y su aprobación en Fase 4, **16 de los
+18 están publicados** (`draft: false`); solo `six-day-camping-safari` y
+`wildlife-leisure-culture` siguen con el sello "Sample itinerary"
+(`draft: true`), por los dos hallazgos documentados justo debajo.
 
 **Explorer — camping (6)**
 

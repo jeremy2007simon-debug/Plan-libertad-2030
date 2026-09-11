@@ -24,7 +24,8 @@
     "check:rights": "node scripts/check-photo-rights.mjs",
     "check:links": "node scripts/check-links-seo.mjs",
     "check:a11y": "node scripts/check-a11y.mjs",
-    "check:responsive": "node scripts/check-responsive.mjs"
+    "check:responsive": "node scripts/check-responsive.mjs",
+    "test:redirects": "node scripts/test-redirects.mjs"
   },
   "dependencies": {
     "next": "16.2.10",
