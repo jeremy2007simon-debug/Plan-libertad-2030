@@ -59,6 +59,7 @@ export default async function HomePage({
       {/* Capa de apertura. Sale en el HTML del servidor pero solo se ve si el
           guardián del <head> ha puesto `data-intro`. */}
       <Intro t={t.a11y} />
+      <IntroScript />
       <Hero locale={locale} t={t} />
       <MaishaMeaning locale={locale} t={t} />
       <ExperienceExplorer locale={locale} t={t} />
@@ -72,7 +73,6 @@ export default async function HomePage({
       <Testimonials locale={locale} t={t} />
       <PlannerSection locale={locale} t={t} />
       <ClosingCTA locale={locale} t={t} />
-      <IntroScript />
     </>
   );
 }

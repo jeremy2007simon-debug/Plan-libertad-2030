@@ -84,7 +84,7 @@ coordenadas, temporadas y fauna) y la silueta del mapa (Natural Earth).
 | Licencias y acreditaciones | `TRUST_CREDENTIALS` en `src/lib/site.ts`. La franja no se pinta si está vacío. |
 | Autoría de la fotografía del cliente | El uso comercial está confirmado por escrito (29/08/2026); la autoría no. La web no nombra a ningún autor. Ver la sección siguiente. |
 | Fotografía de relleno | 22 fotos documentales de Wikimedia Commons cubren los huecos que las 22 del cliente no alcanzan. Ver `public/images/CREDITS.md`. |
-| Los dos vídeos | Ver `public/video/README.md`. Uno está entregado y revisado, y **bloqueado por consentimiento de menores**; el otro no se ha entregado. Ninguno se publica. |
+| Los dos vídeos de «La película»/impacto | Ver `public/video/README.md`. Uno está entregado y revisado, y **bloqueado por consentimiento de menores**; el otro no se ha entregado. Ninguno se publica. (El vídeo de la introducción de la portada es un caso aparte, ya entregado para ese uso exacto y ya publicado — ver la sección siguiente.) |
 | Textos legales | Borrador. Salen con `noindex, nofollow` y fuera del sitemap. Lo que hace falta para cerrarlos está en el cuadro de abajo. |
 | Envío del formulario | `JOURNEY_REQUEST_WEBHOOK` sin configurar. Comprobado, no deducido: `GET /api/journey-requests` responde `{"configured": false}`. Sin él el formulario responde 501, lo dice y ofrece correo y WhatsApp. |
 
@@ -295,6 +295,43 @@ formato por navegador. No hay duplicación de esfuerzo, solo un paso previo.
 Los derivados se generaron con `sharp`: `resize` a 2000 px de ancho máximo (1400
 en vertical) **con `withoutEnlargement`** —ninguna imagen se amplía—, WebP
 calidad 78, y metadata eliminada solo en la copia optimizada.
+
+## Introducción cinematográfica
+
+Al entrar en la portada, una vez por sesión: el vídeo de marca del cliente
+(`public/video/maisha-quest-intro.mp4`, 15 s, sin audio, 2,29 MB) a pantalla
+completa, autoplay silenciado y `playsInline`; al terminar, el rótulo final
+del propio vídeo —reconstruido como imagen nítida, ver la reserva más
+abajo— se acerca ligeramente a quien mira, y un barrido circular descubre el
+hero, que lleva pintado debajo desde el primer fotograma. Detalle técnico y
+de accesibilidad completo en `src/components/intro/Intro.tsx`.
+
+No se ejecuta con `prefers-reduced-motion`, con `saveData` activado, en
+navegadores automatizados, ni una segunda vez en la misma sesión
+(`sessionStorage`, sin ningún dato personal). El botón «Skip intro» —
+traducido en los seis idiomas— y la tecla Escape la cierran de inmediato en
+cualquier momento. Si el vídeo falla por cualquier motivo, se entra en la
+página sin rótulo ni barrido —como muy tarde a los 4 s, el tiempo que le da
+de margen antes de asumir que no va a arrancar—: nunca una capa a pantalla
+completa esperando más que eso.
+
+Dos formatos, `maisha-quest-intro.mp4` (H.264) y `.webm` (VP9) — mismo
+plano, sin audio—: casi todo reproduce el primero, y donde no, el segundo.
+Ninguno lleva `src` en el HTML que sale del servidor —lo asigna un script
+mínimo, y solo tras comprobar que la introducción va a reproducirse—, así
+que las visitas donde no se ve (segunda visita, movimiento reducido...) no
+descargan ni un byte de ninguno de los dos.
+
+⚠️ **El rótulo `maisha-quest-intro-wordmark.png/.webp` es una reconstrucción
+nuestra a partir de los fotogramas del vídeo, no el archivo vectorial oficial
+de la marca.** Solo se usa dentro de esta introducción —el logotipo del
+`Header` sigue siendo la brújula dibujada en código, sin cambios— y no se
+presenta como definitivo en ningún sitio hasta que el cliente lo apruebe.
+
+Verificación automática en `scripts/test-intro.mjs` (`npm run test:intro`):
+primera visita y ciclo completo, no repetición en sesión, `?intro=1`,
+movimiento reducido, `saveData`, sin JavaScript, saltar/Escape, foco y
+lectores de pantalla, geometría en móvil, CLS, y qué pasa si el vídeo falla.
 
 ## El formulario no finge
 

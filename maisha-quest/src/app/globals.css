@@ -1137,28 +1137,32 @@ p {
    Introducción cinematográfica
    --------------------------------------------------------------------------
 
-   Toda la secuencia es CSS. El JavaScript solo decide si se ejecuta y limpia
-   al final (ver `src/components/intro/Intro.tsx`).
+   El vídeo de marca del cliente (15 s, sin audio) a pantalla completa; al
+   terminar, el rótulo reconstruido se acerca ligeramente y un barrido
+   circular descubre el hero. El MOVIMIENTO es CSS; el DISPARO de las fases
+   que dependen del vídeo lo decide `src/components/intro/Intro.tsx` cuando
+   el `<video>` dispara sus propios eventos —no un temporizador fijo, porque
+   un vídeo no arranca en un instante predecible como sí lo hacía la antigua
+   secuencia, hecha enteramente de formas—. Ver el comentario de ese archivo
+   para el porqué completo.
 
    Nada de esto existe sin `:root[data-intro]`, y ese atributo lo pone el
    guardián únicamente en la portada, una vez por sesión y nunca con
-   `prefers-reduced-motion`. Sin JavaScript la capa NO se ve: la regla de
-   ocultación es la de por defecto.
+   `prefers-reduced-motion`. Sin JavaScript la capa NO se ve —ni el vídeo se
+   pide—: la regla de ocultación es la de por defecto.
 
-   Se anima `opacity`, `transform`, `clip-path` y `stroke-dashoffset`. Ninguna
-   propiedad de las que provocan reflow.
+   Se anima `opacity`, `transform` y `clip-path`. Ninguna propiedad de las que
+   provocan reflow.
 
-   Fases (ms):
-     0–400      Dark Canopy a pantalla completa y el patrón entrando.
-     300–1000   La brújula se dibuja y gira un grado.
-     600–1500   Cuatro franjas cruzan la pantalla.
-     1100–2100  MAISHA QUEST y TANZANIA, revelados por máscara.
-     2000–2560  La brújula avanza hacia quien mira y supera el viewport:
-                el envoltorio la escala hasta ×11 mientras se apaga.
-     2150–2800  El aro se convierte en portal: toda la capa se recorta con
-                un círculo que se cierra sobre su propio centro
-                (`clip-path`) y descubre el hero, que llevaba ahí desde el
-                primer fotograma.
+   Fases:
+     0–15000ms     El vídeo, a pantalla completa (`object-fit: cover`).
+     +0–900ms      Tras `ended`: el rótulo nítido se revela y se acerca
+                   ligeramente a quien mira (`data-intro-video-ended`).
+     +1250–1900ms  El barrido circular (`mq-intro-portal-out`, igual que en
+                   la versión anterior) recorta la capa y descubre el hero,
+                   que lleva pintado debajo desde el primer fotograma.
+   Si el vídeo falla en cualquier momento, se entra en la página de
+   inmediato —sin rótulo ni barrido—, igual que al pulsar «saltar».
    -------------------------------------------------------------------------- */
 
 #mq-intro {
@@ -1167,14 +1171,21 @@ p {
 
 /* El fondo, desde el primer píxel pintado: el pseudoelemento de `:root` existe
    antes de que el navegador llegue a la capa, así que no hay destello de la
-   portada. */
+   portada. También es la razón de que el vídeo no necesite `poster`: funde
+   a negro en su primer fotograma, sobre un tono igual de oscuro. */
 :root[data-intro]::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 89;
   background: var(--canopy);
-  animation: mq-intro-portal-out 650ms var(--ease-soft) 2150ms both;
+}
+
+/* El barrido final solo se dispara cuando el vídeo ha terminado de verdad
+   —nunca por un temporizador fijo—, así que vive en una regla aparte,
+   condicionada al atributo que pone `Intro.tsx` en el evento `ended`. */
+:root[data-intro][data-intro-video-ended]::before {
+  animation: mq-intro-portal-out 650ms var(--ease-soft) 1250ms both;
 }
 
 :root[data-intro] {
@@ -1192,7 +1203,10 @@ p {
   height: 100dvh;
   min-height: 100vh;
   padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-  animation: mq-intro-portal-out 650ms var(--ease-soft) 2150ms both;
+}
+
+:root[data-intro][data-intro-video-ended] #mq-intro {
+  animation: mq-intro-portal-out 650ms var(--ease-soft) 1250ms both;
 }
 
 .mq-intro-stage {
@@ -1201,228 +1215,84 @@ p {
   overflow: hidden;
 }
 
-/* --- Fase 1: el patrón ---------------------------------------------------- */
+/* --- El vídeo --------------------------------------------------------------
+   Sin `src` en el HTML del servidor —lo asigna `Intro.tsx`, y solo si de
+   verdad va a reproducirse—, así que esta regla no provoca ninguna petición
+   por sí sola. */
 
-.mq-intro-pattern {
+.mq-intro-video {
   position: absolute;
-  inset: -6%;
-  opacity: 0;
-  transform: scale(1.08);
-  animation: mq-intro-pattern-in 900ms var(--ease-out) 60ms forwards;
-}
-
-.mq-intro-pattern svg {
+  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  /* Explícito, no solo el valor por defecto: en móvil, con el vídeo
+     recortado por los lados, el sujeto principal se mantiene centrado. */
+  object-position: 50% 50%;
+  background: var(--canopy);
 }
 
-.mq-intro-grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.5;
+/* El último fotograma se atenúa cuando aparece el rótulo nítido: en móvil,
+   con el vídeo recortado por los lados, el rótulo grabado queda muy ampliado
+   y a veces cortado por el borde —esperado con `cover` sobre un plano
+   horizontal en una pantalla vertical—. Atenuar el fondo aquí es lo que evita
+   que compita con el rótulo nítido de encima; es la misma «profundidad
+   elegante» pedida para el propio rótulo, aplicada al fondo. */
+:root[data-intro][data-intro-video-ended] .mq-intro-video {
+  animation: mq-intro-video-dim 900ms var(--ease-out) forwards;
 }
 
-@keyframes mq-intro-pattern-in {
-  to {
-    opacity: 0.36;
-    transform: scale(1);
-  }
-}
-
-/* --- Fase 2: la brújula --------------------------------------------------- */
-
-/* El envoltorio que avanza hacia quien mira: escala la brújula hasta que su
-   aro supera el viewport, y se apaga en el tramo final para que el trazo
-   agrandado no deje un borde duro justo antes de que el portal la recorte. */
-.mq-intro-compass-portal {
-  animation: mq-intro-compass-advance 560ms var(--ease-out) 2000ms forwards;
-}
-
-@keyframes mq-intro-compass-advance {
+@keyframes mq-intro-video-dim {
   from {
-    transform: scale(1);
-    opacity: 1;
+    filter: brightness(1) saturate(1);
   }
   to {
-    transform: scale(11);
-    opacity: 0;
+    filter: brightness(0.55) saturate(0.85);
   }
 }
 
-.mq-intro-compass {
-  width: clamp(72px, 13vw, 132px);
-  height: clamp(72px, 13vw, 132px);
-  color: var(--sand);
-  opacity: 0;
-  animation: mq-intro-compass-in 760ms var(--ease-out) 300ms forwards;
-}
+/* --- El rótulo --------------------------------------------------------------
+   Oculto hasta que el vídeo termina de verdad; entonces se revela y se
+   acerca ligeramente a quien mira —una profundidad elegante, sin rotaciones
+   ni efectos de videojuego: solo opacidad y una escala muy contenida. */
 
-.mq-intro-compass circle,
-.mq-intro-compass path {
-  stroke-dasharray: 220;
-  stroke-dashoffset: 220;
-  animation: mq-intro-draw 900ms var(--ease-soft) 340ms forwards;
-}
-
-@keyframes mq-intro-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes mq-intro-compass-in {
-  from {
-    opacity: 0;
-    transform: rotate(-6deg) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(0) scale(1);
-  }
-}
-
-/* --- Fase 3 y 5: las franjas ---------------------------------------------- */
-
-.mq-intro-band {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.mq-intro-band-1 {
-  inset: 0 auto 0 0;
-  width: 22vw;
-  background: linear-gradient(90deg, transparent, rgb(196 147 79 / 0.24), transparent);
-  transform: translate3d(-120%, 0, 0);
-  animation:
-    mq-intro-sweep-x 1100ms var(--ease-soft) 620ms forwards,
-    mq-intro-sweep-x 900ms var(--ease-out) 2020ms forwards;
-}
-
-.mq-intro-band-2 {
-  inset: 0 0 auto 0;
-  height: 14vh;
-  background: linear-gradient(180deg, transparent, rgb(233 223 206 / 0.14), transparent);
-  transform: translate3d(0, -140%, 0);
-  animation: mq-intro-sweep-y 1200ms var(--ease-soft) 760ms forwards;
-}
-
-.mq-intro-band-3 {
-  top: -30%;
-  bottom: -30%;
-  left: 34%;
-  width: 8vw;
-  background: linear-gradient(90deg, transparent, rgb(20 32 25 / 0.5), transparent);
-  transform: rotate(14deg) translate3d(0, -130%, 0);
-  animation: mq-intro-sweep-diagonal 1400ms var(--ease-soft) 700ms forwards;
-}
-
-.mq-intro-band-4 {
-  inset: auto 0 0 0;
-  height: 30vh;
-  background: linear-gradient(0deg, var(--canopy), transparent);
-  transform: translate3d(0, 100%, 0);
-  animation: mq-intro-sweep-up 900ms var(--ease-out) 2000ms forwards;
-}
-
-@keyframes mq-intro-sweep-x {
-  to {
-    transform: translate3d(560%, 0, 0);
-  }
-}
-
-@keyframes mq-intro-sweep-y {
-  to {
-    transform: translate3d(0, 760%, 0);
-  }
-}
-
-@keyframes mq-intro-sweep-diagonal {
-  to {
-    transform: rotate(14deg) translate3d(0, 130%, 0);
-  }
-}
-
-@keyframes mq-intro-sweep-up {
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/* --- Fase 4: la marca ----------------------------------------------------- */
-
-.mq-intro-center {
+.mq-intro-logo-wrap {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1.4rem, 3vw, 2.4rem);
-  padding: 0 1.5rem;
-  text-align: center;
+  padding: 0 8vw;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.mq-intro-word {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(0.7rem, 1.6vw, 1.1rem);
+:root[data-intro][data-intro-video-ended] .mq-intro-logo-wrap {
+  animation: mq-intro-logo-reveal 900ms var(--ease-out) forwards;
 }
 
-/* La máscara: el nombre no aparece con un fundido, se descubre. */
-.mq-intro-mask {
+.mq-intro-logo {
   display: block;
-  overflow: hidden;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  width: clamp(200px, 44vw, 420px);
+  height: auto;
+  filter: drop-shadow(0 18px 40px rgb(0 0 0 / 0.45));
 }
 
-.mq-intro-name {
-  display: block;
-  font-family: var(--font-display);
-  font-size: clamp(2.1rem, 8vw, 5.2rem);
-  line-height: 1.02;
-  letter-spacing: 0.02em;
-  color: var(--parchment);
-  white-space: nowrap;
-  transform: translate3d(0, 108%, 0);
-  animation:
-    mq-intro-rise 900ms var(--ease-out) 1100ms forwards,
-    mq-intro-fade-out 380ms var(--ease-soft) 2180ms forwards;
-}
-
-.mq-intro-country {
-  display: block;
-  font-size: clamp(0.62rem, 1.6vw, 0.8rem);
-  font-weight: 600;
-  letter-spacing: 0.44em;
-  text-indent: 0.44em;
-  text-transform: uppercase;
-  color: var(--sand);
-  transform: translate3d(0, 108%, 0);
-  animation:
-    mq-intro-rise 780ms var(--ease-out) 1320ms forwards,
-    mq-intro-fade-out 380ms var(--ease-soft) 2180ms forwards;
-}
-
-@keyframes mq-intro-rise {
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes mq-intro-fade-out {
-  to {
+@keyframes mq-intro-logo-reveal {
+  from {
     opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.045);
   }
 }
 
 /* El portal: toda la capa se recorta con un círculo que se cierra sobre su
    propio centro. Fuera del círculo se ve lo que hay detrás —el hero, pintado
    desde el primer fotograma—, así que la revelación empieza por los bordes y
-   termina en el punto donde estaba la brújula. `clip-path` también deja sin
+   termina en el centro, donde queda el rótulo. `clip-path` también deja sin
    área interactiva la zona recortada, así que al llegar a 0% la capa ya no
    puede recibir foco ni clics aunque el desmontaje del DOM llegue un instante
    después. */
@@ -1464,23 +1334,6 @@ p {
 @keyframes mq-intro-skip-in {
   to {
     opacity: 1;
-  }
-}
-
-/* En móvil la secuencia se simplifica: menos franjas y una brújula que no
-   pasa de 96 px, como pide la revisión. */
-@media (max-width: 767px) {
-  .mq-intro-compass {
-    width: min(96px, 22vw);
-    height: min(96px, 22vw);
-  }
-
-  .mq-intro-band-3 {
-    display: none;
-  }
-
-  .mq-intro-pattern {
-    animation-duration: 700ms;
   }
 }
 

@@ -1,13 +1,68 @@
-# Vídeo — assets pendientes
+# Vídeo
+
+Dos casos muy distintos conviven en este archivo: el vídeo de la introducción
+cinematográfica, entregado por el cliente para ese uso exacto y ya publicado
+(ver la primera sección), y los dos vídeos de «La película»/impacto, que
+siguen pendientes por un motivo de consentimiento que no es técnico (segunda
+sección, sin cambios respecto a la auditoría anterior).
+
+## El vídeo de la introducción — publicado
+
+`maisha-quest-intro.mp4` y `maisha-quest-intro.webm`, en esta misma carpeta,
+sí están en el repositorio y sí se sirven: son los únicos `<video>` que pinta
+la web hoy, y solo en la introducción cinematográfica de la portada
+(`src/components/intro/Intro.tsx`), una vez por sesión. No hay ningún
+problema de consentimiento que resolver —no aparece ninguna persona
+identificable, es un montaje de marca (fauna, paisaje y el rótulo final)— y
+el cliente lo entregó precisamente para este uso, así que no aplica la
+reserva de la sección siguiente.
+
+Ficha técnica del archivo entregado, medida con `ffprobe`:
+
+| | |
+| --- | --- |
+| Resolución | 910 × 512 |
+| Duración | 15,0 s exactos |
+| Peso | 2,29 MB |
+| Vídeo | H.264, 30 fps, ~1,28 Mbps, `yuv420p` |
+| Audio | Ninguno — se entregó sin pista de audio |
+| `moov` | Ya al principio del archivo (`faststart`): no hizo falta remuxar |
+| SHA-256 | `f08cc07adecf2d298cb82629e60cc1127c8f11fe57630110918d51d6a5e64f3c` |
+
+Ya llegó comprimido para web —910 px de ancho, ~1,28 Mbps, sin audio—, así que
+no se ha vuelto a codificar: recodificar un archivo que ya viene comprimido
+casi siempre lo engorda en vez de reducirlo (ver la tabla de la sección
+siguiente sobre el archivo entregado, medida sobre un caso real).
+
+**`maisha-quest-intro.webm` es una copia nuestra en VP9**, no algo que
+entregara el cliente: no todos los navegadores descodifican H.264 —la
+mayoría sí, y ahí sirve el `.mp4` de arriba— y donde no, el `<video>` cae
+solo al segundo `<source>`. Mismo plano, mismo recorte, sin audio, generado
+con `ffmpeg -c:v libvpx-vp9 -b:v 1300k -crf 32 -an` a partir del `.mp4`
+entregado. Pesa 1,43 MB — menos que el original, porque VP9 comprime mejor a
+igual calidad percibida, no por haber recortado nada.
+
+**El rótulo final** (`Maisha Quest` sobre el atardecer, en el último
+fotograma) se ha recortado del propio vídeo para reutilizarlo, ya nítido,
+como imagen fija tras el `ended` — ver
+`public/images/maisha-quest/originals/maisha-quest-intro-wordmark.png`. Es una
+**reconstrucción nuestra, no el archivo vectorial oficial de la marca**: no se
+usa en ningún otro sitio de la web (el logotipo del `Header` sigue siendo la
+brújula dibujada en código) y no se presenta como definitivo hasta que el
+cliente lo apruebe.
+
+## Los dos vídeos de «La película» / impacto — pendientes
 
 **Estado: uno de los dos archivos ya se ha entregado y está revisado; el otro
 sigue sin existir. Ninguno de los dos se publica, y el entregado tampoco está
 en el repositorio.** El motivo está abajo, y no es técnico.
 
-La web sirve **cero elementos `<video>`**, y hoy eso es correcto. El módulo del
-reproductor está escrito y probado, y consulta `hasPlayableVideo()` antes de
-pintarse; sin archivo no pinta nada. La sección «La película» se recompone y no
-queda hueco, ni marco vacío, ni «Film to follow», ni «Próximamente».
+La sección «La película» de la home sirve **cero elementos `<video>`** propios
+—el de la introducción, arriba, es un caso aparte—, y hoy eso es correcto. El
+módulo del reproductor está escrito y probado, y consulta
+`hasPlayableVideo()` antes de pintarse; sin archivo no pinta nada. La sección
+se recompone y no queda hueco, ni marco vacío, ni «Film to follow», ni
+«Próximamente».
 
 ## Los dos archivos
 

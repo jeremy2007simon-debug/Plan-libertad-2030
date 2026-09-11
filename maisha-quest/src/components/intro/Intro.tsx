@@ -1,24 +1,46 @@
-import { CompassMark } from "@/components/ui/Compass";
-import { COMPANY } from "@/lib/site";
 import type { Dictionary } from "@/i18n/messages/en";
-import { GiraffePattern } from "./GiraffePattern";
 
 /**
  * Introducción cinematográfica de Maisha Quest.
  *
  * Qué es
  * ------
- * Una apertura de menos de tres segundos que se ve UNA VEZ POR SESIÓN al
- * entrar en la portada: fondo Dark Canopy, un patrón abstracto inspirado en la
- * piel de una jirafa, la brújula de la marca dibujándose sola, unas franjas
- * que cruzan la pantalla como rumbos sobre una carta, la marca, «Tanzania», y
- * el hero real descubriéndose por debajo.
+ * Se ve UNA VEZ POR SESIÓN al entrar en la portada: el vídeo de marca a
+ * pantalla completa (15 s, sin audio, entregado por el cliente), que termina
+ * con el rótulo «Maisha Quest» sobre el atardecer; al terminar, ese mismo
+ * rótulo —como imagen PNG nítida, recortada del propio vídeo— se acerca
+ * ligeramente hacia quien mira, y un barrido circular (`mq-intro-portal-out`,
+ * ya usado en la versión anterior de esta introducción) descubre el hero real,
+ * que lleva pintado debajo desde el primer fotograma.
  *
- * Cómo está hecha, y por qué así
- * ------------------------------
- * TODO el movimiento es CSS. No hay librería de animación, ni canvas, ni
- * WebGL, ni vídeo, ni Lottie: son unas décimas de kilobyte de script cuyo
- * único trabajo es decidir si la secuencia se ejecuta y limpiar al terminar.
+ * ⚠️ El rótulo (`maisha-quest-intro-wordmark.webp`) es una reconstrucción
+ * nuestra a partir de los fotogramas del vídeo del cliente, NO el archivo
+ * vectorial oficial de la marca. No se usa en ningún otro sitio de la web
+ * —el logotipo del `Header` sigue siendo la brújula dibujada en código— y no
+ * se presenta como definitivo hasta que el cliente lo apruebe. Ver
+ * `public/images/maisha-quest/originals/maisha-quest-intro-wordmark.png`.
+ *
+ * Por qué es una mezcla de vídeo y CSS, y no solo CSS
+ * ----------------------------------------------------
+ * La versión anterior (brújula + patrón, todo CSS) medía su propio tiempo
+ * porque no dependía de ningún archivo externo: el `animation-delay` se podía
+ * calcular desde el primer fotograma sin más. Un vídeo no ofrece esa garantía
+ * —arranca cuando el navegador decide que puede, no en el milisegundo exacto
+ * en que se pintó la página—, así que las fases que dependen de él (el
+ * rótulo, el barrido final) las dispara un script mínimo cuando el vídeo
+ * dispara sus propios eventos (`ended`, `error`), no un temporizador fijo. El
+ * MOVIMIENTO sigue siendo CSS —el script solo añade un atributo—; el
+ * DISPARO es lo que ahora depende del vídeo real.
+ *
+ * Dos formatos —`maisha-quest-intro.mp4` (H.264) y `.webm` (VP9), mismo
+ * plano, sin audio— porque no todos los navegadores descodifican H.264:
+ * casi todos sí, pero donde no, el `<video>` cae solo al `<source>`
+ * siguiente. Ninguno de los dos `<source>` lleva `src` en el HTML que sale
+ * del servidor: si lo llevara, el navegador empezaría a descargar el archivo
+ * en cada visita a la portada, incluso en las que la introducción no se ve
+ * (sesión ya vista, movimiento reducido, `saveData`, navegador automatizado).
+ * `IntroScript` es quien decide —comprobando el mismo `data-intro` que puso
+ * el guardián del `<head>`— si de verdad hace falta pedirlos.
  *
  * El HTML sale del servidor y **no se ve nunca** salvo que el guardián de
  * abajo ponga `data-intro` en el `<html>`. Sin JavaScript no hay introducción
@@ -28,50 +50,64 @@ import { GiraffePattern } from "./GiraffePattern";
  * flujo. El hero se pinta debajo desde el primer fotograma —la imagen LCP
  * empieza a descargarse igual, sin esperar a que la introducción termine—.
  *
+ * Si el vídeo falla —error de red, códec no soportado, o simplemente no
+ * arranca— se entra en la página sin rótulo ni barrido: el mismo camino que
+ * «saltar» o Escape. Con un códec no soportado el aviso llega enseguida (el
+ * propio `<video>` dispara `error`); con una red que da un error distinto en
+ * los dos `<source>`, medido, ese evento no siempre llega, así que hay un
+ * segundo cinturón: si a los 4 s no ha empezado a reproducirse nada, se
+ * entra en la página igual. Nunca una capa oscura esperando más que eso.
+ *
  * Accesibilidad
  * -------------
  * Todo lo decorativo va bajo `aria-hidden`, así que un lector de pantalla no
  * lee la marca dos veces. El único elemento anunciado es el botón de saltar,
- * que está fuera de ese subárbol, aparece a los 400 ms y responde también a
- * Escape. No hay trampa de foco: no es un diálogo, y quien tabule llega al
- * contenido real. Con `prefers-reduced-motion` la secuencia no se ejecuta.
+ * que está fuera de ese subárbol, aparece a los 400 ms, permanece visible
+ * mientras dura el vídeo y responde también a Escape. No hay trampa de foco:
+ * no es un diálogo, y quien tabule llega al contenido real. Con
+ * `prefers-reduced-motion` la secuencia no se ejecuta —ni el vídeo se pide—.
  */
 export function Intro({ t }: { t: Dictionary["a11y"] }) {
   return (
     <div id="mq-intro" data-intro-root="">
       <div className="mq-intro-stage" aria-hidden="true">
-        {/* Patrón: entra suave sobre el Dark Canopy y se retira con una
-            máscara al final, descubriendo el hero. */}
-        <div className="mq-intro-pattern">
-          <GiraffePattern className="size-full" />
-        </div>
-        <div className="grain mq-intro-grain" />
+        {/* Sin `src`: lo asigna el script de abajo, y solo si de verdad va a
+            reproducirse. `poster` no hace falta —el vídeo funde a negro en su
+            primer fotograma y el fondo Dark Canopy de `:root[data-intro]::before`
+            ya cubre ese instante con un tono igual de oscuro, sin destello. */}
+        <video
+          id="mq-intro-video"
+          className="mq-intro-video"
+          muted
+          playsInline
+          preload="none"
+          aria-hidden="true"
+        >
+          {/* Dos formatos, sin `src` en ninguno todavía —lo asigna el script
+              de abajo—. H.264 primero: es el que casi todo reproduce, a
+              menudo con descodificación por hardware; WebM/VP9 como
+              alternativa para el resto. El navegador se queda con el
+              primero de la lista que sepa reproducir. */}
+          <source id="mq-intro-video-mp4" type="video/mp4" />
+          <source id="mq-intro-video-webm" type="video/webm" />
+        </video>
 
-        {/* Franjas: rumbos de brújula. Cruzan dos veces —al principio
-            descubren fragmentos del patrón, al final barren la pantalla—. */}
-        <span className="mq-intro-band mq-intro-band-1" />
-        <span className="mq-intro-band mq-intro-band-2" />
-        <span className="mq-intro-band mq-intro-band-3" />
-        <span className="mq-intro-band mq-intro-band-4" />
-
-        <div className="mq-intro-center">
-          {/* La brújula OFICIAL, la misma del resto de la web. No hay logotipo
-              nuevo: sus trazos se dibujan con stroke-dasharray. El envoltorio
-              es quien avanza hacia quien mira y supera el viewport al final;
-              el SVG conserva su propio dibujado y pequeño giro de llegada,
-              sin que ambas animaciones compitan por la misma propiedad. */}
-          <span className="mq-intro-compass-portal">
-            <CompassMark className="mq-intro-compass" strokeWidth={0.9} />
-          </span>
-
-          <p className="mq-intro-word">
-            <span className="mq-intro-mask">
-              <span className="mq-intro-name">{COMPANY.name}</span>
-            </span>
-            <span className="mq-intro-mask mq-intro-mask-country">
-              <span className="mq-intro-country">Tanzania</span>
-            </span>
-          </p>
+        {/* El rótulo nítido: oculto hasta que el vídeo termina de verdad. */}
+        <div className="mq-intro-logo-wrap">
+          {/* eslint-disable-next-line @next/next/no-img-element -- capa de
+              apertura fija y decorativa, ajena al flujo del documento: no
+              participa del LCP ni necesita el pipeline responsive de
+              next/image, y controlar el elemento a mano simplifica la
+              animación disparada por el propio vídeo. */}
+          <img
+            className="mq-intro-logo"
+            src="/images/maisha-quest/optimized/maisha-quest-intro-wordmark.webp"
+            width={1800}
+            height={615}
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
         </div>
       </div>
 
@@ -94,11 +130,12 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
  *
  * No se ejecuta si:
  *  · el visitante pide movimiento reducido;
- *  · ya se ha visto en esta sesión (`maisha-cinematic-intro-v2`);
+ *  · ya se ha visto en esta sesión (`maisha-cinematic-intro-v3`);
  *  · no es la portada;
- *  · el navegador dice que se ahorren datos (`saveData`);
+ *  · el navegador dice que se ahorren datos (`saveData`) — el vídeo pesa
+ *    2,3 MB, así que este caso importa más ahora que con la versión en CSS;
  *  · no hay `sessionStorage` accesible (navegación privada muy restrictiva);
- *  · el navegador está automatizado (`navigator.webdriver`), porque tres
+ *  · el navegador está automatizado (`navigator.webdriver`), porque diecisiete
  *    segundos de capa a pantalla completa falsearían las mediciones de las
  *    herramientas de verificación.
  *
@@ -118,12 +155,12 @@ export function IntroGate() {
   var forced=/[?&]intro=1(&|$)/.test(location.search);
   var c=navigator.connection;
   if(!forced&&c&&c.saveData)return;
-  // Navegador automatizado: una capa a pantalla completa durante tres segundos
-  // falsearía cualquier medida de las herramientas de verificación —orden de
-  // tabulación, desbordamiento, texto visible—. El parámetro intro=1 la fuerza
-  // igual, que es como se prueba la propia introducción.
+  // Navegador automatizado: una capa a pantalla completa durante diecisiete
+  // segundos falsearía cualquier medida de las herramientas de verificación
+  // —orden de tabulación, desbordamiento, texto visible—. El parámetro
+  // intro=1 la fuerza igual, que es como se prueba la propia introducción.
   if(!forced&&navigator.webdriver)return;
-  var K='maisha-cinematic-intro-v2';
+  var K='maisha-cinematic-intro-v3';
   if(!forced&&sessionStorage.getItem(K))return;
   sessionStorage.setItem(K,'1');
   d.setAttribute('data-intro','');
@@ -132,28 +169,60 @@ export function IntroGate() {
 }
 
 /**
- * Cierre de la introducción.
+ * Ciclo de vida completo de la introducción: enciende el vídeo (si hace
+ * falta) y la cierra —al terminar de verdad, si falla, al pulsar «saltar» o
+ * al pulsar Escape—.
  *
- * El movimiento no lo lleva este script: lo lleva el CSS. Esto solo la retira
- * —al terminar, al pulsar «saltar» o al pulsar Escape—, quita el atributo del
- * `<html>` y BORRA el nodo del DOM, para que no quede una capa a pantalla
- * completa esperando a nada.
+ * Se renderiza justo después de `<Intro>` en `page.tsx`, como en la versión
+ * anterior —NO anidado dentro del propio `#mq-intro`—. Anidarlo ahí se probó
+ * y provocó un error de hidratación (#418) en pruebas automatizadas, pero el
+ * anidamiento en sí no era la causa real: era que, en un navegador sin
+ * descodificador para ninguno de los dos formatos, el `error` del vídeo podía
+ * llegar en el MISMO turno en que React seguía hidratando ese subárbol, y
+ * borrar el nodo en ese instante desincronizaba la hidratación en curso —ver
+ * el comentario de `end()`, más abajo, que es donde de verdad se corrigió
+ * (aplazando la mutación del DOM un turno). Se deja como hermano de nivel
+ * superior de todas formas, por ser la posición ya probada y por simetría con
+ * la versión anterior, no porque el anidamiento fuera en sí el problema.
+ * Sigue ejecutándose pronto —al principio de la home, antes de las demás
+ * secciones—, así que el vídeo empieza a pedirse lo antes posible y el camino
+ * de fallo está disponible desde el primer instante.
  *
- * La navegación no se bloquea en ningún momento: la capa deja pasar el scroll
- * y el cierre está garantizado por un temporizador, así que ni un fallo de
- * `animationend` puede dejar a alguien encerrado.
+ * Cierre = quitar `data-intro` del `<html>` y BORRAR el nodo del DOM, para
+ * que no quede una capa a pantalla completa esperando a nada. La navegación
+ * no se bloquea en ningún momento: la capa deja pasar el scroll, y el cierre
+ * por fallo o por «saltar»/Escape es SIEMPRE inmediato —sin rótulo ni
+ * barrido—, mientras que el cierre natural pasa primero por el rótulo y el
+ * barrido (`data-intro-video-ended`, en CSS) antes de desmontarse.
+ *
+ * Un temporizador de emergencia (20 s: los 15 del vídeo más el rótulo, el
+ * barrido y un margen) es la garantía última si ningún evento llega a
+ * dispararse; nunca dejaría a alguien mirando una capa oscura más de eso.
  */
 export function IntroScript() {
   const source = `(function(){
   var d=document.documentElement;
   if(!d.hasAttribute('data-intro'))return;
   var node=document.getElementById('mq-intro');
+  var video=document.getElementById('mq-intro-video');
   var done=false;
   function end(){
+    // Se marca "hecho" ya mismo, para que dos disparos a la vez —el vídeo
+    // falla justo cuando alguien pulsa «saltar»— no encolen el cierre dos
+    // veces; pero la mutación del DOM se aplaza un instante. Un fallo del
+    // vídeo puede llegar en el MISMO turno en que este script se ejecuta,
+    // antes de que React haya terminado de hidratar el árbol del servidor;
+    // borrar el nodo en ese instante desincroniza esa hidratación (React
+    // detecta el árbol incompleto y lo regenera entero). Retrasarlo a la
+    // siguiente vuelta del bucle de eventos es gratis para quien mira —nadie
+    // percibe un cero milisegundos— y evita esa carrera por completo.
     if(done)return;done=true;
-    d.removeAttribute('data-intro');
-    document.removeEventListener('keydown',onKey);
-    if(node&&node.parentNode)node.parentNode.removeChild(node);
+    setTimeout(function(){
+      d.removeAttribute('data-intro');
+      d.removeAttribute('data-intro-video-ended');
+      document.removeEventListener('keydown',onKey);
+      if(node&&node.parentNode)node.parentNode.removeChild(node);
+    },0);
   }
   function onKey(e){if(e.key==='Escape')end();}
   document.addEventListener('keydown',onKey);
@@ -161,11 +230,35 @@ export function IntroScript() {
     var skip=node.querySelector('[data-intro-skip]');
     if(skip)skip.addEventListener('click',end);
   }
-  // El temporizador es la garantía; el evento solo adelanta el desmontaje.
-  setTimeout(end,3000);
+  // Última garantía: si nada más dispara el cierre, este lo hace.
+  setTimeout(end,20000);
   if(node)node.addEventListener('animationend',function(e){
     if(e.animationName==='mq-intro-portal-out')end();
   });
+
+  if(!video){end();return;}
+  // Vídeo terminado de verdad: el rótulo y el barrido los dispara el CSS a
+  // partir de este atributo, no un temporizador fijo (ver Intro.tsx).
+  video.addEventListener('ended',function(){
+    d.setAttribute('data-intro-video-ended','');
+  });
+  // Cualquier fallo entra en la página de inmediato, sin rótulo ni barrido.
+  // Con dos <source> el evento 'error' del propio <video> solo llega cuando
+  // NINGUNO de los dos ha podido reproducirse, que es justo lo que interesa.
+  video.addEventListener('error',end);
+  var started=false;
+  video.addEventListener('playing',function(){started=true;});
+  // Si a los cuatro segundos no ha llegado a reproducir nada, algo se ha
+  // atascado (códec, red, autoplay bloqueado pese a ir silenciado): se
+  // entra en la página en vez de dejar una capa esperando.
+  setTimeout(function(){if(!started)end();},4000);
+
+  // Solo aquí se piden los archivos: nunca antes de saber que hace falta.
+  document.getElementById('mq-intro-video-mp4').src='/video/maisha-quest-intro.mp4';
+  document.getElementById('mq-intro-video-webm').src='/video/maisha-quest-intro.webm';
+  video.load();
+  var played=video.play();
+  if(played&&played.catch)played.catch(end);
 })();`;
   return <script dangerouslySetInnerHTML={{ __html: source }} />;
 }
