@@ -324,6 +324,255 @@ campo trampa y tiempo de cumplimentación, sin CAPTCHA.
   foco visible, áreas táctiles de 44 px, menú móvil con trampa de foco y
   `<details>` nativo para itinerarios y FAQ.
 
+## Migración de contenido desde Wix (Fase 2)
+
+Rama de trabajo: `claude/maisha-quest-wix-migration-2`, creada a partir de la
+rama con el diseño premium ya terminado. **No toca producción, Vercel, el
+dominio ni el DNS**; es contenido y documentación, verificado en cada paso con
+`tsc`, `eslint` y `build`.
+
+maishaquest.com (Wix) es la única fuente para todo lo que sigue. Donde el
+sitio real no publica un dato, el código lo deja en `null`/pendiente en vez de
+inventarlo — el mismo principio que ya regía el resto de la web.
+
+### Los 18 paquetes reales de safari
+
+Sustituyen a los 7 de demostración, conservados sin usarse en
+`src/data/structure/safaris.legacy.ts`. Precio siempre "bajo consulta"
+(ningún paquete de Wix publica precio) y los siete itinerarios llevan
+`draft: true` con el sello "Sample itinerary" hasta validarlos con el cliente.
+
+**Explorer — camping (6)**
+
+| Slug | Días |
+| --- | --- |
+| `manyara-ngorongoro-safari` | 2 |
+| `tarangire-manyara-ngorongoro-safari` | 3 |
+| `serengeti-ngorongoro-manyara-safari` | 4 |
+| `northern-circuit-camping-safari` | 5 |
+| `six-day-camping-safari` | 6 — ver nota abajo |
+| `extended-camping-safari` | 7 |
+
+**Escape — lodge + Zanzíbar (6)**
+
+| Slug | Días |
+| --- | --- |
+| `safari-zanzibar-escape` | 7 |
+| `serengeti-zanzibar` | 8 |
+| `big-three-zanzibar` | 9 |
+| `safari-culture-zanzibar` | 10 |
+| `luxury-safari-zanzibar` | 12 |
+| `grand-safari-zanzibar` | 14 |
+
+**Enrich — lodge, fauna + cultura, sin Zanzíbar (6)**
+
+| Slug | Días |
+| --- | --- |
+| `tarangire-serengeti-ngorongoro-enrich` | 5 |
+| `manyara-serengeti-ngorongoro-enrich` | 7 |
+| `tarangire-manyara-serengeti-ngorongoro-enrich` | 8 |
+| `cultural-safari-combo` | 10 |
+| `extended-safari-cultural-immersion` | 11 |
+| `wildlife-leisure-culture` | 12 — ver nota abajo |
+
+Dos hallazgos de la propia web de Wix, documentados en la cabecera de
+`safaris.ts` y no corregidos por nuestra cuenta:
+
+- **`six-day-camping-safari`**: en `/explorer-tanzania-safaris` la tarjeta de
+  6 días enlaza a la misma URL que el paquete de 5 días — un enlace roto del
+  propio Wix. Se publica con el itinerario de 5 días completo más un sexto
+  día abierto marcado `draft`, sin inventar actividad.
+- **`wildlife-leisure-culture`**: la descripción promete una etapa en
+  Zanzíbar que el itinerario día a día nunca cumple (termina en el aeropuerto
+  de Kilimanjaro). Se publica el itinerario, que es el dato verificable, y
+  queda anotado para que el cliente confirme cuál de los dos textos es el
+  correcto.
+
+### Las 5 categorías reales de experiencias
+
+Sustituyen a las 8 categorías inventadas. maishaquest.com no tiene una página
+por actividad individual — solo 5 páginas de categoría —, así que replicar
+más slugs habría sido inventar una arquitectura de contenido que el sitio
+real no tiene. Cada categoría es una única `Experience` cuya descripción
+enumera, con nombre y lugar, las actividades reales listadas en su página de
+origen (`src/data/structure/experiences.ts`, `i18n/content/*.ts`):
+
+| Slug | Página de origen | Ejemplos reales enumerados |
+| --- | --- | --- |
+| `thrill-seeker-adventure` | `/thrill-seaker-adventures` | Skydiving en Kendwa Beach, tirolina en Mto wa Mbu, parapente en Monduli, ciclismo de montaña cerca de Moshi/Arusha |
+| `water-activities` | `/water-activities` | Snorkel en Mnemba Atoll, submarinismo PADI, kitesurf en Paje Beach, motos acuáticas en Kendwa y Nungwi |
+| `tours-and-safaris` | `/tours` | Museos de Arusha y Dar es Salaam, cataratas Materuni y Napuru, Meserani Snake Park, tours de café y tanzanita |
+| `shopping-and-leisure` | `/shopping-and-leisure` | Maasai Market de Arusha, Stone Town, AIM Mall, Rock City Mall (Mwanza) |
+| `nightlife` | `/nightlife` | Via Via y Rafiki Juice Bar (Arusha), Sky Bar y Full Moon Party en Kendwa Rocks (Zanzíbar) |
+
+Las cinco fotografías siguen siendo **provisionales** (reutilizadas del pool
+de fauna/paisaje existente): ninguna representa de verdad paracaidismo, un
+mercado o una discoteca. Ver el inventario de medios más abajo.
+
+### Learn y organización regional
+
+Página nueva `/learn` (`src/app/[locale]/learn/page.tsx`), aditiva: no toca
+el campo `region` de `DestinationStructure` que usa el mapa interactivo y el
+planificador. Usa su propia relación `RegionStructure.destinationSlugs`.
+
+- **6 temas** (`src/data/structure/learn.ts`): Geography, Culture, History,
+  Wildlife and Conservation, Economy, Festivals — resúmenes fieles de
+  `/learn`, no el volcado completo de cada página real.
+- **5 regiones oficiales**, con los 9 destinos actuales repartidos donde de
+  verdad caen, y honestos donde no hay página propia:
+
+  | Región | Destinos actuales del sitio |
+  | --- | --- |
+  | Northern | Serengeti, Tarangire, Lake Manyara, Ngorongoro, Kilimanjaro, Arusha |
+  | Central & Southern | Nyerere, Ruaha |
+  | Lake Zone & Western | *(ninguno todavía — la tarjeta no enlaza a ningún destino)* |
+  | Coastal | *(ninguno todavía — región continental, distinta de Zanzíbar)* |
+  | Zanzibar Island | Zanzíbar |
+
+### Los 3 artículos reales del blog
+
+Sustituyen a los 3 de demostración, conservados sin usarse en
+`src/data/structure/journal.legacy.ts`. Los tres son de Talisa Tufts (que
+coincide con un miembro real del equipo), publicados el 29/04/2025, y son en
+su mayoría texto promocional sobre la propia empresa — los tres mencionan la
+migración del sitio a Wix como novedad, no son guías de viaje:
+
+| Slug nuevo | URL original en Wix |
+| --- | --- |
+| `elevate-your-safari-experience` | `/post/elevate-your-safari-experience-maisha-quest-s-tailored-adventures` |
+| `unleash-your-wanderlust` | `/post/unleash-your-wanderlust-maisha-quest-safari-adventures-await` |
+| `discover-tanzanias-hidden-gems` | `/post/discover-tanzania-s-hidden-gems-maisha-quest-safari-experiences` |
+
+Ninguna de las tres páginas originales tenía imagen descargable con
+atribución clara: las fotografías siguen siendo del pool provisional.
+
+### Impacto social: los dos programas reales
+
+`/impact` mostraba antes cuatro pilares genéricos que no correspondían a
+ningún programa con nombre propio de maishaquest.com. El sitio real solo
+publica dos, y son los dos que quedan (`src/data/structure/impact.ts`):
+
+- **Maisha Quest Cares** (`maishaquest.com/cares`) — Teenage Troubled Youth
+  Program: vivienda segura, formación en oficios, patrocinio educativo y
+  mentoría para adolescentes en riesgo.
+- **Empowerment** (`maishaquest.com/empowerment`) — empleo justo y
+  desarrollo de talento joven tanzano dentro de la empresa.
+
+"Travel with Purpose" no tiene página propia en maishaquest.com (404) ni
+aparece en su sitemap: no se incluye, por no existir contenido oficial que
+migrar. Ningún `outcomes` lleva cifra — el sitio real no publica ninguna.
+
+**La foto del tigre no se usa.** La página real de Cares muestra en el pie
+una fotografía de un tigre, un animal que no existe en Tanzania; no se copia
+por no ser de Maisha Quest y ser incoherente con el destino. `image.src`
+queda en `null` en los dos programas hasta tener una fotografía propia y
+coherente.
+
+### Contenido pendiente de validar con el cliente
+
+| Qué falta | Dónde |
+| --- | --- |
+| Confirmar itinerario real de `six-day-camping-safari` (día 6) | `safaris.ts` |
+| Confirmar cuál texto es correcto en `wildlife-leisure-culture` (¿hay etapa en Zanzíbar o no?) | `safaris.ts` |
+| Precios de los 18 paquetes | Todos "bajo consulta" hasta recibirlos |
+| Página de destino para Lake Eyasi y visitas a poblados masái (aparecen en varios itinerarios) | Pendiente — sin página propia todavía |
+| Fotografías reales de los 18 paquetes, las 5 categorías de experiencias, Learn/regiones y los 2 programas de impacto | Ver inventario de medios, abajo |
+| `/english-refund-policy` no tiene página equivalente en el sitio actual | Decisión del cliente/asesor legal — no se inventa una política de reembolso |
+| Spot-check final del mapa de redirecciones de los paquetes de safari antes de implementarlo | Ver mapa de redirecciones, abajo |
+
+### Inventario de recursos multimedia pendientes de Wix
+
+Ningún dato de este bloque incluye contraseñas ni credenciales de acceso al
+panel de Wix — solo qué páginas/elementos del **Media Manager** de Wix hay
+que localizar y descargar. El Media Manager de Wix es una biblioteca plana,
+no por carpetas, así que se indica la página real donde vive cada imagen en
+vez de una ruta de carpeta.
+
+| Sección | Qué descargar | Dónde está en Wix |
+| --- | --- | --- |
+| Logo | Logotipo e icono de marca | Cualquier página — aparece en la cabecera y el pie de todo el sitio |
+| 18 paquetes de safari | Foto de portada + galería de cada paquete | Cada una de las 18 páginas de paquete (ver el mapa de redirecciones para la URL de cada una) |
+| 5 categorías de experiencias | Foto de portada de cada categoría | `/thrill-seaker-adventures`, `/water-activities`, `/tours`, `/shopping-and-leisure`, `/nightlife` |
+| Learn (6 temas) y regiones (5) | Foto de portada de `/learn` y de cada una de las 5 páginas de región | `/learn`, `/northern-region`, `/central-and-southern-region`, `/lake-zone-and-western-zone`, `/coastal-region`, `/zanzibar-island` |
+| 3 artículos del blog | Imagen de cabecera de cada post | Los 3 posts en `/blog` (URLs en la tabla de artículos, arriba) |
+| Impacto social | Fotografía propia y coherente con Tanzania para Cares y Empowerment — **nunca la foto del tigre** de `/cares` | `/cares`, `/empowerment` |
+| Equipo | Retratos de Talisa Tufts, Frank Lyatuu y Tina Ngabo | **No existen ni en el sitio real** — `/about-maisha-quest-item` tampoco muestra fotos de ninguno de los tres. No es un recurso que descargar de Wix: hacen falta fotografías nuevas del cliente. |
+| Galería general | — | maishaquest.com **no tiene página de galería** (404 comprobado). No hay nada que migrar aquí; si el cliente quiere una, es contenido nuevo, no una migración. |
+| Vídeos | Cualquier vídeo promocional publicado en el sitio de Wix, si existe | Revisar cada página de paquete/experiencia — no se ha confirmado ninguno en la auditoría |
+
+### Mapa de redirecciones 301 (planificación — no implementado)
+
+**Solo documentación.** Ninguna redirección se ha añadido a `next.config.js`
+ni se ha tocado el dominio o el DNS — es lo que pide la decisión 9: preparar
+el mapa, no implementarlo todavía.
+
+Las 44 rutas vienen de `https://www.maishaquest.com/pages-sitemap.xml`
+(comprobado por completo, no una muestra). Los 18 paquetes se emparejan por
+duración + palabra clave de la URL (p. ej. `12days-enrich-...` → la única
+etiquetada `Enrich`); son de alta confianza pero piden un **spot-check final**
+contra las páginas en vivo antes de implementar la redirección real.
+
+| Ruta original (maishaquest.com) | Ruta nueva | Nota |
+| --- | --- | --- |
+| `/` | `/` | — |
+| `/learn` | `/learn` | — |
+| `/northern-region` | `/learn` | Región dentro de la página única de Learn |
+| `/central-and-southern-region` | `/learn` | — |
+| `/lake-zone-and-western-zone` | `/learn` | Sin destino propio todavía |
+| `/coastal-region` | `/learn` | Sin destino propio todavía |
+| `/zanzibar-island` | `/learn` | — |
+| `/experiences` | `/experiences` | — |
+| `/thrill-seaker-adventures` | `/experiences/thrill-seeker-adventure` | — |
+| `/water-activities` | `/experiences/water-activities` | — |
+| `/tours` | `/experiences/tours-and-safaris` | — |
+| `/shopping-and-leisure` | `/experiences/shopping-and-leisure` | — |
+| `/nightlife` | `/experiences/nightlife` | — |
+| `/explorer-tanzania-safaris` | `/collections/explorer` | — |
+| `/escape-tanzania-safaris` | `/collections/escape` | — |
+| `/enrich-tanzania-safaris` | `/collections/enrich` | — |
+| `/2days-tanzania-safaris` | `/safaris/manyara-ngorongoro-safari` | — |
+| `/3days-tanzania-safaris` | `/safaris/tarangire-manyara-ngorongoro-safari` | — |
+| `/4days-tanzania-safaris` | `/safaris/serengeti-ngorongoro-manyara-safari` | — |
+| `/4days-midrange-tanzania-safaris` | *(sin migrar)* | Página huérfana en el propio Wix; no corresponde a ninguno de los 18 |
+| `/5days-tanzania-safaris` | `/safaris/northern-circuit-camping-safari` | Es la URL a la que enlaza (erróneamente) la tarjeta de 6 días en Wix |
+| `/5days-tanzania-safari-adventures` | `/safaris/tarangire-serengeti-ngorongoro-enrich` | — |
+| *(sin URL propia en Wix)* | `/safaris/six-day-camping-safari` | Su tarjeta de origen enlazaba a `/5days-tanzania-safaris`, no a una URL propia |
+| `/7days-camping-tanzania-safaris` | `/safaris/extended-camping-safari` | — |
+| `/7days-manyara-tanzania-safaris` | `/safaris/manyara-serengeti-ngorongoro-enrich` | — |
+| `/7days-luxury-tanzania-safaris` | `/safaris/safari-zanzibar-escape` | — |
+| `/7days-tanzania-safaris` | *(sin migrar)* | Página huérfana en el propio Wix; no corresponde a ninguno de los 18 |
+| `/8days-tanzania-safaris` | `/safaris/tarangire-manyara-serengeti-ngorongoro-enrich` | — |
+| `/8daystanzania-luxury-safaris` | `/safaris/serengeti-zanzibar` | — |
+| `/9days-tanzania-safaris` | `/safaris/big-three-zanzibar` | Único paquete de 9 días — sin ambigüedad |
+| `/10days-tanzania-safaris` | `/safaris/cultural-safari-combo` | — |
+| `/10days-tanzania-luxury-safaris` | `/safaris/safari-culture-zanzibar` | — |
+| `/11days-tanzania-luxury-safaris` | `/safaris/extended-safari-cultural-immersion` | Único paquete de 11 días — sin ambigüedad |
+| `/12days-tanzania-safaris` | `/safaris/luxury-safari-zanzibar` | — |
+| `/12days-enrich-tanzania-luxury-safaris` | `/safaris/wildlife-leisure-culture` | "Enrich" literal en la URL original |
+| `/14days-tanzania-luxury-safaris` | `/safaris/grand-safari-zanzibar` | Único paquete de 14 días — sin ambigüedad |
+| `/blog` | `/journal` | — |
+| `/about-maisha-quest-item` | `/about/team` | — |
+| `/contact-us` | `/contact` | — |
+| `/book-online` | `/plan` | — |
+| `/cares` | `/impact` | Programa Maisha Quest Cares |
+| `/empowerment` | `/impact` | Programa Empowerment |
+| `/english-terms-conditions` | `/legal/terms` | Borrador propio, no la plantilla genérica de Wix |
+| `/english-privacy-policy` | `/legal/privacy` | Borrador propio, no la plantilla genérica de Wix |
+| `/english-refund-policy` | *(pendiente)* | Sin página equivalente todavía — requiere decisión del cliente/asesor legal, no se inventa |
+
+Los 3 artículos del blog no están en `pages-sitemap.xml` (viven en el
+sitemap de posts de Wix) y se documentan aparte:
+
+| Ruta original (maishaquest.com) | Ruta nueva |
+| --- | --- |
+| `/post/elevate-your-safari-experience-maisha-quest-s-tailored-adventures` | `/journal/elevate-your-safari-experience` |
+| `/post/unleash-your-wanderlust-maisha-quest-safari-adventures-await` | `/journal/unleash-your-wanderlust` |
+| `/post/discover-tanzania-s-hidden-gems-maisha-quest-safari-experiences` | `/journal/discover-tanzanias-hidden-gems` |
+
+Todas las rutas nuevas llevan el prefijo de idioma (`/es/...`, `/de/...`,
+etc.) salvo que el visitante ya esté en el idioma por defecto — igual que el
+resto del sitio.
+
 ## Despliegue
 
 Pensado para Vercel con **Root Directory = `maisha-quest`**, igual que
