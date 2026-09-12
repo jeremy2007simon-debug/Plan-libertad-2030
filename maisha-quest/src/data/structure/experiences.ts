@@ -89,14 +89,26 @@ export const EXPERIENCE_SLUGS = EXPERIENCE_STRUCTURE.map((e) => e.slug);
  * Las cinco categorías reales del selector de la home, en el orden en que
  * aparecen en la página /experiences de maishaquest.com. Con una sola
  * `Experience` por categoría, `leadExperienceSlug` coincide con `id`.
+ *
+ * `noPhoto` — solo en `nightlife`. No existe ninguna fotografía autorizada de
+ * vida nocturna: la que se usaba antes (un lago con una jirafa) pasaba la
+ * comprobación cromática del selector por casualidad de color, no porque
+ * representara la categoría. Se retira del selector panorámico —que muestra
+ * una única fotografía protagonista y por eso es donde el desajuste se nota
+ * más— a favor de un tratamiento tipográfico neutral, con el mismo contenido
+ * y el mismo enlace. La `Experience` en sí conserva su fotografía original
+ * (ficha de detalle, rejilla de `/experiences`): ese es un desajuste menor,
+ * de una imagen entre muchas en una rejilla, no la única imagen protagonista
+ * de la categoría, así que se deja fuera de esta ronda.
  */
 export const EXPERIENCE_CATEGORIES: {
   id: Experience["category"];
   leadExperienceSlug: string;
+  noPhoto?: true;
 }[] = [
   { id: "thrill-seeker-adventure", leadExperienceSlug: "thrill-seeker-adventure" },
   { id: "water-activities", leadExperienceSlug: "water-activities" },
   { id: "tours-and-safaris", leadExperienceSlug: "tours-and-safaris" },
   { id: "shopping-and-leisure", leadExperienceSlug: "shopping-and-leisure" },
-  { id: "nightlife", leadExperienceSlug: "nightlife" },
+  { id: "nightlife", leadExperienceSlug: "nightlife", noPhoto: true },
 ];

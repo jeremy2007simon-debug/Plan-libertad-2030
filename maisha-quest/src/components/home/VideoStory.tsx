@@ -12,6 +12,15 @@ import type { MediaVideo } from "@/types/content";
 /**
  * "One country. Endless ways to feel alive."
  *
+ * Ya no se pinta en la portada —el recorrido editorial pedido no incluye este
+ * paso, y sin el vídeo (ver más abajo) era un bloque de solo texto compitiendo
+ * con `Collections` y `FeaturedJourneys` por el mismo espacio—. No se ha
+ * trasladado a `/experiences`: ese título (`t.home.film.title`) es el mismo
+ * que ya usa el `PageHero` de esa página, así que repetirlo aquí debajo
+ * habría sido el mismo encabezado dos veces en la misma pantalla. El
+ * componente y sus cinco hilos (`t.home.film.threads`) se dejan completos, sin
+ * usar, para el día en que el vídeo exista y valga la pena un tramo propio.
+ *
  * Bloque editorial construido alrededor del vídeo VERTICAL del cliente
  * ("WhatsApp Video 2026-08-27 at 16.07.30.mp4": 36 s, 1080×1920, ~45,5 MB —
  * arco, paisaje, playa, safari con elefantes y cierre de marca).

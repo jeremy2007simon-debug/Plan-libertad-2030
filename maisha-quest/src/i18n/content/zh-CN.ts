@@ -117,15 +117,15 @@ export const zhCNContent: ContentDictionary = {
       // 并不存在经确认、独立的第六天行程。第 1 至 5 天沿用已确认的
       // 5 天行程；第六天保持空缺，而非凭空编造。参见 `safaris.ts`
       // 开头的说明。
-      summary: "在北部环线露营游猎的基础上增加第六天。此确切行程的原始页面在 maishaquest.com 上链接有误——详见关于第六天的说明。",
-      overview: "第 1 至 5 天的已确认内容，与北部环线 5 天露营游猎相同。发布前，第六天需直接与 Maisha Quest 确认。",
+      summary: "在北部环线露营游猎的基础上增加第六天，我们会在预订前直接与您确认第六天的具体安排。",
+      overview: "第 1 至 5 天沿用我们已确认的北部环线 5 天露营游猎行程。第六天的具体安排，我们会直接与您确认。",
       travellerProfile: "想要均衡行程、不愿赶路的探险旅客",
       bestTime: "Maisha Quest 未标明",
       included: STANDARD_INCLUDED,
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "露营——提供豪华、中档或经济等不同级别" },
-        { label: "待确认", value: "第六天的行程尚未确认——原始页面实际上链接到的是 5 天行程" },
+        { label: "待确认", value: "我们会在预订前直接与您确认第六天的具体行程。" },
       ],
       days: [
         { title: "塔兰吉雷国家公园", route: "阿鲁沙 → 塔兰吉雷国家公园", activities: ["抵达后游猎", "露营过夜"], estimatedDuration: null },
@@ -167,7 +167,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "游猎期间入住旅馆，桑给巴尔入住海滩酒店——提供豪华、中档或经济等不同级别" },
-        { label: "待确认", value: "前往桑给巴尔的内陆航班是否含在价格内，原始页面并未确认" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，确认前往桑给巴尔的国内航班是否包含在价格内。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["转往您的酒店"], estimatedDuration: null },
@@ -189,7 +189,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "游猎期间入住豪华营地，桑给巴尔入住石头城或度假村" },
-        { label: "待确认", value: "前往桑给巴尔的内陆航班是否含在价格内，原始页面并未确认" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，确认前往桑给巴尔的国内航班是否包含在价格内。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["转往您的酒店"], estimatedDuration: null },
@@ -212,7 +212,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "游猎期间入住旅馆，桑给巴尔入住石头城或海滩度假村" },
-        { label: "待确认", value: "前往桑给巴尔的内陆航班是否含在价格内，原始页面并未确认" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，确认前往桑给巴尔的国内航班是否包含在价格内。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["机场接机", "傍晚行程说明"], estimatedDuration: null },
@@ -236,7 +236,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "游猎期间入住旅馆，桑给巴尔入住石头城或海滩度假村" },
-        { label: "待确认", value: "埃亚西湖在本网站上尚未设有专属目的地页面——详见 Learn/地区板块审核" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，直接向您介绍埃亚西湖阶段的更多详情。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["机场接机"], estimatedDuration: null },
@@ -261,7 +261,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: [...STANDARD_NOT_INCLUDED, "热气球游猎（可自选，第 5 天）"],
       practicalInfo: [
         { label: "住宿", value: "游猎期间入住旅馆，桑给巴尔入住石头城或海滩度假村" },
-        { label: "待确认", value: "前往桑给巴尔的内陆航班是否含在价格内，原始页面并未确认" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，确认前往桑给巴尔的国内航班是否包含在价格内。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["转往您的酒店"], estimatedDuration: null },
@@ -288,7 +288,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "游猎期间入住旅馆，桑给巴尔入住石头城或海滩度假村" },
-        { label: "待确认", value: "埃亚西湖在本网站上尚未设有专属目的地页面——详见 Learn/地区板块审核" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，直接向您介绍埃亚西湖阶段的更多详情。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["转往您的酒店"], estimatedDuration: null },
@@ -375,7 +375,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "旅馆——提供豪华、中档或经济等不同级别" },
-        { label: "待确认", value: "埃亚西湖在本网站上尚未设有专属目的地页面——详见 Learn/地区板块审核" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，直接向您介绍埃亚西湖阶段的更多详情。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["机场接送"], estimatedDuration: null },
@@ -400,7 +400,7 @@ export const zhCNContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "住宿", value: "旅馆——提供豪华、中档或经济等不同级别" },
-        { label: "待确认", value: "埃亚西湖在本网站上尚未设有专属目的地页面——详见 Learn/地区板块审核" },
+        { label: "待确认", value: "我们会在为您制定专属行程方案时，直接向您介绍埃亚西湖阶段的更多详情。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["机场接送"], estimatedDuration: null },
@@ -423,14 +423,14 @@ export const zhCNContent: ContentDictionary = {
       // 从未离开大陆，并在乞力马扎罗机场结束。行程——这个可核实的
       // 部分——按原样发布；参见 `safaris.ts` 开头的说明。
       summary: "在北部各公园观赏野生动物，参观咖啡与坦桑石农场，并与哈扎人、达托加人及马赛社群进行文化交流。",
-      overview: "为期十二天的 Enrich 系列行程。说明：maishaquest.com 上的行程描述还承诺有桑给巴尔的海滩时光，但已发布的逐日行程并未包含这部分——已标注，待客户确认哪个版本正确。",
+      overview: "为期十二天的 Enrich 系列行程。我们会在预订前直接与您确认此行程的具体安排。",
       travellerProfile: "想将野生动物、休闲与文化结合的旅客",
       bestTime: "全年",
       included: STANDARD_INCLUDED,
       notIncluded: [...STANDARD_NOT_INCLUDED, "热气球游猎（可自选，第 7 天）"],
       practicalInfo: [
         { label: "住宿", value: "旅馆——提供豪华、中档或经济等不同级别" },
-        { label: "待确认", value: "行程描述承诺有桑给巴尔阶段，但逐日行程并未包含——需与客户确认哪个版本正确" },
+        { label: "待确认", value: "我们会在预订前直接与您确认此行程的具体安排。" },
       ],
       days: [
         { title: "抵达阿鲁沙", route: "乞力马扎罗国际机场 → 阿鲁沙", activities: ["转往您的酒店"], estimatedDuration: null },

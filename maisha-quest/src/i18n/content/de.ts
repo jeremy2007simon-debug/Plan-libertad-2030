@@ -119,15 +119,15 @@ export const deContent: ContentDictionary = {
       // Reiseprogramm für einen sechsten Tag. Die Tage 1–5 wiederholen das
       // bestätigte 5-Tage-Programm; Tag 6 bleibt offen, statt erfunden zu
       // werden. Siehe die Anmerkung am Anfang von `safaris.ts`.
-      summary: "Ein sechster Tag, ergänzt zur Camping-Safari durch die Nordroute. Die Quellseite für genau dieses Reiseprogramm ist auf maishaquest.com nicht korrekt verlinkt — siehe die Anmerkung zu Tag 6.",
-      overview: "Der bestätigte Inhalt für die Tage 1 bis 5 entspricht der 5-tägigen Camping-Safari durch die Nordroute. Tag 6 muss vor der Veröffentlichung direkt mit Maisha Quest bestätigt werden.",
+      summary: "Ein sechster Tag, ergänzt zur Camping-Safari durch die Nordroute — den Ablauf für Tag 6 bestätigen wir direkt mit Ihnen vor der Buchung.",
+      overview: "Die Tage 1 bis 5 folgen unserer bestätigten 5-tägigen Camping-Safari durch die Nordroute. Den genauen Ablauf für Tag 6 bestätigen wir direkt mit Ihnen.",
       travellerProfile: "Abenteurer, die ein ausgewogenes Reiseprogramm ohne Hetze suchen",
       bestTime: "Von Maisha Quest nicht angegeben",
       included: STANDARD_INCLUDED,
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Camping — verfügbar in Luxus-, Mittel- oder Budgetklasse" },
-        { label: "Ausstehend", value: "Das Reiseprogramm für Tag 6 ist nicht bestätigt — die Quellseite verlinkt stattdessen auf das 5-Tage-Paket" },
+        { label: "Ausstehend", value: "Den genauen Ablauf für Tag 6 bestätigen wir direkt mit Ihnen vor der Buchung." },
       ],
       days: [
         { title: "Tarangire-Nationalpark", route: "Arusha → Tarangire-Nationalpark", activities: ["Pirschfahrt bei Ankunft", "Übernachtung im Camp"], estimatedDuration: null },
@@ -169,7 +169,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge während der Safari, Strandhotel auf Sansibar — verfügbar in Luxus-, Mittel- oder Budgetklasse" },
-        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, wird auf der Quellseite nicht bestätigt" },
+        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, bestätigen wir Ihnen bei der Erstellung Ihres persönlichen Angebots." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer zu Ihrem Hotel"], estimatedDuration: null },
@@ -191,7 +191,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Luxus-Camp während der Safari, Stone Town oder Resort auf Sansibar" },
-        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, wird auf der Quellseite nicht bestätigt" },
+        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, bestätigen wir Ihnen bei der Erstellung Ihres persönlichen Angebots." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer zu Ihrem Hotel"], estimatedDuration: null },
@@ -214,7 +214,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge während der Safari, Stone Town oder Strandresort auf Sansibar" },
-        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, wird auf der Quellseite nicht bestätigt" },
+        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, bestätigen wir Ihnen bei der Erstellung Ihres persönlichen Angebots." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Abholung am Flughafen", "Briefing am Abend"], estimatedDuration: null },
@@ -238,7 +238,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge während der Safari, Stone Town oder Strandresort auf Sansibar" },
-        { label: "Ausstehend", value: "Der Eyasi-See hat auf dieser Website noch keine eigene Zielseite — siehe die Learn-/Regionen-Prüfung" },
+        { label: "Ausstehend", value: "Weitere Details zur Etappe am Eyasi-See teilen wir Ihnen direkt bei der Erstellung Ihres persönlichen Angebots mit." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Abholung am Flughafen"], estimatedDuration: null },
@@ -263,7 +263,7 @@ export const deContent: ContentDictionary = {
       notIncluded: [...STANDARD_NOT_INCLUDED, "Ballonsafari (optional, an Tag 5)"],
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge während der Safari, Stone Town oder Strandresort auf Sansibar" },
-        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, wird auf der Quellseite nicht bestätigt" },
+        { label: "Ausstehend", value: "Ob der Inlandsflug nach Sansibar im Preis enthalten ist, bestätigen wir Ihnen bei der Erstellung Ihres persönlichen Angebots." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer zu Ihrem Hotel"], estimatedDuration: null },
@@ -290,7 +290,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge während der Safari, Stone Town oder Strandresort auf Sansibar" },
-        { label: "Ausstehend", value: "Der Eyasi-See hat auf dieser Website noch keine eigene Zielseite — siehe die Learn-/Regionen-Prüfung" },
+        { label: "Ausstehend", value: "Weitere Details zur Etappe am Eyasi-See teilen wir Ihnen direkt bei der Erstellung Ihres persönlichen Angebots mit." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer zu Ihrem Hotel"], estimatedDuration: null },
@@ -377,7 +377,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge — verfügbar in Luxus-, Mittel- oder Budgetklasse" },
-        { label: "Ausstehend", value: "Der Eyasi-See hat auf dieser Website noch keine eigene Zielseite — siehe die Learn-/Regionen-Prüfung" },
+        { label: "Ausstehend", value: "Weitere Details zur Etappe am Eyasi-See teilen wir Ihnen direkt bei der Erstellung Ihres persönlichen Angebots mit." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer vom Flughafen"], estimatedDuration: null },
@@ -402,7 +402,7 @@ export const deContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge — verfügbar in Luxus-, Mittel- oder Budgetklasse" },
-        { label: "Ausstehend", value: "Der Eyasi-See hat auf dieser Website noch keine eigene Zielseite — siehe die Learn-/Regionen-Prüfung" },
+        { label: "Ausstehend", value: "Weitere Details zur Etappe am Eyasi-See teilen wir Ihnen direkt bei der Erstellung Ihres persönlichen Angebots mit." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer vom Flughafen"], estimatedDuration: null },
@@ -428,14 +428,14 @@ export const deContent: ContentDictionary = {
       // überprüfbare Teil — wird unverändert veröffentlicht; siehe die
       // Anmerkung am Anfang von `safaris.ts`.
       summary: "Tierbeobachtung in den Parks des Nordens, ein Besuch einer Kaffee- und Tanzanit-Farm sowie kulturelle Begegnungen mit den Hadzabe-, Datoga- und Maasai-Gemeinschaften.",
-      overview: "Ein zwölftägiges Enrich-Programm. Anmerkung: Die Paketbeschreibung auf maishaquest.com verspricht zudem Strandzeit auf Sansibar, die das veröffentlichte Tag-für-Tag-Programm nicht enthält — zur Bestätigung durch den Kunden markiert, welche Angabe korrekt ist.",
+      overview: "Ein zwölftägiges Enrich-Programm. Den genauen Reiseverlauf für diese Reise bestätigen wir direkt mit Ihnen vor der Buchung.",
       travellerProfile: "Reisende, die Tierwelt, Erholung und Kultur kombiniert suchen",
       bestTime: "Ganzjährig",
       included: STANDARD_INCLUDED,
       notIncluded: [...STANDARD_NOT_INCLUDED, "Ballonsafari (optional, an Tag 7)"],
       practicalInfo: [
         { label: "Unterkunft", value: "Lodge — verfügbar in Luxus-, Mittel- oder Budgetklasse" },
-        { label: "Ausstehend", value: "Die Paketbeschreibung verspricht eine Sansibar-Etappe, die das Tag-für-Tag-Programm nicht enthält — mit dem Kunden klären, welche Angabe korrekt ist" },
+        { label: "Ausstehend", value: "Den genauen Reiseverlauf für diese Reise bestätigen wir direkt mit Ihnen vor der Buchung." },
       ],
       days: [
         { title: "Ankunft in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer zu Ihrem Hotel"], estimatedDuration: null },

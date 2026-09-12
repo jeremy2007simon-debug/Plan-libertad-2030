@@ -120,15 +120,15 @@ export const frContent: ContentDictionary = {
       // et distinct pour un sixième jour. Les jours 1 à 5 reprennent le
       // programme confirmé de 5 jours ; le jour 6 reste ouvert plutôt
       // qu'inventé. Voir la remarque en tête de `safaris.ts`.
-      summary: "Un sixième jour ajouté au safari en camping du circuit nord. La page source de ce programme exact n'est pas correctement reliée sur maishaquest.com — voir la remarque sur le jour 6.",
-      overview: "Le contenu confirmé des jours 1 à 5 correspond au safari en camping de 5 jours sur le circuit nord. Le jour 6 doit être confirmé directement auprès de Maisha Quest avant publication.",
+      summary: "Un sixième jour ajouté au safari en camping du circuit nord, avec le programme du jour 6 confirmé directement avec vous avant la réservation.",
+      overview: "Les jours 1 à 5 suivent notre safari en camping de 5 jours sur le circuit nord, déjà confirmé. Nous confirmerons directement avec vous le programme exact du jour 6.",
       travellerProfile: "Aventuriers recherchant un programme équilibré et sans hâte",
       bestTime: "Non précisé par Maisha Quest",
       included: STANDARD_INCLUDED,
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Camping — disponible en catégorie luxe, intermédiaire ou économique" },
-        { label: "En attente", value: "Le programme du jour 6 n'est pas confirmé — la page source renvoie plutôt vers le forfait de 5 jours" },
+        { label: "En attente", value: "Nous confirmerons directement avec vous le programme exact du jour 6 avant la réservation." },
       ],
       days: [
         { title: "Parc national du Tarangire", route: "Arusha → parc national du Tarangire", activities: ["Safari à l'arrivée", "Nuit en campement"], estimatedDuration: null },
@@ -170,7 +170,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Lodge pendant le safari, hôtel de plage à Zanzibar — disponible en catégorie luxe, intermédiaire ou économique" },
-        { label: "En attente", value: "L'inclusion du vol intérieur vers Zanzibar dans le prix n'est pas confirmée sur la page source" },
+        { label: "En attente", value: "Nous vous confirmerons si le vol intérieur vers Zanzibar est inclus dans le prix lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert vers votre hôtel"], estimatedDuration: null },
@@ -192,7 +192,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Camp de luxe pendant le safari, Stone Town ou complexe hôtelier à Zanzibar" },
-        { label: "En attente", value: "L'inclusion du vol intérieur vers Zanzibar dans le prix n'est pas confirmée sur la page source" },
+        { label: "En attente", value: "Nous vous confirmerons si le vol intérieur vers Zanzibar est inclus dans le prix lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert vers votre hôtel"], estimatedDuration: null },
@@ -215,7 +215,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Lodge pendant le safari, Stone Town ou complexe balnéaire à Zanzibar" },
-        { label: "En attente", value: "L'inclusion du vol intérieur vers Zanzibar dans le prix n'est pas confirmée sur la page source" },
+        { label: "En attente", value: "Nous vous confirmerons si le vol intérieur vers Zanzibar est inclus dans le prix lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Accueil à l'aéroport", "Briefing en soirée"], estimatedDuration: null },
@@ -239,7 +239,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Lodge pendant le safari, Stone Town ou complexe balnéaire à Zanzibar" },
-        { label: "En attente", value: "Le lac Eyasi n'a pas encore de page de destination dédiée sur ce site — voir l'audit Learn/régions" },
+        { label: "En attente", value: "Nous vous donnerons plus de détails sur l'étape du lac Eyasi directement lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Accueil à l'aéroport"], estimatedDuration: null },
@@ -264,7 +264,7 @@ export const frContent: ContentDictionary = {
       notIncluded: [...STANDARD_NOT_INCLUDED, "Safari en montgolfière (en option, le jour 5)"],
       practicalInfo: [
         { label: "Hébergement", value: "Lodge pendant le safari, Stone Town ou complexe balnéaire à Zanzibar" },
-        { label: "En attente", value: "L'inclusion du vol intérieur vers Zanzibar dans le prix n'est pas confirmée sur la page source" },
+        { label: "En attente", value: "Nous vous confirmerons si le vol intérieur vers Zanzibar est inclus dans le prix lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert vers votre hôtel"], estimatedDuration: null },
@@ -291,7 +291,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Lodge pendant le safari, Stone Town ou complexe balnéaire à Zanzibar" },
-        { label: "En attente", value: "Le lac Eyasi n'a pas encore de page de destination dédiée sur ce site — voir l'audit Learn/régions" },
+        { label: "En attente", value: "Nous vous donnerons plus de détails sur l'étape du lac Eyasi directement lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert vers votre hôtel"], estimatedDuration: null },
@@ -378,7 +378,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Lodge — disponible en catégorie luxe, intermédiaire ou économique" },
-        { label: "En attente", value: "Le lac Eyasi n'a pas encore de page de destination dédiée sur ce site — voir l'audit Learn/régions" },
+        { label: "En attente", value: "Nous vous donnerons plus de détails sur l'étape du lac Eyasi directement lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert depuis l'aéroport"], estimatedDuration: null },
@@ -403,7 +403,7 @@ export const frContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Hébergement", value: "Lodge — disponible en catégorie luxe, intermédiaire ou économique" },
-        { label: "En attente", value: "Le lac Eyasi n'a pas encore de page de destination dédiée sur ce site — voir l'audit Learn/régions" },
+        { label: "En attente", value: "Nous vous donnerons plus de détails sur l'étape du lac Eyasi directement lors de l'élaboration de votre proposition personnalisée." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert depuis l'aéroport"], estimatedDuration: null },
@@ -428,14 +428,14 @@ export const frContent: ContentDictionary = {
       // l'aéroport du Kilimandjaro. Le programme — la partie vérifiable —
       // est publié tel quel ; voir la remarque en tête de `safaris.ts`.
       summary: "Observation de la faune dans les parcs du nord, la visite d'une plantation de café et de tanzanite, et des rencontres culturelles avec les communautés hadzabe, datoga et maasaï.",
-      overview: "Un programme Enrich de douze jours. Remarque : la description du forfait sur maishaquest.com promet également du temps de plage à Zanzibar, que le programme jour par jour publié n'inclut pas — signalé pour que le client confirme quelle version est correcte.",
+      overview: "Un programme Enrich de douze jours. Nous confirmerons directement avec vous l'itinéraire exact de ce voyage avant la réservation.",
       travellerProfile: "Voyageurs recherchant faune, détente et culture combinées",
       bestTime: "Toute l'année",
       included: STANDARD_INCLUDED,
       notIncluded: [...STANDARD_NOT_INCLUDED, "Safari en montgolfière (en option, le jour 7)"],
       practicalInfo: [
         { label: "Hébergement", value: "Lodge — disponible en catégorie luxe, intermédiaire ou économique" },
-        { label: "En attente", value: "La description du forfait promet une étape à Zanzibar que le programme jour par jour n'inclut pas — à clarifier avec le client" },
+        { label: "En attente", value: "Nous confirmerons directement avec vous l'itinéraire exact de ce voyage avant la réservation." },
       ],
       days: [
         { title: "Arrivée à Arusha", route: "Aéroport international du Kilimandjaro → Arusha", activities: ["Transfert vers votre hôtel"], estimatedDuration: null },

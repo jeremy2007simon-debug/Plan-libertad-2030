@@ -217,4 +217,26 @@ export const WANTED_PHOTOGRAPHY: WantedPhoto[] = [
     meanwhile: "Fotografía del atardecer con zoom lento. Funciona sin vídeo.",
     priority: "baja",
   },
+  {
+    key: "experience.culture",
+    subject:
+      "Escena humana real y autorizada de la categoría Tours & Safaris — una " +
+      "visita guiada, una conversación con un guía o un anfitrión local, algo " +
+      "que se lea como la experiencia, no como arquitectura. La fotografía " +
+      "actual (`maasai-boma-warm`, un boma sin personas, con el tejado " +
+      "corregido de morado a un tono cálido) pasa las comprobaciones técnicas " +
+      "pero no representa bien la experiencia: es la única fotografía de " +
+      "persona/comunidad en todo el catálogo, y por eso queda como recurso " +
+      "pendiente, no reemplazado por otra imagen de fauna o paisaje.",
+    placement: "Selector de experiencias (home y /experiences), ficha de " +
+      "Tours & Safaris",
+    ratio: "16:10 (panel panorámico) y 3:2 (tarjeta)",
+    fillIn: "image de la Experience \"tours-and-safaris\" en " +
+      "src/data/structure/experiences.ts",
+    meanwhile:
+      "Se mantiene `maasai-boma-warm`: no es fauna ni un desajuste de " +
+      "categoría como el de Nightlife, así que se deja visible mientras no " +
+      "haya una autorizada mejor — pero sin darla por definitiva.",
+    priority: "media",
+  },
 ];

@@ -119,15 +119,15 @@ export const esContent: ContentDictionary = {
       // un sexto día. Los días 1-5 repiten el itinerario confirmado de 5
       // días; el día 6 se deja abierto en lugar de inventarse. Véase la nota
       // al comienzo de `safaris.ts`.
-      summary: "Un sexto día añadido al safari de campamento del circuito norte. La página de origen de este itinerario exacto no está enlazada correctamente en maishaquest.com — véase la nota sobre el día 6.",
-      overview: "El contenido confirmado para los días 1 a 5 coincide con el Safari de campamento de 5 días por el circuito norte. El día 6 debe confirmarse directamente con Maisha Quest antes de publicarlo.",
+      summary: "Un sexto día añadido al safari de campamento del circuito norte, con el plan del día 6 confirmado directamente contigo antes de reservar.",
+      overview: "Los días 1 a 5 siguen nuestro Safari de campamento de 5 días por el circuito norte, ya confirmado. El plan exacto del día 6 lo confirmamos contigo directamente.",
       travellerProfile: "Viajeros que buscan un itinerario equilibrado sin prisas",
       bestTime: "No especificado por Maisha Quest",
       included: STANDARD_INCLUDED,
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Campamento — disponible en categoría de lujo, media o económica" },
-        { label: "Pendiente", value: "El itinerario del día 6 no está confirmado — la página de origen enlaza en su lugar al paquete de 5 días" },
+        { label: "Pendiente", value: "Confirmaremos contigo directamente el plan exacto del día 6 antes de reservar." },
       ],
       days: [
         { title: "Parque Nacional de Tarangire", route: "Arusha → Parque Nacional de Tarangire", activities: ["Safari a la llegada", "Noche en campamento"], estimatedDuration: null },
@@ -169,7 +169,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge durante el safari, hotel de playa en Zanzíbar — disponible en categoría de lujo, media o económica" },
-        { label: "Pendiente", value: "No está confirmado en la página de origen si el vuelo interno a Zanzíbar está incluido en el precio" },
+        { label: "Pendiente", value: "Te confirmaremos si el vuelo interno a Zanzíbar está incluido en el precio al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado a su hotel"], estimatedDuration: null },
@@ -191,7 +191,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Campamento de lujo durante el safari, Stone Town o resort en Zanzíbar" },
-        { label: "Pendiente", value: "No está confirmado en la página de origen si el vuelo interno a Zanzíbar está incluido en el precio" },
+        { label: "Pendiente", value: "Te confirmaremos si el vuelo interno a Zanzíbar está incluido en el precio al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado a su hotel"], estimatedDuration: null },
@@ -214,7 +214,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge durante el safari, Stone Town o resort de playa en Zanzíbar" },
-        { label: "Pendiente", value: "No está confirmado en la página de origen si el vuelo interno a Zanzíbar está incluido en el precio" },
+        { label: "Pendiente", value: "Te confirmaremos si el vuelo interno a Zanzíbar está incluido en el precio al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Recogida en el aeropuerto", "Briefing por la tarde"], estimatedDuration: null },
@@ -238,7 +238,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge durante el safari, Stone Town o resort de playa en Zanzíbar" },
-        { label: "Pendiente", value: "El Lago Eyasi todavía no tiene página propia de destino en este sitio — véase la auditoría de Learn/regiones" },
+        { label: "Pendiente", value: "Te daremos más detalles sobre la etapa del Lago Eyasi directamente al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Recogida en el aeropuerto"], estimatedDuration: null },
@@ -263,7 +263,7 @@ export const esContent: ContentDictionary = {
       notIncluded: [...STANDARD_NOT_INCLUDED, "Safari en globo (opcional, el día 5)"],
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge durante el safari, Stone Town o resort de playa en Zanzíbar" },
-        { label: "Pendiente", value: "No está confirmado en la página de origen si el vuelo interno a Zanzíbar está incluido en el precio" },
+        { label: "Pendiente", value: "Te confirmaremos si el vuelo interno a Zanzíbar está incluido en el precio al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado a su hotel"], estimatedDuration: null },
@@ -290,7 +290,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge durante el safari, Stone Town o resort de playa en Zanzíbar" },
-        { label: "Pendiente", value: "El Lago Eyasi todavía no tiene página propia de destino en este sitio — véase la auditoría de Learn/regiones" },
+        { label: "Pendiente", value: "Te daremos más detalles sobre la etapa del Lago Eyasi directamente al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado a su hotel"], estimatedDuration: null },
@@ -377,7 +377,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge — disponible en categoría de lujo, media o económica" },
-        { label: "Pendiente", value: "El Lago Eyasi todavía no tiene página propia de destino en este sitio — véase la auditoría de Learn/regiones" },
+        { label: "Pendiente", value: "Te daremos más detalles sobre la etapa del Lago Eyasi directamente al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado desde el aeropuerto"], estimatedDuration: null },
@@ -402,7 +402,7 @@ export const esContent: ContentDictionary = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge — disponible en categoría de lujo, media o económica" },
-        { label: "Pendiente", value: "El Lago Eyasi todavía no tiene página propia de destino en este sitio — véase la auditoría de Learn/regiones" },
+        { label: "Pendiente", value: "Te daremos más detalles sobre la etapa del Lago Eyasi directamente al preparar tu propuesta personalizada." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado desde el aeropuerto"], estimatedDuration: null },
@@ -427,14 +427,14 @@ export const esContent: ContentDictionary = {
       // Kilimanjaro. El itinerario —la parte verificable— se publica tal
       // cual; véase la nota al comienzo de `safaris.ts`.
       summary: "Observación de fauna por los parques del norte, una visita a una finca de café y de tanzanita, y encuentros culturales con las comunidades hadzabe, datoga y masái.",
-      overview: "Un itinerario Enrich de doce días. Nota: la descripción del paquete en maishaquest.com también promete tiempo de playa en Zanzíbar, algo que el itinerario día a día publicado no incluye — señalado para que el cliente confirme cuál es correcto.",
+      overview: "Un itinerario Enrich de doce días. Confirmaremos contigo directamente el itinerario exacto de este viaje antes de reservar.",
       travellerProfile: "Viajeros que buscan fauna, ocio y cultura combinados",
       bestTime: "Todo el año",
       included: STANDARD_INCLUDED,
       notIncluded: [...STANDARD_NOT_INCLUDED, "Safari en globo (opcional, el día 7)"],
       practicalInfo: [
         { label: "Alojamiento", value: "Lodge — disponible en categoría de lujo, media o económica" },
-        { label: "Pendiente", value: "La descripción del paquete promete una etapa en Zanzíbar que el itinerario día a día no incluye — confirmar con el cliente cuál es correcto" },
+        { label: "Pendiente", value: "Confirmaremos contigo directamente el itinerario exacto de este viaje antes de reservar." },
       ],
       days: [
         { title: "Llegada a Arusha", route: "Aeropuerto Internacional del Kilimanjaro → Arusha", activities: ["Traslado a su hotel"], estimatedDuration: null },

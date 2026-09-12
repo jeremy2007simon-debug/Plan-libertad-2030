@@ -288,10 +288,14 @@ for (const perfil of ["iPhone 13", "Pixel 7"]) {
 
   const m = await page.evaluate(() => {
     const v = document.getElementById("mq-intro-video");
+    const frame = document.querySelector(".mq-intro-frame");
     const node = document.getElementById("mq-intro");
     const vr = v ? v.getBoundingClientRect() : null;
+    const fr = frame ? frame.getBoundingClientRect() : null;
     return {
       objectFit: v ? getComputedStyle(v).objectFit : "",
+      frameAncho: fr ? fr.width : 0,
+      frameAlto: fr ? fr.height : 0,
       videoAncho: vr ? Math.round(vr.width) : 0,
       videoIzquierda: vr ? vr.left : 0,
       videoDerecha: vr ? vr.right : 0,
@@ -302,11 +306,18 @@ for (const perfil of ["iPhone 13", "Pixel 7"]) {
     };
   });
 
-  // `contain`, no `cover`: el plano (910×512) se ve siempre completo —nunca
-  // recorta el rótulo manuscrito del cliente por los lados—, centrado por
-  // construcción dentro del viewport.
-  if (m.objectFit !== "contain") fail(`${perfil}: object-fit es "${m.objectFit}", no "contain"`);
-  else pass(`${perfil}: object-fit: contain — el rótulo nunca se recorta`);
+  // El vídeo en sí usa `cover`, pero dentro de un marco (`.mq-intro-frame`)
+  // que fuerza la proporción exacta del plano (910×512): "llenarlo" y
+  // "contenerlo" son la misma operación cuando las proporciones coinciden, así
+  // que el rótulo manuscrito nunca se recorta por los lados en ninguna
+  // pantalla, y el marco queda centrado por construcción.
+  if (m.objectFit !== "cover") fail(`${perfil}: object-fit es "${m.objectFit}", no "cover"`);
+  else pass(`${perfil}: object-fit: cover dentro de un marco 910:512 — nunca recorta`);
+  const proporcion = m.frameAncho / m.frameAlto;
+  const esperada = 910 / 512;
+  if (Math.abs(proporcion - esperada) > 0.02)
+    fail(`${perfil}: el marco mide ${proporcion.toFixed(3)}, no la proporción del plano (${esperada.toFixed(3)})`);
+  else pass(`${perfil}: el marco respeta la proporción exacta del plano (${proporcion.toFixed(3)})`);
   if (m.videoAncho > m.viewport + 2)
     fail(`${perfil}: el vídeo (${m.videoAncho}px) desborda el viewport (${m.viewport}px)`);
   else pass(`${perfil}: el vídeo cabe siempre dentro del viewport`);

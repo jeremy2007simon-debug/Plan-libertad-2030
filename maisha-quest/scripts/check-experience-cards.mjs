@@ -149,7 +149,7 @@ const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromi
 
 console.log("\n== 1. Las cinco fotografías, activadas en orden ==");
 const page = await (await browser.newContext({ viewport: { width: 1440, height: 1000 } })).newPage();
-await page.goto(`${BASE}/es`, { waitUntil: "networkidle" });
+await page.goto(`${BASE}/es/experiences`, { waitUntil: "networkidle" });
 await page.locator(DESKTOP_ROWS).first().scrollIntoViewIfNeeded();
 await page.waitForTimeout(300);
 
@@ -161,7 +161,7 @@ const medidas = [];
 for (let i = 0; i < filas; i += 1) {
   await page.locator(DESKTOP_ROWS).nth(i).focus();
   await page.waitForTimeout(850); // deja terminar la transición del panel
-  const { titulo, src, objectPosition } = await page.evaluate((sel) => {
+  const { titulo, src, objectPosition, tieneImagen } = await page.evaluate((sel) => {
     const panel = document.querySelector(sel);
     const img = panel.querySelector("img");
     const h3 = panel.querySelector("h3");
@@ -169,8 +169,17 @@ for (let i = 0; i < filas; i += 1) {
       titulo: h3?.textContent?.trim() ?? "?",
       src: img?.currentSrc || img?.src || "",
       objectPosition: img ? getComputedStyle(img).objectPosition : "",
+      tieneImagen: !!img,
     };
   }, PANEL);
+  // `nightlife` (y cualquier otra categoría sin fotografía autorizada) usa a
+  // propósito un tratamiento tipográfico neutral, sin `<img>`: no es un fallo
+  // de carga, es la corrección que pidió esta misma ronda. Se deja constancia
+  // y se salta la medición cromática, que no aplica a un fondo sólido.
+  if (!tieneImagen) {
+    pass(`${titulo}: sin fotografía a propósito (tratamiento tipográfico neutral)`);
+    continue;
+  }
   const { archivo, file } = resolveFile(src);
   if (!file) {
     fail(`${titulo}: no se encuentra el archivo ${archivo}`);
@@ -263,7 +272,7 @@ console.log("\n== 4. Geometría en los seis anchos ==");
 for (const width of ANCHOS) {
   const c = await browser.newContext({ viewport: { width, height: width < 500 ? 844 : 900 }, isMobile: width < 768 });
   const p = await c.newPage();
-  await p.goto(`${BASE}/es`, { waitUntil: "networkidle" });
+  await p.goto(`${BASE}/es/experiences`, { waitUntil: "networkidle" });
 
   const escritorio = width >= 1024;
   const rowSelector = escritorio ? DESKTOP_ROWS : MOBILE_ROWS;
@@ -310,7 +319,7 @@ console.log("\n== 5. Índice móvil: scroll-snap ==");
 {
   const c = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const p = await c.newPage();
-  await p.goto(`${BASE}/es`, { waitUntil: "networkidle" });
+  await p.goto(`${BASE}/es/experiences`, { waitUntil: "networkidle" });
   const pista = p.locator("[data-experience-track]").first();
   await pista.scrollIntoViewIfNeeded();
   await p.waitForTimeout(500);
@@ -341,7 +350,7 @@ console.log("\n== 6. Una sola fila activa a la vez ==");
 {
   const c = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const p = await c.newPage();
-  await p.goto(`${BASE}/es`, { waitUntil: "networkidle" });
+  await p.goto(`${BASE}/es/experiences`, { waitUntil: "networkidle" });
   await p.locator(DESKTOP_ROWS).first().scrollIntoViewIfNeeded();
   await p.locator(DESKTOP_ROWS).nth(3).focus();
   await p.waitForTimeout(150);

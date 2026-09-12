@@ -174,15 +174,15 @@ export const enContent = {
       // there is no distinct confirmed itinerary for a sixth day. Days 1–5
       // repeat the confirmed 5-day itinerary; day 6 is left open rather than
       // invented. See the note at the top of `safaris.ts`.
-      summary: "A sixth day added to the Northern Circuit camping safari. The source page for this exact itinerary is not linked correctly on maishaquest.com — see the note on day 6.",
-      overview: "Confirmed content for days 1–5 matches the 5-Day Northern Circuit Camping Safari. Day 6 needs confirming directly with Maisha Quest before publishing.",
+      summary: "A sixth day added to the Northern Circuit camping safari, with the day 6 plan confirmed directly with you before booking.",
+      overview: "Days 1–5 follow our confirmed 5-Day Northern Circuit Camping Safari. We'll confirm the exact plan for day 6 with you directly.",
       travellerProfile: "Adventurers wanting a balanced itinerary without rushing",
       bestTime: "Not specified by Maisha Quest",
       included: STANDARD_INCLUDED,
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Camping — luxury, mid-range or budget tiers available" },
-        { label: "Pending", value: "Day 6 itinerary not confirmed — the source page links to the 5-day package instead" },
+        { label: "Pending", value: "We'll confirm the exact plan for day 6 with you directly before booking." },
       ],
       days: [
         { title: "Tarangire National Park", route: "Arusha → Tarangire National Park", activities: ["Game drive on arrival", "Overnight camping"], estimatedDuration: null },
@@ -224,7 +224,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Lodge on safari, beach hotel on Zanzibar — luxury, mid-range or budget tiers available" },
-        { label: "Pending", value: "Whether the internal flight to Zanzibar is included in the price is not confirmed on the source page" },
+        { label: "Pending", value: "We'll confirm whether the internal flight to Zanzibar is included when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer to your hotel"], estimatedDuration: null },
@@ -246,7 +246,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Luxury camp on safari, Stone Town or resort on Zanzibar" },
-        { label: "Pending", value: "Whether the internal flight to Zanzibar is included in the price is not confirmed on the source page" },
+        { label: "Pending", value: "We'll confirm whether the internal flight to Zanzibar is included when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer to your hotel"], estimatedDuration: null },
@@ -269,7 +269,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Lodge on safari, Stone Town or beach resort on Zanzibar" },
-        { label: "Pending", value: "Whether the internal flight to Zanzibar is included in the price is not confirmed on the source page" },
+        { label: "Pending", value: "We'll confirm whether the internal flight to Zanzibar is included when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Airport pickup", "Evening briefing"], estimatedDuration: null },
@@ -293,7 +293,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Lodge on safari, Stone Town or beach resort on Zanzibar" },
-        { label: "Pending", value: "Lake Eyasi does not yet have its own destination page on this site — see the Learn/regions audit" },
+        { label: "Pending", value: "We'll share more detail on the Lake Eyasi stage with you directly when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Airport pickup"], estimatedDuration: null },
@@ -318,7 +318,7 @@ export const enContent = {
       notIncluded: [...STANDARD_NOT_INCLUDED, "Hot-air balloon safari (optional, on day 5)"],
       practicalInfo: [
         { label: "Accommodation", value: "Lodge on safari, Stone Town or beach resort on Zanzibar" },
-        { label: "Pending", value: "Whether the internal flight to Zanzibar is included in the price is not confirmed on the source page" },
+        { label: "Pending", value: "We'll confirm whether the internal flight to Zanzibar is included when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer to your hotel"], estimatedDuration: null },
@@ -345,7 +345,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Lodge on safari, Stone Town or beach resort on Zanzibar" },
-        { label: "Pending", value: "Lake Eyasi does not yet have its own destination page on this site — see the Learn/regions audit" },
+        { label: "Pending", value: "We'll share more detail on the Lake Eyasi stage with you directly when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer to your hotel"], estimatedDuration: null },
@@ -432,7 +432,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Lodge — luxury, mid-range or budget tiers available" },
-        { label: "Pending", value: "Lake Eyasi does not yet have its own destination page on this site — see the Learn/regions audit" },
+        { label: "Pending", value: "We'll share more detail on the Lake Eyasi stage with you directly when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Airport transfer"], estimatedDuration: null },
@@ -457,7 +457,7 @@ export const enContent = {
       notIncluded: STANDARD_NOT_INCLUDED,
       practicalInfo: [
         { label: "Accommodation", value: "Lodge — luxury, mid-range or budget tiers available" },
-        { label: "Pending", value: "Lake Eyasi does not yet have its own destination page on this site — see the Learn/regions audit" },
+        { label: "Pending", value: "We'll share more detail on the Lake Eyasi stage with you directly when we put together your personalised proposal." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Airport transfer"], estimatedDuration: null },
@@ -482,14 +482,14 @@ export const enContent = {
       // itinerary — the verifiable part — is published as-is; see the note
       // at the top of `safaris.ts`.
       summary: "Wildlife viewing across the northern parks, a coffee farm and Tanzanite visit, and cultural encounters with Hadzabe, Datoga and Maasai communities.",
-      overview: "A twelve-day Enrich itinerary. Note: the package description on maishaquest.com also promises Zanzibar beach time, which the published day-by-day itinerary does not include — flagged for the client to confirm which is correct.",
+      overview: "A twelve-day Enrich itinerary. We'll confirm the exact itinerary for this journey with you directly before booking.",
       travellerProfile: "Travellers wanting wildlife, leisure and culture combined",
       bestTime: "Year-round",
       included: STANDARD_INCLUDED,
       notIncluded: [...STANDARD_NOT_INCLUDED, "Hot-air balloon safari (optional, on day 7)"],
       practicalInfo: [
         { label: "Accommodation", value: "Lodge — luxury, mid-range or budget tiers available" },
-        { label: "Pending", value: "The package description promises a Zanzibar stage that the day-by-day itinerary does not include — confirm with the client which is correct" },
+        { label: "Pending", value: "We'll confirm the exact itinerary for this journey with you directly before booking." },
       ],
       days: [
         { title: "Arrival in Arusha", route: "Kilimanjaro International Airport → Arusha", activities: ["Transfer to your hotel"], estimatedDuration: null },

@@ -82,26 +82,38 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
   return (
     <div id="mq-intro" data-intro-root="">
       <div className="mq-intro-stage" aria-hidden="true">
-        {/* Sin `src`: lo asigna el script de abajo, y solo si de verdad va a
-            reproducirse. `poster` no hace falta —el vídeo funde a negro en su
-            primer fotograma y el fondo Dark Canopy de `:root[data-intro]::before`
-            ya cubre ese instante con un tono igual de oscuro, sin destello. */}
-        <video
-          id="mq-intro-video"
-          className="mq-intro-video"
-          muted
-          playsInline
-          preload="none"
-          aria-hidden="true"
-        >
-          {/* Dos formatos, sin `src` en ninguno todavía —lo asigna el script
-              de abajo—. H.264 primero: es el que casi todo reproduce, a
-              menudo con descodificación por hardware; WebM/VP9 como
-              alternativa para el resto. El navegador se queda con el
-              primero de la lista que sepa reproducir. */}
-          <source id="mq-intro-video-mp4" type="video/mp4" />
-          <source id="mq-intro-video-webm" type="video/webm" />
-        </video>
+        {/* El marco: fuerza la proporción exacta del plano (910×512) dentro
+            de una caja centrada, para que `cover` en el vídeo de dentro nunca
+            recorte nada —el marco YA tiene su proporción, así que "llenarlo"
+            y "contenerlo" son la misma operación—. Es lo que permite un
+            filete dorado pegado al borde real de la imagen en vez de flotar
+            en mitad de una franja vacía: en una pantalla mucho más alta que
+            ancha —el grueso del catálogo de móviles—, sin este marco esas
+            franjas se leen como espacio muerto en vez de una pantalla de
+            cine con su propio borde. */}
+        <div className="mq-intro-frame">
+          {/* Sin `src`: lo asigna el script de abajo, y solo si de verdad va a
+              reproducirse. `poster` no hace falta —el vídeo funde a negro en su
+              primer fotograma y el fondo Dark Canopy de `:root[data-intro]::before`
+              ya cubre ese instante con un tono igual de oscuro, sin destello. */}
+          <video
+            id="mq-intro-video"
+            className="mq-intro-video"
+            muted
+            playsInline
+            preload="none"
+            aria-hidden="true"
+          >
+            {/* Dos formatos, sin `src` en ninguno todavía —lo asigna el script
+                de abajo—. H.264 primero: es el que casi todo reproduce, a
+                menudo con descodificación por hardware; WebM/VP9 como
+                alternativa para el resto. El navegador se queda con el
+                primero de la lista que sepa reproducir. */}
+            <source id="mq-intro-video-mp4" type="video/mp4" />
+            <source id="mq-intro-video-webm" type="video/webm" />
+          </video>
+        </div>
+        <div className="grain absolute inset-0" />
       </div>
 
       {/* Fuera del subárbol decorativo: es lo único que se anuncia. */}

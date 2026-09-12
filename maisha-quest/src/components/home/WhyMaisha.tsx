@@ -11,6 +11,13 @@ import { TRUST_CREDENTIALS } from "@/lib/site";
 /**
  * "Your journey, in trusted hands".
  *
+ * Ya no se pinta en la portada: sus seis motivos (`t.home.why.pillars`) se
+ * volvieron a mostrar tal cual en `/about`, sección «Cómo trabajamos» —
+ * tenerlo aquí además era el mismo texto dos veces en el mismo recorrido, no
+ * contenido nuevo. Se deja el componente completo, sin usar, por si hace
+ * falta esta presentación —fotografía + motivos + acreditaciones— en algún
+ * otro sitio más adelante; no se ha borrado nada de `/about`.
+ *
  * Seis motivos, sin una sola estadística. La franja de acreditaciones
  * (licencias, asociaciones, años en operación, viajeros atendidos, tiempo de
  * respuesta) está construida y maquetada, pero solo se pinta si

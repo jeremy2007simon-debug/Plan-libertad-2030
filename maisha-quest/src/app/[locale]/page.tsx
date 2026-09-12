@@ -3,8 +3,6 @@ import { notFound } from "next/navigation";
 import { ClosingCTA } from "@/components/home/ClosingCTA";
 import { Intro, IntroScript } from "@/components/intro/Intro";
 import { Collections } from "@/components/home/Collections";
-import { DestinationMap } from "@/components/home/DestinationMap";
-import { ExperienceExplorer } from "@/components/home/ExperienceExplorer";
 import { FeaturedJourneys } from "@/components/home/FeaturedJourneys";
 import { Hero } from "@/components/home/Hero";
 import { Impact } from "@/components/home/Impact";
@@ -12,8 +10,6 @@ import { MaishaMeaning } from "@/components/home/MaishaMeaning";
 import { PlannerSection } from "@/components/home/PlannerSection";
 import { Team } from "@/components/home/Team";
 import { Testimonials } from "@/components/home/Testimonials";
-import { VideoStory } from "@/components/home/VideoStory";
-import { WhyMaisha } from "@/components/home/WhyMaisha";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMetadata } from "@/lib/seo";
@@ -37,13 +33,26 @@ export async function generateMetadata({
 /**
  * Home.
  *
- * El orden es un recorrido, no un catálogo: quién somos → cómo quieres viajar
- * → qué ofrecemos → dónde → cómo se siente → por qué nosotros → quiénes somos
- * → qué dejamos atrás → qué dicen → empecemos.
+ * El recorrido editorial pedido, sin desvíos: portada y propuesta de valor →
+ * quiénes somos, en dos frases → cómo quieres viajar (Explorer/Escape/Enrich)
+ * → los viajes oficiales destacados → equipo e impacto real → planificar.
  *
- * Todas las secciones son componentes de servidor salvo las tres que
- * necesitan estado (mapa, carrusel y planificador). El JavaScript que llega al
- * navegador es solo el de esas tres.
+ * Tres secciones que vivían aquí se han trasladado a la página interior donde
+ * de verdad completan algo, en vez de repetirlo:
+ *  · `ExperienceExplorer` y `VideoStory` → `/experiences`, delante de su
+ *    propio listado completo de experiencias (mismo contenido, sin la
+ *    competencia de imágenes con `FeaturedJourneys` que tenían aquí).
+ *  · `DestinationMap` → `/destinations`, delante de su propio listado por
+ *    región.
+ *  · `WhyMaisha` se retira sin trasladar nada: sus seis motivos
+ *    (`t.home.why.pillars`) ya se pintan en `/about`, en la sección «Cómo
+ *    trabajamos» — mantenerlo aquí era el mismo texto dos veces, no contenido
+ *    nuevo.
+ *
+ * Todas las secciones son componentes de servidor salvo las que necesitan
+ * estado (carrusel de Experiencias en la página de experiencias, mapa en la
+ * de destinos, y el planificador aquí). El JavaScript que llega al navegador
+ * en esta página es solo el del planificador.
  */
 export default async function HomePage({
   params,
@@ -62,12 +71,8 @@ export default async function HomePage({
       <IntroScript />
       <Hero locale={locale} t={t} />
       <MaishaMeaning locale={locale} t={t} />
-      <ExperienceExplorer locale={locale} t={t} />
       <Collections locale={locale} t={t} />
       <FeaturedJourneys locale={locale} t={t} />
-      <DestinationMap locale={locale} t={t} />
-      <VideoStory locale={locale} t={t} />
-      <WhyMaisha locale={locale} t={t} />
       <Team locale={locale} t={t} />
       <Impact locale={locale} t={t} />
       <Testimonials locale={locale} t={t} />

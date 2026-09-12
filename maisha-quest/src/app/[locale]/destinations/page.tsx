@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/motion";
 import { PHOTOS } from "@/data/photography";
+import { DestinationMap } from "@/components/home/DestinationMap";
 import { isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMetadata } from "@/lib/seo";
@@ -53,6 +54,11 @@ export default async function DestinationsPage({
         // No se usa la del cráter: es la portada de una de las fichas de abajo.
         image={PHOTOS["wildebeest-migration"]}
       />
+
+      {/* Trasladado desde la portada: el mapa interactivo vivía en la home;
+          aquí, un tramo antes del listado por región, es donde completa algo
+          en vez de repetirlo. */}
+      <DestinationMap locale={locale} t={t} />
 
       <div className="bg-page py-20 sm:py-24">
         <Container width="wide">

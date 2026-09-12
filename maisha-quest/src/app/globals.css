@@ -1215,6 +1215,35 @@ p {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  /* Centra el marco (ver más abajo) dentro de la capa completa. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- El marco ----------------------------------------------------------
+   Fuerza la proporción real del plano (910×512): en cualquier pantalla más
+   alta que ancha —todo el catálogo de móviles— sobra alto, nunca ancho, así
+   que el marco encoge en altura y dos franjas del Dark Canopy quedan arriba
+   y abajo. Un filete dorado pegado a su borde y el grano de fondo (en
+   `Intro.tsx`) convierten esas franjas en el borde de una pantalla de cine,
+   no en espacio muerto. */
+.mq-intro-frame {
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: 910 / 512;
+  border-top: 1px solid rgba(196, 147, 79, 0.35);
+  border-bottom: 1px solid rgba(196, 147, 79, 0.35);
+}
+
+/* Al terminar de verdad, el último fotograma —el propio rótulo del cliente,
+   sin una segunda imagen superpuesta— se acerca ligeramente a quien mira:
+   una profundidad elegante, sin rotaciones ni efectos de videojuego, solo una
+   escala muy contenida sobre el fotograma congelado. Anima el marco, no solo
+   el vídeo, para que el filete dorado se acerque con él. */
+:root[data-intro][data-intro-video-ended] .mq-intro-frame {
+  animation: mq-intro-video-settle 900ms var(--ease-out) forwards;
 }
 
 /* --- El vídeo --------------------------------------------------------------
@@ -1227,22 +1256,11 @@ p {
   inset: 0;
   width: 100%;
   height: 100%;
-  /* `contain`, no `cover`: el plano (910×512) se ve siempre completo, con el
-     Dark Canopy rellenando lo que sobre. `cover` recortaría los lados en
-     cualquier pantalla más alta que ancha —todo el catálogo de móviles— y el
-     rótulo manuscrito, que ocupa casi todo el ancho del plano, es lo primero
-     que perdería el recorte. `contain` centra por construcción: no hace
-     falta `object-position`. */
-  object-fit: contain;
+  /* El marco que lo contiene YA tiene la proporción exacta del plano
+     (910×512), así que `cover` aquí no recorta nada: llenar el marco y
+     contenerlo son la misma operación cuando las proporciones coinciden. */
+  object-fit: cover;
   background: var(--canopy);
-}
-
-/* Al terminar de verdad, el último fotograma —el propio rótulo del cliente,
-   sin una segunda imagen superpuesta— se acerca ligeramente a quien mira:
-   una profundidad elegante, sin rotaciones ni efectos de videojuego, solo una
-   escala muy contenida sobre el fotograma congelado. */
-:root[data-intro][data-intro-video-ended] .mq-intro-video {
-  animation: mq-intro-video-settle 900ms var(--ease-out) forwards;
 }
 
 @keyframes mq-intro-video-settle {

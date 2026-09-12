@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/motion";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
+import { ExperienceExplorer } from "@/components/home/ExperienceExplorer";
 import { isLocale, localeHref } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMetadata } from "@/lib/seo";
@@ -45,6 +46,11 @@ export default async function ExperiencesPage({
         lede={t.experiences.lede}
         image={CLIENT_PHOTOS["male-lions-together"]}
       />
+
+      {/* Trasladado desde la portada: el explorador por categoría vivía en la
+          home compitiendo por fotografías con los viajes destacados. Aquí, un
+          tramo antes del listado completo, es donde de verdad ayuda a elegir. */}
+      <ExperienceExplorer locale={locale} t={t} />
 
       <div className="bg-page py-20 sm:py-24">
         <Container width="wide">

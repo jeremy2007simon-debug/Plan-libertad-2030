@@ -14,7 +14,13 @@ export interface ExplorerItem {
   label: string;
   shortDescription: string;
   objectPosition: string;
-  image: { src: string; alt: string; blurDataURL: string };
+  /**
+   * `null` cuando no hay fotografía autorizada que represente la categoría
+   * (hoy, solo `nightlife`): el panel pasa a un tratamiento tipográfico
+   * neutral en vez de una fotografía que no encaja, con el mismo contenido y
+   * el mismo enlace que las demás filas.
+   */
+  image: { src: string; alt: string; blurDataURL: string } | null;
 }
 
 const PANEL_ID = "experience-explorer-panel";
@@ -162,20 +168,37 @@ export function ExperienceExplorerPanel({
           key={item.id}
           className="relative h-[58vh] max-h-[440px] overflow-hidden bg-charcoal lg:h-[min(72vh,760px)] lg:max-h-none"
         >
-          <span className="mq-explorer-mask absolute inset-0 block overflow-hidden">
-            <Image
-              key={item.id}
-              src={item.image.src}
-              alt={item.image.alt}
-              fill
-              sizes="(max-width: 1023px) 100vw, 66vw"
-              quality={72}
-              placeholder="blur"
-              blurDataURL={item.image.blurDataURL}
-              style={{ objectPosition: item.objectPosition }}
-              className="mq-explorer-zoom object-cover"
-            />
-          </span>
+          {item.image ? (
+            <span className="mq-explorer-mask absolute inset-0 block overflow-hidden">
+              <Image
+                key={item.id}
+                src={item.image.src}
+                alt={item.image.alt}
+                fill
+                sizes="(max-width: 1023px) 100vw, 66vw"
+                quality={72}
+                placeholder="blur"
+                blurDataURL={item.image.blurDataURL}
+                style={{ objectPosition: item.objectPosition }}
+                className="mq-explorer-zoom object-cover"
+              />
+            </span>
+          ) : (
+            /* Sin fotografía autorizada que represente esta categoría (ver
+               `EXPERIENCE_CATEGORIES`): tratamiento tipográfico neutral en
+               vez de forzar una imagen que no encaja. Mismo fondo oscuro que
+               el resto del panel, con el propio nombre de la categoría como
+               textura de fondo — el mismo recurso que la marca de agua
+               "Maisha" de más arriba en la home, no un elemento nuevo. */
+            <span
+              aria-hidden="true"
+              className="mq-explorer-mask absolute inset-0 flex items-center justify-center overflow-hidden bg-[linear-gradient(155deg,var(--canopy),var(--olive-deep))]"
+            >
+              <span className="font-display px-6 text-center text-[13vw] leading-[0.95] text-parchment/[0.09] select-none lg:text-[5.5vw]">
+                {item.label}
+              </span>
+            </span>
+          )}
           {/* Barrido decorativo: independiente de la máscara, para que la luz
               cruce el encuadre sin quedar recortada por el propio borde que
               está revelando la fotografía. */}
@@ -183,7 +206,9 @@ export function ExperienceExplorerPanel({
             aria-hidden="true"
             className="mq-explorer-sweep pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-linear-to-r from-transparent via-[var(--gold)]/30 to-transparent"
           />
-          <div className="media-scrim-soft pointer-events-none absolute inset-0" />
+          {item.image && (
+            <div className="media-scrim-soft pointer-events-none absolute inset-0" />
+          )}
 
           <div className="mq-explorer-caption pointer-events-none absolute inset-x-0 bottom-0 p-6 sm:p-9">
             <span className="tnum block text-[0.72rem] tracking-[0.24em] text-[var(--gold)]">
