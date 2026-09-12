@@ -104,7 +104,7 @@ export function MobileCTABar({
           href={localeHref(locale, "/plan")}
           className="flex min-h-12 flex-1 items-center justify-center rounded-[2px] bg-terracotta-deep px-5 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
         >
-          {t.planShort}
+          {t.planCta}
         </Link>
         <a
           href={whatsappHref(t.whatsappMessage)}

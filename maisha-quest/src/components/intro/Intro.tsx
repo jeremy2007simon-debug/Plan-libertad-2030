@@ -7,18 +7,29 @@ import type { Dictionary } from "@/i18n/messages/en";
  * ------
  * Se ve UNA VEZ POR SESIÓN al entrar en la portada: el vídeo de marca a
  * pantalla completa (15 s, sin audio, entregado por el cliente), que termina
- * con el rótulo «Maisha Quest» sobre el atardecer; al terminar, ese mismo
- * rótulo —como imagen PNG nítida, recortada del propio vídeo— se acerca
- * ligeramente hacia quien mira, y un barrido circular (`mq-intro-portal-out`,
- * ya usado en la versión anterior de esta introducción) descubre el hero real,
- * que lleva pintado debajo desde el primer fotograma.
+ * con el rótulo «Maisha Quest» —manuscrito, YA incrustado en el propio
+ * vídeo— sobre el atardecer. Al terminar, ese mismo fotograma se acerca
+ * ligeramente hacia quien mira (solo el vídeo: no hay una segunda imagen del
+ * rótulo superpuesta) y un barrido circular (`mq-intro-portal-out`, ya usado
+ * en la versión anterior de esta introducción) descubre el hero real, que
+ * lleva pintado debajo desde el primer fotograma.
  *
- * ⚠️ El rótulo (`maisha-quest-intro-wordmark.webp`) es una reconstrucción
- * nuestra a partir de los fotogramas del vídeo del cliente, NO el archivo
- * vectorial oficial de la marca. No se usa en ningún otro sitio de la web
- * —el logotipo del `Header` sigue siendo la brújula dibujada en código— y no
- * se presenta como definitivo hasta que el cliente lo apruebe. Ver
- * `public/images/maisha-quest/originals/maisha-quest-intro-wordmark.png`.
+ * ⚠️ El rótulo manuscrito del vídeo es obra del cliente, distinto de la marca
+ * serif con brújula que usa el `Header` en el resto del sitio. Esta
+ * introducción no sustituye esa identidad —el logotipo del `Header` sigue
+ * siendo la brújula dibujada en código—; la diferencia entre ambos rótulos
+ * queda para que la resuelva el cliente, no para que la decida el código.
+ *
+ * `object-fit: contain`, no `cover`
+ * ----------------------------------
+ * El vídeo (910×512, un plano horizontal) se ajusta con `contain`: se ve
+ * completo siempre, con el fondo Dark Canopy rellenando los márgenes que
+ * sobran. `cover` recortaría los lados en cualquier pantalla más alta que
+ * ancha —todo el catálogo de móviles—, y el rótulo manuscrito, al ocupar casi
+ * todo el ancho del plano, es tan ancho que ese recorte se lo comería por los
+ * dos lados. `contain` no lo hace nunca, en ningún tamaño de pantalla, y de
+ * paso centra el sujeto y el rótulo por construcción —no hace falta
+ * `object-position` para lograrlo—.
  *
  * Por qué es una mezcla de vídeo y CSS, y no solo CSS
  * ----------------------------------------------------
@@ -91,24 +102,6 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
           <source id="mq-intro-video-mp4" type="video/mp4" />
           <source id="mq-intro-video-webm" type="video/webm" />
         </video>
-
-        {/* El rótulo nítido: oculto hasta que el vídeo termina de verdad. */}
-        <div className="mq-intro-logo-wrap">
-          {/* eslint-disable-next-line @next/next/no-img-element -- capa de
-              apertura fija y decorativa, ajena al flujo del documento: no
-              participa del LCP ni necesita el pipeline responsive de
-              next/image, y controlar el elemento a mano simplifica la
-              animación disparada por el propio vídeo. */}
-          <img
-            className="mq-intro-logo"
-            src="/images/maisha-quest/optimized/maisha-quest-intro-wordmark.webp"
-            width={1800}
-            height={615}
-            alt=""
-            loading="eager"
-            decoding="async"
-          />
-        </div>
       </div>
 
       {/* Fuera del subárbol decorativo: es lo único que se anuncia. */}

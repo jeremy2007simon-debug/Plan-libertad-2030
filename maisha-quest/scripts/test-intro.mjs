@@ -254,17 +254,15 @@ console.log("\n== 8. Foco y accesibilidad ==");
     const skip = node.querySelector("[data-intro-skip]");
     return {
       escenarioOculto: stage?.getAttribute("aria-hidden") === "true",
+      videoDentroDeOculto: !!node.querySelector("[aria-hidden='true'] #mq-intro-video"),
       botonFuera: !skip?.closest("[aria-hidden='true']"),
       focoInicial: document.activeElement === document.body,
-      rotuloDentroDeOculto: !!node.querySelector("[aria-hidden='true'] .mq-intro-logo"),
-      altVacio: node.querySelector(".mq-intro-logo")?.getAttribute("alt") === "",
     };
   });
   if (!info.escenarioOculto) fail("lo decorativo no está bajo aria-hidden");
   else pass("todo lo decorativo va bajo aria-hidden");
-  if (!info.rotuloDentroDeOculto || !info.altVacio)
-    fail("el rótulo de la introducción se anunciaría y se leería junto al del hero");
-  else pass("el rótulo no se anuncia: no se lee dos veces");
+  if (!info.videoDentroDeOculto) fail("el vídeo de la introducción se anunciaría junto al del hero");
+  else pass("el vídeo no se anuncia: no hay un segundo rótulo que leer");
   if (!info.botonFuera) fail("el botón de saltar está dentro del subárbol oculto y no se anuncia");
   else pass("el botón de saltar sí se anuncia");
   if (!info.focoInicial) fail("la introducción se lleva el foco al abrirse");
@@ -293,9 +291,10 @@ for (const perfil of ["iPhone 13", "Pixel 7"]) {
     const node = document.getElementById("mq-intro");
     const vr = v ? v.getBoundingClientRect() : null;
     return {
-      objectPosition: v ? getComputedStyle(v).objectPosition : "",
       objectFit: v ? getComputedStyle(v).objectFit : "",
       videoAncho: vr ? Math.round(vr.width) : 0,
+      videoIzquierda: vr ? vr.left : 0,
+      videoDerecha: vr ? vr.right : 0,
       viewport: window.innerWidth,
       alto: node ? Math.round(node.getBoundingClientRect().height) : 0,
       ventana: window.innerHeight,
@@ -303,14 +302,17 @@ for (const perfil of ["iPhone 13", "Pixel 7"]) {
     };
   });
 
-  if (m.objectFit !== "cover") fail(`${perfil}: object-fit es "${m.objectFit}", no "cover"`);
-  else pass(`${perfil}: object-fit: cover`);
-  if (m.objectPosition !== "50% 50%")
-    fail(`${perfil}: object-position es "${m.objectPosition}", el sujeto no queda centrado`);
-  else pass(`${perfil}: sujeto principal centrado (object-position: 50% 50%)`);
-  if (Math.abs(m.videoAncho - m.viewport) > 2)
-    fail(`${perfil}: el vídeo mide ${m.videoAncho}px de ancho y el viewport ${m.viewport}px`);
-  else pass(`${perfil}: el vídeo cubre el ancho del viewport`);
+  // `contain`, no `cover`: el plano (910×512) se ve siempre completo —nunca
+  // recorta el rótulo manuscrito del cliente por los lados—, centrado por
+  // construcción dentro del viewport.
+  if (m.objectFit !== "contain") fail(`${perfil}: object-fit es "${m.objectFit}", no "contain"`);
+  else pass(`${perfil}: object-fit: contain — el rótulo nunca se recorta`);
+  if (m.videoAncho > m.viewport + 2)
+    fail(`${perfil}: el vídeo (${m.videoAncho}px) desborda el viewport (${m.viewport}px)`);
+  else pass(`${perfil}: el vídeo cabe siempre dentro del viewport`);
+  const centrado = Math.abs(m.videoIzquierda - (m.viewport - m.videoDerecha)) <= 2;
+  if (!centrado) fail(`${perfil}: el vídeo no queda centrado horizontalmente`);
+  else pass(`${perfil}: sujeto y rótulo centrados (contain los centra por construcción)`);
   if (m.desborde) fail(`${perfil}: hay desbordamiento horizontal`);
   else pass(`${perfil}: sin desbordamiento horizontal`);
   if (Math.abs(m.alto - m.ventana) > 2) fail(`${perfil}: la capa mide ${m.alto} y la ventana ${m.ventana}`);

@@ -55,7 +55,7 @@ export function ClosingCTA({ locale, t }: { locale: Locale; t: Dictionary }) {
 
           <Reveal delay={0.3} className="mt-9 flex flex-wrap gap-3 sm:gap-4">
             <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
-              {t.nav.planShort}
+              {t.nav.planCta}
             </ButtonLink>
             <ButtonLink
               href="/contact"

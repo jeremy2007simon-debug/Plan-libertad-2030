@@ -1,12 +1,10 @@
 import { ButtonLink } from "@/components/ui/Button";
-import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { AnimatedLine, ImageReveal, ParallaxMedia, Reveal } from "@/components/ui/motion";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
-import { HOME_COORDINATES } from "@/lib/site";
 import { getPhotoAlt } from "@/i18n/alt";
 
 /**
@@ -68,15 +66,10 @@ export async function MaishaMeaning({
           {/* Texto */}
           <div className="lg:col-span-5 lg:col-start-8">
             <Reveal>
-              <div className="flex items-center gap-3">
-                <CompassMark className="size-6 text-[var(--gold)]" />
-                <span className="tnum text-[0.66rem] tracking-[0.2em] text-ink-faint uppercase">
-                  {HOME_COORDINATES.label}
-                </span>
-              </div>
-              <p className="eyebrow mt-5 text-terracotta-text">
-                {t.home.maisha.eyebrow}
-              </p>
+              {/* Sin brújula ni coordenadas aquí: el Hero, un tramo de scroll
+                  más arriba, ya las mostró — repetirlas no aporta nada nuevo,
+                  solo ruido decorativo. */}
+              <p className="eyebrow text-terracotta-text">{t.home.maisha.eyebrow}</p>
             </Reveal>
 
             <Reveal delay={0.08}>

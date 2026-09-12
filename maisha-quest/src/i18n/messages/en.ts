@@ -78,7 +78,6 @@ export const en = {
       enrich: "Culture, cuisine and communities.",
     },
     planCta: "Plan Your Journey",
-    planShort: "Plan My Safari",
     speakToExpert: "Speak to a Local Expert",
     chat: "Chat",
     /** Texto que se precarga en WhatsApp. Se codifica al construir la URL. */
@@ -837,7 +836,6 @@ export const en = {
          editorial y propio de cada idioma, no un salto automático. */
       headline: ["Private journeys", "through Tanzania"],
       subline: "Guided by local experts. Designed around your story.",
-      designCta: "Design Your Safari",
       exploreCta: "Explore Journeys",
       pillars: ["Local experts", "Private safaris", "Responsible travel"],
       scroll: "Scroll",
@@ -958,8 +956,7 @@ export const en = {
       title: "Stories brought home",
       lede:
         "What travellers said after they got back, published with the source so you can check it yourself.",
-      emptyTitle:
-        "We would rather show you nothing than show you something we wrote ourselves.",
+      emptyTitle: "The first traveller stories are on their way.",
       emptyBody:
         "Reviews will be published here as travellers send them, each one with a link to where it was originally posted. Until then, ask us and we will put you in touch with someone who has travelled with us.",
       emptyBodyWithSources:

@@ -42,14 +42,19 @@ con `ffmpeg -c:v libvpx-vp9 -b:v 1300k -crf 32 -an` a partir del `.mp4`
 entregado. Pesa 1,43 MB — menos que el original, porque VP9 comprime mejor a
 igual calidad percibida, no por haber recortado nada.
 
-**El rótulo final** (`Maisha Quest` sobre el atardecer, en el último
-fotograma) se ha recortado del propio vídeo para reutilizarlo, ya nítido,
-como imagen fija tras el `ended` — ver
-`public/images/maisha-quest/originals/maisha-quest-intro-wordmark.png`. Es una
-**reconstrucción nuestra, no el archivo vectorial oficial de la marca**: no se
-usa en ningún otro sitio de la web (el logotipo del `Header` sigue siendo la
-brújula dibujada en código) y no se presenta como definitivo hasta que el
-cliente lo apruebe.
+**El rótulo final** (`Maisha Quest` manuscrito sobre el atardecer, en el
+último fotograma) ya está incrustado en el propio vídeo: tras el `ended`, ese
+mismo fotograma se congela y se ve completo —`object-fit: contain`, no
+`cover`— en vez de recortarlo. No hay una segunda imagen del rótulo
+superpuesta: la versión anterior de esta introducción sí reconstruía el
+rótulo como PNG aparte, pero eso duplicaba un logo que el vídeo ya trae, así
+que se retiró (`public/images/maisha-quest/originals/maisha-quest-intro-wordmark.png`
+ya no existe en el repositorio).
+
+⚠️ **Ese rótulo manuscrito es obra del cliente, distinto de la marca serif
+con brújula que usa el resto del sitio** —el logotipo del `Header` sigue
+siendo esa brújula, sin cambios—. Cuál de los dos usar hacia delante es una
+decisión del cliente, no algo que este código deba resolver por su cuenta.
 
 ## Los dos vídeos de «La película» / impacto — pendientes
 

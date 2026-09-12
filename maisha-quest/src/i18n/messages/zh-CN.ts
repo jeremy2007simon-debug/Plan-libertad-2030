@@ -81,7 +81,6 @@ export const zhCN: Dictionary = {
       enrich: "文化、饮食与当地社区。",
     },
     planCta: "定制我的行程",
-    planShort: "定制行程",
     speakToExpert: "咨询当地专家",
     chat: "咨询",
     whatsappMessage:
@@ -801,7 +800,6 @@ export const zhCN: Dictionary = {
     hero: {
       headline: ["坦桑尼亚", "私人定制之旅"],
       subline: "由当地专家带领，围绕您的故事设计。",
-      designCta: "定制我的行程",
       exploreCta: "浏览行程",
       pillars: ["当地专家", "私人定制", "负责任的旅行"],
       scroll: "向下滚动",
@@ -916,7 +914,7 @@ export const zhCN: Dictionary = {
       title: "被带回家的故事",
       lede:
         "旅行者回来之后说的话，连同出处一并公布，方便您自行核对。",
-      emptyTitle: "与其给您看我们自己写的东西，不如什么都不放。",
+      emptyTitle: "旅行者的真实故事即将呈现。",
       emptyBody:
         "旅行者陆续寄来评价后，我们会在此发布，每一条都附上原始发布链接。在此之前，问我们一声，我们会把您和与我们同行过的人联系上。",
       emptyBodyWithSources:

@@ -82,9 +82,11 @@ export async function Hero({
         <div className="media-scrim-top absolute inset-x-0 top-0 h-[7.5rem]" />
         <div className="grain absolute inset-0" />
         {/* Transición hacia la siguiente sección: la fotografía se funde en el
-            pergamino en lugar de terminar en un corte recto. Va dentro de esta
-            capa (`-z-10`) para quedar por debajo del texto. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-b from-transparent to-[var(--page)] sm:h-32" />
+            pergamino en lugar de terminar en un corte recto. Corta y precisa
+            a propósito —una banda alta se ve como una niebla que se come el
+            pie de la fotografía; esta apenas roza el horizonte—. Va dentro de
+            esta capa (`-z-10`) para quedar por debajo del texto. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-linear-to-b from-transparent to-[var(--page)] sm:h-14" />
       </div>
 
       <Container width="wide" className="pb-14 pt-32 sm:pb-20">
@@ -131,7 +133,7 @@ export async function Hero({
             style={{ animationDelay: "640ms" }}
           >
             <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
-              {t.home.hero.designCta}
+              {t.nav.planCta}
             </ButtonLink>
             <ButtonLink
               href="/safaris"

@@ -121,7 +121,7 @@ export default async function SafarisPage({
               </p>
             </div>
             <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
-              {t.home.hero.designCta}
+              {t.nav.planCta}
             </ButtonLink>
           </div>
         </Container>

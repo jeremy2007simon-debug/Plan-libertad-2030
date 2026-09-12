@@ -76,7 +76,6 @@ export const es: Dictionary = {
       enrich: "Cultura, cocina y comunidades.",
     },
     planCta: "Diseña tu viaje",
-    planShort: "Diseñar mi safari",
     speakToExpert: "Habla con un experto local",
     chat: "Chat",
     whatsappMessage:
@@ -825,7 +824,6 @@ export const es: Dictionary = {
     hero: {
       headline: ["Viajes privados", "por Tanzania"],
       subline: "Guiados por expertos locales. Pensados para tu historia.",
-      designCta: "Diseña tu safari",
       exploreCta: "Ver los viajes",
       pillars: ["Expertos locales", "Safaris privados", "Viaje responsable"],
       scroll: "Desliza",
@@ -946,8 +944,7 @@ export const es: Dictionary = {
       title: "Historias que vuelven a casa",
       lede:
         "Lo que contaron los viajeros al volver, publicado con su fuente para que puedas comprobarlo tú mismo.",
-      emptyTitle:
-        "Preferimos no enseñarte nada antes que enseñarte algo escrito por nosotros.",
+      emptyTitle: "Las primeras experiencias de nuestros viajeros están en camino.",
       emptyBody:
         "Las opiniones se publicarán aquí según nos las envíen los viajeros, cada una con el enlace a donde se publicó originalmente. Mientras tanto, pregúntanos y te ponemos en contacto con alguien que ha viajado con nosotros.",
       emptyBodyWithSources:

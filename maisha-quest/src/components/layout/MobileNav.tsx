@@ -183,7 +183,7 @@ export function MobileNav({
 
             <div className="mt-9 flex flex-col gap-3">
               <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
-                {t.planShort}
+                {t.planCta}
               </ButtonLink>
               <ButtonLink
                 href="/contact"

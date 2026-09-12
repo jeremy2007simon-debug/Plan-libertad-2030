@@ -299,12 +299,25 @@ calidad 78, y metadata eliminada solo en la copia optimizada.
 ## Introducción cinematográfica
 
 Al entrar en la portada, una vez por sesión: el vídeo de marca del cliente
-(`public/video/maisha-quest-intro.mp4`, 15 s, sin audio, 2,29 MB) a pantalla
-completa, autoplay silenciado y `playsInline`; al terminar, el rótulo final
-del propio vídeo —reconstruido como imagen nítida, ver la reserva más
-abajo— se acerca ligeramente a quien mira, y un barrido circular descubre el
-hero, que lleva pintado debajo desde el primer fotograma. Detalle técnico y
-de accesibilidad completo en `src/components/intro/Intro.tsx`.
+(`public/video/maisha-quest-intro.mp4`, 15 s, sin audio, 2,29 MB, 910×512 —
+por debajo de Full HD, tal cual se entregó) a pantalla completa, autoplay
+silenciado y `playsInline`; al terminar, el propio último fotograma —el
+rótulo manuscrito ya incrustado en el vídeo, sin una segunda imagen
+superpuesta— se acerca ligeramente a quien mira, y un barrido circular
+descubre el hero, que lleva pintado debajo desde el primer fotograma. Detalle
+técnico y de accesibilidad completo en `src/components/intro/Intro.tsx`.
+
+`object-fit: contain`, no `cover`: el plano se ve siempre completo, con el
+fondo oscuro rellenando lo que sobre. Con `cover` cualquier pantalla más alta
+que ancha —todo el catálogo de móviles— recortaría los lados, y el rótulo
+manuscrito, que ocupa casi todo el ancho del plano, es lo primero que se
+llevaría ese recorte.
+
+⚠️ **El rótulo manuscrito del vídeo es obra del cliente, distinto de la marca
+serif con brújula que usa el resto del sitio** (el logotipo del `Header`
+sigue siendo esa brújula, sin cambios, y esta introducción no la sustituye).
+Cuál de los dos rótulos usar hacia delante es una decisión del cliente, no
+algo que este código deba resolver por su cuenta.
 
 No se ejecuta con `prefers-reduced-motion`, con `saveData` activado, en
 navegadores automatizados, ni una segunda vez en la misma sesión
@@ -322,16 +335,11 @@ mínimo, y solo tras comprobar que la introducción va a reproducirse—, así
 que las visitas donde no se ve (segunda visita, movimiento reducido...) no
 descargan ni un byte de ninguno de los dos.
 
-⚠️ **El rótulo `maisha-quest-intro-wordmark.png/.webp` es una reconstrucción
-nuestra a partir de los fotogramas del vídeo, no el archivo vectorial oficial
-de la marca.** Solo se usa dentro de esta introducción —el logotipo del
-`Header` sigue siendo la brújula dibujada en código, sin cambios— y no se
-presenta como definitivo en ningún sitio hasta que el cliente lo apruebe.
-
 Verificación automática en `scripts/test-intro.mjs` (`npm run test:intro`):
 primera visita y ciclo completo, no repetición en sesión, `?intro=1`,
 movimiento reducido, `saveData`, sin JavaScript, saltar/Escape, foco y
-lectores de pantalla, geometría en móvil, CLS, y qué pasa si el vídeo falla.
+lectores de pantalla, geometría en móvil (nunca se recorta el rótulo), CLS,
+y qué pasa si el vídeo falla.
 
 ## El formulario no finge
 

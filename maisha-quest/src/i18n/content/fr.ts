@@ -674,7 +674,7 @@ export const frContent: ContentDictionary = {
   team: {
     "talisa-tufts": {
       role: "Fondatrice",
-      bio: "Talisa a fondé Maisha Quest après un parcours dans le tourisme international et l’hôtellerie. Elle parle quatre langues : c’est pourquoi les voyageurs de Moscou, Shanghai ou Madrid sont accompagnés dans la leur — et pourquoi la première conversation sur votre voyage n’a presque jamais besoin d’un traducteur.",
+      bio: "Talisa a fondé Maisha Quest après un parcours dans le tourisme international et l’hôtellerie. Elle parle anglais, swahili, russe et mandarin : c’est pourquoi les voyageurs de Moscou ou de Shanghai sont accompagnés dans leur langue dès la première conversation sur votre voyage.",
       specialty: "Conception de voyages et relation client multilingue",
       favouritePlace: null,
     },

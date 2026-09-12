@@ -667,7 +667,7 @@ export const zhCNContent: ContentDictionary = {
   team: {
     "talisa-tufts": {
       role: "创始人",
-      bio: "Talisa 在国际旅游与酒店业工作多年后创立了 Maisha Quest。她会四种语言——所以来自莫斯科、上海和马德里的旅客都能用自己的语言被照顾到，关于行程的第一次交流也几乎不需要翻译。",
+      bio: "Talisa 在国际旅游与酒店业工作多年后创立了 Maisha Quest。她会讲英语、斯瓦希里语、俄语和普通话——所以来自莫斯科或上海的旅客从关于行程的第一次交流起，就能用自己的语言被照顾到。",
       specialty: "行程设计与多语言客户沟通",
       favouritePlace: null,
     },

@@ -1155,8 +1155,10 @@ p {
    provocan reflow.
 
    Fases:
-     0–15000ms     El vídeo, a pantalla completa (`object-fit: cover`).
-     +0–900ms      Tras `ended`: el rótulo nítido se revela y se acerca
+     0–15000ms     El vídeo, completo siempre (`object-fit: contain`), con
+                   el Dark Canopy detrás.
+     +0–900ms      Tras `ended`: el propio fotograma final —el rótulo del
+                   cliente, sin una segunda imagen superpuesta— se acerca
                    ligeramente a quien mira (`data-intro-video-ended`).
      +1250–1900ms  El barrido circular (`mq-intro-portal-out`, igual que en
                    la versión anterior) recorta la capa y descubre el hero,
@@ -1225,67 +1227,30 @@ p {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* Explícito, no solo el valor por defecto: en móvil, con el vídeo
-     recortado por los lados, el sujeto principal se mantiene centrado. */
-  object-position: 50% 50%;
+  /* `contain`, no `cover`: el plano (910×512) se ve siempre completo, con el
+     Dark Canopy rellenando lo que sobre. `cover` recortaría los lados en
+     cualquier pantalla más alta que ancha —todo el catálogo de móviles— y el
+     rótulo manuscrito, que ocupa casi todo el ancho del plano, es lo primero
+     que perdería el recorte. `contain` centra por construcción: no hace
+     falta `object-position`. */
+  object-fit: contain;
   background: var(--canopy);
 }
 
-/* El último fotograma se atenúa cuando aparece el rótulo nítido: en móvil,
-   con el vídeo recortado por los lados, el rótulo grabado queda muy ampliado
-   y a veces cortado por el borde —esperado con `cover` sobre un plano
-   horizontal en una pantalla vertical—. Atenuar el fondo aquí es lo que evita
-   que compita con el rótulo nítido de encima; es la misma «profundidad
-   elegante» pedida para el propio rótulo, aplicada al fondo. */
+/* Al terminar de verdad, el último fotograma —el propio rótulo del cliente,
+   sin una segunda imagen superpuesta— se acerca ligeramente a quien mira:
+   una profundidad elegante, sin rotaciones ni efectos de videojuego, solo una
+   escala muy contenida sobre el fotograma congelado. */
 :root[data-intro][data-intro-video-ended] .mq-intro-video {
-  animation: mq-intro-video-dim 900ms var(--ease-out) forwards;
+  animation: mq-intro-video-settle 900ms var(--ease-out) forwards;
 }
 
-@keyframes mq-intro-video-dim {
+@keyframes mq-intro-video-settle {
   from {
-    filter: brightness(1) saturate(1);
+    transform: scale(1);
   }
   to {
-    filter: brightness(0.55) saturate(0.85);
-  }
-}
-
-/* --- El rótulo --------------------------------------------------------------
-   Oculto hasta que el vídeo termina de verdad; entonces se revela y se
-   acerca ligeramente a quien mira —una profundidad elegante, sin rotaciones
-   ni efectos de videojuego: solo opacidad y una escala muy contenida. */
-
-.mq-intro-logo-wrap {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 8vw;
-  opacity: 0;
-  pointer-events: none;
-}
-
-:root[data-intro][data-intro-video-ended] .mq-intro-logo-wrap {
-  animation: mq-intro-logo-reveal 900ms var(--ease-out) forwards;
-}
-
-.mq-intro-logo {
-  display: block;
-  width: clamp(200px, 44vw, 420px);
-  height: auto;
-  filter: drop-shadow(0 18px 40px rgb(0 0 0 / 0.45));
-}
-
-@keyframes mq-intro-logo-reveal {
-  from {
-    opacity: 0;
-    transform: scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1.045);
+    transform: scale(1.035);
   }
 }
 
