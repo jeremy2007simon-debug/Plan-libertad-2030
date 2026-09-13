@@ -239,7 +239,7 @@ export function MapExplorer({
                 }}
               >
                 <span
-                  className={`block size-2.5 rotate-45 border transition-all duration-[var(--dur-base)] ease-[var(--ease-out)] ${
+                  className={`mq-tap block size-2.5 rotate-45 border transition-[transform,background-color,border-color] duration-[var(--dur-base)] ease-[var(--ease-out)] ${
                     isActive
                       ? "animate-point-pulse scale-125 border-terracotta bg-terracotta"
                       : "border-forest/60 bg-cream group-hover:scale-110 group-hover:border-terracotta group-hover:bg-terracotta/25 group-focus-visible:scale-110 group-focus-visible:border-terracotta group-focus-visible:bg-terracotta/25"

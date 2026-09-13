@@ -100,7 +100,7 @@ export function MobileNav({
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-label={t.openMenu}
-        className={`flex min-h-11 items-center gap-2.5 px-2 lg:hidden ${
+        className={`mq-tap flex min-h-11 items-center gap-2.5 rounded-[var(--radius-pill)] px-2.5 lg:hidden ${
           dark ? "text-parchment" : "text-forest"
         }`}
       >
@@ -117,7 +117,7 @@ export function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label={t.siteMenu}
-          className="fixed inset-0 z-[60] flex flex-col bg-forest text-parchment lg:hidden"
+          className="mq-mobile-nav-panel fixed inset-0 z-[60] flex flex-col bg-forest text-parchment lg:hidden"
         >
           <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between px-5 sm:px-8">
             <span className="flex items-center gap-3">
@@ -133,7 +133,7 @@ export function MobileNav({
                   triggerRef.current?.focus();
                 }}
                 aria-label={t.closeMenu}
-                className="flex min-h-11 items-center gap-2.5 px-2 text-parchment"
+                className="mq-tap flex min-h-11 items-center gap-2.5 rounded-[var(--radius-pill)] px-2.5 text-parchment"
               >
                 <span className="eyebrow">{t.close}</span>
                 <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true">
@@ -157,7 +157,7 @@ export function MobileNav({
                 <li key={item.key} className="border-b border-rule-on-dark/45">
                   <Link
                     href={localeHref(locale, item.href)}
-                    className="flex min-h-14 items-center font-display text-[1.6rem] text-parchment"
+                    className="mq-tap flex min-h-14 items-center font-display text-[1.6rem] text-parchment active:text-sand"
                   >
                     {t.items[item.key as keyof typeof t.items]}
                   </Link>
@@ -169,7 +169,7 @@ export function MobileNav({
                           <li key={child.key}>
                             <Link
                               href={localeHref(locale, child.href)}
-                              className="flex min-h-11 items-center text-[0.92rem] text-on-dark-soft"
+                              className="mq-tap flex min-h-11 items-center text-[0.92rem] text-on-dark-soft active:text-sand"
                             >
                               {t.items[child.key as keyof typeof t.items]}
                             </Link>

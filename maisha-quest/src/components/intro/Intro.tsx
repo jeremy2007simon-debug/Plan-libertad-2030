@@ -85,7 +85,7 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
           quiera. Oculta por defecto —sin JavaScript no hay introducción— y
           también mientras el panel de vídeo ya está activo, para no duplicar
           controles. `IntroScript` la revela. */}
-      <button type="button" data-intro-watch="" className="mq-intro-watch" hidden>
+      <button type="button" data-intro-watch="" className="mq-tap mq-intro-watch" hidden>
         <svg aria-hidden="true" viewBox="0 0 24 24" className="mq-intro-watch-icon">
           <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor" />
         </svg>
@@ -125,13 +125,13 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
           </div>
 
           <div className="mq-intro-video-controls">
-            <button type="button" data-intro-enter="" className="mq-intro-video-enter">
+            <button type="button" data-intro-enter="" className="mq-tap mq-intro-video-enter">
               {t.introEnter}
             </button>
             <button
               type="button"
               data-intro-mute=""
-              className="mq-intro-video-mute"
+              className="mq-tap mq-icon-btn on-dark mq-intro-video-mute"
               aria-pressed="true"
             >
               {/* Icono de silencio; `IntroScript` alterna icono y texto según

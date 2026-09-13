@@ -95,7 +95,7 @@ export default async function CollectionPage({
             {collection.traits.map((trait) => (
               <li
                 key={trait}
-                className="border border-rule px-4 py-2 text-[0.85rem] text-ink-soft"
+                className="mq-tag border border-rule px-4 py-2 text-[0.85rem] text-ink-soft"
               >
                 {trait}
               </li>

@@ -68,11 +68,11 @@ export default async function FaqPage({
                 <div className="flex flex-col divide-y divide-rule">
                   {inTopic.map((faq) => (
                     <details key={faq.slug} id={faq.slug} className="group py-5">
-                      <summary className="flex cursor-pointer list-none items-start justify-between gap-6 [&::-webkit-details-marker]:hidden">
-                        <h3 className="font-display text-[1.2rem] leading-snug text-forest">
+                      <summary className="mq-tap flex cursor-pointer list-none items-start justify-between gap-6 rounded-[var(--radius-xs)] [&::-webkit-details-marker]:hidden">
+                        <h3 className="font-display text-[1.2rem] leading-snug text-forest transition-colors duration-[var(--dur-hover)] ease-[var(--ease-out)] group-hover:text-terracotta-text">
                           {faq.question}
                         </h3>
-                        <CompassPoint className="mt-2 size-3 shrink-0 text-gold transition-transform duration-500 group-open:rotate-45" />
+                        <CompassPoint className="mt-2 size-3 shrink-0 text-gold transition-transform duration-[var(--dur-hover)] ease-[var(--ease-out)] group-open:rotate-45" />
                       </summary>
                       <p className="mt-4 text-[0.96rem] leading-relaxed text-ink-soft">
                         {faq.answer}

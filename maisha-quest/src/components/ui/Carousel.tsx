@@ -64,9 +64,6 @@ export function Carousel({
   };
 
   const dark = tone === "dark";
-  const button = dark
-    ? "border-on-dark-faint text-on-dark hover:bg-parchment hover:text-forest"
-    : "border-forest/25 text-forest hover:bg-forest hover:text-parchment";
 
   return (
     <div className={`relative ${className}`}>
@@ -95,7 +92,7 @@ export function Carousel({
           tabIndex={-1}
           onClick={() => scrollBy(-1)}
           disabled={atStart}
-          className={`flex size-11 items-center justify-center rounded-full border transition-colors duration-300 disabled:opacity-25 ${button}`}
+          className={`mq-tap mq-icon-btn ${dark ? "on-dark" : ""}`}
         >
           <Chevron className="size-4 rotate-180" />
         </button>
@@ -104,7 +101,7 @@ export function Carousel({
           tabIndex={-1}
           onClick={() => scrollBy(1)}
           disabled={atEnd}
-          className={`flex size-11 items-center justify-center rounded-full border transition-colors duration-300 disabled:opacity-25 ${button}`}
+          className={`mq-tap mq-icon-btn ${dark ? "on-dark" : ""}`}
         >
           <Chevron className="size-4" />
         </button>

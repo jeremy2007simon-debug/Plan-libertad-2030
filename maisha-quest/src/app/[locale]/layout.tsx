@@ -121,7 +121,7 @@ export default async function LocaleLayout({
         {/* Salto al contenido: primer elemento enfocable de la página. */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[2px] focus:bg-forest focus:px-5 focus:py-3 focus:text-sm focus:text-parchment"
+          className="mq-tap sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[var(--radius-sm)] focus:bg-forest focus:px-5 focus:py-3 focus:text-sm focus:text-parchment"
         >
           {t.a11y.skipToContent}
         </a>

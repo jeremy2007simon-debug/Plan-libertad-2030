@@ -148,9 +148,9 @@ export async function Collections({
 
                       <Link
                         href={localeHref(locale, `/collections/${collection.id}`)}
-                        className="tap-44 group mt-6 inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
+                        className="mq-tap tap-44 group mt-6 inline-flex items-center gap-3 text-[0.9rem] font-semibold text-forest"
                       >
-                        <span className="border-b border-forest/30 pb-1 transition-colors duration-[var(--dur-hover)] group-hover:border-terracotta-text group-focus-visible:border-terracotta-text group-hover:text-terracotta-text group-focus-visible:text-terracotta-text">
+                        <span className="mq-link group-hover:text-terracotta-text group-focus-visible:text-terracotta-text">
                           {t.home.collections.explore(collection.name)}
                         </span>
                         <MagneticArrow className="text-terracotta-text" />

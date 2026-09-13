@@ -169,7 +169,7 @@ export function LazyVideo({
           type="button"
           onClick={togglePlay}
           aria-pressed={playing}
-          className="inline-flex min-h-11 items-center gap-3 rounded-[2px] bg-[color-mix(in_srgb,var(--canopy)_78%,transparent)] px-5 py-3 text-[0.7rem] font-semibold tracking-[0.06em] text-parchment uppercase backdrop-blur-sm transition-colors duration-[var(--dur-hover)] hover:bg-parchment hover:text-forest"
+          className="mq-tap inline-flex min-h-11 items-center gap-3 rounded-[var(--radius-pill)] bg-[color-mix(in_srgb,var(--canopy)_78%,transparent)] px-5 py-3 text-[0.85rem] font-semibold text-parchment backdrop-blur-sm hover:bg-parchment hover:text-forest"
         >
           <PlayIcon playing={playing} className="size-3.5" />
           {playing ? t.pause : t.play}
@@ -181,7 +181,7 @@ export function LazyVideo({
             onClick={toggleSound}
             aria-pressed={!muted}
             aria-label={muted ? t.unmute : t.mute}
-            className="inline-flex size-11 items-center justify-center rounded-[2px] bg-[color-mix(in_srgb,var(--canopy)_78%,transparent)] text-parchment backdrop-blur-sm transition-colors duration-[var(--dur-hover)] hover:bg-parchment hover:text-forest"
+            className="mq-tap mq-icon-btn on-dark bg-[color-mix(in_srgb,var(--canopy)_78%,transparent)] backdrop-blur-sm"
           >
             <SoundIcon muted={muted} className="size-4" />
           </button>

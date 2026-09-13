@@ -102,7 +102,7 @@ export function MobileCTABar({
       <div className="flex items-stretch gap-3">
         <Link
           href={localeHref(locale, "/plan")}
-          className="flex min-h-12 flex-1 items-center justify-center rounded-[2px] bg-terracotta-deep px-5 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
+          className="mq-tap flex min-h-12 flex-1 items-center justify-center rounded-[var(--radius-pill)] bg-terracotta-deep px-5 text-[0.85rem] font-semibold text-white"
         >
           {t.planCta}
         </Link>
@@ -111,7 +111,7 @@ export function MobileCTABar({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t.whatsappLabel}
-          className="flex min-h-12 items-center justify-center gap-2 rounded-[2px] border border-on-dark-faint px-4 text-[0.72rem] font-semibold tracking-[0.06em] text-parchment uppercase"
+          className="mq-tap flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-pill)] border border-on-dark-faint px-4 text-[0.85rem] font-semibold text-parchment"
         >
           <WhatsAppGlyph className="size-4" />
           {t.chat}

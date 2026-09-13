@@ -163,7 +163,7 @@ export function LocaleSelector({
         aria-controls={menuId}
         aria-haspopup="menu"
         aria-label={`${t.buttonLabel} — ${current.nativeName}`}
-        className={`eyebrow flex min-h-11 items-center gap-1.5 px-2 transition-colors duration-300 ${
+        className={`mq-tap eyebrow flex min-h-11 items-center gap-1.5 rounded-[var(--radius-pill)] px-2.5 ${
           dark ? "text-on-dark-soft hover:text-parchment" : "text-ink-soft hover:text-forest"
         }`}
       >
@@ -178,7 +178,7 @@ export function LocaleSelector({
           id={menuId}
           role="menu"
           aria-label={t.menuLabel}
-          className="absolute right-0 top-full z-50 mt-2 w-56 border border-rule bg-cream p-2 shadow-[0_18px_48px_-24px_rgba(27,29,26,0.4)]"
+          className="mq-dropdown-panel absolute right-0 top-full z-50 mt-2 w-56 rounded-[var(--radius-sm)] border border-rule bg-cream p-2 shadow-[0_18px_48px_-24px_rgba(27,29,26,0.4)]"
         >
           {LOCALES.map((option) => {
             const meta = LOCALE_META[option];
@@ -194,7 +194,7 @@ export function LocaleSelector({
                 href={`/${option}${path === "/" ? "" : path}${suffix}`}
                 onClick={() => remember(option)}
                 aria-busy={changingTo === option || undefined}
-                className={`flex min-h-11 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm transition-colors duration-[var(--dur-hover)] hover:bg-sand/30 focus-visible:bg-sand/30 ${
+                className={`mq-tap flex min-h-11 w-full items-center justify-between gap-3 rounded-[var(--radius-xs)] px-3 py-2 text-left text-sm hover:bg-sand/30 focus-visible:bg-sand/30 ${
                   active || changingTo === option
                     ? "bg-sand/25 text-forest"
                     : "text-ink"

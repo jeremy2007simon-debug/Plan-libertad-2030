@@ -65,6 +65,20 @@
   --dur-base: 560ms;
   --dur-fast: 280ms;
   --dur-hover: 300ms;
+  /* Microinteracciones: hover/foco en 180-300 ms (--dur-hover cubre eso), y
+     la pulsación aparte, más corta, porque un "achicado" al soltar el dedo
+     que tardara lo mismo que un cambio de color se sentiría perezoso. */
+  --dur-press: 140ms;
+
+  /* Radios: una jerarquía de tres, no un solo valor para todo.
+       --radius-xs   etiquetas y chips informativos (duración, perfil de viaje)
+       --radius-sm   campos, tarjetas de elección, superficies pequeñas
+       --radius-pill botones primarios, controles de icono, paneles del vídeo
+     Las fotografías y las secciones grandes NO llevan radio: su geometría
+     recta es deliberada y es lo que distingue "editorial" de "app". */
+  --radius-xs: 3px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
 
   /* Altura de la cabecera; la usan el scroll-margin y los heros. */
   --header-h: 76px;
@@ -1134,6 +1148,240 @@ p {
 }
 
 /* --------------------------------------------------------------------------
+   Sistema de controles
+   --------------------------------------------------------------------------
+   Clases compartidas por botones, campos, chips de elección y controles de
+   icono en toda la web —`Button.tsx` es el único punto que decide FORMA y
+   JERARQUÍA (primario en cápsula, secundario con contorno fino), pero el
+   campo de un formulario o una tarjeta de elección del planificador no pasan
+   por ese componente, así que su radio, su transición y su respuesta al tacto
+   viven aquí para no repetir cuatro veces el mismo número.
+
+   Reparto de radios (ver `--radius-*` en :root): las fotografías y las
+   secciones grandes NO llevan radio —su geometría recta es deliberada—, así
+   que estas clases son las únicas que lo usan.
+
+   Pulsación: un `scale(0.97)` de 140 ms en vez de un cambio de color solo, en
+   cualquier control que lleve `.mq-tap`. Sin rebote —una única curva de
+   salida, la misma que el resto de la web— y desactivado del todo con
+   `prefers-reduced-motion`, porque una escala sigue siendo una animación de
+   movimiento aunque dure poco.
+   -------------------------------------------------------------------------- */
+
+@layer components {
+
+.mq-tap {
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out);
+}
+
+.mq-tap:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-tap {
+    transition:
+      background-color var(--dur-hover) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) var(--ease-out);
+  }
+  .mq-tap:active {
+    transform: none;
+  }
+}
+
+/* --- Controles de icono ----------------------------------------------------
+   Circulares, 44 px de área táctil real (no solo visual), contorno fino que
+   se rellena al pasar por encima. Usado por el carrusel, el contador de
+   viajeros del planificador, y los controles de los dos reproductores de
+   vídeo (introducción e "Impacto"). */
+.mq-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--rule-strong);
+  color: var(--forest);
+  background: transparent;
+}
+
+.mq-icon-btn:hover {
+  background: var(--forest);
+  color: var(--parchment);
+  border-color: var(--forest);
+}
+
+.mq-icon-btn:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Sobre fondo oscuro (vídeo, cabecera, secciones verdes): el contorno y el
+   relleno se invierten en vez de desaparecer sobre un fondo del mismo tono. */
+.mq-icon-btn.on-dark {
+  border-color: var(--rule-on-dark);
+  color: var(--on-dark);
+}
+
+.mq-icon-btn.on-dark:hover {
+  background: var(--parchment);
+  color: var(--forest);
+  border-color: var(--parchment);
+}
+
+/* --- Campos --------------------------------------------------------------
+   Un input, un select y un textarea comparten radio, filete y foco. El
+   filete pasa de `--rule` a terracota con el mismo tiempo que un botón: un
+   campo es, al final, otro control con el que se interactúa. */
+.mq-field {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--forest);
+  transition:
+    border-color var(--dur-hover) var(--ease-out),
+    box-shadow var(--dur-hover) var(--ease-out);
+}
+
+.mq-field:hover {
+  border-color: var(--rule-strong);
+}
+
+.mq-field:focus-visible {
+  border-color: var(--terracotta);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--terracotta) 18%, transparent);
+}
+
+.mq-field[aria-invalid="true"] {
+  border-color: var(--terracotta);
+}
+
+.mq-field:disabled {
+  opacity: 0.45;
+}
+
+/* --- Tarjetas de elección --------------------------------------------------
+   El radio/checkbox de `ChoiceGrid` y de la lista de destinos del
+   planificador: un filete que se despega del gris de fondo (`--rule`) hacia
+   el color de marca al elegir, con una superficie tintada muy suave detrás en
+   vez del bloque sólido de antes —más cercano a una selección editorial que
+   a un botón de aplicación. */
+.mq-choice {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  transition:
+    border-color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out);
+}
+
+.mq-choice:hover {
+  border-color: color-mix(in srgb, var(--forest) 40%, transparent);
+}
+
+.mq-choice[data-checked="true"] {
+  border-color: var(--terracotta);
+  background: color-mix(in srgb, var(--terracotta) 7%, transparent);
+}
+
+/* --- Chips informativos -----------------------------------------------------
+   Etiquetas que no se pulsan (duración, perfil de viaje, intereses): un radio
+   pequeño para que dejen de leerse como un rótulo cuadrado sin convertirse en
+   una píldora, que aquí competiría con los botones de verdad. */
+.mq-tag {
+  border-radius: var(--radius-xs);
+}
+
+/* --- Enlaces editoriales ----------------------------------------------------
+   Texto con subrayado que se dibuja al pasar por encima o al recibir el
+   foco, en vez de estar siempre puesto. El truco es un degradado de dos
+   colores del mismo tono que el texto, con su tamaño en cero: crecer su
+   ancho de 0 a 100% dibuja la línea sin tocar `text-decoration` ni provocar
+   reflow, y funciona igual de bien en un enlace de una palabra que en uno
+   partido en dos líneas. La flecha (`MagneticArrow`, en `motion.tsx`) es
+   aparte: este enlace solo pone el trazo. */
+.mq-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    background-size var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out);
+}
+
+.mq-link:hover,
+.mq-link:focus-visible,
+/* Cuando el trazo va en un <span> hijo y la flecha (`MagneticArrow`) es un
+   hermano suyo dentro del mismo `<a class="group">` — el patrón de
+   Collections/FeaturedJourneys/SafariCard —, lo que se pasa por encima o
+   recibe el foco es el enlace entero, no el `<span>`. */
+:where(.group):hover .mq-link,
+:where(.group):focus-visible .mq-link {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-link {
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+}
+
+/* --- Carga -------------------------------------------------------------- */
+
+@keyframes mq-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mq-spinner {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  animation: mq-spin 700ms linear infinite;
+}
+
+/* --- Paneles superpuestos ---------------------------------------------
+   Entrada breve del menú móvil a pantalla completa y del menú del selector
+   de idioma: antes aparecían de golpe (montaje condicional sin transición).
+   `both` deja el estado final puesto tras terminar, así que no hace falta
+   quitar la animación a mano. */
+@keyframes mq-panel-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.mq-mobile-nav-panel {
+  animation: mq-panel-fade-in 320ms var(--ease-out) both;
+}
+
+.mq-dropdown-panel {
+  animation: mq-panel-fade-in 220ms var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-mobile-nav-panel,
+  .mq-dropdown-panel {
+    animation: none;
+  }
+}
+
+}
+
+/* --------------------------------------------------------------------------
    Introducción cinematográfica — experiencia de vídeo opcional
    --------------------------------------------------------------------------
 
@@ -1240,41 +1488,31 @@ p {
   gap: 0.75rem;
 }
 
+/* Cápsula, igual que `primary` en `Button.tsx`: el vídeo tiene su propia
+   paleta (arena sobre Dark Canopy, no terracota) porque vive sobre una
+   fotografía en vez de sobre pergamino, pero la FORMA y la respuesta al
+   tacto son las mismas —es lo que integra este control con el resto del
+   sistema en vez de dejarlo como una pieza aparte. */
 .mq-intro-video-enter {
   min-height: 44px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.75rem;
   border: 1px solid var(--sand);
-  border-radius: 2px;
-  font-size: 0.72rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--canopy);
   background: var(--sand);
-  transition:
-    background-color 250ms var(--ease-out),
-    color 250ms var(--ease-out);
 }
 
 .mq-intro-video-enter:hover {
   background: var(--parchment);
 }
 
+/* El botón de silencio reutiliza `.mq-icon-btn` (ver «Sistema de
+   controles», más arriba) en su variante `on-dark`; esto solo ajusta el
+   fondo semitransparente propio del vídeo. */
 .mq-intro-video-mute {
-  display: flex;
-  min-height: 44px;
-  min-width: 44px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgb(233 223 206 / 0.34);
-  border-radius: 2px;
-  color: var(--parchment);
   background: rgb(20 32 25 / 0.4);
-  transition: border-color 250ms var(--ease-out);
-}
-
-.mq-intro-video-mute:hover {
-  border-color: var(--sand);
 }
 
 .mq-intro-video-mute-icon {
@@ -1306,17 +1544,14 @@ p {
   min-height: 40px;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.55rem 0.9rem 0.55rem 0.7rem;
+  padding: 0.55rem 1rem 0.55rem 0.75rem;
   border: 1px solid rgb(233 223 206 / 0.3);
-  border-radius: 999px;
-  font-size: 0.68rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--parchment);
   background: rgb(20 32 25 / 0.32);
   backdrop-filter: blur(2px);
-  transition: border-color 250ms var(--ease-out);
 }
 
 .mq-intro-watch:hover {

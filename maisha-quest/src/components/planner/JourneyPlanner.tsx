@@ -328,7 +328,7 @@ export function JourneyPlanner({
             href={`${COMPANY.emailHref}?subject=${encodeURIComponent(
               `${t.summary.heading} — ${state.firstName} ${state.lastName}`.trim(),
             )}&body=${encodeURIComponent(status.summary)}`}
-            className="inline-flex min-h-11 items-center rounded-[2px] bg-terracotta-deep px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-white uppercase"
+            className="mq-tap inline-flex min-h-11 items-center rounded-[var(--radius-pill)] bg-terracotta-deep px-6 py-3 text-[0.85rem] font-semibold text-white"
           >
             {t.status.sendByEmail}
           </a>
@@ -336,7 +336,7 @@ export function JourneyPlanner({
             href={whatsappHref(status.summary)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center rounded-[2px] border border-forest/35 px-6 py-3 text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase"
+            className="mq-tap inline-flex min-h-11 items-center rounded-[var(--radius-sm)] border border-forest/35 px-6 py-3 text-[0.85rem] font-semibold text-forest hover:bg-forest hover:text-parchment hover:border-forest"
           >
             {t.status.sendOnWhatsApp}
           </a>
@@ -407,11 +407,11 @@ export function JourneyPlanner({
                 type="button"
                 disabled={index > stepIndex}
                 onClick={() => goTo(index)}
-                className={`tap-44 text-[0.75rem] tracking-[0.06em] uppercase transition-colors duration-[var(--dur-hover)] disabled:cursor-default ${
+                className={`mq-tap tap-44 rounded-[var(--radius-pill)] px-3 text-[0.8rem] disabled:cursor-default ${
                   index === stepIndex
-                    ? "font-semibold text-forest"
+                    ? "bg-forest/8 font-semibold text-forest"
                     : index < stepIndex
-                      ? "text-ink-faint underline decoration-rule underline-offset-4 hover:text-terracotta-text"
+                      ? "mq-link text-ink-faint hover:text-terracotta-text"
                       : "text-ink-faint"
                 }`}
               >
@@ -470,11 +470,8 @@ export function JourneyPlanner({
                   return (
                     <li key={destination.slug}>
                       <label
-                        className={`flex min-h-14 cursor-pointer items-center justify-between gap-3 border px-4 py-3 transition-colors duration-300 ${
-                          checked
-                            ? "border-terracotta bg-terracotta/8"
-                            : "border-rule hover:border-forest/40"
-                        }`}
+                        data-checked={checked}
+                        className="mq-choice flex min-h-14 cursor-pointer items-center justify-between gap-3 px-4 py-3"
                       >
                         <span>
                           <span className="block text-[0.95rem] text-forest">
@@ -486,7 +483,7 @@ export function JourneyPlanner({
                         </span>
                         <input
                           type="checkbox"
-                          className="size-4 accent-[#B56545]"
+                          className="size-4 accent-terracotta-deep"
                           checked={checked}
                           onChange={(event) =>
                             update(
@@ -524,12 +521,12 @@ export function JourneyPlanner({
                   disabled={state.datesFlexible}
                   min={new Date().toISOString().slice(0, 7)}
                   onChange={(event) => update("travelMonth", event.target.value)}
-                  className="min-h-12 w-full max-w-xs border border-rule bg-white px-4 text-[0.95rem] text-forest disabled:opacity-45"
+                  className="mq-field min-h-12 max-w-xs px-4 text-[0.95rem]"
                 />
                 <label className="mt-3 flex min-h-11 w-fit cursor-pointer items-center gap-2.5 text-[0.9rem] text-ink-soft">
                   <input
                     type="checkbox"
-                    className="size-4 accent-[#B56545]"
+                    className="size-4 accent-terracotta-deep"
                     checked={state.datesFlexible}
                     onChange={(event) => {
                       update("datesFlexible", event.target.checked);
@@ -675,7 +672,7 @@ export function JourneyPlanner({
                       setLanguageTouched(true);
                       update("preferredLanguage", event.target.value);
                     }}
-                    className="min-h-12 w-full border border-rule bg-white px-4 text-[0.95rem] text-forest"
+                    className="mq-field min-h-12 px-4 text-[0.95rem]"
                   >
                     {LOCALES.map((code) => (
                       <option key={code} value={code}>
@@ -693,14 +690,14 @@ export function JourneyPlanner({
                   value={state.specialRequests}
                   onChange={(event) => update("specialRequests", event.target.value)}
                   placeholder={t.fields.notesPlaceholder}
-                  className="w-full border border-rule bg-white px-4 py-3 text-[0.95rem] leading-relaxed text-forest placeholder:text-ink-faint"
+                  className="mq-field px-4 py-3 text-[0.95rem] leading-relaxed placeholder:text-ink-faint"
                 />
               </Field>
 
               <label className="flex cursor-pointer items-start gap-3 text-[0.88rem] leading-relaxed text-ink-soft">
                 <input
                   type="checkbox"
-                  className="mt-1 size-4 shrink-0 accent-[#B56545]"
+                  className="mt-1 size-4 shrink-0 accent-terracotta-deep"
                   checked={state.consent}
                   onChange={(event) => update("consent", event.target.checked)}
                 />
@@ -761,7 +758,7 @@ export function JourneyPlanner({
               size="lg"
               onClick={submit}
               type="button"
-              disabled={status.kind === "sending"}
+              loading={status.kind === "sending"}
             >
               {status.kind === "sending" ? t.sending : t.send}
             </Button>
@@ -872,9 +869,7 @@ function TextInput({
       aria-required={required || undefined}
       aria-invalid={invalid || undefined}
       onChange={(event) => onChange(event.target.value)}
-      className={`min-h-12 w-full border bg-white px-4 text-[0.95rem] text-forest ${
-        invalid ? "border-terracotta" : "border-rule"
-      }`}
+      className="mq-field min-h-12 px-4 text-[0.95rem]"
     />
   );
 }
@@ -918,11 +913,8 @@ function ChoiceGrid({
           return (
             <li key={option}>
               <label
-                className={`flex min-h-14 cursor-pointer flex-col justify-center border px-4 py-3 transition-colors duration-300 ${
-                  checked
-                    ? "border-terracotta bg-terracotta/8"
-                    : "border-rule hover:border-forest/40"
-                }`}
+                data-checked={checked}
+                className="mq-choice flex min-h-14 cursor-pointer flex-col justify-center px-4 py-3"
               >
                 <span className="flex items-center gap-3">
                   <input
@@ -931,7 +923,7 @@ function ChoiceGrid({
                     value={option}
                     checked={checked}
                     onChange={() => onChange(option)}
-                    className="size-4 accent-[#B56545]"
+                    className="size-4 accent-terracotta-deep"
                   />
                   <span className="text-[0.95rem] text-forest">{text.label}</span>
                 </span>
@@ -992,7 +984,8 @@ function Counter({
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
           aria-label={removeLabel}
-          className="flex size-11 items-center justify-center border border-rule text-forest transition-colors duration-300 hover:border-forest"
+          disabled={value <= min}
+          className="mq-tap mq-icon-btn"
         >
           −
         </button>
@@ -1003,7 +996,7 @@ function Counter({
           type="button"
           onClick={() => onChange(value + 1)}
           aria-label={addLabel}
-          className="flex size-11 items-center justify-center border border-rule text-forest transition-colors duration-300 hover:border-forest"
+          className="mq-tap mq-icon-btn"
         >
           +
         </button>
@@ -1096,7 +1089,7 @@ function Review({
           <button
             type="button"
             onClick={() => onEdit(STEPS.indexOf(row.step))}
-            className="text-[0.75rem] tracking-[0.06em] text-ink-faint uppercase underline underline-offset-4 transition-colors duration-300 hover:text-terracotta-text"
+            className="mq-tap mq-link tap-44 text-[0.8rem] text-ink-faint hover:text-terracotta-text"
           >
             {t.review.edit}
           </button>

@@ -121,21 +121,31 @@ export function Header({
                     aria-current={active ? "page" : undefined}
                     aria-expanded={item.children ? openMenu === item.key : undefined}
                     onFocus={() => item.children && openWithDelay(item.key)}
-                    className={`relative flex min-h-11 items-center px-3.5 text-[0.82rem] font-medium tracking-[0.02em] transition-colors duration-[var(--dur-hover)] ${linkColor} ${
+                    className={`mq-tap relative flex min-h-11 items-center rounded-[var(--radius-pill)] px-3.5 text-[0.82rem] font-medium hover:bg-[color-mix(in_srgb,var(--parchment)_10%,transparent)] ${linkColor} ${
                       active ? "text-parchment" : ""
                     }`}
                   >
                     {label}
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-3.5 bottom-2 h-px bg-[var(--gold)]"
-                      />
-                    )}
+                    {/* El filete activo crece desde el centro en vez de estar
+                        siempre puesto a ancho completo: una transición, no
+                        solo un estado. */}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute inset-x-3.5 bottom-1.5 h-px origin-center scale-x-0 bg-[var(--gold)] transition-transform duration-[var(--dur-hover)] ease-[var(--ease-out)] ${
+                        active ? "scale-x-100" : ""
+                      }`}
+                    />
                   </Link>
 
-                  {item.children && openMenu === item.key && (
-                    <div className="absolute left-0 top-full w-80 border border-[var(--rule-on-dark)] bg-[color-mix(in_srgb,var(--canopy)_96%,transparent)] p-2 backdrop-blur-[10px]">
+                  {item.children && (
+                    <div
+                      aria-hidden={openMenu !== item.key}
+                      className={`absolute left-0 top-full w-80 origin-top rounded-[var(--radius-sm)] border border-[var(--rule-on-dark)] bg-[color-mix(in_srgb,var(--canopy)_96%,transparent)] p-2 backdrop-blur-[10px] transition-[opacity,transform] duration-[var(--dur-fast)] ease-[var(--ease-out)] ${
+                        openMenu === item.key
+                          ? "pointer-events-auto translate-y-0 opacity-100"
+                          : "pointer-events-none -translate-y-1 opacity-0"
+                      }`}
+                    >
                       <ul>
                         {item.children.map((child) => {
                           const description =
@@ -146,7 +156,8 @@ export function Header({
                             <li key={child.key}>
                               <Link
                                 href={localeHref(locale, child.href)}
-                                className="block px-3.5 py-3 transition-colors duration-[var(--dur-hover)] hover:bg-[color-mix(in_srgb,var(--olive)_38%,transparent)]"
+                                tabIndex={openMenu === item.key ? undefined : -1}
+                                className="mq-tap block rounded-[var(--radius-xs)] px-3.5 py-3 hover:bg-[color-mix(in_srgb,var(--olive)_38%,transparent)]"
                               >
                                 <span className="block text-[0.9rem] text-parchment">
                                   {t.items[child.key as keyof typeof t.items]}

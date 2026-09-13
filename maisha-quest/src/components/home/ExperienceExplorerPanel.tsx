@@ -139,8 +139,8 @@ export function ExperienceExplorerPanel({
           <>
             <span
               aria-hidden="true"
-              className={`hidden h-px shrink-0 origin-right bg-[var(--gold)] transition-all duration-300 sm:block ${
-                isActive ? "w-8 opacity-100" : "w-0 opacity-0"
+              className={`hidden h-px w-8 shrink-0 origin-right bg-[var(--gold)] transition-[transform,opacity] duration-300 ease-[var(--ease-out)] sm:block ${
+                isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
               }`}
             />
             <span

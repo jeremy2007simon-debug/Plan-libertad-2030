@@ -158,7 +158,7 @@ export default async function DestinationPage({
                       {destination.wildlife.map((animal) => (
                         <span
                           key={animal}
-                          className="border border-rule px-3 py-1.5 text-[0.8rem] text-ink-soft"
+                          className="mq-tag border border-rule px-3 py-1.5 text-[0.8rem] text-ink-soft"
                         >
                           {animal}
                         </span>

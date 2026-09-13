@@ -42,7 +42,7 @@ export function SafariCard({
           preload={preload}
           className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05] group-focus-visible:scale-[1.05]"
         />
-        <span className="absolute left-4 top-4 bg-parchment/92 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.08em] text-forest uppercase">
+        <span className="mq-tag absolute left-4 top-4 bg-parchment/92 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.08em] text-forest uppercase">
           {t.common.dayCount(safari.durationDays)}
         </span>
       </Link>
@@ -69,7 +69,7 @@ export function SafariCard({
         </p>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          <span className="border border-rule px-2.5 py-1 text-[0.72rem] text-ink-soft">
+          <span className="mq-tag border border-rule px-2.5 py-1 text-[0.72rem] text-ink-soft">
             {safari.travellerProfile}
           </span>
         </div>
@@ -86,13 +86,13 @@ export function SafariCard({
           <div className="flex items-center gap-4">
             <Link
               href={localeHref(locale, `/safaris/${safari.slug}`)}
-              className="text-[0.72rem] font-semibold tracking-[0.06em] text-forest uppercase underline decoration-forest/30 underline-offset-[6px] transition-colors duration-300 hover:text-terracotta-text hover:decoration-terracotta-text"
+              className="mq-tap mq-link tap-44 text-[0.85rem] font-semibold text-forest hover:text-terracotta-text"
             >
               {t.common.viewJourney}
             </Link>
             <Link
               href={localeHref(locale, `/plan?safari=${safari.slug}`)}
-              className="text-[0.72rem] font-semibold tracking-[0.06em] text-terracotta-text uppercase underline decoration-terracotta-text/35 underline-offset-[6px] transition-colors duration-300 hover:decoration-terracotta-text"
+              className="mq-tap mq-link tap-44 text-[0.85rem] font-semibold text-terracotta-text"
             >
               {t.common.customize}
             </Link>
