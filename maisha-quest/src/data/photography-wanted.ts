@@ -239,4 +239,24 @@ export const WANTED_PHOTOGRAPHY: WantedPhoto[] = [
       "haya una autorizada mejor — pero sin darla por definitiva.",
     priority: "media",
   },
+  {
+    key: "experience.nightlife",
+    subject:
+      "Escena real y autorizada de vida nocturna en Arusha, Zanzíbar o " +
+      "cualquier plaza que el cliente confirme — un bar, una terraza, música " +
+      "en vivo, algo reconocible como vida nocturna. No existe ninguna en el " +
+      "catálogo actual: la que se usaba antes (un lago con una jirafa, de día) " +
+      "pasaba la comprobación cromática del selector por casualidad de color, " +
+      "no porque representara la categoría.",
+    placement: "Selector de experiencias (home y /experiences), tarjeta de " +
+      "Nightlife en /experiences, cabecera de /experiences/nightlife",
+    ratio: "16:10 (panel panorámico), 3:2 (tarjeta) y 21:9 (cabecera)",
+    fillIn: "image de la Experience \"nightlife\" en src/data/structure/experiences.ts",
+    meanwhile:
+      "`image` queda sin definir a propósito: cada uno de los tres sitios " +
+      "pasa a un tratamiento tipográfico neutral —mismo fondo oscuro, el " +
+      "nombre de la categoría como textura de fondo—, con el mismo contenido " +
+      "y el mismo enlace que si hubiera fotografía.",
+    priority: "media",
+  },
 ];

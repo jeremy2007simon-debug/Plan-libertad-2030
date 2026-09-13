@@ -72,13 +72,14 @@ export const EXPERIENCE_STRUCTURE: ExperienceStructure[] = [
   {
     slug: "nightlife",
     category: "nightlife",
-    // Provisional: sin fotos propias de vida nocturna. `savannah-acacia-sunset`
-    // era la primera opción por tema, pero a 2264 K, 63% de saturación y fuera
-    // de rango cromático rompía la comprobación del explorador
-    // (check-experience-cards.mjs exige 2600-7000 K, saturación hasta 45% y
-    // menos de 16% de píxeles azul/violeta entre las cinco fotografías). Esta
-    // pasa las tres comprobaciones — sigue sin representar vida nocturna real.
-    image: PHOTOS["lake-manyara-giraffe"],
+    // Sin fotografía: no existe ninguna imagen autorizada de vida nocturna.
+    // Antes se ponía aquí una fotografía elegida solo porque pasaba la
+    // comprobación cromática del selector (`check-experience-cards.mjs`) —
+    // un lago con una jirafa, que no representa la categoría en absoluto.
+    // `image` queda sin definir a propósito: cada sitio que la pinta (tarjeta
+    // de /experiences, cabecera de su ficha, selector de la home) pasa a un
+    // tratamiento tipográfico neutral en su lugar. Ver `photography-wanted.ts`
+    // si llega una fotografía real que lo resuelva.
     destinationSlugs: ["arusha", "zanzibar"],
   },
 ];
@@ -90,25 +91,18 @@ export const EXPERIENCE_SLUGS = EXPERIENCE_STRUCTURE.map((e) => e.slug);
  * aparecen en la página /experiences de maishaquest.com. Con una sola
  * `Experience` por categoría, `leadExperienceSlug` coincide con `id`.
  *
- * `noPhoto` — solo en `nightlife`. No existe ninguna fotografía autorizada de
- * vida nocturna: la que se usaba antes (un lago con una jirafa) pasaba la
- * comprobación cromática del selector por casualidad de color, no porque
- * representara la categoría. Se retira del selector panorámico —que muestra
- * una única fotografía protagonista y por eso es donde el desajuste se nota
- * más— a favor de un tratamiento tipográfico neutral, con el mismo contenido
- * y el mismo enlace. La `Experience` en sí conserva su fotografía original
- * (ficha de detalle, rejilla de `/experiences`): ese es un desajuste menor,
- * de una imagen entre muchas en una rejilla, no la única imagen protagonista
- * de la categoría, así que se deja fuera de esta ronda.
+ * `nightlife` no tiene `image` (ver `Experience.image` y la propia entrada en
+ * `EXPERIENCE_STRUCTURE`): cada sitio que pinta su fotografía —incluido este
+ * selector— lo detecta directamente comprobando si `image` existe, en vez de
+ * llevar aquí una segunda bandera que podría desincronizarse de la primera.
  */
 export const EXPERIENCE_CATEGORIES: {
   id: Experience["category"];
   leadExperienceSlug: string;
-  noPhoto?: true;
 }[] = [
   { id: "thrill-seeker-adventure", leadExperienceSlug: "thrill-seeker-adventure" },
   { id: "water-activities", leadExperienceSlug: "water-activities" },
   { id: "tours-and-safaris", leadExperienceSlug: "tours-and-safaris" },
   { id: "shopping-and-leisure", leadExperienceSlug: "shopping-and-leisure" },
-  { id: "nightlife", leadExperienceSlug: "nightlife", noPhoto: true },
+  { id: "nightlife", leadExperienceSlug: "nightlife" },
 ];

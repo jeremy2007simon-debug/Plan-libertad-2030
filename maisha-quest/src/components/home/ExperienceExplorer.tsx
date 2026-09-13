@@ -48,16 +48,16 @@ export async function ExperienceExplorer({
     shortDescription: category.experience.shortDescription,
     objectPosition: OBJECT_POSITION[category.id] ?? "center",
     // `nightlife`: sin fotografía autorizada que la represente de verdad (ver
-    // el comentario en `EXPERIENCE_CATEGORIES`). `null` activa el tratamiento
-    // tipográfico neutral en `ExperienceExplorerPanel`, con el mismo
-    // contenido y el mismo enlace que las demás filas.
-    image: category.noPhoto
-      ? null
-      : {
+    // `Experience.image`). `null` activa el tratamiento tipográfico neutral
+    // en `ExperienceExplorerPanel`, con el mismo contenido y el mismo enlace
+    // que las demás filas.
+    image: category.experience.image
+      ? {
           src: category.experience.image.src,
           alt: alt[category.experience.image.altKey],
           blurDataURL: category.experience.image.blurDataURL,
-        },
+        }
+      : null,
   }));
 
   return (

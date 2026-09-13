@@ -265,7 +265,14 @@ export interface Experience {
     | "nightlife";
   shortDescription: string;
   description: string;
-  image: ResolvedImage;
+  /**
+   * `undefined` en `nightlife`: no existe ninguna fotografía autorizada que
+   * represente vida nocturna real (ver el comentario en
+   * `EXPERIENCE_STRUCTURE`). Cada sitio que pinta esta imagen —la tarjeta de
+   * `/experiences`, la cabecera de su propia ficha— pasa a un tratamiento
+   * tipográfico neutral en su lugar, nunca a una fotografía que no encaja.
+   */
+  image?: ResolvedImage;
   /** Destinos donde se vive esta experiencia. */
   destinationSlugs: Slug[];
 }
@@ -563,7 +570,8 @@ export interface DestinationText {
 export interface ExperienceStructure {
   slug: Slug;
   category: Experience["category"];
-  image: ResolvedImage;
+  /** Ver el comentario en `Experience.image`: opcional solo en `nightlife`. */
+  image?: ResolvedImage;
   destinationSlugs: Slug[];
 }
 

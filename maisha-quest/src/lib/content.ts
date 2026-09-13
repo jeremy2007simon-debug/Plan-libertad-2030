@@ -418,11 +418,10 @@ export function getExperienceForDestination(locale: Locale, slug: Slug): Experie
 /** Las cinco tarjetas del selector de experiencia. */
 export async function getExperienceCategories(
   locale: Locale,
-): Promise<{ id: string; experience: Experience; noPhoto?: true }[]> {
+): Promise<{ id: string; experience: Experience }[]> {
   return EXPERIENCE_CATEGORIES.map((category) => ({
     id: category.id,
     experience: composeExperience(locale, category.leadExperienceSlug),
-    noPhoto: category.noPhoto,
   }));
 }
 

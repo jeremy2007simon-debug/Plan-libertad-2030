@@ -43,7 +43,12 @@ export async function generateMetadata({
     path: `/experiences/${experience.slug}`,
     title: experience.name,
     description: experience.description.slice(0, 158),
-    image: { src: experience.image.src, alt: alt[experience.image.altKey] },
+    // `nightlife` no tiene fotografía autorizada (ver Experience.image):
+    // sin `image`, el Open Graph cae al valor por defecto del sitio en vez
+    // de forzar una que no encaja.
+    ...(experience.image
+      ? { image: { src: experience.image.src, alt: alt[experience.image.altKey] } }
+      : {}),
   });
 }
 

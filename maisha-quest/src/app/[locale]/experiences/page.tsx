@@ -63,12 +63,26 @@ export default async function ExperiencesPage({
                     className="group block"
                   >
                     <div className="relative aspect-3/2 overflow-hidden">
-                      <Photo
-                        photo={experience.image}
-                        alt=""
-                        sizes="(max-width: 768px) 100vw, 32vw"
-                        className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
-                      />
+                      {experience.image ? (
+                        <Photo
+                          photo={experience.image}
+                          alt=""
+                          sizes="(max-width: 768px) 100vw, 32vw"
+                          className="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+                        />
+                      ) : (
+                        /* `nightlife`: sin fotografía autorizada (ver
+                            Experience.image) — mismo tratamiento tipográfico
+                            neutral que el selector de la home. */
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(155deg,var(--canopy),var(--olive-deep))]"
+                        >
+                          <span className="font-display px-4 text-center text-[13vw] leading-[0.95] text-parchment/[0.09] select-none sm:text-[3.4vw]">
+                            {experience.name}
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <p className="eyebrow mt-5 text-terracotta-text">
                       {t.categories[experience.category]}
