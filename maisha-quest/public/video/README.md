@@ -6,55 +6,107 @@ cinematográfica, entregado por el cliente para ese uso exacto y ya publicado
 siguen pendientes por un motivo de consentimiento que no es técnico (segunda
 sección, sin cambios respecto a la auditoría anterior).
 
-## El vídeo de la introducción — publicado
+## El vídeo de la introducción — publicado (v2, montaje completo de 35 s)
 
-`maisha-quest-intro.mp4` y `maisha-quest-intro.webm`, en esta misma carpeta,
-sí están en el repositorio y sí se sirven: son los únicos `<video>` que pinta
-la web hoy, y solo en la introducción cinematográfica de la portada
-(`src/components/intro/Intro.tsx`), una vez por sesión. No hay ningún
-problema de consentimiento que resolver —no aparece ninguna persona
-identificable, es un montaje de marca (fauna, paisaje y el rótulo final)— y
-el cliente lo entregó precisamente para este uso, así que no aplica la
-reserva de la sección siguiente.
+Sustituye al recorte de 15 s de la versión anterior de este documento. El
+cliente entregó el montaje real y completo, y la introducción ha cambiado de
+arquitectura al mismo tiempo: ya NO es una capa a pantalla completa que
+bloquea el acceso al sitio, sino una experiencia de vídeo opcional dentro del
+propio hueco del hero, con un botón «Enter the website» visible desde el
+primer instante (ver `src/components/intro/Intro.tsx` para el porqué completo
+del cambio).
 
-Ficha técnica del archivo entregado, medida con `ffprobe`:
+`originals/maisha-quest-intro-v2.mp4` es el archivo **exactamente como lo
+entregó el cliente**, sin recodificar — se conserva aparte, intacto, tal y
+como pide la política de este repositorio de no tocar nunca el entregable
+original. `optimized/maisha-quest-intro-v2.mp4` y `optimized/
+maisha-quest-intro-v2.webm` son los dos derivados que de verdad sirve la web
+(el `<video>` descarga solo UNO de los dos, nunca ambos), más el póster que
+se ve mientras carga.
+
+Ficha técnica del original entregado, medida con `ffprobe`:
 
 | | |
 | --- | --- |
-| Resolución | 910 × 512 |
-| Duración | 15,0 s exactos |
-| Peso | 2,29 MB |
-| Vídeo | H.264, 30 fps, ~1,28 Mbps, `yuv420p` |
-| Audio | Ninguno — se entregó sin pista de audio |
+| Resolución | 1920 × 1080 (Full HD real, no un `upscale`) |
+| Duración | 35,4 s exactos — el montaje completo, sin recortar ni acelerar |
+| Peso | 16,4 MB |
+| Vídeo | H.264, ~59,94 fps, ~3,58 Mbps, `yuv420p` |
+| Audio | AAC estéreo, 48 kHz, ~126 kbps — sonido ambiente real (comprobado con `ffmpeg -af volumedetect`: -12,4 dB de media, no está en silencio) |
 | `moov` | Ya al principio del archivo (`faststart`): no hizo falta remuxar |
-| SHA-256 | `f08cc07adecf2d298cb82629e60cc1127c8f11fe57630110918d51d6a5e64f3c` |
+| SHA-256 | `63e36d1d983fef66ccc86be0e429113c5fccdf4462eef66e9c60bc47b57e43c3` |
 
-Ya llegó comprimido para web —910 px de ancho, ~1,28 Mbps, sin audio—, así que
-no se ha vuelto a codificar: recodificar un archivo que ya viene comprimido
-casi siempre lo engorda en vez de reducirlo (ver la tabla de la sección
-siguiente sobre el archivo entregado, medida sobre un caso real).
+**Contenido, comprobado fotograma a fotograma:** jirafa caminando con el
+Kilimanjaro al fondo → elefante en primer plano → atardecer con ñus y una
+acacia solitaria → retrato de un hombre masái → guepardo corriendo → león
+tumbado en luz dorada → globos aerostáticos sobre la migración → punto de
+vista desde un vehículo de safari → el rótulo `Maisha Quest`, manuscrito,
+sobre una textura de piel de jirafa, incrustado en el propio archivo en sus
+últimos ~3 s.
 
-**`maisha-quest-intro.webm` es una copia nuestra en VP9**, no algo que
-entregara el cliente: no todos los navegadores descodifican H.264 —la
-mayoría sí, y ahí sirve el `.mp4` de arriba— y donde no, el `<video>` cae
-solo al segundo `<source>`. Mismo plano, mismo recorte, sin audio, generado
-con `ffmpeg -c:v libvpx-vp9 -b:v 1300k -crf 32 -an` a partir del `.mp4`
-entregado. Pesa 1,43 MB — menos que el original, porque VP9 comprime mejor a
-igual calidad percibida, no por haber recortado nada.
+**Optimización — un solo derivado H.264, sin ganancia real en VP9 a menor
+peso:**
 
-**El rótulo final** (`Maisha Quest` manuscrito sobre el atardecer, en el
-último fotograma) ya está incrustado en el propio vídeo: tras el `ended`, ese
-mismo fotograma se congela y se ve completo —`object-fit: contain`, no
-`cover`— en vez de recortarlo. No hay una segunda imagen del rótulo
-superpuesta: la versión anterior de esta introducción sí reconstruía el
-rótulo como PNG aparte, pero eso duplicaba un logo que el vídeo ya trae, así
-que se retiró (`public/images/maisha-quest/originals/maisha-quest-intro-wordmark.png`
-ya no existe en el repositorio).
+| Receta | Peso | |
+| --- | --- | --- |
+| Original entregado | 16,4 MB | — |
+| `-c copy -movflags +faststart` | 16,4 MB | El `moov` ya estaba al principio; copiar no cambia nada |
+| `-crf 23 -preset slow` | 15,4 MB | Apenas ahorra: casi no queda margen a esa calidad |
+| **`-crf 25 -preset slow` (el usado)** | **12,7 MB** | Comprobado fotograma a fotograma contra el original (incluido el rótulo final): sin artefactos visibles |
+| VP9 a `-crf 32` (el usado para el `.webm`) | 15,8 MB | Más pesado que el H.264 a `-crf 25` — con esta fuente (60 fps, mucho movimiento) VP9 no gana en tamaño |
+
+`optimized/maisha-quest-intro-v2.mp4` (H.264, `-crf 25 -preset slow`,
+`-movflags +faststart`, mismos 1920×1080 y ~59,94 fps que el original — ni
+resolución ni duración ni fps se han tocado) pesa **12,7 MB**, SHA-256
+`dd3cc02e9a5f706d113d5684617bf6d09239185f6af2433604a9a10534f835b5`.
+
+**`optimized/maisha-quest-intro-v2.webm` (VP9) se incluye pese a pesar más**
+—15,8 MB, SHA-256
+`03e160c17ce7df518555c7d7beaf1986f369b8f736ad046a00a362d7a3c936d4`—, al
+revés que el criterio de «solo si pesa menos» de la sección de abajo: aquí lo
+que importa es la compatibilidad de códec, no el peso, porque el navegador
+descarga solo uno de los dos `<source>`, nunca los dos. Comprobado en este
+mismo proceso: el Chromium de código abierto que empaqueta Playwright en este
+entorno de pruebas **no trae descodificador H.264** (`canPlayType('video/mp4;
+codecs="avc1..."')` devuelve vacío) y el `.mp4` se queda a medio cargar y
+aborta a los pocos segundos; con el `.webm` como segundo `<source>`, el
+`<video>` cae ahí solo y reproduce el montaje completo sin problema. Es
+exactamente el mismo motivo, y la misma solución, que ya documentaba la
+versión anterior de este archivo para el recorte de 15 s.
+
+**Póster** — `optimized/maisha-quest-intro-v2-poster.webp`, fotograma a los
+0,6 s (la jirafa, antes de que aparezca el elefante), SHA-256
+`a56b560455f9143099c579476e123c10a7586a27b07677e64485de12a41ffb01`.
+
+**El rótulo final** (`Maisha Quest` manuscrito sobre piel de jirafa, en los
+últimos ~3 s) ya está incrustado en el propio archivo: no se superpone
+ningún logo encima, ni el PNG dorado reconstruido de una versión muy anterior
+de esta introducción (que ya no existe en el repositorio), ni ningún otro. El
+cierre se deja exactamente como lo entregó el cliente.
 
 ⚠️ **Ese rótulo manuscrito es obra del cliente, distinto de la marca serif
 con brújula que usa el resto del sitio** —el logotipo del `Header` sigue
 siendo esa brújula, sin cambios—. Cuál de los dos usar hacia delante es una
-decisión del cliente, no algo que este código deba resolver por su cuenta.
+decisión del cliente, no algo que este código deba resolver por su cuenta. La
+reconstrucción tipográfica de ese rótulo hecha en una fase muy anterior de
+este proyecto (relieve simulado por sombreado CSS, nunca una animación 3D
+real) quedó descartada en cuanto se confirmó que el vídeo real ya lo trae
+incrustado; si en algún documento anterior se la describió sin la palabra
+«simulado», esta nota lo corrige.
+
+**Formato — horizontal de origen, sin edición vertical dedicada.** El plano
+es 16:9 (1920×1080): grabación de dron y cámara en mano en el
+Serengeti/Kilimanjaro, ninguna toma pensada para un recorte 9:16. La
+introducción muestra el marco 16:9 completo, sin recortar, tanto en
+escritorio como en móvil (`object-fit: cover` dentro de un marco que fuerza
+esa misma proporción, así que nunca se pierde nada de la imagen ni del
+rótulo); en pantallas más altas que anchas eso dejaste texturas de Dark
+Canopy a los lados. Un recorte a 9:16 real perdería la mitad de cada plano
+panorámico (los globos, la migración, el propio rótulo) y NO se ha hecho.
+**Si algún día se necesita una experiencia vertical a pantalla completa que
+iguale de verdad un hero móvil sin barras laterales, hace falta un montaje
+vertical dedicado del cliente — queda anotado aquí como recurso pendiente,
+no resuelto por recorte.**
 
 ## Los dos vídeos de «La película» / impacto — pendientes
 

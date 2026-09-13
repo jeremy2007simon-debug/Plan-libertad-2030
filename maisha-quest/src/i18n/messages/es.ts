@@ -13,7 +13,10 @@ import type { Dictionary } from "./en";
  */
 export const es: Dictionary = {
   a11y: {
-    skipIntro: "Saltar introducción",
+    introEnter: "Entrar en la web",
+    introMute: "Silenciar la película",
+    introUnmute: "Activar el sonido",
+    introWatch: "Ver la introducción",
     skipToContent: "Saltar al contenido",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",

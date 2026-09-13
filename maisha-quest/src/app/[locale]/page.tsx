@@ -51,8 +51,11 @@ export async function generateMetadata({
  *
  * Todas las secciones son componentes de servidor salvo las que necesitan
  * estado (carrusel de Experiencias en la página de experiencias, mapa en la
- * de destinos, y el planificador aquí). El JavaScript que llega al navegador
- * en esta página es solo el del planificador.
+ * de destinos, y el planificador aquí). Aparte del planificador, el único
+ * otro JavaScript de esta página es el de la experiencia de vídeo opcional
+ * (`IntroScript`, junto a `IntroGate` en el `<head>` del layout) — ninguno de
+ * los dos es un componente de cliente de React: son `<script>` sencillos que
+ * activan y desactivan atributos, sin hidratación propia.
  */
 export default async function HomePage({
   params,
@@ -65,11 +68,21 @@ export default async function HomePage({
 
   return (
     <>
-      {/* Capa de apertura. Sale en el HTML del servidor pero solo se ve si el
-          guardián del <head> ha puesto `data-intro`. */}
-      <Intro t={t.a11y} />
-      <IntroScript />
-      <Hero locale={locale} t={t} />
+      {/* La experiencia de vídeo opcional vive DENTRO del hueco del hero, no
+          en una capa a pantalla completa: el envoltorio `relative` es lo que
+          permite que el panel de vídeo (`position: absolute` en `Intro.tsx`)
+          cubra exactamente ese hueco sin bloquear el resto de la página. El
+          hero real está siempre pintado detrás desde el primer fotograma;
+          `data-intro-hero-content` es lo que `IntroScript` marca `inert`
+          mientras el vídeo está activo, para que tabular no caiga en un
+          titular tapado e invisible. */}
+      <div className="relative">
+        <div data-intro-hero-content="">
+          <Hero locale={locale} t={t} />
+        </div>
+        <Intro t={t.a11y} />
+        <IntroScript t={t.a11y} />
+      </div>
       <MaishaMeaning locale={locale} t={t} />
       <Collections locale={locale} t={t} />
       <FeaturedJourneys locale={locale} t={t} />

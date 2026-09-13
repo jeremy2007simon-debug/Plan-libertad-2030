@@ -18,7 +18,10 @@ import type { Dictionary } from "./en";
  */
 export const zhCN: Dictionary = {
   a11y: {
-    skipIntro: "跳过开场",
+    introEnter: "进入网站",
+    introMute: "静音",
+    introUnmute: "取消静音",
+    introWatch: "观看片头影片",
     skipToContent: "跳至主要内容",
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",

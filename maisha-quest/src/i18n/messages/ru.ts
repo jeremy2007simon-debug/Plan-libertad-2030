@@ -27,7 +27,10 @@ const plural = (n: number, one: string, few: string, many: string) => {
 
 export const ru: Dictionary = {
   a11y: {
-    skipIntro: "Пропустить заставку",
+    introEnter: "Войти на сайт",
+    introMute: "Выключить звук",
+    introUnmute: "Включить звук",
+    introWatch: "Смотреть вступление",
     skipToContent: "Перейти к содержанию",
     openMenu: "Открыть меню",
     closeMenu: "Закрыть меню",

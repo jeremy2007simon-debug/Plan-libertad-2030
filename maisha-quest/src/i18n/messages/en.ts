@@ -15,7 +15,10 @@ import type { PluralForms } from "@/i18n/format";
 
 export const en = {
   a11y: {
-    skipIntro: "Skip intro",
+    introEnter: "Enter the website",
+    introMute: "Mute the film",
+    introUnmute: "Unmute the film",
+    introWatch: "Watch the intro film",
     skipToContent: "Skip to content",
     openMenu: "Open menu",
     closeMenu: "Close menu",

@@ -1,269 +1,343 @@
 import type { Dictionary } from "@/i18n/messages/en";
 
 /**
- * Introducción cinematográfica de Maisha Quest.
+ * Introducción cinematográfica de Maisha Quest — experiencia de vídeo opcional.
  *
  * Qué es
  * ------
- * Se ve UNA VEZ POR SESIÓN al entrar en la portada: el vídeo de marca a
- * pantalla completa (15 s, sin audio, entregado por el cliente), que termina
- * con el rótulo «Maisha Quest» —manuscrito, YA incrustado en el propio
- * vídeo— sobre el atardecer. Al terminar, ese mismo fotograma se acerca
- * ligeramente hacia quien mira (solo el vídeo: no hay una segunda imagen del
- * rótulo superpuesta) y un barrido circular (`mq-intro-portal-out`, ya usado
- * en la versión anterior de esta introducción) descubre el hero real, que
- * lleva pintado debajo desde el primer fotograma.
+ * El montaje real entregado por el cliente (35,4 s, con audio ambiente,
+ * 1920×1080) se ofrece UNA VEZ POR SESIÓN al entrar en la portada, pero NUNCA
+ * bloquea el acceso al sitio: se reproduce dentro del propio hueco del hero
+ * —no en una capa a pantalla completa— con un botón «Enter the website»
+ * visible desde el primer instante. Quien lo pulsa entra de inmediato; quien
+ * no hace nada ve el vídeo completo y pasa solo al hero al terminar; quien
+ * quiere volver a verlo —o no lo vio la primera vez porque pidió movimiento
+ * reducido— tiene un botón discreto para reproducirlo cuando quiera.
  *
- * ⚠️ El rótulo manuscrito del vídeo es obra del cliente, distinto de la marca
- * serif con brújula que usa el `Header` en el resto del sitio. Esta
- * introducción no sustituye esa identidad —el logotipo del `Header` sigue
- * siendo la brújula dibujada en código—; la diferencia entre ambos rótulos
- * queda para que la resuelva el cliente, no para que la decida el código.
+ * Por qué dentro del hero y no a pantalla completa
+ * -------------------------------------------------
+ * La versión anterior (ver el historial de este archivo) era una capa
+ * `position: fixed` que tapaba todo el documento y bloqueaba el scroll hasta
+ * terminar o pulsar «saltar». El cliente pidió expresamente lo contrario: el
+ * vídeo es una invitación opcional, no un peaje. Por eso el panel es
+ * `position: absolute` dentro del MISMO hueco que ocupa `<Hero>` (ver el
+ * `<div className="relative">` que los envuelve en `page.tsx`): el resto de
+ * la página —cabecera, scroll, cualquier enlace— funciona exactamente igual
+ * que si el vídeo no existiera. `inert` es quien impide que el tabulador
+ * caiga en el titular del hero mientras está tapado por el vídeo; no hay
+ * ningún `overflow: hidden` en `<html>` ni en ningún ancestro.
  *
- * `object-fit: contain`, no `cover`
- * ----------------------------------
- * El vídeo (910×512, un plano horizontal) se ajusta con `contain`: se ve
- * completo siempre, con el fondo Dark Canopy rellenando los márgenes que
- * sobran. `cover` recortaría los lados en cualquier pantalla más alta que
- * ancha —todo el catálogo de móviles—, y el rótulo manuscrito, al ocupar casi
- * todo el ancho del plano, es tan ancho que ese recorte se lo comería por los
- * dos lados. `contain` no lo hace nunca, en ningún tamaño de pantalla, y de
- * paso centra el sujeto y el rótulo por construcción —no hace falta
- * `object-position` para lograrlo—.
+ * `object-fit: cover` dentro de un marco 16:9 — no un recorte
+ * -------------------------------------------------------------
+ * El archivo es 1920×1080 exactos (comprobado con `ffprobe`): el marco fuerza
+ * esa misma proporción, así que «llenarlo» y «contenerlo» son la misma
+ * operación y nunca se recorta nada, ni siquiera el rótulo final. Lo que NO
+ * se ha resuelto —y se documenta en vez de forzar una solución que lo
+ * estropearía— es un hero vertical a pantalla completa en móvil: este plano
+ * es horizontal de origen (grabación de dron y cámara en mano en el
+ * Serengeti/Kilimanjaro), y un recorte a 9:16 se comería la mitad de cada
+ * plano panorámico —los globos, la sabana con la migración, el propio
+ * rótulo—. Si algún día hace falta ese formato, hace falta un montaje
+ * vertical dedicado, no un `object-fit: cover` sobre este archivo. Mientras
+ * tanto, el marco 16:9 se muestra completo tanto en escritorio como en móvil,
+ * centrado, con el espacio sobrante del Dark Canopy alrededor —el mismo
+ * tratamiento (filete dorado, grano) que ya llevaba la introducción
+ * anterior—, y los controles ocupan ese margen en vez de superponerse al
+ * propio vídeo.
  *
- * Por qué es una mezcla de vídeo y CSS, y no solo CSS
- * ----------------------------------------------------
- * La versión anterior (brújula + patrón, todo CSS) medía su propio tiempo
- * porque no dependía de ningún archivo externo: el `animation-delay` se podía
- * calcular desde el primer fotograma sin más. Un vídeo no ofrece esa garantía
- * —arranca cuando el navegador decide que puede, no en el milisegundo exacto
- * en que se pintó la página—, así que las fases que dependen de él (el
- * rótulo, el barrido final) las dispara un script mínimo cuando el vídeo
- * dispara sus propios eventos (`ended`, `error`), no un temporizador fijo. El
- * MOVIMIENTO sigue siendo CSS —el script solo añade un atributo—; el
- * DISPARO es lo que ahora depende del vídeo real.
+ * Sonido
+ * ------
+ * El archivo SÍ trae audio real (comprobado con `ffprobe -af volumedetect`:
+ * -12,4 dB de media, no está en silencio). Empieza silenciado —así lo exige
+ * el autoplay de cualquier navegador— y el botón de silencio es el único
+ * control además de «Enter the website». Al salir de la introducción —por
+ * cualquier vía: el botón, Escape, que el vídeo termine solo, o que falle—
+ * se pausa el vídeo y se vuelve a silenciar, así que una reproducción
+ * posterior (el botón discreto) siempre empieza en el mismo estado.
  *
- * Dos formatos —`maisha-quest-intro.mp4` (H.264) y `.webm` (VP9), mismo
- * plano, sin audio— porque no todos los navegadores descodifican H.264:
- * casi todos sí, pero donde no, el `<video>` cae solo al `<source>`
- * siguiente. Ninguno de los dos `<source>` lleva `src` en el HTML que sale
- * del servidor: si lo llevara, el navegador empezaría a descargar el archivo
- * en cada visita a la portada, incluso en las que la introducción no se ve
- * (sesión ya vista, movimiento reducido, `saveData`, navegador automatizado).
- * `IntroScript` es quien decide —comprobando el mismo `data-intro` que puso
- * el guardián del `<head>`— si de verdad hace falta pedirlos.
- *
- * El HTML sale del servidor y **no se ve nunca** salvo que el guardián de
- * abajo ponga `data-intro` en el `<html>`. Sin JavaScript no hay introducción
- * y la portada se ve entera: la apertura es una mejora, no un requisito.
- *
- * Nada de esto provoca CLS: la capa es `position: fixed` y no participa del
- * flujo. El hero se pinta debajo desde el primer fotograma —la imagen LCP
- * empieza a descargarse igual, sin esperar a que la introducción termine—.
- *
- * Si el vídeo falla —error de red, códec no soportado, o simplemente no
- * arranca— se entra en la página sin rótulo ni barrido: el mismo camino que
- * «saltar» o Escape. Con un códec no soportado el aviso llega enseguida (el
- * propio `<video>` dispara `error`); con una red que da un error distinto en
- * los dos `<source>`, medido, ese evento no siempre llega, así que hay un
- * segundo cinturón: si a los 4 s no ha empezado a reproducirse nada, se
- * entra en la página igual. Nunca una capa oscura esperando más que eso.
+ * El rótulo final
+ * ----------------
+ * Comprobado fotograma a fotograma: el propio archivo entregado ya trae el
+ * rótulo «Maisha Quest» incrustado sobre una textura (piel de jirafa) en sus
+ * últimos ~3 s. No se superpone ningún logotipo encima —ni el PNG dorado
+ * reconstruido de una versión anterior, que ya no se usa en ningún sitio del
+ * código, ni ningún otro—. El cierre se deja exactamente como se entregó.
  *
  * Accesibilidad
  * -------------
- * Todo lo decorativo va bajo `aria-hidden`, así que un lector de pantalla no
- * lee la marca dos veces. El único elemento anunciado es el botón de saltar,
- * que está fuera de ese subárbol, aparece a los 400 ms, permanece visible
- * mientras dura el vídeo y responde también a Escape. No hay trampa de foco:
- * no es un diálogo, y quien tabule llega al contenido real. Con
- * `prefers-reduced-motion` la secuencia no se ejecuta —ni el vídeo se pide—.
+ * El vídeo en sí es `aria-hidden`: es un fondo decorativo sin voz ni
+ * diálogo, solo sonido ambiente, así que no hace falta transcripción. Los
+ * botones («Enter the website», silencio, ver de nuevo) SÍ son accesibles,
+ * con nombre y estado (`aria-pressed` en el de silencio) y foco visible; no
+ * viven bajo `aria-hidden`. El panel entero lleva `inert` mientras no está
+ * activo —evita que alguien tabulando llegue a un botón invisible—, y dentro
+ * del propio panel no hay ninguna trampa de foco: tabular al final de sus dos
+ * botones lleva al resto de la página, no de vuelta al primero.
+ *
+ * Con `prefers-reduced-motion` el vídeo no arranca solo, pero el botón
+ * discreto para verlo bajo demanda SIGUE disponible —es la forma en que esa
+ * preferencia y «ofrécelo bajo demanda» conviven sin contradicción—.
  */
 export function Intro({ t }: { t: Dictionary["a11y"] }) {
   return (
     <div id="mq-intro" data-intro-root="">
-      <div className="mq-intro-stage" aria-hidden="true">
-        {/* El marco: fuerza la proporción exacta del plano (910×512) dentro
-            de una caja centrada, para que `cover` en el vídeo de dentro nunca
-            recorte nada —el marco YA tiene su proporción, así que "llenarlo"
-            y "contenerlo" son la misma operación—. Es lo que permite un
-            filete dorado pegado al borde real de la imagen en vez de flotar
-            en mitad de una franja vacía: en una pantalla mucho más alta que
-            ancha —el grueso del catálogo de móviles—, sin este marco esas
-            franjas se leen como espacio muerto en vez de una pantalla de
-            cine con su propio borde. */}
-        <div className="mq-intro-frame">
-          {/* Sin `src`: lo asigna el script de abajo, y solo si de verdad va a
-              reproducirse. `poster` no hace falta —el vídeo funde a negro en su
-              primer fotograma y el fondo Dark Canopy de `:root[data-intro]::before`
-              ya cubre ese instante con un tono igual de oscuro, sin destello. */}
-          <video
-            id="mq-intro-video"
-            className="mq-intro-video"
-            muted
-            playsInline
-            preload="none"
-            aria-hidden="true"
-          >
-            {/* Dos formatos, sin `src` en ninguno todavía —lo asigna el script
-                de abajo—. H.264 primero: es el que casi todo reproduce, a
-                menudo con descodificación por hardware; WebM/VP9 como
-                alternativa para el resto. El navegador se queda con el
-                primero de la lista que sepa reproducir. */}
-            <source id="mq-intro-video-mp4" type="video/mp4" />
-            <source id="mq-intro-video-webm" type="video/webm" />
-          </video>
-        </div>
-        <div className="grain absolute inset-0" />
-      </div>
-
-      {/* Fuera del subárbol decorativo: es lo único que se anuncia. */}
-      <button type="button" data-intro-skip="" className="mq-intro-skip">
-        {t.skipIntro}
+      {/* Acción secundaria discreta: ver (o volver a ver) el vídeo cuando se
+          quiera. Oculta por defecto —sin JavaScript no hay introducción— y
+          también mientras el panel de vídeo ya está activo, para no duplicar
+          controles. `IntroScript` la revela. */}
+      <button type="button" data-intro-watch="" className="mq-intro-watch" hidden>
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="mq-intro-watch-icon">
+          <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor" />
+        </svg>
+        {t.introWatch}
       </button>
+
+      {/* El panel: cubre el hueco del hero (ver el envoltorio `relative` en
+          page.tsx), nunca el documento entero. `inert` de fábrica: sin
+          JavaScript, o antes de que decida activarse, ninguno de sus botones
+          es alcanzable. */}
+      <div className="mq-intro-video-panel" data-intro-panel="" inert>
+        <div className="mq-intro-video-stage">
+          <div className="mq-intro-video-frame">
+            {/* Decorativo: sonido ambiente, sin voz que transcribir. Sin
+                `src` en el HTML del servidor —lo asigna `IntroScript`, y solo
+                si de verdad va a reproducirse—. */}
+            <video
+              id="mq-intro-video"
+              className="mq-intro-video-el"
+              muted
+              playsInline
+              preload="none"
+              poster="/video/optimized/maisha-quest-intro-v2-poster.webp"
+              aria-hidden="true"
+            >
+              {/* H.264 primero —lo descodifica casi todo, a menudo por
+                  hardware—; VP9 como alternativa donde no. No todos los
+                  navegadores traen H.264 (algunas variantes de Chromium/
+                  Firefox en Linux, comprobado en este mismo entorno de
+                  pruebas): con dos `<source>`, el `<video>` cae solo al
+                  siguiente en vez de fallar. El navegador descarga solo UNO
+                  de los dos, nunca ambos. */}
+              <source id="mq-intro-video-mp4" type="video/mp4" />
+              <source id="mq-intro-video-webm" type="video/webm" />
+            </video>
+            <div className="grain absolute inset-0" aria-hidden="true" />
+          </div>
+
+          <div className="mq-intro-video-controls">
+            <button type="button" data-intro-enter="" className="mq-intro-video-enter">
+              {t.introEnter}
+            </button>
+            <button
+              type="button"
+              data-intro-mute=""
+              className="mq-intro-video-mute"
+              aria-pressed="true"
+            >
+              {/* Icono de silencio; `IntroScript` alterna icono y texto según
+                  `aria-pressed`. */}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="mq-intro-video-mute-icon"
+                data-intro-mute-icon-off
+              >
+                <path
+                  d="M4 9.5v5h3.6l4.9 4V5.5l-4.9 4H4Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="m16.2 8.3 5.4 5.4M21.6 8.3l-5.4 5.4"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="mq-intro-video-mute-icon"
+                data-intro-mute-icon-on
+                style={{ display: "none" }}
+              >
+                <path d="M4 9.5v5h3.6l4.9 4V5.5l-4.9 4H4Z" fill="currentColor" />
+                <path
+                  d="M16.4 8.6a5 5 0 0 1 0 6.8M19 6a8.5 8.5 0 0 1 0 12"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+              <span data-intro-mute-label>{t.introUnmute}</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 /**
- * Guardián de la introducción. Va en el `<head>`, antes de pintar nada.
+ * Guardián de la introducción. Va en el `<head>`, antes de pintar nada —igual
+ * que en la versión anterior—, para que el panel aparezca ya activo en el
+ * primer fotograma que ve quien visita la portada y no haya un destello del
+ * hero sin vídeo encima.
  *
- * Decide si la secuencia se ejecuta, y lo decide ANTES del primer fotograma:
- * si lo hiciera después, se vería un destello de la portada antes de que la
- * capa la tapara. Por eso pone `data-intro` en el `<html>`, y por eso el CSS
- * pinta el fondo Dark Canopy con un pseudoelemento de `:root` —que existe
- * desde el primer píxel— y no espera a que el navegador llegue a la capa.
- *
- * No se ejecuta si:
- *  · el visitante pide movimiento reducido;
- *  · ya se ha visto en esta sesión (`maisha-cinematic-intro-v3`);
+ * No se activa solo si:
+ *  · el visitante pide movimiento reducido (sigue disponible bajo demanda,
+ *    vía el botón discreto — ver `Intro`);
+ *  · ya se ha visto en esta sesión (`maisha-cinematic-intro-v4`);
  *  · no es la portada;
  *  · el navegador dice que se ahorren datos (`saveData`) — el vídeo pesa
- *    2,3 MB, así que este caso importa más ahora que con la versión en CSS;
- *  · no hay `sessionStorage` accesible (navegación privada muy restrictiva);
- *  · el navegador está automatizado (`navigator.webdriver`), porque diecisiete
- *    segundos de capa a pantalla completa falsearían las mediciones de las
- *    herramientas de verificación.
+ *    12,7 MB;
+ *  · no hay `sessionStorage` accesible;
+ *  · el navegador está automatizado (`navigator.webdriver`) — las
+ *    herramientas de verificación no deben medir con un vídeo de fondo
+ *    reproduciéndose solo.
  *
- * `?intro=1` la fuerza aunque la marca de sesión exista: es la forma de
- * revisarla sin abrir una ventana nueva. El movimiento reducido manda incluso
- * sobre eso.
- *
- * En `sessionStorage` solo se guarda la marca. Ni un dato personal.
+ * `?intro=1` la fuerza igual que antes. El movimiento reducido manda incluso
+ * sobre eso —pero el botón discreto sigue ahí, con o sin `?intro=1`—.
  */
 export function IntroGate() {
   const source = `(function(){try{
   var d=document.documentElement;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   var p=location.pathname.replace(/\\/+$/,'');
-  // Portada en cualquiera de los seis idiomas: "" o "/xx".
   if(!/^(\\/(en|es|de|fr|ru|zh-CN))?$/.test(p))return;
   var forced=/[?&]intro=1(&|$)/.test(location.search);
   var c=navigator.connection;
   if(!forced&&c&&c.saveData)return;
-  // Navegador automatizado: una capa a pantalla completa durante diecisiete
-  // segundos falsearía cualquier medida de las herramientas de verificación
-  // —orden de tabulación, desbordamiento, texto visible—. El parámetro
-  // intro=1 la fuerza igual, que es como se prueba la propia introducción.
   if(!forced&&navigator.webdriver)return;
-  var K='maisha-cinematic-intro-v3';
+  var K='maisha-cinematic-intro-v4';
   if(!forced&&sessionStorage.getItem(K))return;
   sessionStorage.setItem(K,'1');
-  d.setAttribute('data-intro','');
+  d.setAttribute('data-intro-eligible','');
 }catch(e){}})();`;
   return <script dangerouslySetInnerHTML={{ __html: source }} />;
 }
 
 /**
- * Ciclo de vida completo de la introducción: enciende el vídeo (si hace
- * falta) y la cierra —al terminar de verdad, si falla, al pulsar «saltar» o
- * al pulsar Escape—.
+ * Ciclo de vida completo de la experiencia de vídeo: activa el panel (si el
+ * guardián lo marcó elegible), enciende el vídeo, y responde a cada forma de
+ * salir —«Enter the website», Escape, que el vídeo termine solo, o que
+ * falle—. También enciende el botón discreto de «ver (de nuevo) el vídeo»,
+ * que funciona SIEMPRE que haya JavaScript, sea o no elegible la reproducción
+ * automática.
  *
- * Se renderiza justo después de `<Intro>` en `page.tsx`, como en la versión
- * anterior —NO anidado dentro del propio `#mq-intro`—. Anidarlo ahí se probó
- * y provocó un error de hidratación (#418) en pruebas automatizadas, pero el
- * anidamiento en sí no era la causa real: era que, en un navegador sin
- * descodificador para ninguno de los dos formatos, el `error` del vídeo podía
- * llegar en el MISMO turno en que React seguía hidratando ese subárbol, y
- * borrar el nodo en ese instante desincronizaba la hidratación en curso —ver
- * el comentario de `end()`, más abajo, que es donde de verdad se corrigió
- * (aplazando la mutación del DOM un turno). Se deja como hermano de nivel
- * superior de todas formas, por ser la posición ya probada y por simetría con
- * la versión anterior, no porque el anidamiento fuera en sí el problema.
- * Sigue ejecutándose pronto —al principio de la home, antes de las demás
- * secciones—, así que el vídeo empieza a pedirse lo antes posible y el camino
- * de fallo está disponible desde el primer instante.
- *
- * Cierre = quitar `data-intro` del `<html>` y BORRAR el nodo del DOM, para
- * que no quede una capa a pantalla completa esperando a nada. La navegación
- * no se bloquea en ningún momento: la capa deja pasar el scroll, y el cierre
- * por fallo o por «saltar»/Escape es SIEMPRE inmediato —sin rótulo ni
- * barrido—, mientras que el cierre natural pasa primero por el rótulo y el
- * barrido (`data-intro-video-ended`, en CSS) antes de desmontarse.
- *
- * Un temporizador de emergencia (20 s: los 15 del vídeo más el rótulo, el
- * barrido y un margen) es la garantía última si ningún evento llega a
- * dispararse; nunca dejaría a alguien mirando una capa oscura más de eso.
+ * A diferencia de la versión anterior, nunca borra ningún nodo del DOM: solo
+ * alterna atributos (`data-intro-eligible` en `<html>`, `inert` en el panel y
+ * en el envoltorio del hero). Evita por completo la clase de error de
+ * hidratación que exigía aplazar el borrado del nodo en la versión anterior,
+ * porque aquí no hay ningún borrado que aplazar.
  */
-export function IntroScript() {
+export function IntroScript({ t }: { t: Dictionary["a11y"] }) {
+  const muteLabel = JSON.stringify(t.introMute);
+  const unmuteLabel = JSON.stringify(t.introUnmute);
   const source = `(function(){
   var d=document.documentElement;
-  if(!d.hasAttribute('data-intro'))return;
-  var node=document.getElementById('mq-intro');
+  var panel=document.querySelector('[data-intro-panel]');
+  var heroContent=document.querySelector('[data-intro-hero-content]');
   var video=document.getElementById('mq-intro-video');
-  var done=false;
-  function end(){
-    // Se marca "hecho" ya mismo, para que dos disparos a la vez —el vídeo
-    // falla justo cuando alguien pulsa «saltar»— no encolen el cierre dos
-    // veces; pero la mutación del DOM se aplaza un instante. Un fallo del
-    // vídeo puede llegar en el MISMO turno en que este script se ejecuta,
-    // antes de que React haya terminado de hidratar el árbol del servidor;
-    // borrar el nodo en ese instante desincroniza esa hidratación (React
-    // detecta el árbol incompleto y lo regenera entero). Retrasarlo a la
-    // siguiente vuelta del bucle de eventos es gratis para quien mira —nadie
-    // percibe un cero milisegundos— y evita esa carrera por completo.
-    if(done)return;done=true;
-    setTimeout(function(){
-      d.removeAttribute('data-intro');
-      d.removeAttribute('data-intro-video-ended');
-      document.removeEventListener('keydown',onKey);
-      if(node&&node.parentNode)node.parentNode.removeChild(node);
-    },0);
-  }
-  function onKey(e){if(e.key==='Escape')end();}
-  document.addEventListener('keydown',onKey);
-  if(node){
-    var skip=node.querySelector('[data-intro-skip]');
-    if(skip)skip.addEventListener('click',end);
-  }
-  // Última garantía: si nada más dispara el cierre, este lo hace.
-  setTimeout(end,20000);
-  if(node)node.addEventListener('animationend',function(e){
-    if(e.animationName==='mq-intro-portal-out')end();
-  });
+  var watchBtn=document.querySelector('[data-intro-watch]');
+  if(!panel||!video||!watchBtn){return;}
 
-  if(!video){end();return;}
-  // Vídeo terminado de verdad: el rótulo y el barrido los dispara el CSS a
-  // partir de este atributo, no un temporizador fijo (ver Intro.tsx).
-  video.addEventListener('ended',function(){
-    d.setAttribute('data-intro-video-ended','');
-  });
-  // Cualquier fallo entra en la página de inmediato, sin rótulo ni barrido.
-  // Con dos <source> el evento 'error' del propio <video> solo llega cuando
-  // NINGUNO de los dos ha podido reproducirse, que es justo lo que interesa.
-  video.addEventListener('error',end);
+  var muteBtn=panel.querySelector('[data-intro-mute]');
+  var muteLabelEl=muteBtn.querySelector('[data-intro-mute-label]');
+  var iconOff=muteBtn.querySelector('[data-intro-mute-icon-off]');
+  var iconOn=muteBtn.querySelector('[data-intro-mute-icon-on]');
+  var enterBtn=panel.querySelector('[data-intro-enter]');
+  var srcMp4=document.getElementById('mq-intro-video-mp4');
+  var srcWebm=document.getElementById('mq-intro-video-webm');
+  var active=false;
   var started=false;
-  video.addEventListener('playing',function(){started=true;});
-  // Si a los cuatro segundos no ha llegado a reproducir nada, algo se ha
-  // atascado (códec, red, autoplay bloqueado pese a ir silenciado): se
-  // entra en la página en vez de dejar una capa esperando.
-  setTimeout(function(){if(!started)end();},4000);
+  var endedTimer=null;
+  var closingTimer=null;
 
-  // Solo aquí se piden los archivos: nunca antes de saber que hace falta.
-  document.getElementById('mq-intro-video-mp4').src='/video/maisha-quest-intro.mp4';
-  document.getElementById('mq-intro-video-webm').src='/video/maisha-quest-intro.webm';
-  video.load();
-  var played=video.play();
-  if(played&&played.catch)played.catch(end);
+  function setMuteUi(){
+    var muted=video.muted;
+    muteBtn.setAttribute('aria-pressed',String(muted));
+    if(muteLabelEl)muteLabelEl.textContent=muted?${unmuteLabel}:${muteLabel};
+    if(iconOff)iconOff.style.display=muted?'':'none';
+    if(iconOn)iconOn.style.display=muted?'none':'';
+  }
+
+  function activate(){
+    if(active)return;active=true;
+    if(endedTimer){clearTimeout(endedTimer);endedTimer=null;}
+    if(closingTimer){clearTimeout(closingTimer);closingTimer=null;}
+    d.removeAttribute('data-intro-closing');
+    panel.inert=false;
+    d.setAttribute('data-intro-eligible','');
+    if(heroContent)heroContent.inert=true;
+    watchBtn.hidden=true;
+    video.muted=true;setMuteUi();
+    if(!srcMp4.getAttribute('src')){
+      srcMp4.setAttribute('src','/video/optimized/maisha-quest-intro-v2.mp4');
+      srcWebm.setAttribute('src','/video/optimized/maisha-quest-intro-v2.webm');
+    }
+    video.currentTime=0;
+    video.load();
+    started=false;
+    var played=video.play();
+    if(played&&played.catch)played.catch(deactivate);
+    setTimeout(function(){if(!started)deactivate();},4000);
+  }
+
+  function deactivate(){
+    if(!active){
+      // También puede llamarse antes de activar (fallo de red, por ejemplo):
+      // asegura que la marca de elegibilidad no deja el panel a medio
+      // activar en una recarga dentro de la misma sesión.
+      d.removeAttribute('data-intro-eligible');
+      panel.inert=true;
+      watchBtn.hidden=false;
+      return;
+    }
+    active=false;
+    panel.inert=true;
+    try{video.pause();}catch(e){}
+    video.muted=true;setMuteUi();
+    if(heroContent)heroContent.inert=false;
+    watchBtn.hidden=false;
+    // Transición breve: se desvanece con el panel todavía visible
+    // (data-intro-closing), y solo al terminar se quita data-intro-eligible
+    // -lo que de verdad lo saca del documento-. Cortarlo de golpe aquí mismo
+    // sería un salto seco en vez de la transición breve que pide el encargo
+    // al pulsar «Enter the website».
+    d.setAttribute('data-intro-closing','');
+    closingTimer=setTimeout(function(){
+      closingTimer=null;
+      d.removeAttribute('data-intro-eligible');
+      d.removeAttribute('data-intro-closing');
+    },360);
+  }
+
+  enterBtn.addEventListener('click',deactivate);
+  muteBtn.addEventListener('click',function(){
+    video.muted=!video.muted;setMuteUi();
+  });
+  watchBtn.addEventListener('click',activate);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&active)deactivate();
+  });
+  video.addEventListener('playing',function(){started=true;});
+  video.addEventListener('error',deactivate);
+  video.addEventListener('ended',function(){
+    // Transición natural: se deja un instante el fotograma final —el rótulo
+    // incrustado en el propio archivo— antes de pasar al hero, en vez de un
+    // corte seco en el mismo fotograma en que 'ended' dispara.
+    endedTimer=setTimeout(deactivate,650);
+  });
+
+  // Elegible desde el guardián del <head>: arranca ya.
+  if(d.hasAttribute('data-intro-eligible')){
+    activate();
+  }else{
+    panel.inert=true;
+    watchBtn.hidden=false;
+  }
 })();`;
   return <script dangerouslySetInnerHTML={{ __html: source }} />;
 }

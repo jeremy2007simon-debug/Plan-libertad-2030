@@ -1134,202 +1134,202 @@ p {
 }
 
 /* --------------------------------------------------------------------------
-   Introducción cinematográfica
+   Introducción cinematográfica — experiencia de vídeo opcional
    --------------------------------------------------------------------------
 
-   El vídeo de marca del cliente (15 s, sin audio) a pantalla completa; al
-   terminar, el rótulo reconstruido se acerca ligeramente y un barrido
-   circular descubre el hero. El MOVIMIENTO es CSS; el DISPARO de las fases
-   que dependen del vídeo lo decide `src/components/intro/Intro.tsx` cuando
-   el `<video>` dispara sus propios eventos —no un temporizador fijo, porque
-   un vídeo no arranca en un instante predecible como sí lo hacía la antigua
-   secuencia, hecha enteramente de formas—. Ver el comentario de ese archivo
-   para el porqué completo.
+   El montaje real del cliente (35,4 s, 1920×1080, con audio) se ofrece
+   dentro del propio hueco del hero, NUNCA en una capa a pantalla completa:
+   `src/components/intro/Intro.tsx` explica el porqué completo del cambio de
+   arquitectura respecto a la versión anterior (que sí bloqueaba la página).
 
-   Nada de esto existe sin `:root[data-intro]`, y ese atributo lo pone el
-   guardián únicamente en la portada, una vez por sesión y nunca con
-   `prefers-reduced-motion`. Sin JavaScript la capa NO se ve —ni el vídeo se
-   pide—: la regla de ocultación es la de por defecto.
+   El panel es `position: absolute` dentro del envoltorio `relative` que
+   `page.tsx` pone alrededor de `<Hero>` — cubre exactamente su hueco, no el
+   documento. No hay ningún `overflow: hidden` en `<html>`: el scroll nunca
+   se bloquea, ni siquiera mientras el vídeo se reproduce.
 
-   Se anima `opacity`, `transform` y `clip-path`. Ninguna propiedad de las que
-   provocan reflow.
-
-   Fases:
-     0–15000ms     El vídeo, completo siempre (`object-fit: contain`), con
-                   el Dark Canopy detrás.
-     +0–900ms      Tras `ended`: el propio fotograma final —el rótulo del
-                   cliente, sin una segunda imagen superpuesta— se acerca
-                   ligeramente a quien mira (`data-intro-video-ended`).
-     +1250–1900ms  El barrido circular (`mq-intro-portal-out`, igual que en
-                   la versión anterior) recorta la capa y descubre el hero,
-                   que lleva pintado debajo desde el primer fotograma.
-   Si el vídeo falla en cualquier momento, se entra en la página de
-   inmediato —sin rótulo ni barrido—, igual que al pulsar «saltar».
+   Visible cuando `:root[data-intro-eligible]` —que pone el guardián antes de
+   pintar en la primera visita, y que `IntroScript` vuelve a poner si se pulsa
+   el botón discreto de «ver de nuevo»—. Sin JavaScript el panel no se ve y
+   el vídeo no se pide: la regla de ocultación es la de por defecto, y el
+   propio panel sale del HTML con `inert`.
    -------------------------------------------------------------------------- */
 
-#mq-intro {
+.mq-intro-video-panel {
   display: none;
-}
-
-/* El fondo, desde el primer píxel pintado: el pseudoelemento de `:root` existe
-   antes de que el navegador llegue a la capa, así que no hay destello de la
-   portada. También es la razón de que el vídeo no necesite `poster`: funde
-   a negro en su primer fotograma, sobre un tono igual de oscuro. */
-:root[data-intro]::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 89;
-  background: var(--canopy);
-}
-
-/* El barrido final solo se dispara cuando el vídeo ha terminado de verdad
-   —nunca por un temporizador fijo—, así que vive en una regla aparte,
-   condicionada al atributo que pone `Intro.tsx` en el evento `ended`. */
-:root[data-intro][data-intro-video-ended]::before {
-  animation: mq-intro-portal-out 650ms var(--ease-soft) 1250ms both;
-}
-
-:root[data-intro] {
-  /* Nadie se desplaza durante la apertura, pero tampoco se bloquea la página:
-     la barra vuelve sola en cuanto termina. */
-  overflow: hidden;
-}
-
-:root[data-intro] #mq-intro {
-  display: block;
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  /* Cubre el viewport dinámico de Safari; `100vh` dejaría una franja. */
-  height: 100dvh;
-  min-height: 100vh;
-  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-}
-
-:root[data-intro][data-intro-video-ended] #mq-intro {
-  animation: mq-intro-portal-out 650ms var(--ease-soft) 1250ms both;
-}
-
-.mq-intro-stage {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  /* Centra el marco (ver más abajo) dentro de la capa completa. */
-  display: flex;
+  z-index: 5;
   align-items: center;
   justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 5vw, 3rem);
+  background: var(--canopy);
+  opacity: 1;
+  transition: opacity 360ms var(--ease-soft);
+}
+
+:root[data-intro-eligible] .mq-intro-video-panel {
+  display: flex;
+}
+
+/* Fase de cierre: `IntroScript` la pone durante los ~360ms del desvanecido,
+   ANTES de quitar `data-intro-eligible` (lo que de verdad vuelve a
+   `display: none`). Sin esto, el panel pasaría de visible a invisible en un
+   corte seco en vez de una transición breve. `display: none` como reposo por
+   defecto —en vez de `opacity`/`visibility`— es a propósito: dos botones
+   colocados pero permanentemente a opacidad 0 (sin JavaScript, o con
+   movimiento reducido, donde el panel nunca se activa) siguen teniendo caja
+   y tamaño reales, y una auditoría de accesibilidad los marca como
+   «controles invisibles» — `display: none` los saca del todo, caja incluida. */
+:root[data-intro-closing] .mq-intro-video-panel {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* El escenario: columna que centra el marco y, debajo, los controles —en el
+   margen del vídeo, nunca sobre él (ver más abajo)—. `width: 100%` es lo que
+   deja que el marco (con su propio `max-width`) use todo el ancho disponible
+   del panel en vez de encogerse al tamaño de su contenido. */
+.mq-intro-video-stage {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 1.75rem);
 }
 
 /* --- El marco ----------------------------------------------------------
-   Fuerza la proporción real del plano (910×512): en cualquier pantalla más
-   alta que ancha —todo el catálogo de móviles— sobra alto, nunca ancho, así
-   que el marco encoge en altura y dos franjas del Dark Canopy quedan arriba
-   y abajo. Un filete dorado pegado a su borde y el grano de fondo (en
-   `Intro.tsx`) convierten esas franjas en el borde de una pantalla de cine,
-   no en espacio muerto. */
-.mq-intro-frame {
+   El archivo es 1920×1080 exactos: el marco fuerza esa misma proporción, así
+   que `cover` en el vídeo de dentro (más abajo) nunca recorta nada, incluido
+   el rótulo final. En cualquier pantalla que no sea 16:9 —todo el catálogo
+   de móviles— sobra ancho o alto alrededor del marco, nunca dentro de él; ese
+   sobrante es el propio `.mq-intro-video-stage` (Dark Canopy + grano), no
+   espacio muerto. */
+.mq-intro-video-frame {
   position: relative;
   width: 100%;
+  max-width: 64rem;
   max-height: 100%;
-  aspect-ratio: 910 / 512;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
   border-top: 1px solid rgba(196, 147, 79, 0.35);
   border-bottom: 1px solid rgba(196, 147, 79, 0.35);
 }
 
-/* Al terminar de verdad, el último fotograma —el propio rótulo del cliente,
-   sin una segunda imagen superpuesta— se acerca ligeramente a quien mira:
-   una profundidad elegante, sin rotaciones ni efectos de videojuego, solo una
-   escala muy contenida sobre el fotograma congelado. Anima el marco, no solo
-   el vídeo, para que el filete dorado se acerque con él. */
-:root[data-intro][data-intro-video-ended] .mq-intro-frame {
-  animation: mq-intro-video-settle 900ms var(--ease-out) forwards;
-}
-
-/* --- El vídeo --------------------------------------------------------------
-   Sin `src` en el HTML del servidor —lo asigna `Intro.tsx`, y solo si de
-   verdad va a reproducirse—, así que esta regla no provoca ninguna petición
-   por sí sola. */
-
-.mq-intro-video {
+.mq-intro-video-el {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  /* El marco que lo contiene YA tiene la proporción exacta del plano
-     (910×512), así que `cover` aquí no recorta nada: llenar el marco y
-     contenerlo son la misma operación cuando las proporciones coinciden. */
+  /* El marco ya tiene la proporción exacta del plano (16:9): "llenarlo" y
+     "contenerlo" son la misma operación cuando las proporciones coinciden. */
   object-fit: cover;
   background: var(--canopy);
 }
 
-@keyframes mq-intro-video-settle {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.035);
-  }
+/* --- Controles -------------------------------------------------------------
+   Fuera del propio vídeo, en el margen del escenario: nada se superpone al
+   plano ni, sobre todo, al rótulo final incrustado en el archivo. */
+
+.mq-intro-video-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
-/* El portal: toda la capa se recorta con un círculo que se cierra sobre su
-   propio centro. Fuera del círculo se ve lo que hay detrás —el hero, pintado
-   desde el primer fotograma—, así que la revelación empieza por los bordes y
-   termina en el centro, donde queda el rótulo. `clip-path` también deja sin
-   área interactiva la zona recortada, así que al llegar a 0% la capa ya no
-   puede recibir foco ni clics aunque el desmontaje del DOM llegue un instante
-   después. */
-@keyframes mq-intro-portal-out {
-  from {
-    clip-path: circle(150% at 50% 50%);
-  }
-  to {
-    clip-path: circle(0% at 50% 50%);
-  }
-}
-
-/* --- Saltar --------------------------------------------------------------- */
-
-.mq-intro-skip {
-  position: absolute;
-  right: max(1rem, env(safe-area-inset-right));
-  bottom: max(1rem, env(safe-area-inset-bottom));
-  z-index: 2;
+.mq-intro-video-enter {
   min-height: 44px;
-  padding: 0.7rem 1.1rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--canopy);
+  background: var(--sand);
+  transition:
+    background-color 250ms var(--ease-out),
+    color 250ms var(--ease-out);
+}
+
+.mq-intro-video-enter:hover {
+  background: var(--parchment);
+}
+
+.mq-intro-video-mute {
+  display: flex;
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgb(233 223 206 / 0.34);
   border-radius: 2px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--parchment);
   background: rgb(20 32 25 / 0.4);
-  opacity: 0;
-  animation: mq-intro-skip-in 300ms var(--ease-out) 400ms forwards;
+  transition: border-color 250ms var(--ease-out);
 }
 
-.mq-intro-skip:hover {
+.mq-intro-video-mute:hover {
   border-color: var(--sand);
-  color: var(--sand);
 }
 
-@keyframes mq-intro-skip-in {
-  to {
-    opacity: 1;
-  }
+.mq-intro-video-mute-icon {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
-/* Cinturón y tirantes: si alguien llega aquí con movimiento reducido —el
-   guardián ya no debería haber puesto el atributo—, no hay secuencia. */
+.mq-intro-video-mute [data-intro-mute-label] {
+  /* El estado se anuncia por `aria-pressed`; el texto visible del botón es
+     solo el icono, para no competir con «Enter the website». */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Ver (de nuevo) el vídeo -------------------------------------------
+   Acción secundaria discreta, siempre en el mismo sitio del hero, visible
+   salvo mientras el panel de arriba ya está activo. */
+
+.mq-intro-watch {
+  position: absolute;
+  left: max(1.25rem, env(safe-area-inset-left));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  z-index: 4;
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem 0.55rem 0.7rem;
+  border: 1px solid rgb(233 223 206 / 0.3);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--parchment);
+  background: rgb(20 32 25 / 0.32);
+  backdrop-filter: blur(2px);
+  transition: border-color 250ms var(--ease-out);
+}
+
+.mq-intro-watch:hover {
+  border-color: var(--sand);
+}
+
+.mq-intro-watch-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  :root[data-intro]::before,
-  :root[data-intro] #mq-intro {
-    display: none;
-    animation: none;
-  }
-
-  :root[data-intro] {
-    overflow: visible;
+  .mq-intro-video-panel {
+    transition: none;
   }
 }
