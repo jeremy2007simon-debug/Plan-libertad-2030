@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { type Locale, localeHref, stripLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { whatsappHref } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 import { ButtonLink } from "@/components/ui/Button";
 
 /**
@@ -107,6 +108,7 @@ export function MobileCTABar({
           href={whatsappHref(t.whatsappMessage)}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent("whatsapp_click")}
           aria-label={t.whatsappLabel}
           className="mq-tap flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-pill)] border border-on-dark-faint px-4 text-[0.85rem] font-semibold text-parchment"
         >

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/PageHero";
+import { ViewTracker } from "@/components/analytics/ViewTracker";
 import { Itinerary } from "@/components/safari/Itinerary";
 import { RouteMap } from "@/components/safari/RouteMap";
 import { SafariCard } from "@/components/safari/SafariCard";
@@ -101,6 +102,7 @@ export default async function SafariPage({
 
   return (
     <>
+      <ViewTracker event="safari_view" id={safari.slug} />
       <SafariSchema locale={locale} safari={safari} />
       <FaqSchema faqs={faqs} />
 

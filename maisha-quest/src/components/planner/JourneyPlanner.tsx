@@ -23,6 +23,7 @@ import { LOCALES, LOCALE_META, type Locale } from "@/i18n/config";
 import { fill, plural, type PluralForms } from "@/i18n/format";
 import type { Dictionary } from "@/i18n/messages/en";
 import { COMPANY, whatsappHref } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * Planificador de safari por pasos.
@@ -123,6 +124,7 @@ export function JourneyPlanner({
 
   useEffect(() => {
     startedAt.current = Date.now();
+    trackEvent("planner_start");
     const draft = readPlannerDraft();
     requestId.current =
       draft?.requestId ||
@@ -273,6 +275,7 @@ export function JourneyPlanner({
       }
 
       setStatus({ kind: "sent", reference: body.reference ?? "" });
+      trackEvent("journey_submitted");
       try {
         clearPlannerDraft();
       } catch {
@@ -336,6 +339,7 @@ export function JourneyPlanner({
             href={whatsappHref(status.summary)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("whatsapp_click")}
             className="mq-tap inline-flex min-h-11 items-center rounded-[var(--radius-sm)] border border-forest/35 px-6 py-3 text-[0.85rem] font-semibold text-forest hover:bg-forest hover:text-parchment hover:border-forest"
           >
             {t.status.sendOnWhatsApp}

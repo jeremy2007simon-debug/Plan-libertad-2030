@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
+import { trackEvent } from "@/lib/analytics";
 
 export interface HeroFilmStrings {
   /** Nombre accesible del botón circular y del propio `<video>`. */
@@ -191,7 +192,10 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
         <button
           ref={triggerRef}
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+            trackEvent("video_play");
+          }}
           aria-haspopup="dialog"
           aria-label={`${t.play} — ${t.duration}`}
           className="mq-tap mq-hero-play"
