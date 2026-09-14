@@ -1391,18 +1391,113 @@ p {
   }
 }
 
-.mq-mobile-nav-panel {
-  animation: mq-panel-fade-in 320ms var(--ease-out) both;
-}
-
 .mq-dropdown-panel {
   animation: mq-panel-fade-in 220ms var(--ease-out) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mq-mobile-nav-panel,
   .mq-dropdown-panel {
     animation: none;
+  }
+}
+
+/* --- Menú del sitio ------------------------------------------------------
+   `SiteMenu.tsx`. Entrada más larga que el resto de paneles superpuestos
+   (400 ms en vez de 220-320) porque aquí hay más que revelar —dos columnas
+   en vez de un desplegable pequeño—; el cierre es más corto (240 ms) a
+   propósito: abrir invita a mirar, cerrar solo tiene que quitarse de en
+   medio. Mismo patrón que `.mq-video-modal`: `data-closing` dispara la
+   segunda animación y el componente no se desmonta hasta que termina
+   (`requestClose`, en `SiteMenu.tsx`), así que nunca desaparece a media
+   transición. */
+@keyframes mq-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes mq-menu-out {
+  to {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.mq-site-menu {
+  animation: mq-menu-in 400ms var(--ease-out) both;
+}
+
+.mq-site-menu[data-closing] {
+  animation: mq-menu-out 240ms var(--ease-soft) both;
+}
+
+/* Entrada escalonada de cada fila de primer nivel. El retardo lo pone
+   `SiteMenu.tsx` en línea (`animationDelay`), tope de 300 ms igual que
+   `Stagger` en `motion.tsx` — pasado ese punto el último enlace aparecería
+   cuando quien abre el menú ya ha apartado la vista. */
+@keyframes mq-menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.mq-menu-item {
+  animation: mq-menu-item-in 380ms var(--ease-out) both;
+}
+
+/* Fundido de la fotografía del panel de escritorio al cambiar de enlace
+   activo. Las capas están todas montadas a la vez, apiladas con
+   `position: absolute` — solo cambia su opacidad — para que el cambio sea
+   un fundido y no una recarga de imagen. */
+.mq-menu-photo-layer {
+  transition: opacity 300ms var(--ease-soft);
+}
+
+.mq-menu-photo-scrim {
+  background: linear-gradient(
+    to top,
+    rgba(var(--scrim), 0.82) 0%,
+    rgba(var(--scrim), 0.32) 45%,
+    transparent 78%
+  );
+}
+
+/* Acordeón de submenú, en escritorio y en móvil por igual.
+   `grid-template-rows: 0fr → 1fr` anima una altura desconocida de antemano
+   sin tocar `height` —que no se puede transicionar hacia/desde `auto`— y sin
+   el salto brusco de un `max-height` con un valor inventado. El hijo directo
+   necesita `overflow: hidden` porque una fila `0fr` en una rejilla no recorta
+   por sí sola el contenido que aloja. */
+.mq-submenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms var(--ease-out);
+}
+
+.mq-submenu > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.mq-submenu[data-open] {
+  grid-template-rows: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-site-menu,
+  .mq-site-menu[data-closing],
+  .mq-menu-item {
+    animation: none;
+  }
+
+  .mq-menu-photo-layer {
+    transition: none;
+  }
+
+  .mq-submenu {
+    transition: none;
   }
 }
 

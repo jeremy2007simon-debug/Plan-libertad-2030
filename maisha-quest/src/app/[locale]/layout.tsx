@@ -8,6 +8,7 @@ import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { OrganizationSchema } from "@/components/seo/StructuredData";
 import { MotionScript } from "@/components/ui/motion";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getPhotoAlt } from "@/i18n/alt";
 import { LOCALES, LOCALE_META, isLocale, localeHref } from "@/i18n/config";
 import { alternatesFor } from "@/lib/seo";
 import { COMPANY, SITE_URL } from "@/lib/site";
@@ -97,6 +98,7 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
 
   const t = await getDictionary(locale);
+  const photoAlt = await getPhotoAlt(locale);
   const meta = LOCALE_META[locale];
   // La pila tipográfica se decide por sistema de escritura, no por idioma:
   // ruso y español comparten familia; el chino no puede.
@@ -121,7 +123,7 @@ export default async function LocaleLayout({
         >
           {t.a11y.skipToContent}
         </a>
-        <Header locale={locale} t={t.nav} hours={t.company.hours} />
+        <Header locale={locale} t={t.nav} hours={t.company.hours} photoAlt={photoAlt} />
         <main id="main">{children}</main>
         <Footer locale={locale} t={t.footer} nav={t.nav} hours={t.company.hours} />
         <MobileCTABar locale={locale} t={t.nav} />

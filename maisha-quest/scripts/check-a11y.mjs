@@ -231,10 +231,13 @@ console.log("\n== 4. Selector de idioma ==");
   // primero. Se identifica por su propio `aria-label` ("Cambiar de idioma…"),
   // no por ser "el primer botón con aria-expanded de la cabecera": ese ya no
   // es un selector fiable ahora que el propio disparador del menú también
-  // lleva `aria-expanded`.
+  // lleva `aria-expanded`. Tampoco se busca dentro de `header`: el panel
+  // (`SiteMenu.tsx`) se porta a `document.body` para no quedar encajado en
+  // la altura de una cabecera con `backdrop-filter` — mismo motivo que el
+  // overlay del vídeo de la portada.
   await page.getByRole("button", { name: "Abrir menú" }).click();
   await page.waitForTimeout(250);
-  const trigger = page.locator('header button[aria-expanded][aria-label*="Cambiar de idioma"]');
+  const trigger = page.locator('button[aria-expanded][aria-label*="Cambiar de idioma"]');
   await trigger.focus();
   await page.keyboard.press("Enter");
   await page.waitForTimeout(250);

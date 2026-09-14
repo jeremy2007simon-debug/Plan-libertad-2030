@@ -41,6 +41,18 @@ export const en = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     siteMenu: "Site menu",
+    /**
+     * Nombre accesible del botón que despliega/repliega un submenú.
+     *
+     * Dos plantillas con un hueco `{label}`, no una función: este diccionario
+     * cruza de servidor a cliente entero (`t.nav` llega a `Header`, que es
+     * `"use client"`), y una función no se puede serializar en ese salto —
+     * React lanza en build ("Functions cannot be passed directly to Client
+     * Components"). El hueco en la cadena resuelve lo mismo —el orden de
+     * verbo y nombre cambia por idioma— sin dejar de ser texto plano.
+     */
+    expandSection: "Expand {label}",
+    collapseSection: "Collapse {label}",
     whatsappLabel: "Message Maisha Quest on WhatsApp",
     language: {
       buttonLabel: "Change language",
@@ -75,7 +87,16 @@ export const en = {
       explorer: "Wild landscapes, adventure and discovery.",
       escape: "Space, comfort and effortless connection.",
       enrich: "Culture, cuisine and communities.",
+      destinations: "Where each journey begins — the landscapes of northern and southern Tanzania.",
+      experiences: "The moments between camps: on foot, on water, and after dark.",
+      learn: "Everything to plan with confidence, region by region.",
+      about: "Who we are, and why every journey starts in Arusha.",
+      team: "The local experts who build and guide your journey.",
+      impact: "Where a share of every journey goes, and why it matters.",
+      journal: "Field notes, guides and stories from the road.",
     },
+    /** Verbo independiente: enlace bajo la fotografía del menú. Nunca se compone con el nombre de la sección. */
+    explore: "Explore",
     planCta: "Plan Your Journey",
     speakToExpert: "Speak to a Local Expert",
     chat: "Chat",

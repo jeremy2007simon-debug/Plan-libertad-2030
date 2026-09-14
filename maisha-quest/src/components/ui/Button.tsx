@@ -11,10 +11,18 @@ import type { ComponentProps, ReactNode } from "react";
  * `globals.css`). El dorado no se usa nunca como fondo de botón — solo como
  * detalle.
  *
- * Segunda pasada de diseño (tras la primera entrega): la versión anterior
- * era un rectángulo casi recto (2 px de radio) en VERSALITAS con tracking
- * ancho en los tres tipos de botón — leía "aplicación de formularios", no
- * "safari premium". Ahora:
+ * Tercera pasada de diseño (tras la de composición del menú): la cápsula
+ * `primary` llevaba el texto centrado y nada más — correcta, pero sin ningún
+ * gesto que la distinguiera de un botón de formulario. Ahora el extremo
+ * derecho lleva un círculo integrado con una flecha: mismo enlace, mismo
+ * control, no un segundo botón —el círculo no lleva su propio `aria-label` ni
+ * puede recibir foco por separado—. `quiet` gana la misma flecha, ya
+ * existente como `MagneticArrow` en `motion.tsx` y reutilizada aquí en vez de
+ * crear un segundo icono con el mismo trabajo.
+ *
+ * Segunda pasada (tras la primera entrega): la versión anterior era un
+ * rectángulo casi recto (2 px de radio) en VERSALITAS con tracking ancho en
+ * los tres tipos de botón. Ahora:
  *  - `primary` es una cápsula (`--radius-pill`): silueta suave, sin llegar a
  *    parecer una pastilla de interfaz técnica porque el resto de la página
  *    —fotografías, tarjetas, secciones— sigue con geometría recta.
@@ -31,14 +39,39 @@ type Tone = "light" | "dark";
 type Size = "md" | "lg";
 
 const BASE =
-  "mq-tap relative inline-flex items-center justify-center gap-2.5 font-sans font-semibold " +
+  "mq-tap group relative inline-flex items-center font-sans font-semibold " +
   "disabled:opacity-45 disabled:pointer-events-none disabled:active:scale-100 " +
   // 44 px de alto mínimo: área táctil cómoda en móvil.
   "min-h-11 text-[0.85rem] sm:text-[0.9rem]";
 
+/* Ningún `justify-*` vive en BASE a propósito: Tailwind resuelve un empate
+   entre dos utilidades de la misma propiedad por su propio orden interno, no
+   por el del className (ver la nota de este mismo problema en Header.tsx),
+   así que cada variante lleva UNA sola clase `justify-*`, nunca dos a la vez.
+
+   `primary` usa `justify-between`: cuando el botón se estira a lo ancho de su
+   contenedor —la lista de CTAs del menú móvil, por ejemplo— el círculo tiene
+   que quedarse pegado al borde derecho de la cápsula, no flotar cerca del
+   centro. Con ancho automático (la mayoría de los usos) no cambia nada frente
+   a `justify-center`: no sobra espacio que repartir.
+
+   El círculo deja más aire a la izquierda del texto que a la derecha: el
+   propio círculo ya aporta su margen visual, así que un padding simétrico
+   dejaría un hueco de más en ese lado. `secondary` no lleva círculo y
+   mantiene el padding simétrico de siempre, centrado. */
+const PRIMARY_SIZES: Record<Size, string> = {
+  md: "justify-between py-1.5 pl-6 pr-1.5 gap-3",
+  lg: "justify-between py-2 pl-8 pr-2 gap-3.5",
+};
+
 const SIZES: Record<Size, string> = {
-  md: "px-6 py-3",
-  lg: "px-8 py-4",
+  md: "justify-center px-6 py-3 gap-2.5",
+  lg: "justify-center px-8 py-4 gap-2.5",
+};
+
+const ARROW_CIRCLE: Record<Size, string> = {
+  md: "size-8",
+  lg: "size-9",
 };
 
 const SHAPE: Record<Variant, string> = {
@@ -55,11 +88,10 @@ const SHAPE: Record<Variant, string> = {
 const VARIANTS: Record<Variant, Record<Tone, string>> = {
   /* La terracota de marca (#B56142) da 4,42:1 con blanco, por debajo de AA
      para una etiqueta pequeña. El botón usa por eso la variante profunda
-     (5,73:1) y oscurece un paso más al pasar por encima, con un filete
-     dorado que aparece por debajo. */
+     (5,73:1) y oscurece un paso más al pasar por encima. */
   primary: {
-    light: "bg-terracotta-deep text-white hover:bg-[#874429] hover:shadow-[inset_0_-2px_0_var(--gold)]",
-    dark: "bg-terracotta-deep text-white hover:bg-[#874429] hover:shadow-[inset_0_-2px_0_var(--gold)]",
+    light: "bg-terracotta-deep text-white hover:bg-[#874429]",
+    dark: "bg-terracotta-deep text-white hover:bg-[#874429]",
   },
   secondary: {
     light:
@@ -70,20 +102,85 @@ const VARIANTS: Record<Variant, Record<Tone, string>> = {
    * `tap-44`: la variante discreta es texto subrayado sin caja, así que su
    * zona táctil medía la altura de una línea. El pseudoelemento la lleva a
    * 44 px sin cambiar ni un píxel del diseño. Ver `globals.css`.
-   *
-   * `mq-link`: el subrayado se dibuja al pasar por encima o al recibir el
-   * foco, en vez de estar siempre puesto — ver esa clase en `globals.css`
-   * para el porqué completo.
    */
   quiet: {
-    light: "mq-link tap-44 text-forest hover:text-terracotta-text px-0 min-h-0 py-1",
-    dark: "mq-link tap-44 text-on-dark hover:text-sand px-0 min-h-0 py-1",
+    light: "tap-44 text-forest hover:text-terracotta-text px-0 min-h-0 py-1 gap-1.5",
+    dark: "tap-44 text-on-dark hover:text-sand px-0 min-h-0 py-1 gap-1.5",
   },
 };
 
-function classes(variant: Variant, tone: Tone, size: Size, className: string) {
-  const shape = variant === "quiet" ? "" : `${SHAPE[variant]} ${SIZES[size]}`;
-  return `${BASE} ${shape} ${VARIANTS[variant][tone]} ${className}`.trim();
+function outerClasses(variant: Variant, tone: Tone, size: Size, className: string) {
+  if (variant === "quiet") return `${BASE} ${VARIANTS.quiet[tone]} ${className}`.trim();
+  const sizing = variant === "primary" ? PRIMARY_SIZES[size] : SIZES[size];
+  return `${BASE} ${SHAPE[variant]} ${sizing} ${VARIANTS[variant][tone]} ${className}`.trim();
+}
+
+/**
+ * Flecha en un círculo integrado, solo para `primary`.
+ *
+ * Decorativa: el enlace o botón que la envuelve ya lleva el texto y el
+ * `aria-label` si hace falta, así que esto no necesita ninguno propio.
+ * `group-hover`/`group-focus-visible` la desplazan unos píxeles y aclaran el
+ * círculo — el gesto vive en el padre (`.mq-tap.group`), no aquí.
+ */
+function ArrowCircle({ size }: { size: Size }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`${ARROW_CIRCLE[size]} mq-btn-arrow inline-flex shrink-0 items-center justify-center rounded-full bg-white/15 transition-[transform,background-color] duration-[var(--dur-hover)] ease-[var(--ease-out)] group-hover:translate-x-1 group-hover:bg-white/25 group-focus-visible:translate-x-1 group-focus-visible:bg-white/25`}
+    >
+      <svg viewBox="0 0 16 16" className="size-3.5" aria-hidden="true">
+        <path
+          d="M3 8h9.5M9 4.2 13 8l-4 3.8"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </svg>
+    </span>
+  );
+}
+
+/**
+ * Flecha de texto, para `quiet`.
+ *
+ * Mismo dibujo que `MagneticArrow` (`motion.tsx`) pero inline aquí: ese
+ * componente exige un ancestro `.group` propio y aquí el ancestro ya es el
+ * propio enlace (`BASE` incluye `group`), así que reimplementar el mismo
+ * `group-hover`/`group-focus-visible` evita depender de un `<span>`
+ * intermedio adicional.
+ */
+function TextArrow() {
+  return (
+    <span
+      aria-hidden="true"
+      className="inline-block shrink-0 transition-transform duration-[var(--dur-hover)] ease-[var(--ease-out)] group-hover:translate-x-1 group-focus-visible:translate-x-1"
+    >
+      →
+    </span>
+  );
+}
+
+function Content({ variant, size, children }: { variant: Variant; size: Size; children: ReactNode }) {
+  if (variant === "primary") {
+    return (
+      <>
+        <span>{children}</span>
+        <ArrowCircle size={size} />
+      </>
+    );
+  }
+  if (variant === "quiet") {
+    return (
+      <>
+        <span className="mq-link">{children}</span>
+        <TextArrow />
+      </>
+    );
+  }
+  return <>{children}</>;
 }
 
 interface Common {
@@ -117,10 +214,12 @@ export function ButtonLink({
   return (
     <Link
       href={locale ? localeHref(locale, href) : href}
-      className={classes(variant, tone, size, className)}
+      className={outerClasses(variant, tone, size, className)}
       {...rest}
     >
-      {children}
+      <Content variant={variant} size={size}>
+        {children}
+      </Content>
     </Link>
   );
 }
@@ -147,13 +246,15 @@ export function Button({
   }) {
   return (
     <button
-      className={classes(variant, tone, size, className)}
+      className={outerClasses(variant, tone, size, className)}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       {...rest}
     >
       {loading && <span className="mq-spinner" aria-hidden="true" />}
-      {children}
+      <Content variant={variant} size={size}>
+        {children}
+      </Content>
     </button>
   );
 }

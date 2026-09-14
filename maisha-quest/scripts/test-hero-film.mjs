@@ -315,7 +315,16 @@ console.log("\n== 12. Scroll de fondo bloqueado mientras está abierto, restaura
   else pass("el scroll de fondo se bloquea mientras el overlay está abierto");
 
   await page.keyboard.press("Escape");
-  await page.waitForTimeout(400);
+  // El cierre real tarda 220 ms (`requestClose`, en `HeroFilmButton.tsx`) más
+  // lo que tarde el hilo principal en llegar a ejecutarlo — variable según la
+  // carga de la página. Un `waitForTimeout` fijo corría el riesgo de leer el
+  // scroll ANTES de que `overflow` volviera a su valor normal, a veces por
+  // muy poco: se espera aquí a la propia condición, no a una duración
+  // adivinada.
+  await page.waitForFunction(
+    () => getComputedStyle(document.body).overflow !== "hidden",
+    { timeout: 2000 },
+  );
   const after = await page.evaluate(() => window.scrollY);
   const overflowAfter = await page.evaluate(() => getComputedStyle(document.body).overflow);
   if (overflowAfter === "hidden") fail("el scroll de fondo sigue bloqueado tras cerrar");

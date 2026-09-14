@@ -2,10 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { type Locale, localeHref, stripLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { whatsappHref } from "@/lib/site";
+import { ButtonLink } from "@/components/ui/Button";
 
 /**
  * Barra de acción persistente en móvil.
@@ -100,12 +100,9 @@ export function MobileCTABar({
       className="mobile-action-bar border-t border-rule-on-dark/30 bg-forest"
     >
       <div className="flex items-stretch gap-3">
-        <Link
-          href={localeHref(locale, "/plan")}
-          className="mq-tap flex min-h-12 flex-1 items-center justify-center rounded-[var(--radius-pill)] bg-terracotta-deep px-5 text-[0.85rem] font-semibold text-white"
-        >
+        <ButtonLink href="/plan" locale={locale} variant="primary" size="md" className="flex-1">
           {t.planCta}
-        </Link>
+        </ButtonLink>
         <a
           href={whatsappHref(t.whatsappMessage)}
           target="_blank"

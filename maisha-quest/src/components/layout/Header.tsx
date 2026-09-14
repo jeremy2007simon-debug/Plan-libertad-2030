@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { type Locale, localeHref, stripLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
-import { MobileNav } from "./MobileNav";
+import type { PhotoAlt } from "@/i18n/alt";
+import { SiteMenu } from "./SiteMenu";
 import { Logo } from "./Logo";
 
 /**
@@ -18,9 +19,10 @@ import { Logo } from "./Logo";
  * lista de enlaces, selector + CTA + menú móvil). La referencia pedida por el
  * cliente resuelve eso con tres zonas fijas: menú a la izquierda, marca
  * centrada, CTA a la derecha — un patrón habitual en operadores de safari de
- * gama alta. El menú de pantalla completa (`MobileNav`) ya estaba construido
- * y probado para móvil; aquí se activa en TODAS las anchuras en vez de
- * duplicar la navegación en dos sitios. El selector de idioma no desaparece:
+ * gama alta. El panel de pantalla completa (`SiteMenu`) es la única
+ * navegación, en cualquier ancho, en vez de duplicarla en dos sitios: en
+ * escritorio se abre en dos zonas —enlaces y fotografía—, en móvil en una
+ * sola columna. El selector de idioma no desaparece:
  * vive dentro de ese mismo panel, visible nada más abrirlo, en vez de sumar
  * una cuarta pieza a una barra que se quería limpia.
  *
@@ -42,11 +44,14 @@ export function Header({
   locale,
   t,
   hours,
+  photoAlt,
 }: {
   locale: Locale;
   t: Dictionary["nav"];
-  /** Horario ya traducido; solo lo usa el menú móvil. Ver `Footer`. */
+  /** Horario ya traducido; solo lo usa el panel del menú. Ver `Footer`. */
   hours: string;
+  /** Textos alternativos de las fotografías del panel de escritorio del menú. */
+  photoAlt: PhotoAlt;
 }) {
   // La ruta con la que se decide la cabecera transparente va SIN prefijo de
   // idioma: `/es` y `/en` son la misma portada.
@@ -85,7 +90,7 @@ export function Header({
         style={{ height: solid ? "62px" : "76px" }}
       >
         <div className="flex items-center justify-self-start">
-          <MobileNav locale={locale} tone={tone} t={t} hours={hours} alwaysVisible />
+          <SiteMenu locale={locale} tone={tone} t={t} hours={hours} photoAlt={photoAlt} alwaysVisible />
         </div>
 
         <div className="justify-self-center">
