@@ -811,6 +811,7 @@ export const zhCN: Dictionary = {
       subline: "由当地专家带领，围绕您的故事设计。",
       video: {
         play: "播放 Maisha Quest 影片",
+        duration: "时长 35s",
         close: "关闭视频",
         loading: "视频加载中…",
         error: "视频无法播放，请检查网络连接后重试。",

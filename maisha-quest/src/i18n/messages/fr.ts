@@ -838,6 +838,7 @@ export const fr: Dictionary = {
       subline: "Guidés par des experts locaux. Pensés pour votre histoire.",
       video: {
         play: "Lire le film Maisha Quest",
+        duration: "Film de 35 s",
         close: "Fermer la vidéo",
         loading: "Chargement de la vidéo…",
         error: "La vidéo n'a pas pu être lue. Vérifiez votre connexion et réessayez.",

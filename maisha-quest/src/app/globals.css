@@ -1633,22 +1633,114 @@ p {
   background: rgba(var(--scrim), 0.55);
 }
 
-.mq-video-modal-ended {
+/* --- Transición final: la brújula atraviesa la pantalla ------------------
+   Al terminar el vídeo (`ended`), en vez del panel estático de "ver de
+   nuevo"/"cerrar" de antes, la marca real de Maisha Quest —la brújula de
+   `CompassMark`, sin el nombre: el propio vídeo ya cierra con su rótulo
+   "Maisha Quest" sobre piel de leopardo, y repetirlo aquí lo duplicaría—
+   avanza hacia la cámara mientras todo el overlay (`data-flythrough` en
+   `.mq-video-modal`) se desvanece con ella, revelando la portada que ya
+   está montada debajo sin otro clic. ~1,9 s en total, dentro de la horquilla
+   de 1,5–2,5 s pedida; el temporizador en JS (`HeroFilmButton`) usa el mismo
+   valor para desmontar el overlay justo cuando ya es invisible. */
+
+.mq-video-modal[data-flythrough] {
+  animation: mq-flythrough-out 1.9s var(--ease-soft) both;
+}
+
+.mq-video-modal-flythrough {
   position: absolute;
   inset: 0;
   z-index: 1;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 1.5rem;
-  background: rgba(var(--scrim), 0.6);
+  /* Da profundidad real a `translateZ` en `.mq-flythrough-mark`: sin esto
+     sería un escalado plano, justo lo que el encargo pide distinguir de una
+     animación 3D genuina. */
+  perspective: 60rem;
+  /* El propio vídeo cierra su último plano con su rótulo "Maisha Quest"
+     sobre una brújula ya dibujada en la piel de leopardo (ver el vídeo
+     fuente): dejar ese fotograma visible mientras esta brújula nueva vuela
+     por encima duplicaba la marca dos veces a la vez. Este fondo opaco lo
+     cubre enseguida —antes de que la brújula sea grande— para que solo haya
+     una marca en pantalla en cada instante. */
+  background: rgb(var(--scrim));
+  opacity: 0;
+  animation: mq-flythrough-cover 1.9s var(--ease-soft) both;
+}
+
+.mq-flythrough-mark {
+  width: clamp(4.5rem, 14vw, 7rem);
+  height: auto;
+  color: var(--parchment);
+  animation: mq-flythrough-mark 1.9s var(--ease-soft) both;
+  will-change: transform, opacity;
+}
+
+@keyframes mq-flythrough-out {
+  0% {
+    opacity: 1;
+  }
+  58% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mq-flythrough-cover {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes mq-flythrough-mark {
+  0% {
+    transform: translateZ(0) scale(0.85);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  68% {
+    transform: translateZ(30rem) scale(3.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(46rem) scale(4.4);
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .mq-video-modal {
     animation: none;
     transition: none;
+  }
+
+  /* No debería llegar a montarse con movimiento reducido (`HeroFilmButton`
+     salta directo al fundido de cierre existente), pero si lo hiciera por
+     cualquier motivo, que no anime. */
+  .mq-video-modal[data-flythrough] {
+    animation: none;
+    opacity: 0;
+  }
+
+  .mq-video-modal-flythrough {
+    animation: none;
+    opacity: 0;
+  }
+
+  .mq-flythrough-mark {
+    animation: none;
+    opacity: 0;
   }
 }

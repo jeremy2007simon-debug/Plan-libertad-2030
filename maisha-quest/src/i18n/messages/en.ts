@@ -859,6 +859,8 @@ export const en = {
       video: {
         /** Nombre accesible del botón circular y del propio `<video>`. */
         play: "Play the Maisha Quest film",
+        /** Duración real del vídeo (35.42 s), mostrada junto al botón. */
+        duration: "35 sec film",
         close: "Close video",
         loading: "Loading video…",
         error: "The video couldn't be played. Please check your connection and try again.",

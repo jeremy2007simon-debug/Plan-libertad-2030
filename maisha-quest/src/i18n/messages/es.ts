@@ -835,6 +835,7 @@ export const es: Dictionary = {
       subline: "Guiados por expertos locales. Pensados para tu historia.",
       video: {
         play: "Reproducir la película de Maisha Quest",
+        duration: "Película de 35 s",
         close: "Cerrar el vídeo",
         loading: "Cargando el vídeo…",
         error: "No se ha podido reproducir el vídeo. Comprueba tu conexión e inténtalo de nuevo.",

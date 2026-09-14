@@ -103,13 +103,17 @@ export default async function PlanPage({
                 <p className="eyebrow mt-4 text-ink-faint">{t.home.planner.ratherTalk}</p>
                 <a
                   href={COMPANY.phoneHref}
-                  className="tap-44 font-display mt-2 inline-block text-[1.35rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
+                  // `block`, no `inline-block`: dos enlaces seguidos en línea
+                  // se pegaban al ancho de esta columna estrecha y el
+                  // teléfono y el correo acababan en la misma línea sin
+                  // espacio entre ellos ("411info@maishaquest.com").
+                  className="tap-44 font-display mt-2 block text-[1.35rem] text-forest transition-colors duration-300 hover:text-terracotta-text"
                 >
                   {COMPANY.phone}
                 </a>
                 <a
                   href={COMPANY.emailHref}
-                  className="tap-44 mt-1 inline-block text-[0.95rem] text-ink-soft transition-colors duration-300 hover:text-terracotta-text"
+                  className="tap-44 mt-1 block text-[0.95rem] text-ink-soft transition-colors duration-300 hover:text-terracotta-text"
                 >
                   {COMPANY.email}
                 </a>
