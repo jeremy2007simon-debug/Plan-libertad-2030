@@ -95,6 +95,15 @@ export function LocaleSelector({
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
+        // El menú móvil también escucha Escape en el MISMO `document` para
+        // cerrarse entero: los dos listeners están en el mismo destino, así
+        // que `stopPropagation` no basta para saltarse el otro —hace falta
+        // `stopImmediatePropagation`—. Sin esto, Escape dentro del
+        // desplegable de idioma cerraba los DOS a la vez (el desplegable
+        // vive ahora dentro de ese menú, desde el rediseño de la cabecera).
+        // Escape debe cerrar solo la capa más interna, como cualquier
+        // diálogo anidado.
+        event.stopImmediatePropagation();
         setOpen(false);
         buttonRef.current?.focus();
         return;
@@ -110,11 +119,16 @@ export function LocaleSelector({
 
       if (event.key === "Tab") {
         // Foco atrapado: salir por el final vuelve al principio y al revés.
+        // `stopImmediatePropagation` evita que la trampa de foco del menú
+        // móvil —que también escucha Tab en el mismo `document`— compita por
+        // el mismo evento y redirija el foco otra vez.
         if (!event.shiftKey && index === items.length - 1) {
           event.preventDefault();
+          event.stopImmediatePropagation();
           items[0].focus();
         } else if (event.shiftKey && index <= 0) {
           event.preventDefault();
+          event.stopImmediatePropagation();
           items[items.length - 1].focus();
         }
         return;
@@ -127,10 +141,18 @@ export function LocaleSelector({
     };
 
     document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
+    // Captura, no burbuja: el menú móvil que puede envolver este selector
+    // (desde el rediseño de la cabecera) añade SU escucha de teclado a
+    // `document` antes que esta —se abre primero—, y los listeners de un
+    // mismo destino se disparan en el orden en que se añadieron. En fase de
+    // burbuja, el del menú móvil actuaría primero y cerraría el menú entero
+    // antes de que `stopImmediatePropagation` pudiera evitarlo. En captura,
+    // esta escucha se dispara siempre primero, sin importar el orden de
+    // registro, así que sí llega a tiempo de frenar al menú móvil.
+    document.addEventListener("keydown", onKeyDown, true);
     return () => {
       document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("keydown", onKeyDown, true);
     };
   }, [open]);
 

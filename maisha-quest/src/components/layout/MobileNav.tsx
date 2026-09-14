@@ -27,6 +27,7 @@ export function MobileNav({
   t,
   hours,
   tone = "light",
+  alwaysVisible = false,
 }: {
   locale: Locale;
   t: Dictionary["nav"];
@@ -39,6 +40,13 @@ export function MobileNav({
    */
   hours: string;
   tone?: "light" | "dark";
+  /**
+   * La cabecera usa este mismo panel como ÚNICA navegación, en cualquier
+   * ancho —no solo en móvil—: por defecto (`false`) el disparador y el panel
+   * siguen ocultos desde `lg`, para los pocos sitios que todavía dan por
+   * hecho una navegación de escritorio aparte.
+   */
+  alwaysVisible?: boolean;
 }) {
   const pathname = usePathname();
   /**
@@ -100,9 +108,9 @@ export function MobileNav({
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-label={t.openMenu}
-        className={`mq-tap flex min-h-11 items-center gap-2.5 rounded-[var(--radius-pill)] px-2.5 lg:hidden ${
-          dark ? "text-parchment" : "text-forest"
-        }`}
+        className={`mq-tap flex min-h-11 items-center gap-2.5 rounded-[var(--radius-pill)] px-2.5 ${
+          alwaysVisible ? "" : "lg:hidden"
+        } ${dark ? "text-parchment" : "text-forest"}`}
       >
         <span className="eyebrow">{t.menu}</span>
         <span aria-hidden="true" className="flex w-5 flex-col gap-[5px]">
@@ -117,7 +125,9 @@ export function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label={t.siteMenu}
-          className="mq-mobile-nav-panel fixed inset-0 z-[60] flex flex-col bg-forest text-parchment lg:hidden"
+          className={`mq-mobile-nav-panel fixed inset-0 z-[60] flex flex-col bg-forest text-parchment ${
+            alwaysVisible ? "" : "lg:hidden"
+          }`}
         >
           <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between px-5 sm:px-8">
             <span className="flex items-center gap-3">

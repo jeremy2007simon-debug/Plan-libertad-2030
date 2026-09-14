@@ -1,180 +1,112 @@
-import { ButtonLink } from "@/components/ui/Button";
-import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { ParallaxMedia } from "@/components/ui/motion";
 import { CLIENT_PHOTOS } from "@/data/client-photography";
-import { HOME_COORDINATES } from "@/lib/site";
+import { COMPANY } from "@/lib/site";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
-import type { MediaVideo } from "@/types/content";
 import { getPhotoAlt } from "@/i18n/alt";
+import { HeroFilmButton } from "./HeroFilmButton";
 
 /**
- * Hero.
+ * Portada.
  *
- * Sin JavaScript: la entrada es CSS puro (opacidad y un desplazamiento corto,
- * escalonados) y la fotografía hace un zoom lentísimo con `transform`, así que
- * no hay reflow ni trabajo en el hilo principal. Con `prefers-reduced-motion`
- * todo queda quieto y colocado.
+ * Segunda pasada de diseño de la portada, a partir de una referencia visual
+ * que el cliente facilitó (composición de un operador de safari de gama
+ * alta): fotografía a sangre, cabecera de tres zonas superpuesta, marca
+ * centrada con una línea de bienvenida encima, un botón circular de
+ * reproducción entre dos filetes horizontales, y ubicación + descripción en
+ * la fila inferior. Ni el nombre, ni el logotipo, ni las imágenes de esa
+ * referencia se han copiado — solo la distribución y las proporciones; el
+ * contenido, la paleta y los seis idiomas son los propios de Maisha Quest.
  *
- * El titular entra línea a línea, con las líneas definidas en el diccionario:
- * el corte es una decisión editorial de cada idioma, no un salto automático
- * que en alemán o en ruso caería en mitad de una palabra larga.
+ * El titular anterior ("Private journeys through Tanzania") deja de ser el
+ * `<h1>` visual, pero no desaparece del todo: su antigua segunda línea
+ * (`subline`) se reutiliza tal cual como la descripción breve de la esquina
+ * inferior derecha, porque ya era una frase real sobre el negocio, no un
+ * relleno. El `<h1>` en sí pasa a ser "Welcome to" + "Maisha Quest": las dos
+ * líneas viven DENTRO del mismo `<h1>` —nunca un `<p>` suelto delante— para
+ * que el nombre accesible siga siendo una frase completa y no una marca
+ * pelada sin contexto.
  *
- * El paralaje del fondo solo se activa en escritorio con puntero fino. En
- * móvil no hay ninguno: `background-attachment: fixed` no funciona en iOS y
- * un paralaje por scroll a esa altura de imagen se ve a tirones.
+ * El vídeo de 35 s ya no vive aquí de ninguna forma: `HeroFilmButton` monta
+ * su propio overlay y no toca el documento hasta que alguien pulsa el botón.
+ * Sin JavaScript, o antes del primer clic, la portada es exactamente esta
+ * fotografía y este texto — nunca una introducción a medio cargar.
  *
- * La imagen lleva `preload`: es el LCP de la página y debe empezar a
- * descargarse en el primer viaje al servidor.
+ * Sin JavaScript: la entrada es CSS puro (opacidad y un desplazamiento corto)
+ * y la fotografía hace un zoom lentísimo con `transform`. Con
+ * `prefers-reduced-motion` todo queda quieto y colocado — ver `:root[data-js]`
+ * en `globals.css`, que es lo único que activa estas clases `animate-*`.
  *
- * VÍDEO: el cliente entregó dos vídeos verticales sin comprimir; ninguno sirve
- * como hero horizontal de escritorio (estirar un 1080×1920 a pantalla completa
- * se ve mal y pesa 45 MB). Cuando exista el montaje horizontal comprimido, se
- * pasa por la prop `video` y este componente lo reproduce sobre la fotografía,
- * que se queda como póster. Hasta entonces, foto real.
+ * La imagen lleva `preload`: es el LCP de la página.
  */
-export async function Hero({
-  locale,
-  t,
-  video,
-}: {
-  locale: Locale;
-  t: Dictionary;
-  video?: MediaVideo;
-}) {
+export async function Hero({ locale, t }: { locale: Locale; t: Dictionary }) {
   const alt = await getPhotoAlt(locale);
-  // Fotografía del cliente: siluetas de fauna cruzando el horizonte al
-  // atardecer. Su `objectPosition` mantiene el sol y las siluetas dentro del
-  // recorte también en vertical, donde el hero pierde el 70 % del ancho.
+  // Misma fotografía autorizada que llevaba la portada anterior: siluetas de
+  // fauna cruzando el horizonte al atardecer.
   const image = CLIENT_PHOTOS["tanzania-wildlife-sunset-hero"];
 
   return (
-    <section className="relative isolate flex min-h-[84svh] flex-col justify-end overflow-hidden bg-charcoal">
+    <section className="dark-section relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-charcoal">
       {/* Fotografía */}
       <div className="absolute inset-0 -z-10">
-        <ParallaxMedia strength={34} className="absolute -inset-y-12 inset-x-0">
+        <ParallaxMedia strength={26} className="absolute -inset-y-12 inset-x-0">
           <div className="animate-hero-zoom absolute inset-0 origin-center">
             <Photo photo={image} alt={alt[image.altKey]} preload sizes="100vw" />
           </div>
         </ParallaxMedia>
-        {video?.mp4 && (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={image.src}
-            aria-hidden="true"
-            className="absolute inset-0 size-full object-cover"
-          >
-            {video.webm && <source src={video.webm} type="video/webm" />}
-            <source src={video.mp4} type="video/mp4" />
-          </video>
-        )}
-        {/* Dos velos cruzados: uno vertical que asienta el pie del encuadre y
-            otro lateral bajo el texto. Juntos dan contraste AA sobre el cielo
-            del amanecer sin bajar la fotografía a un gris plano. */}
-        <div className="media-scrim absolute inset-0" />
-        <div className="media-scrim-side absolute inset-0" />
-        {/* Banda bajo la cabecera transparente. */}
-        <div className="media-scrim-top absolute inset-x-0 top-0 h-[7.5rem]" />
+        {/* Oscurecimiento sutil y uniforme, no solo en un borde: la
+            composición centrada necesita contraste en medio de la fotografía,
+            no únicamente al pie. Conserva el color, no lo apaga. */}
+        <div className="hero-scrim absolute inset-0" />
+        <div className="media-scrim-top absolute inset-x-0 top-0 h-[8rem]" />
         <div className="grain absolute inset-0" />
-        {/* Transición hacia la siguiente sección: la fotografía se funde en el
-            pergamino en lugar de terminar en un corte recto. Corta y precisa
-            a propósito —una banda alta se ve como una niebla que se come el
-            pie de la fotografía; esta apenas roza el horizonte—. Va dentro de
-            esta capa (`-z-10`) para quedar por debajo del texto. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-linear-to-b from-transparent to-[var(--page)] sm:h-14" />
       </div>
 
-      <Container width="wide" className="pb-14 pt-32 sm:pb-20">
-        <div className="max-w-3xl">
-          <div className="animate-compass-in flex items-center gap-4">
-            <CompassMark className="size-11 text-sand" />
-            <span className="tnum text-[0.68rem] tracking-[0.22em] text-parchment uppercase">
-              {HOME_COORDINATES.label}
-            </span>
-            {/* Línea de brújula: se dibuja desde el punto de coordenadas
-                hacia el borde, como el rumbo trazado sobre una carta. */}
+      {/* Bloque central: bienvenida, marca y botón de reproducción */}
+      <div className="relative flex flex-1 flex-col items-center justify-center px-5 pt-[calc(var(--header-h)+1.5rem)] pb-14 text-center sm:px-8">
+        <h1 className="text-parchment">
+          <span
+            className="animate-fade-up eyebrow block"
+            style={{ animationDelay: "160ms" }}
+          >
+            {t.home.hero.welcome}
+          </span>{" "}
+          <span className="mt-4 block overflow-hidden pb-[0.1em] sm:mt-5">
             <span
-              aria-hidden="true"
-              className="animate-compass-line hidden h-px flex-1 origin-left bg-linear-to-r from-sand/60 to-transparent sm:block"
-            />
-          </div>
-
-          <h1 className="text-display mt-8 text-parchment">
-            {t.home.hero.headline.map((line, index) => (
-              /* Cada línea sube desde su propia máscara. El `overflow-hidden`
-                 va en el contenedor y el movimiento en el hijo, para que la
-                 animación no recorte los descendentes de la tipografía. */
-              <span key={line} className="block overflow-hidden pb-[0.08em]">
-                <span
-                  className="animate-line-up block"
-                  style={{ animationDelay: `${160 + index * 120}ms` }}
-                >
-                  {line}
-                  {index < t.home.hero.headline.length - 1 ? " " : ""}
-                </span>
-              </span>
-            ))}
-          </h1>
-
-          <p
-            className="animate-fade-up text-lede measure mt-6 text-parchment"
-            style={{ animationDelay: "480ms" }}
-          >
-            {t.home.hero.subline}
-          </p>
-
-          <div
-            className="animate-fade-up mt-10 flex flex-wrap items-center gap-3 sm:gap-4"
-            style={{ animationDelay: "640ms" }}
-          >
-            <ButtonLink href="/plan" locale={locale} variant="primary" size="lg">
-              {t.nav.planCta}
-            </ButtonLink>
-            <ButtonLink
-              href="/safaris"
-              locale={locale}
-              variant="secondary"
-              tone="dark"
-              size="lg"
+              className="animate-line-up font-display block text-[clamp(2.75rem,9vw,7rem)] leading-[0.98] tracking-[0.01em] uppercase"
+              style={{ animationDelay: "300ms" }}
             >
-              {t.home.hero.exploreCta}
-            </ButtonLink>
-          </div>
+              Maisha Quest
+            </span>
+          </span>
+        </h1>
 
-          <ul
-            className="animate-fade-up mt-10 flex flex-wrap items-center gap-x-5 gap-y-1.5 sm:gap-x-5"
-            style={{ animationDelay: "800ms" }}
-          >
-            {t.home.hero.pillars.map(
-              (item, index) => (
-                <li key={item} className="flex items-center gap-3 sm:gap-5">
-                  {index > 0 && (
-                    <span aria-hidden="true" className="hidden text-sand/50 sm:inline">
-                      ·
-                    </span>
-                  )}
-                  <span className="eyebrow text-parchment">{item}</span>
-                </li>
-              ),
-            )}
-          </ul>
+        <div
+          className="animate-fade-up mt-10 flex w-full max-w-md items-center gap-4 sm:mt-14 sm:max-w-lg sm:gap-6"
+          style={{ animationDelay: "560ms" }}
+        >
+          <span aria-hidden="true" className="h-px flex-1 bg-parchment/35" />
+          <HeroFilmButton t={t.home.hero.video} />
+          <span aria-hidden="true" className="h-px flex-1 bg-parchment/35" />
         </div>
-      </Container>
+      </div>
 
-      {/* Indicación de scroll: decorativa, oculta a lectores de pantalla. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-7 right-6 hidden flex-col items-center gap-3 sm:flex"
-      >
-        <span className="eyebrow [writing-mode:vertical-rl] text-parchment/80">
-          {t.home.hero.scroll}
-        </span>
-        <span className="animate-scroll-hint h-10 w-px bg-linear-to-b from-parchment/60 to-transparent" />
+      {/* Fila inferior: ubicación real a la izquierda, descripción a la
+          derecha — en móvil se apilan en el mismo orden. */}
+      <div className="relative pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        <Container width="wide">
+          <div
+            className="animate-fade-up flex flex-col items-center gap-3 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left"
+            style={{ animationDelay: "720ms" }}
+          >
+            <p className="eyebrow text-parchment">{COMPANY.base}</p>
+            <p className="measure-narrow text-[0.85rem] leading-relaxed text-parchment sm:text-right">
+              {t.home.hero.subline}
+            </p>
+          </div>
+        </Container>
       </div>
     </section>
   );

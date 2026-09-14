@@ -225,7 +225,16 @@ console.log("\n== 3. Navegación por teclado ==");
 console.log("\n== 4. Selector de idioma ==");
 {
   await page.goto(`${BASE}/es`, { waitUntil: "networkidle" });
-  const trigger = page.locator("header button[aria-expanded]").first();
+  // El selector vive dentro del panel del menú (rediseño de la cabecera:
+  // menú a la izquierda, marca centrada, CTA a la derecha — ya no hay un
+  // selector suelto en la propia barra), así que hay que abrir ese panel
+  // primero. Se identifica por su propio `aria-label` ("Cambiar de idioma…"),
+  // no por ser "el primer botón con aria-expanded de la cabecera": ese ya no
+  // es un selector fiable ahora que el propio disparador del menú también
+  // lleva `aria-expanded`.
+  await page.getByRole("button", { name: "Abrir menú" }).click();
+  await page.waitForTimeout(250);
+  const trigger = page.locator('header button[aria-expanded][aria-label*="Cambiar de idioma"]');
   await trigger.focus();
   await page.keyboard.press("Enter");
   await page.waitForTimeout(250);
@@ -245,11 +254,18 @@ console.log("\n== 4. Selector de idioma ==");
 
   await trigger.click();
   await page.waitForTimeout(200);
+  // Un punto dentro del propio panel del menú, pero fuera del desplegable de
+  // idioma: el panel es un diálogo a pantalla completa, así que "fuera" del
+  // selector sigue estando dentro de él.
   await page.mouse.click(20, 400);
   await page.waitForTimeout(250);
   if ((await trigger.getAttribute("aria-expanded")) !== "false")
     fail("el selector no se cierra al hacer clic fuera");
   else pass("se cierra al hacer clic fuera");
+
+  // Deja el menú como lo encontró.
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(200);
 }
 
 /* ---- 6. Formulario: errores y anuncios ----------------------------------- */

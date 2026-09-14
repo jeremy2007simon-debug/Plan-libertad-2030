@@ -12,10 +12,6 @@ import type { Dictionary } from "./en";
  */
 export const fr: Dictionary = {
   a11y: {
-    introEnter: "Entrer sur le site",
-    introMute: "Couper le son",
-    introUnmute: "Activer le son",
-    introWatch: "Voir l’introduction",
     skipToContent: "Aller au contenu",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
@@ -828,11 +824,16 @@ export const fr: Dictionary = {
 
   home: {
     hero: {
-      headline: ["Voyages privés", "en Tanzanie"],
+      welcome: "Bienvenue chez",
       subline: "Guidés par des experts locaux. Pensés pour votre histoire.",
-      exploreCta: "Découvrir les voyages",
-      pillars: ["Experts locaux", "Safaris privés", "Voyage responsable"],
-      scroll: "Défiler",
+      video: {
+        play: "Lire le film Maisha Quest",
+        close: "Fermer la vidéo",
+        loading: "Chargement de la vidéo…",
+        error: "La vidéo n'a pas pu être lue. Vérifiez votre connexion et réessayez.",
+        retry: "Réessayer",
+        watchAgain: "Revoir",
+      },
     },
     maisha: {
       eyebrow: "Notre nom",

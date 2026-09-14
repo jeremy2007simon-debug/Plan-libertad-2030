@@ -18,10 +18,6 @@ import type { Dictionary } from "./en";
  */
 export const zhCN: Dictionary = {
   a11y: {
-    introEnter: "进入网站",
-    introMute: "静音",
-    introUnmute: "取消静音",
-    introWatch: "观看片头影片",
     skipToContent: "跳至主要内容",
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",
@@ -801,11 +797,16 @@ export const zhCN: Dictionary = {
 
   home: {
     hero: {
-      headline: ["坦桑尼亚", "私人定制之旅"],
+      welcome: "欢迎来到",
       subline: "由当地专家带领，围绕您的故事设计。",
-      exploreCta: "浏览行程",
-      pillars: ["当地专家", "私人定制", "负责任的旅行"],
-      scroll: "向下滚动",
+      video: {
+        play: "播放 Maisha Quest 影片",
+        close: "关闭视频",
+        loading: "视频加载中…",
+        error: "视频无法播放，请检查网络连接后重试。",
+        retry: "重试",
+        watchAgain: "重新观看",
+      },
     },
     maisha: {
       eyebrow: "我们的名字",

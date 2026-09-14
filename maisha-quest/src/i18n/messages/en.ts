@@ -15,10 +15,6 @@ import type { PluralForms } from "@/i18n/format";
 
 export const en = {
   a11y: {
-    introEnter: "Enter the website",
-    introMute: "Mute the film",
-    introUnmute: "Unmute the film",
-    introWatch: "Watch the intro film",
     skipToContent: "Skip to content",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -835,13 +831,19 @@ export const en = {
 
   home: {
     hero: {
-      /* En líneas: el hero las revela una tras otra. El corte es
-         editorial y propio de cada idioma, no un salto automático. */
-      headline: ["Private journeys", "through Tanzania"],
+      /** Encabeza el `<h1>`, encima del nombre de la marca en grande. */
+      welcome: "Welcome to",
+      /** Reutilizada como la descripción breve de la portada, abajo a la derecha. */
       subline: "Guided by local experts. Designed around your story.",
-      exploreCta: "Explore Journeys",
-      pillars: ["Local experts", "Private safaris", "Responsible travel"],
-      scroll: "Scroll",
+      video: {
+        /** Nombre accesible del botón circular y del propio `<video>`. */
+        play: "Play the Maisha Quest film",
+        close: "Close video",
+        loading: "Loading video…",
+        error: "The video couldn't be played. Please check your connection and try again.",
+        retry: "Try again",
+        watchAgain: "Watch again",
+      },
     },
     maisha: {
       eyebrow: "Our name",

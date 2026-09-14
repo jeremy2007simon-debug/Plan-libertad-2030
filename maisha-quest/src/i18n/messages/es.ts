@@ -13,10 +13,6 @@ import type { Dictionary } from "./en";
  */
 export const es: Dictionary = {
   a11y: {
-    introEnter: "Entrar en la web",
-    introMute: "Silenciar la película",
-    introUnmute: "Activar el sonido",
-    introWatch: "Ver la introducción",
     skipToContent: "Saltar al contenido",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
@@ -825,11 +821,16 @@ export const es: Dictionary = {
 
   home: {
     hero: {
-      headline: ["Viajes privados", "por Tanzania"],
+      welcome: "Bienvenido a",
       subline: "Guiados por expertos locales. Pensados para tu historia.",
-      exploreCta: "Ver los viajes",
-      pillars: ["Expertos locales", "Safaris privados", "Viaje responsable"],
-      scroll: "Desliza",
+      video: {
+        play: "Reproducir la película de Maisha Quest",
+        close: "Cerrar el vídeo",
+        loading: "Cargando el vídeo…",
+        error: "No se ha podido reproducir el vídeo. Comprueba tu conexión e inténtalo de nuevo.",
+        retry: "Reintentar",
+        watchAgain: "Ver de nuevo",
+      },
     },
     maisha: {
       eyebrow: "Nuestro nombre",

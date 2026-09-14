@@ -2,35 +2,41 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { type Locale, localeHref, stripLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
-import { MAIN_NAV } from "@/lib/nav";
-import { LocaleSelector } from "./LocaleSelector";
-import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
+import { Logo } from "./Logo";
 
 /**
  * Cabecera.
+ *
+ * Tercera pasada de diseño (tras la de botones): la navegación de escritorio
+ * —siete enlaces en fila junto al logotipo— competía con la marca por el
+ * mismo espacio y dejaba la cabecera con tres densidades distintas (logo,
+ * lista de enlaces, selector + CTA + menú móvil). La referencia pedida por el
+ * cliente resuelve eso con tres zonas fijas: menú a la izquierda, marca
+ * centrada, CTA a la derecha — un patrón habitual en operadores de safari de
+ * gama alta. El menú de pantalla completa (`MobileNav`) ya estaba construido
+ * y probado para móvil; aquí se activa en TODAS las anchuras en vez de
+ * duplicar la navegación en dos sitios. El selector de idioma no desaparece:
+ * vive dentro de ese mismo panel, visible nada más abrirlo, en vez de sumar
+ * una cuarta pieza a una barra que se quería limpia.
  *
  * Arranca transparente sobre el hero y, al hacer scroll, pasa a verde profundo
  * translúcido con un desenfoque ligero por detrás. El cambio se hace con una
  * clase, no midiendo en cada scroll: el listener es pasivo y solo escribe
  * estado cuando cruza el umbral, así que no cuesta fotogramas.
  *
- * El fondo oscuro es el mismo en las once secciones de la home y en el resto
- * de páginas, lo que evita el otro problema: una cabecera que cambia de claro
- * a oscuro según la sección que tenga debajo obliga a recalcular el contraste
- * de cada enlace en cada scroll y nunca queda del todo bien.
- *
  * Al fijarse, la cabecera se compacta de 76 a 62 px. Como es `fixed` y el
  * `--header-h` que usan los heros vive en `:root`, esa altura no desplaza ni
  * un píxel del documento: no hay salto de layout.
  *
- * Solo hay siete entradas en el nivel superior —el problema de la web actual
- * era tener catorce— y los tres tipos de paquete pasan a ser un submenú de
- * Safaris.
+ * La rejilla de tres columnas (`1fr auto 1fr`) es lo que centra de verdad el
+ * logotipo: un `flex justify-between` con dos grupos de anchos distintos a
+ * los lados no lo deja exactamente en el centro, y aquí sí importa —es la
+ * pieza más grande de la composición.
  */
 export function Header({
   locale,
@@ -42,20 +48,10 @@ export function Header({
   /** Horario ya traducido; solo lo usa el menú móvil. Ver `Footer`. */
   hours: string;
 }) {
-  // La ruta con la que se compara el estado activo va SIN prefijo de idioma:
-  // `/es/safaris` y `/en/safaris` son la misma entrada de menú.
+  // La ruta con la que se decide la cabecera transparente va SIN prefijo de
+  // idioma: `/es` y `/en` son la misma portada.
   const pathname = stripLocale(usePathname()).path;
   const [scrolled, setScrolled] = useState(false);
-  /**
-   * El submenú abierto se guarda junto a la ruta en la que se abrió, y se
-   * considera cerrado en cuanto la ruta cambia. Derivarlo así evita un efecto
-   * que llame a setState al navegar —y, con él, un render en cascada.
-   */
-  const [menuState, setMenuState] = useState<{ label: string; path: string } | null>(
-    null,
-  );
-  const openMenu = menuState?.path === pathname ? menuState.label : null;
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /**
    * Las páginas con hero a sangre dejan la cabecera transparente al inicio.
@@ -72,21 +68,9 @@ export function Header({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const openWithDelay = (label: string) => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setMenuState({ label, path: pathname });
-  };
-
-  const closeWithDelay = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    // Margen para cruzar el hueco entre el enlace y el panel sin que se cierre.
-    closeTimer.current = setTimeout(() => setMenuState(null), 140);
-  };
-
   /* La cabecera es oscura en los dos estados, así que el tono de los hijos
-     (logo, selector, botón de menú) no cambia nunca. */
+     (logo, botón de menú) no cambia nunca. */
   const tone = "dark" as const;
-  const linkColor = "text-parchment hover:text-sand";
 
   return (
     <header
@@ -97,103 +81,55 @@ export function Header({
       }`}
     >
       <div
-        className="mx-auto flex w-full max-w-[88rem] items-center justify-between gap-6 px-5 transition-[height] duration-500 ease-[var(--ease-out)] sm:px-8"
+        className="mx-auto grid w-full max-w-[88rem] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 transition-[height] duration-500 ease-[var(--ease-out)] sm:px-8"
         style={{ height: solid ? "62px" : "76px" }}
       >
-        <Logo locale={locale} homeLabel={t.homeLabel} tone={tone} />
+        <div className="flex items-center justify-self-start">
+          <MobileNav locale={locale} tone={tone} t={t} hours={hours} alwaysVisible />
+        </div>
 
-        {/* Navegación de escritorio */}
-        <nav aria-label={t.mainNavLabel} className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {MAIN_NAV.map((item) => {
-              const label = t.items[item.key as keyof typeof t.items];
-              const active =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <li
-                  key={item.key}
-                  className="relative"
-                  onMouseEnter={() => item.children && openWithDelay(item.key)}
-                  onMouseLeave={closeWithDelay}
-                >
-                  <Link
-                    href={localeHref(locale, item.href)}
-                    aria-current={active ? "page" : undefined}
-                    aria-expanded={item.children ? openMenu === item.key : undefined}
-                    onFocus={() => item.children && openWithDelay(item.key)}
-                    className={`mq-tap relative flex min-h-11 items-center rounded-[var(--radius-pill)] px-3.5 text-[0.82rem] font-medium hover:bg-[color-mix(in_srgb,var(--parchment)_10%,transparent)] ${linkColor} ${
-                      active ? "text-parchment" : ""
-                    }`}
-                  >
-                    {label}
-                    {/* El filete activo crece desde el centro en vez de estar
-                        siempre puesto a ancho completo: una transición, no
-                        solo un estado. */}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-x-3.5 bottom-1.5 h-px origin-center scale-x-0 bg-[var(--gold)] transition-transform duration-[var(--dur-hover)] ease-[var(--ease-out)] ${
-                        active ? "scale-x-100" : ""
-                      }`}
-                    />
-                  </Link>
+        <div className="justify-self-center">
+          <Logo locale={locale} homeLabel={t.homeLabel} tone={tone} />
+        </div>
 
-                  {item.children && (
-                    <div
-                      aria-hidden={openMenu !== item.key}
-                      className={`absolute left-0 top-full w-80 origin-top rounded-[var(--radius-sm)] border border-[var(--rule-on-dark)] bg-[color-mix(in_srgb,var(--canopy)_96%,transparent)] p-2 backdrop-blur-[10px] transition-[opacity,transform] duration-[var(--dur-fast)] ease-[var(--ease-out)] ${
-                        openMenu === item.key
-                          ? "pointer-events-auto translate-y-0 opacity-100"
-                          : "pointer-events-none -translate-y-1 opacity-0"
-                      }`}
-                    >
-                      <ul>
-                        {item.children.map((child) => {
-                          const description =
-                            t.descriptions[
-                              child.key as keyof typeof t.descriptions
-                            ];
-                          return (
-                            <li key={child.key}>
-                              <Link
-                                href={localeHref(locale, child.href)}
-                                tabIndex={openMenu === item.key ? undefined : -1}
-                                className="mq-tap block rounded-[var(--radius-xs)] px-3.5 py-3 hover:bg-[color-mix(in_srgb,var(--olive)_38%,transparent)]"
-                              >
-                                <span className="block text-[0.9rem] text-parchment">
-                                  {t.items[child.key as keyof typeof t.items]}
-                                </span>
-                                {description && (
-                                  <span className="mt-0.5 block text-[0.8rem] leading-snug text-on-dark-soft">
-                                    {description}
-                                  </span>
-                                )}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center justify-self-end">
+          {/* Icono en móvil estrecho para no forzar el ancho de esta columna
+              —igual que la de la izquierda, por la propia rejilla— y volver a
+              partir el logotipo del centro real. Texto completo desde `sm`.
+              Envuelto en lugar de pasarle `hidden` al propio botón: `Button`
+              lleva `inline-flex` en su clase base y, al estar ambas en la
+              misma capa, Tailwind resuelve el empate por su propio orden, no
+              por el del atributo — el botón se quedaría visible en móvil. */}
           <div className="hidden sm:block">
-            <LocaleSelector locale={locale} tone={tone} t={t.language} />
-          </div>
-          {/* Envuelto en lugar de pasarle `hidden` al botón: `Button` lleva
-              `inline-flex` en su clase base y, al estar ambas en la misma capa,
-              Tailwind resuelve el empate por su propio orden, no por el del
-              atributo — el botón se quedaría visible en móvil. */}
-          <div className="hidden lg:block">
             <ButtonLink href="/plan" locale={locale} variant="primary" size="md">
               {t.planCta}
             </ButtonLink>
           </div>
-          <MobileNav locale={locale} tone={tone} t={t} hours={hours} />
+          <Link
+            href={localeHref(locale, "/plan")}
+            aria-label={t.planCta}
+            className="mq-tap mq-icon-btn on-dark sm:hidden"
+          >
+            <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
+              <rect
+                x="4"
+                y="5.5"
+                width="16"
+                height="14.5"
+                rx="1.6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                fill="none"
+              />
+              <path
+                d="M4 9.5h16M8 3.5v3.6M16 3.5v3.6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+          </Link>
         </div>
       </div>
     </header>

@@ -367,6 +367,24 @@ p {
   }
 }
 
+/* Velo de la portada nueva.
+   La composición ya no ancla el texto a un lateral o al pie: el titular y el
+   botón de reproducción viven en el CENTRO de la fotografía, con la ubicación
+   y la descripción en la fila inferior. El oscurecimiento no puede vivir solo
+   en un borde como en `.media-scrim-side`; sube en las dos franjas de texto
+   (cabecera arriba, fila inferior abajo) y se queda moderado mientras
+   tanto — sutil, sin lavar el color de la fotografía a un gris plano. */
+.hero-scrim {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 19, 15, 0.62) 0%,
+    rgba(15, 19, 15, 0.32) 22%,
+    rgba(15, 19, 15, 0.4) 50%,
+    rgba(15, 19, 15, 0.34) 74%,
+    rgba(15, 19, 15, 0.62) 100%
+  );
+}
+
 /* --------------------------------------------------------------------------
    Escalas de texto por superficie
 
@@ -1382,189 +1400,151 @@ p {
 }
 
 /* --------------------------------------------------------------------------
-   Introducción cinematográfica — experiencia de vídeo opcional
+   Portada — botón de reproducción y reproductor bajo demanda
    --------------------------------------------------------------------------
 
-   El montaje real del cliente (35,4 s, 1920×1080, con audio) se ofrece
-   dentro del propio hueco del hero, NUNCA en una capa a pantalla completa:
-   `src/components/intro/Intro.tsx` explica el porqué completo del cambio de
-   arquitectura respecto a la versión anterior (que sí bloqueaba la página).
+   Segunda arquitectura del vídeo de introducción, tras la anterior (ver el
+   historial de este archivo): ya no vive dentro del hero ni se ofrece en
+   ningún momento sin que alguien lo pida —ni a pantalla completa bloqueando
+   la web, ni de fondo dentro del propio hueco del hero—. La portada se ve y
+   funciona de inmediato; el vídeo de 35 s solo existe si se pulsa el botón
+   circular, en un overlay aparte (`HeroFilmButton`, en
+   `src/components/home/HeroFilmButton.tsx`, documenta el porqué completo).
 
-   El panel es `position: absolute` dentro del envoltorio `relative` que
-   `page.tsx` pone alrededor de `<Hero>` — cubre exactamente su hueco, no el
-   documento. No hay ningún `overflow: hidden` en `<html>`: el scroll nunca
-   se bloquea, ni siquiera mientras el vídeo se reproduce.
+   El botón es interfaz propia, no una miniatura del vídeo: no lleva póster,
+   así que no hay nada que precargar antes del clic. */
 
-   Visible cuando `:root[data-intro-eligible]` —que pone el guardián antes de
-   pintar en la primera visita, y que `IntroScript` vuelve a poner si se pulsa
-   el botón discreto de «ver de nuevo»—. Sin JavaScript el panel no se ve y
-   el vídeo no se pide: la regla de ocultación es la de por defecto, y el
-   propio panel sale del HTML con `inert`.
-   -------------------------------------------------------------------------- */
-
-.mq-intro-video-panel {
-  display: none;
-  position: absolute;
-  inset: 0;
-  z-index: 5;
+.mq-hero-play {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 5vw, 3rem);
-  background: var(--canopy);
-  opacity: 1;
-  transition: opacity 360ms var(--ease-soft);
+  width: clamp(4.5rem, 8vw, 6.25rem);
+  height: clamp(4.5rem, 8vw, 6.25rem);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(244 240 231 / 0.65);
+  background: rgb(244 240 231 / 0.06);
+  color: var(--parchment);
+  transition:
+    transform var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
 }
 
-:root[data-intro-eligible] .mq-intro-video-panel {
+.mq-hero-play:hover,
+.mq-hero-play:focus-visible {
+  transform: scale(1.06);
+  background: rgb(244 240 231 / 0.16);
+  border-color: var(--parchment);
+}
+
+/* El triángulo del icono "pesa" más a la izquierda que a la derecha dentro de
+   su propio cuadro: sin este ajuste óptico se ve descentrado en el círculo. */
+.mq-hero-play-icon {
+  margin-left: 0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-hero-play {
+    transition:
+      background-color var(--dur-hover) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-out);
+  }
+
+  .mq-hero-play:hover,
+  .mq-hero-play:focus-visible {
+    transform: none;
+  }
+}
+
+/* --- El reproductor ------------------------------------------------------
+   Controles NATIVOS (`controls` en el `<video>`): pausa, avance, volumen y
+   pantalla completa accesibles por teclado sin reconstruir ninguno de los
+   cuatro a mano. Este overlay solo añade lo que el vídeo nativo no trae —el
+   cierre— y los tres estados (carga, error, fin). */
+
+.mq-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1.25rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right))
+    max(1.25rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
+  background: rgb(12 16 12 / 0.92);
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  animation: mq-panel-fade-in 260ms var(--ease-out) both;
+  transition: opacity 220ms var(--ease-soft);
 }
 
-/* Fase de cierre: `IntroScript` la pone durante los ~360ms del desvanecido,
-   ANTES de quitar `data-intro-eligible` (lo que de verdad vuelve a
-   `display: none`). Sin esto, el panel pasaría de visible a invisible en un
-   corte seco en vez de una transición breve. `display: none` como reposo por
-   defecto —en vez de `opacity`/`visibility`— es a propósito: dos botones
-   colocados pero permanentemente a opacidad 0 (sin JavaScript, o con
-   movimiento reducido, donde el panel nunca se activa) siguen teniendo caja
-   y tamaño reales, y una auditoría de accesibilidad los marca como
-   «controles invisibles» — `display: none` los saca del todo, caja incluida. */
-:root[data-intro-closing] .mq-intro-video-panel {
+.mq-video-modal[data-closing] {
   opacity: 0;
   pointer-events: none;
 }
 
-/* El escenario: columna que centra el marco y, debajo, los controles —en el
-   margen del vídeo, nunca sobre él (ver más abajo)—. `width: 100%` es lo que
-   deja que el marco (con su propio `max-width`) use todo el ancho disponible
-   del panel en vez de encogerse al tamaño de su contenido. */
-.mq-intro-video-stage {
-  display: flex;
-  width: 100%;
-  min-height: 0;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1rem, 3vw, 1.75rem);
-}
-
-/* --- El marco ----------------------------------------------------------
-   El archivo es 1920×1080 exactos: el marco fuerza esa misma proporción, así
-   que `cover` en el vídeo de dentro (más abajo) nunca recorta nada, incluido
-   el rótulo final. En cualquier pantalla que no sea 16:9 —todo el catálogo
-   de móviles— sobra ancho o alto alrededor del marco, nunca dentro de él; ese
-   sobrante es el propio `.mq-intro-video-stage` (Dark Canopy + grano), no
-   espacio muerto. */
-.mq-intro-video-frame {
+.mq-video-modal-frame {
   position: relative;
   width: 100%;
-  max-width: 64rem;
+  max-width: 68rem;
   max-height: 100%;
   aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-top: 1px solid rgba(196, 147, 79, 0.35);
-  border-bottom: 1px solid rgba(196, 147, 79, 0.35);
+  background: #000;
 }
 
-.mq-intro-video-el {
+.mq-video-modal-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  /* El marco ya tiene la proporción exacta del plano (16:9): "llenarlo" y
-     "contenerlo" son la misma operación cuando las proporciones coinciden. */
-  object-fit: cover;
-  background: var(--canopy);
+  /* A petición expresa: se ve el plano completo, incluido el rótulo final,
+     nunca recortado — al contrario que el resto de vídeos de la web, que
+     usan `cover` porque no llevan texto incrustado. */
+  object-fit: contain;
+  background: #000;
 }
 
-/* --- Controles -------------------------------------------------------------
-   Fuera del propio vídeo, en el margen del escenario: nada se superpone al
-   plano ni, sobre todo, al rótulo final incrustado en el archivo. */
+.mq-video-modal-close {
+  position: absolute;
+  top: max(0.75rem, env(safe-area-inset-top));
+  right: max(0.75rem, env(safe-area-inset-right));
+  z-index: 2;
+  background: rgb(12 16 12 / 0.55);
+}
 
-.mq-intro-video-controls {
+.mq-video-modal-state {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--parchment);
+  background: rgb(0 0 0 / 0.4);
+}
+
+.mq-video-modal-ended {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-}
-
-/* Cápsula, igual que `primary` en `Button.tsx`: el vídeo tiene su propia
-   paleta (arena sobre Dark Canopy, no terracota) porque vive sobre una
-   fotografía en vez de sobre pergamino, pero la FORMA y la respuesta al
-   tacto son las mismas —es lo que integra este control con el resto del
-   sistema en vez de dejarlo como una pieza aparte. */
-.mq-intro-video-enter {
-  min-height: 44px;
-  padding: 0.75rem 1.75rem;
-  border: 1px solid var(--sand);
-  border-radius: var(--radius-pill);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--canopy);
-  background: var(--sand);
-}
-
-.mq-intro-video-enter:hover {
-  background: var(--parchment);
-}
-
-/* El botón de silencio reutiliza `.mq-icon-btn` (ver «Sistema de
-   controles», más arriba) en su variante `on-dark`; esto solo ajusta el
-   fondo semitransparente propio del vídeo. */
-.mq-intro-video-mute {
-  background: rgb(20 32 25 / 0.4);
-}
-
-.mq-intro-video-mute-icon {
-  width: 1.15rem;
-  height: 1.15rem;
-}
-
-.mq-intro-video-mute [data-intro-mute-label] {
-  /* El estado se anuncia por `aria-pressed`; el texto visible del botón es
-     solo el icono, para no competir con «Enter the website». */
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-/* --- Ver (de nuevo) el vídeo -------------------------------------------
-   Acción secundaria discreta, siempre en el mismo sitio del hero, visible
-   salvo mientras el panel de arriba ya está activo. */
-
-.mq-intro-watch {
-  position: absolute;
-  left: max(1.25rem, env(safe-area-inset-left));
-  bottom: max(1.25rem, env(safe-area-inset-bottom));
-  z-index: 4;
-  display: flex;
-  min-height: 40px;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1rem 0.55rem 0.75rem;
-  border: 1px solid rgb(233 223 206 / 0.3);
-  border-radius: var(--radius-pill);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--parchment);
-  background: rgb(20 32 25 / 0.32);
-  backdrop-filter: blur(2px);
-}
-
-.mq-intro-watch:hover {
-  border-color: var(--sand);
-}
-
-.mq-intro-watch-icon {
-  width: 0.85rem;
-  height: 0.85rem;
+  padding: 1.5rem;
+  background: rgb(12 16 12 / 0.6);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mq-intro-video-panel {
+  .mq-video-modal {
+    animation: none;
     transition: none;
   }
 }

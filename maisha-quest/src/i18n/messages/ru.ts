@@ -27,10 +27,6 @@ const plural = (n: number, one: string, few: string, many: string) => {
 
 export const ru: Dictionary = {
   a11y: {
-    introEnter: "Войти на сайт",
-    introMute: "Выключить звук",
-    introUnmute: "Включить звук",
-    introWatch: "Смотреть вступление",
     skipToContent: "Перейти к содержанию",
     openMenu: "Открыть меню",
     closeMenu: "Закрыть меню",
@@ -847,15 +843,16 @@ export const ru: Dictionary = {
 
   home: {
     hero: {
-      headline: ["Индивидуальные путешествия", "по Танзании"],
+      welcome: "Добро пожаловать в",
       subline: "С местными экспертами. Собрано вокруг вашей истории.",
-      exploreCta: "Смотреть маршруты",
-      pillars: [
-        "Местные эксперты",
-        "Индивидуальные сафари",
-        "Ответственные путешествия",
-      ],
-      scroll: "Листайте",
+      video: {
+        play: "Смотреть фильм Maisha Quest",
+        close: "Закрыть видео",
+        loading: "Загрузка видео…",
+        error: "Не удалось воспроизвести видео. Проверьте соединение и попробуйте снова.",
+        retry: "Повторить",
+        watchAgain: "Посмотреть снова",
+      },
     },
     maisha: {
       eyebrow: "Наше имя",
