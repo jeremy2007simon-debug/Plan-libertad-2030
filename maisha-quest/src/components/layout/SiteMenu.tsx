@@ -13,6 +13,7 @@ import type { Dictionary } from "@/i18n/messages/en";
 import type { PhotoAlt } from "@/i18n/alt";
 import { MAIN_NAV, type NavNode } from "@/lib/nav";
 import { COMPANY } from "@/lib/site";
+import { useScrollLock } from "@/lib/useScrollLock";
 import { LocaleSelector } from "./LocaleSelector";
 
 /**
@@ -93,11 +94,11 @@ export function SiteMenu({
     }, 240);
   }, []);
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (!open) return;
 
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
     closeRef.current?.focus({ preventScroll: true });
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -126,7 +127,6 @@ export function SiteMenu({
 
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = overflow;
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open, requestClose]);

@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
 import { CompassMark } from "@/components/ui/Compass";
 import { trackEvent } from "@/lib/analytics";
+import { useScrollLock } from "@/lib/useScrollLock";
 
 export interface HeroFilmStrings {
   /** Nombre accesible del botón circular y del propio `<video>`. */
@@ -138,15 +139,15 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
     play();
   }, [open, play]);
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (!open) return;
 
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
     // `{ preventScroll: true }`: aunque el botón de cierre está siempre
     // dentro de la ventana (vive en un overlay `position: fixed`), enfocarlo
     // sin esto saltaba el documento de fondo hacia arriba igualmente —el
-    // propio salto que "conserva la posición de scroll" pide evitar.
+    // propio salto que `useScrollLock` existe para evitar.
     closeRef.current?.focus({ preventScroll: true });
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -173,7 +174,6 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
 
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = overflow;
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open, requestClose]);

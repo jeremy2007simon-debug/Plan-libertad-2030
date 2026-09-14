@@ -49,15 +49,29 @@ const currentStep = () =>
     return el ? Number(el.getAttribute("data-planner-step")) : -1;
   });
 
-/** Cambia de idioma con el selector real de la cabecera, no navegando a mano. */
+/**
+ * Cambia de idioma con el selector real, no navegando a mano.
+ *
+ * El selector vive dentro de `SiteMenu` (portal a `document.body`, fuera del
+ * propio `<header>` en el DOM), así que primero hay que abrir el menú del
+ * sitio y luego su propio desplegable de idioma antes de que exista el
+ * enlace `hreflang`.
+ */
 async function switchLocale(to) {
-  const link = page.locator(`header a[hreflang="${to}"]`).first();
+  let link = page.locator(`a[hreflang="${to}"]`).first();
   if ((await link.count()) === 0) {
-    const trigger = page.locator("header button[aria-expanded]").first();
-    await trigger.click().catch(() => {});
+    // `aria-haspopup="dialog"` en vez del nombre accesible: ese texto
+    // (`t.openMenu`) va en el idioma de la página, así que un literal en
+    // inglés no encontraría nada al partir de /es o /de.
+    const menuTrigger = page.locator('button[aria-haspopup="dialog"]').first();
+    if (await menuTrigger.count()) {
+      await menuTrigger.click();
+      await page.waitForTimeout(200);
+    }
+    await page.locator('button[aria-haspopup="menu"]').first().click();
     await page.waitForTimeout(150);
   }
-  await page.locator(`header a[hreflang="${to}"]`).first().click();
+  await page.locator(`a[hreflang="${to}"]`).first().click();
   await page.waitForLoadState("networkidle");
 }
 

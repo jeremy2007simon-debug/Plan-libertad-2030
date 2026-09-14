@@ -182,10 +182,12 @@ console.log("\n== 5. Apertura y cierre repetidos ==");
     await page.waitForTimeout(350);
   }
   const closedCleanly = !(await dialog.isVisible().catch(() => false));
-  const bodyOverflow = await page.evaluate(() => getComputedStyle(document.body).overflow);
+  // `useScrollLock` (src/lib/useScrollLock.ts) bloquea con `position: fixed`
+  // en el <body>, no con `overflow: hidden` — ver ese archivo sobre por qué.
+  const bodyLocked = await page.evaluate(() => getComputedStyle(document.body).position === "fixed");
   if (!closedCleanly) fail("tras varios ciclos el panel se queda abierto");
   else pass("tres ciclos de apertura/cierre seguidos: el panel termina cerrado");
-  if (bodyOverflow === "hidden") fail("el scroll del fondo se queda bloqueado tras los ciclos");
+  if (bodyLocked) fail("el scroll del fondo se queda bloqueado tras los ciclos");
   else pass("el scroll del fondo queda restaurado tras los ciclos");
 
   await ctx.close();

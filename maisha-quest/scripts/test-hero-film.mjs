@@ -19,8 +19,10 @@
  *  5. El botón de cierre (×) hace lo mismo.
  *  6. Se puede reabrir después de cerrar, y el <video> es un elemento nuevo
  *     (arranca desde cero, no heredado del cierre anterior).
- *  7. Al terminar el vídeo aparecen "Watch again" y "Close video"; "Watch
- *     again" reinicia desde cero y vuelve a reproducir.
+ *  7. Al terminar el vídeo (evento `ended`), la brújula de la marca avanza
+ *     sola hacia la cámara y el overlay se cierra solo, sin pedir un clic
+ *     más — sustituye al panel estático "Watch again" / "Close video" de
+ *     antes. Escape sigue cerrando al instante en mitad de esa transición.
  *  8. Un fallo de red real (404 en los dos formatos) entra en el estado de
  *     error con un botón de reintentar, no se queda cargando para siempre.
  *  9. `prefers-reduced-motion`: el overlay se sigue pudiendo abrir y cerrar,
@@ -45,7 +47,7 @@ const fail = (m) => { problems.push(m); console.log(`  FAIL  ${m}`); };
 const pass = (m) => console.log(`  ok    ${m}`);
 
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
-const PLAY_LABEL = "Play the Maisha Quest film";
+const PLAY_LABEL = "Play the Maisha Quest film — 35 sec film";
 
 console.log("\n== 1. Primera visita: portada completa, scroll libre, sin pedir el vídeo ==");
 {
@@ -187,7 +189,7 @@ console.log("\n== 6. Reapertura: vídeo nuevo, arranca desde cero ==");
   await ctx.close();
 }
 
-console.log("\n== 7. Fin del vídeo: volver a verlo / cerrar ==");
+console.log("\n== 7. Fin del vídeo: la brújula atraviesa la pantalla y se cierra sola ==");
 {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await ctx.newPage();
@@ -197,23 +199,38 @@ console.log("\n== 7. Fin del vídeo: volver a verlo / cerrar ==");
   await page.evaluate(() => document.querySelector("video").dispatchEvent(new Event("ended")));
   await page.waitForTimeout(300);
 
-  const watchAgain = page.getByRole("button", { name: "Watch again" });
-  const closeVideo = page.getByRole("button", { name: "Close video" });
-  if ((await watchAgain.count()) === 0) fail("no aparece \"Watch again\" al terminar");
-  else pass("\"Watch again\" aparece al terminar");
-  if ((await closeVideo.count()) === 0) fail("no aparece \"Close video\" al terminar");
-  else pass("\"Close video\" aparece al terminar");
+  const flythrough = page.locator(".mq-video-modal-flythrough");
+  if ((await flythrough.count()) === 0) fail("no aparece la brújula al terminar el vídeo");
+  else pass("la brújula de la marca aparece al terminar el vídeo");
 
-  await watchAgain.click();
-  await page.waitForTimeout(400);
-  const state = await page.evaluate(() => {
-    const v = document.querySelector("video");
-    return { paused: v.paused, time: v.currentTime };
-  });
-  if (state.paused) fail("\"Watch again\" no reanuda la reproducción");
-  else pass("\"Watch again\" reanuda la reproducción");
-  if (state.time > 1.5) fail(`\"Watch again\" no reinicia desde el principio (currentTime=${state.time.toFixed(2)})`);
-  else pass(`\"Watch again\" reinicia desde el principio (currentTime=${state.time.toFixed(2)})`);
+  const closeBtn = page.getByRole("button", { name: "Close video" });
+  if ((await closeBtn.count()) === 0) fail("el botón de cierre desaparece durante la transición");
+  else pass("el botón de cierre sigue disponible durante la transición");
+
+  await page.waitForSelector(".mq-video-modal", { state: "detached", timeout: 4000 }).catch(() => {});
+  const stillOpen = (await page.getByRole("dialog").count()) > 0;
+  if (stillOpen) fail("el overlay no se cierra solo tras la transición");
+  else pass("el overlay se cierra solo, sin pedir otro clic, y revela la portada");
+
+  await ctx.close();
+}
+
+console.log("\n== 7b. Escape interrumpe la transición al instante ==");
+{
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const page = await ctx.newPage();
+  await page.goto(`${BASE}/en`, { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: PLAY_LABEL }).click();
+  await page.waitForTimeout(700);
+  await page.evaluate(() => document.querySelector("video").dispatchEvent(new Event("ended")));
+  await page.waitForSelector(".mq-video-modal-flythrough", { state: "attached", timeout: 2000 });
+  await page.keyboard.press("Escape");
+  const closed = await page
+    .waitForSelector(".mq-video-modal", { state: "detached", timeout: 1000 })
+    .then(() => true)
+    .catch(() => false);
+  if (!closed) fail("Escape no cierra de inmediato durante la transición de la brújula");
+  else pass("Escape interrumpe la transición y cierra de inmediato");
   await ctx.close();
 }
 
@@ -310,24 +327,28 @@ console.log("\n== 12. Scroll de fondo bloqueado mientras está abierto, restaura
 
   await page.getByRole("button", { name: PLAY_LABEL }).click();
   await page.waitForTimeout(400);
-  const overflowWhileOpen = await page.evaluate(() => getComputedStyle(document.body).overflow);
-  if (overflowWhileOpen !== "hidden") fail(`el scroll de fondo no se bloquea (overflow: ${overflowWhileOpen})`);
+  // `useScrollLock` (src/lib/useScrollLock.ts) bloquea sacando el <body> del
+  // flujo con `position: fixed`, no con `overflow: hidden`: ese `overflow`
+  // en solitario, con `scroll-behavior: smooth` activo en toda la web,
+  // animaba la página de vuelta a 0 en cuanto perdía su rango de scroll —el
+  // bug real que este mismo test descubrió y que llevó a cambiar de técnica.
+  const lockedWhileOpen = await page.evaluate(() => getComputedStyle(document.body).position);
+  if (lockedWhileOpen !== "fixed") fail(`el scroll de fondo no se bloquea (position: ${lockedWhileOpen})`);
   else pass("el scroll de fondo se bloquea mientras el overlay está abierto");
 
   await page.keyboard.press("Escape");
   // El cierre real tarda 220 ms (`requestClose`, en `HeroFilmButton.tsx`) más
   // lo que tarde el hilo principal en llegar a ejecutarlo — variable según la
   // carga de la página. Un `waitForTimeout` fijo corría el riesgo de leer el
-  // scroll ANTES de que `overflow` volviera a su valor normal, a veces por
-  // muy poco: se espera aquí a la propia condición, no a una duración
-  // adivinada.
+  // scroll ANTES de que el bloqueo se levantara, a veces por muy poco: se
+  // espera aquí a la propia condición, no a una duración adivinada.
   await page.waitForFunction(
-    () => getComputedStyle(document.body).overflow !== "hidden",
+    () => getComputedStyle(document.body).position !== "fixed",
     { timeout: 2000 },
   );
   const after = await page.evaluate(() => window.scrollY);
-  const overflowAfter = await page.evaluate(() => getComputedStyle(document.body).overflow);
-  if (overflowAfter === "hidden") fail("el scroll de fondo sigue bloqueado tras cerrar");
+  const lockedAfter = await page.evaluate(() => getComputedStyle(document.body).position);
+  if (lockedAfter === "fixed") fail("el scroll de fondo sigue bloqueado tras cerrar");
   else pass("el scroll de fondo se restaura al cerrar");
   if (Math.abs(after - before) > 2) fail(`la posición de scroll cambia al cerrar (${before} → ${after})`);
   else pass(`la posición de scroll se conserva al cerrar (${before} → ${after})`);
