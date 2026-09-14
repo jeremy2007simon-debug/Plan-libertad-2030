@@ -26,7 +26,13 @@ export const DESTINATION_STRUCTURE: DestinationStructure[] = [
     // actividades propias aquí.
     experienceSlugs: [],
     image: PHOTOS["serengeti-plains"],
-    gallery: [CLIENT_PHOTOS["male-lions-together"], CLIENT_PHOTOS["zebra-herd-monochrome"], PHOTOS["serengeti-sunrise"], PHOTOS["wildebeest-migration"]],
+    /* `zebra-herd-monochrome` salía de esta galería: el archivo del cliente es
+       monocromo de origen (comprobado en el original, no un procesado
+       nuestro), y al lado de tres fotografías en color leía como una foto
+       rota, no como una elección editorial. `lion-open-savannah` cubre el
+       hueco con la misma dirección cálida de las otras tres y sin repetirse
+       en ninguna página cercana (solo aparecía en Colecciones). */
+    gallery: [CLIENT_PHOTOS["male-lions-together"], CLIENT_PHOTOS["lion-open-savannah"], PHOTOS["serengeti-sunrise"], PHOTOS["wildebeest-migration"]],
     mapPosition: {"x":494.5955776482442,"y":120.88893930571223},
     seasonCount: 3,
   },

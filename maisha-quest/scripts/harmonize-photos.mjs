@@ -48,6 +48,25 @@ const RAW = (() => {
   const i = args.indexOf("--raw");
   return i === -1 ? null : args[i + 1];
 })();
+/**
+ * Procesa solo las recetas cuyo slug está en esta lista (repetible:
+ * `--only tanzania/arusha --only maisha-quest/leopard`).
+ *
+ * Necesario porque `sourceFor()` cae al DERIVADO PUBLICADO cuando no hay
+ * original que leer (todo lo de `tanzania/` es fotografía de archivo sin
+ * carpeta de originales propia, salvo que se pase `--raw`): relanzar el
+ * script entero sin esto reaplicaría la receta de cada foto de archivo YA
+ * corregida sobre su propio resultado anterior, doblando el ajuste cada vez.
+ * Con `--only` se toca exactamente la receta nueva y las demás se quedan
+ * como estaban.
+ */
+const ONLY = (() => {
+  const slugs = [];
+  args.forEach((a, i) => {
+    if (a === "--only") slugs.push(args[i + 1]);
+  });
+  return slugs.length ? new Set(slugs) : null;
+})();
 
 /**
  * Las recetas.
@@ -168,6 +187,24 @@ const RECIPES = {
     saturation: 0.97,
     gain: [1.02, 1.0, 0.96],
     pedestal: [3, 4, 1],
+  },
+  /* ---- Revisión cromática de todo el sitio (no solo la portada) --------
+     La auditoría de septiembre de 2026 amplió el criterio a destinos,
+     paquetes, Learn e Impact: estas entradas corrigen lo que se sale de la
+     dirección cálida fuera de la home. */
+
+  "tanzania/arusha": {
+    motivo:
+      "ARUSHA. Única fotografía de calle —el resto de la web es fauna y " +
+      "paisaje— y la única con un azul de cielo saturado: se usa en más de " +
+      "una docena de itinerarios (día 1 de casi todos los safaris) y en la " +
+      "ficha del propio destino, así que su temperatura se nota en toda la " +
+      "web, no en un sitio aislado. No se sustituye por una foto de fauna " +
+      "porque la página necesita mostrar Arusha de verdad, la ciudad.",
+    selective: [{ hue: [195, 250], saturation: 0.55, feather: 20 }],
+    saturation: 1.0,
+    gain: [1.05, 1.0, 0.9],
+    pedestal: [4, 3, 0],
   },
   "tanzania/ngorongoro-zebras": {
     motivo:
@@ -350,6 +387,7 @@ const pct = (v) => `${Math.round(v * 100)} %`;
 const salida = [];
 
 for (const [slug, receta] of Object.entries(RECIPES)) {
+  if (ONLY && !ONLY.has(slug)) continue;
   // Las del cliente se publican en `optimized/`; las de Commons, sueltas.
   const rutaDestino = slug.startsWith("maisha-quest/")
     ? `public/images/maisha-quest/optimized/${slug.split("/")[1]}.webp`

@@ -447,7 +447,13 @@ export const SAFARI_STRUCTURE: SafariStructure[] = [
     accommodationStyle: "Lodge",
     price: PRICE_ON_REQUEST,
     image: PHOTOS["maasai-boma-warm"],
-    gallery: [PHOTOS["serengeti-sunrise"], CLIENT_PHOTOS["elephant-family-walking"]],
+    /* `elephant-family-walking` salía de aquí: es monocroma en el propio
+       original del cliente (comprobado, no un procesado nuestro — no hay
+       color que recuperar sin inventarlo), y al lado de un amanecer muy
+       saturado se leía como una foto sin color, no como una elección. Los
+       elefantes de esta ruta siguen presentes en la ficha de Tarangire, en
+       Learn y en el día 9 del itinerario — solo se retira de ESTA pareja. */
+    gallery: [PHOTOS["serengeti-sunrise"], CLIENT_PHOTOS["leopard-in-tree"]],
     itinerary: [
       { day: 1, accommodationSlug: null, meals: ["dinner"], images: [PHOTOS["arusha"]] },
       { day: 2, accommodationSlug: null, meals: ["breakfast", "lunch", "dinner"], images: [PHOTOS["arusha"]] },

@@ -13,7 +13,9 @@ altas luces. No se ha recortado, ni retocado, ni añadido o quitado nada, ni se
 ha cambiado el color real de ningún animal. Los atardeceres cálidos del cliente
 NO se tocan: son cálidos porque son atardeceres, y esa es la dirección buscada.
 
-Fecha de esta pasada: 2026-08-29.
+Fecha de esta pasada: 2026-08-29. Ampliada el 2026-09-14 con la revisión
+cromática de todo el sitio (no solo la portada): esa fila lleva su propia
+fecha en la columna «Por qué» cuando aplica.
 
 La columna «antes» compara con el derivado que estaba publicado en el momento
 de ejecutarlo: si se vuelve a lanzar sin cambiar la receta no hay diferencia,
@@ -34,6 +36,7 @@ portada antes de tocar nada.
 | `maisha-quest/flamingos-tanzania-lake` | 9.128 K: el agua del lago se va al cian y es la foto más fría de la portada después de la boma. El rosa de los flamencos no se toca. | original del cliente (image-X4-1.jpg) | 6043 → 6541 K | 10 % → 13 % | 1 % → 1 % |
 | `maisha-quest/giraffes-open-savannah` | 6.438 K: entra nueva en la portada —sustituye a la monocroma— y llega un punto más fría que el resto. Ajuste mínimo: el cielo sigue siendo azul y la hierba, hierba. | original del cliente (image-X4-3.jpg) | 5910 → 5918 K | 30 % → 30 % | 4 % → 4 % |
 | `tanzania/ngorongoro-zebras` | SAFARI Y ZANZÍBAR. 6.719 K con verdes fríos: se apartaba del oliva del resto, y en el recorte de la tarjeta la bruma azul del cráter ocupa el tercio superior. | original de Commons | 5335 → 5333 K | 29 % → 29 % | 19 % → 19 % |
+| `tanzania/arusha` (2026-09-14) | ARUSHA. Única fotografía de calle de toda la web —el resto es fauna y paisaje— y la única con un cielo azul saturado; se usa en más de una docena de itinerarios (día 1 de casi todos los safaris) y en la ficha del propio destino, así que su temperatura se notaba en toda la web. No se sustituye por fauna porque la página necesita mostrar Arusha de verdad. | derivado publicado | 8070 → 5515 K | 21 % → 19 % | 3 % → 14 % |
 
 ## Recetas exactas
 
@@ -50,6 +53,13 @@ portada antes de tocar nada.
 | `maisha-quest/flamingos-tanzania-lake` | 1.16 | 1.05 / 1.01 / 0.93 | 4 / 4 / 0 |
 | `maisha-quest/giraffes-open-savannah` | 0.97 | 1.02 / 1 / 0.96 | 3 / 4 / 1 |
 | `tanzania/ngorongoro-zebras` | 0.96 | 1.045 / 1.005 / 0.93 | 5 / 6 / 2 |
+| `tanzania/arusha` | 1 | 1.05 / 1 / 0.9 | 4 / 3 / 0 |
+
+`tanzania/arusha` lleva además una pasada selectiva previa (igual que
+`maasai-boma-warm`, `kilimanjaro-kibo`, `balloon-serengeti` y
+`ngorongoro-zebras`, arriba): solo el azul del cielo (tono 195°-250°) baja al
+55 % de su saturación antes de aplicar la ganancia global — el resto del
+encuadre no se toca.
 
 La ganancia multiplica cada canal —más rojo y menos azul calienta— y el
 pedestal lo desplaza, que pesa en las sombras y casi nada en las luces: negros
@@ -101,4 +111,8 @@ positivo comprime las altas luces y recupera detalle en un cielo quemado.
 ### `ngorongoro-zebras`
 
 ![Antes y después de ngorongoro-zebras](tone/ngorongoro-zebras-antes-despues.webp)
+
+### `arusha`
+
+![Antes y después de arusha](tone/arusha-antes-despues.webp)
 

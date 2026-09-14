@@ -39,6 +39,15 @@
   --earth: #604536;         /* Earth Brown — madera, cuero */
   --charcoal: #181b17;
   --white: #ffffff;
+  /* Mismo negro-verdoso que --charcoal, en tripleta para poder mezclarlo
+     dentro de un rgba(). Existían tres variaciones casi idénticas de este
+     tono (27,29,26 / 18,22,18 / 15,19,15) repartidas entre los velos sobre
+     fotografía y el fondo de los contenedores de vídeo: mismo trabajo,
+     tres negros ligeramente distintos, sin ninguna razón para que difirieran.
+     Un solo origen también asegura que el velo y el fondo del contenedor que
+     hay detrás de la fotografía (`bg-charcoal`) sean EXACTAMENTE el mismo
+     color, no uno parecido — la costura entre los dos deja de notarse. */
+  --scrim: 24, 27, 23;
 
   /* --- Roles semánticos --------------------------------------------------- */
   /* Los componentes usan estos, no los de marca. */
@@ -286,10 +295,10 @@ p {
 .media-scrim {
   background: linear-gradient(
     to top,
-    rgba(27, 29, 26, 0.78) 0%,
-    rgba(27, 29, 26, 0.5) 28%,
-    rgba(27, 29, 26, 0.16) 58%,
-    rgba(27, 29, 26, 0.28) 100%
+    rgba(var(--scrim), 0.78) 0%,
+    rgba(var(--scrim), 0.5) 28%,
+    rgba(var(--scrim), 0.16) 58%,
+    rgba(var(--scrim), 0.28) 100%
   );
 }
 
@@ -330,11 +339,11 @@ p {
 .media-scrim-side {
   background: linear-gradient(
     to top,
-    rgba(18, 22, 18, 0.9) 0%,
-    rgba(18, 22, 18, 0.74) 34%,
-    rgba(18, 22, 18, 0.44) 62%,
-    rgba(18, 22, 18, 0.14) 86%,
-    rgba(18, 22, 18, 0) 100%
+    rgba(var(--scrim), 0.9) 0%,
+    rgba(var(--scrim), 0.74) 34%,
+    rgba(var(--scrim), 0.44) 62%,
+    rgba(var(--scrim), 0.14) 86%,
+    rgba(var(--scrim), 0) 100%
   );
 }
 
@@ -347,10 +356,10 @@ p {
 .media-scrim-top {
   background: linear-gradient(
     to bottom,
-    rgba(18, 22, 18, 0.72) 0%,
-    rgba(18, 22, 18, 0.52) 45%,
-    rgba(18, 22, 18, 0.2) 78%,
-    rgba(18, 22, 18, 0) 100%
+    rgba(var(--scrim), 0.72) 0%,
+    rgba(var(--scrim), 0.52) 45%,
+    rgba(var(--scrim), 0.2) 78%,
+    rgba(var(--scrim), 0) 100%
   );
 }
 
@@ -358,11 +367,11 @@ p {
   .media-scrim-side {
     background: linear-gradient(
       to right,
-      rgba(18, 22, 18, 0.88) 0%,
-      rgba(18, 22, 18, 0.72) 30%,
-      rgba(18, 22, 18, 0.42) 52%,
-      rgba(18, 22, 18, 0.12) 74%,
-      rgba(18, 22, 18, 0) 88%
+      rgba(var(--scrim), 0.88) 0%,
+      rgba(var(--scrim), 0.72) 30%,
+      rgba(var(--scrim), 0.42) 52%,
+      rgba(var(--scrim), 0.12) 74%,
+      rgba(var(--scrim), 0) 88%
     );
   }
 }
@@ -377,11 +386,11 @@ p {
 .hero-scrim {
   background: linear-gradient(
     to bottom,
-    rgba(15, 19, 15, 0.62) 0%,
-    rgba(15, 19, 15, 0.32) 22%,
-    rgba(15, 19, 15, 0.4) 50%,
-    rgba(15, 19, 15, 0.34) 74%,
-    rgba(15, 19, 15, 0.62) 100%
+    rgba(var(--scrim), 0.62) 0%,
+    rgba(var(--scrim), 0.32) 22%,
+    rgba(var(--scrim), 0.4) 50%,
+    rgba(var(--scrim), 0.34) 74%,
+    rgba(var(--scrim), 0.62) 100%
   );
 }
 
@@ -1473,7 +1482,7 @@ p {
   justify-content: center;
   padding: max(1.25rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right))
     max(1.25rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
-  background: rgb(12 16 12 / 0.92);
+  background: rgba(var(--scrim), 0.92);
   backdrop-filter: blur(6px);
   opacity: 1;
   animation: mq-panel-fade-in 260ms var(--ease-out) both;
@@ -1511,7 +1520,7 @@ p {
   top: max(0.75rem, env(safe-area-inset-top));
   right: max(0.75rem, env(safe-area-inset-right));
   z-index: 2;
-  background: rgb(12 16 12 / 0.55);
+  background: rgba(var(--scrim), 0.55);
 }
 
 .mq-video-modal-state {
@@ -1526,7 +1535,7 @@ p {
   padding: 1.5rem;
   text-align: center;
   color: var(--parchment);
-  background: rgb(0 0 0 / 0.4);
+  background: rgba(var(--scrim), 0.55);
 }
 
 .mq-video-modal-ended {
@@ -1539,7 +1548,7 @@ p {
   justify-content: center;
   gap: 0.75rem;
   padding: 1.5rem;
-  background: rgb(12 16 12 / 0.6);
+  background: rgba(var(--scrim), 0.6);
 }
 
 @media (prefers-reduced-motion: reduce) {
