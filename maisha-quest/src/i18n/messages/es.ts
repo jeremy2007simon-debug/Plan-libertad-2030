@@ -33,7 +33,7 @@ export const es: Dictionary = {
 
   nav: {
     /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
-    homeLabel: "— inicio",
+    homeLabel: "— Ir al inicio",
     mainNavLabel: "Principal",
     menu: "Menú",
     close: "Cerrar",

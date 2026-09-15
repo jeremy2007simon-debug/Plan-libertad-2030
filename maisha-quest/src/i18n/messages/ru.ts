@@ -47,7 +47,7 @@ export const ru: Dictionary = {
 
   nav: {
     /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
-    homeLabel: "— на главную",
+    homeLabel: "— перейти на главную",
     mainNavLabel: "Основная навигация",
     menu: "Меню",
     close: "Закрыть",

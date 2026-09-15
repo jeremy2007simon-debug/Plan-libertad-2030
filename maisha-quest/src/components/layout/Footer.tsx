@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { CompassMark } from "@/components/ui/Compass";
 import { Container } from "@/components/ui/Container";
 import { type Locale, localeHref } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/messages/en";
 import { FOOTER_NAV } from "@/lib/nav";
 import { COMPANY, HOME_COORDINATES, socialLinks, whatsappHref } from "@/lib/site";
+import { Logo } from "./Logo";
 import { WhatsAppGlyph } from "./MobileCTABar";
 
 /**
@@ -46,10 +46,14 @@ export function Footer({
         <div className="grid gap-12 lg:grid-cols-[1.15fr_2fr]">
           {/* Marca y contacto */}
           <div>
-            <div className="flex items-center gap-3 text-parchment">
-              <CompassMark className="size-9 text-[var(--gold)]" />
-              <span className="font-display text-[1.45rem]">Maisha Quest</span>
-            </div>
+            <Logo
+              locale={locale}
+              homeLabel={nav.homeLabel}
+              tone="dark"
+              size="lg"
+              showCountry={false}
+              iconClassName="text-[var(--gold)]"
+            />
             <p className="measure-narrow mt-5 text-[0.92rem] leading-relaxed text-on-dark-soft">
               {t.blurb}
             </p>

@@ -35,7 +35,7 @@ export const en = {
 
   nav: {
     /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
-    homeLabel: "— home",
+    homeLabel: "— go to homepage",
     mainNavLabel: "Main",
     menu: "Menu",
     close: "Close",

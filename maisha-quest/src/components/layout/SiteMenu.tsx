@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
-import { CompassMark } from "@/components/ui/Compass";
 import { Photo } from "@/components/ui/Photo";
 import { MagneticArrow } from "@/components/ui/motion";
 import { type Locale, localeHref } from "@/i18n/config";
@@ -15,6 +14,7 @@ import { MAIN_NAV, type NavNode } from "@/lib/nav";
 import { COMPANY } from "@/lib/site";
 import { useScrollLock } from "@/lib/useScrollLock";
 import { LocaleSelector } from "./LocaleSelector";
+import { Logo } from "./Logo";
 
 /**
  * Menú del sitio.
@@ -174,10 +174,7 @@ export function SiteMenu({
             }`}
           >
             <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between px-5 sm:px-8 lg:px-10">
-              <span className="flex items-center gap-3">
-                <CompassMark className="size-7 text-sand" />
-                <span className="font-display text-[1.25rem]">{COMPANY.name}</span>
-              </span>
+              <Logo locale={locale} homeLabel={t.homeLabel} tone="dark" size="sm" showCountry={false} />
               <div className="flex items-center gap-2">
                 <LocaleSelector locale={locale} tone="dark" t={t.language} />
                 <button

@@ -53,12 +53,13 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
  *
  * Decide, sincrónicamente, si la secuencia se ejecuta:
  *  · Solo en la portada, en cualquiera de los seis idiomas.
- *  · Nunca si quien navega llegó desde otra portada del propio sitio —el
- *    caso real es el selector de idioma, que es un enlace de verdad y hace
- *    una recarga completa: sin esto, cambiar de /es a /en repetiría la
- *    entrada—. Una recarga de la MISMA página (F5) se detecta aparte con la
- *    Navigation Timing API y siempre se deja pasar, sea cual sea el
- *    `referrer` que el navegador conserve de antes.
+ *  · Nunca si quien navega llegó desde OTRA portada del propio sitio —el
+ *    caso real es el selector de idioma, un enlace de verdad que hace una
+ *    recarga completa entre /es y /en: sin esto, cambiar de idioma repetiría
+ *    la entrada—. Si el origen es la MISMA portada (el logo, enlazado a
+ *    propósito a su propia ruta para forzar justo esta recarga, o una
+ *    recarga real con F5, detectada aparte por la Navigation Timing API),
+ *    la entrada SÍ se ejecuta.
  *  · Nunca en un navegador automatizado (`navigator.webdriver`), salvo que
  *    `?intro=1` la fuerce: es como se verifica la propia introducción sin
  *    que cada comprobación automática de la web tenga que esperarla.
@@ -83,9 +84,13 @@ export function IntroGate() {
     if(ref){
       try{
         var refUrl=new URL(ref);
+        // Solo se salta si la home de origen es OTRA (idioma distinto): el
+        // propio logo, pulsado ya en la home, enlaza a esa MISMA ruta a
+        // propósito para forzar justo esta recarga — no debe confundirse
+        // con el selector de idioma pasando de una home a otra.
         if(refUrl.origin===location.origin){
           var refPath=refUrl.pathname.replace(/\\/+$/,'');
-          if(/^(\\/(en|es|de|fr|ru|zh-CN))?$/.test(refPath))return;
+          if(refPath!==p&&/^(\\/(en|es|de|fr|ru|zh-CN))?$/.test(refPath))return;
         }
       }catch(e){}
     }

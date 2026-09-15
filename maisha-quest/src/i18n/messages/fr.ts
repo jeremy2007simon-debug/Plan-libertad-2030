@@ -32,7 +32,7 @@ export const fr: Dictionary = {
 
   nav: {
     /** Sufijo del enlace de la marca, solo para lectores de pantalla. */
-    homeLabel: "— accueil",
+    homeLabel: "— aller à l’accueil",
     mainNavLabel: "Navigation principale",
     menu: "Menu",
     close: "Fermer",
