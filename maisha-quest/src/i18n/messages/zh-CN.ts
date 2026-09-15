@@ -33,6 +33,7 @@ export const zhCN: Dictionary = {
     whatsapp: "通过 WhatsApp 联系 Maisha Quest",
     callUs: "致电 Maisha Quest",
     emailUs: "发邮件给 Maisha Quest",
+    skipIntro: "跳过片头",
   },
 
   nav: {

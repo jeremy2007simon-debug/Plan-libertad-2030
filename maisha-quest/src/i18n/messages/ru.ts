@@ -42,6 +42,7 @@ export const ru: Dictionary = {
     whatsapp: "Написать Maisha Quest в WhatsApp",
     callUs: "Позвонить в Maisha Quest",
     emailUs: "Написать в Maisha Quest",
+    skipIntro: "Пропустить заставку",
   },
 
   nav: {

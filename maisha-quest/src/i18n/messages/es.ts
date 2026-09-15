@@ -28,6 +28,7 @@ export const es: Dictionary = {
     whatsapp: "Escribir a Maisha Quest por WhatsApp",
     callUs: "Llamar a Maisha Quest",
     emailUs: "Escribir a Maisha Quest",
+    skipIntro: "Saltar la introducción",
   },
 
   nav: {

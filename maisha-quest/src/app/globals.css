@@ -69,6 +69,10 @@
   /* Curvas y tiempos: lentos, sin rebotes. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.33, 0, 0.15, 1);
+  /* Aceleración progresiva: arranca lenta y gana velocidad, al contrario que
+     las otras dos curvas. Solo la usa el avance de la marca en la entrada a
+     la portada (`mq-intro-mark`), que pide explícitamente ese efecto. */
+  --ease-intro-advance: cubic-bezier(0.6, 0, 0.9, 0.35);
   --dur-slow: 900ms;
   --dur-media: 1100ms;
   --dur-base: 560ms;
@@ -1633,114 +1637,189 @@ p {
   background: rgba(var(--scrim), 0.55);
 }
 
-/* --- Transición final: la brújula atraviesa la pantalla ------------------
-   Al terminar el vídeo (`ended`), en vez del panel estático de "ver de
-   nuevo"/"cerrar" de antes, la marca real de Maisha Quest —la brújula de
-   `CompassMark`, sin el nombre: el propio vídeo ya cierra con su rótulo
-   "Maisha Quest" sobre piel de leopardo, y repetirlo aquí lo duplicaría—
-   avanza hacia la cámara mientras todo el overlay (`data-flythrough` en
-   `.mq-video-modal`) se desvanece con ella, revelando la portada que ya
-   está montada debajo sin otro clic. ~1,9 s en total, dentro de la horquilla
-   de 1,5–2,5 s pedida; el temporizador en JS (`HeroFilmButton`) usa el mismo
-   valor para desmontar el overlay justo cuando ya es invisible. */
-
-.mq-video-modal[data-flythrough] {
-  animation: mq-flythrough-out 1.9s var(--ease-soft) both;
-}
-
-.mq-video-modal-flythrough {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Da profundidad real a `translateZ` en `.mq-flythrough-mark`: sin esto
-     sería un escalado plano, justo lo que el encargo pide distinguir de una
-     animación 3D genuina. */
-  perspective: 60rem;
-  /* El propio vídeo cierra su último plano con su rótulo "Maisha Quest"
-     sobre una brújula ya dibujada en la piel de leopardo (ver el vídeo
-     fuente): dejar ese fotograma visible mientras esta brújula nueva vuela
-     por encima duplicaba la marca dos veces a la vez. Este fondo opaco lo
-     cubre enseguida —antes de que la brújula sea grande— para que solo haya
-     una marca en pantalla en cada instante. */
-  background: rgb(var(--scrim));
-  opacity: 0;
-  animation: mq-flythrough-cover 1.9s var(--ease-soft) both;
-}
-
-.mq-flythrough-mark {
-  width: clamp(4.5rem, 14vw, 7rem);
-  height: auto;
-  color: var(--parchment);
-  animation: mq-flythrough-mark 1.9s var(--ease-soft) both;
-  will-change: transform, opacity;
-}
-
-@keyframes mq-flythrough-out {
-  0% {
-    opacity: 1;
-  }
-  58% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes mq-flythrough-cover {
-  0% {
-    opacity: 0;
-  }
-  18% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes mq-flythrough-mark {
-  0% {
-    transform: translateZ(0) scale(0.85);
-    opacity: 0;
-  }
-  14% {
-    opacity: 1;
-  }
-  68% {
-    transform: translateZ(30rem) scale(3.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translateZ(46rem) scale(4.4);
-    opacity: 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .mq-video-modal {
     animation: none;
     transition: none;
   }
+}
 
-  /* No debería llegar a montarse con movimiento reducido (`HeroFilmButton`
-     salta directo al fundido de cierre existente), pero si lo hiciera por
-     cualquier motivo, que no anime. */
-  .mq-video-modal[data-flythrough] {
-    animation: none;
+/* --------------------------------------------------------------------------
+   Entrada a la portada — la marca atraviesa la pantalla
+   --------------------------------------------------------------------------
+
+   Ver `src/components/intro/Intro.tsx` para el porqué completo: se ejecuta
+   en cada carga real de la home (nunca en navegación interna, cambio de
+   idioma o menú), sin `sessionStorage`. El guardián de ese archivo pone
+   `data-intro="full"` (o `"reduced"`, con movimiento reducido) en el
+   `<html>` antes del primer fotograma.
+
+   El fondo es un pseudoelemento de `:root`: existe desde el primer píxel,
+   así que no hace falta esperar a que el navegador llegue al nodo real
+   `#mq-intro` para cubrir la portada — evita el destello de un fotograma de
+   hero antes de que la capa lo tape. Los dos (fondo y contenido) comparten
+   exactamente la misma animación y duración, así que se desvanecen como una
+   sola pieza. */
+
+html[data-intro]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: radial-gradient(120% 120% at 50% 42%, var(--forest) 0%, var(--canopy) 72%);
+  pointer-events: none;
+}
+
+html[data-intro="full"]::before {
+  animation: mq-intro-veil-out 1.8s var(--ease-soft) both;
+}
+
+html[data-intro="reduced"]::before {
+  animation: mq-intro-veil-out-reduced 0.65s var(--ease-out) both;
+}
+
+#mq-intro {
+  display: none;
+}
+
+html[data-intro] #mq-intro {
+  display: block;
+}
+
+.mq-intro-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Necesario para que `translateZ` en `.mq-intro-center` sea profundidad de
+     verdad, no un escalado plano — la propia entrega pide distinguir una
+     animación 3D real de "ampliar una imagen". */
+  perspective: 70rem;
+}
+
+.mq-intro-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  /* Cabe en cualquier móvil sin desbordar: un hijo `nowrap` dentro de un
+     flex en columna, si no, ignora el ancho del contenedor (min-width:auto
+     de fábrica) y se sale por los lados en pantallas estrechas. */
+  max-width: min(90vw, 26rem);
+  padding-inline: 1rem;
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+html[data-intro="full"] .mq-intro-center {
+  animation: mq-intro-mark 1.8s var(--ease-intro-advance) both;
+}
+
+html[data-intro="reduced"] .mq-intro-center {
+  animation: mq-intro-fade-reduced 0.65s var(--ease-out) both;
+}
+
+.mq-intro-compass {
+  width: clamp(3.75rem, 13vw, 6rem);
+  height: auto;
+  color: var(--sand);
+  /* "Iluminación sutil": un resplandor cálido detrás del trazo, no un brillo
+     genérico de interfaz. */
+  filter: drop-shadow(0 0 2.25rem rgba(196, 147, 79, 0.45));
+}
+
+.mq-intro-word {
+  font-family: var(--font-display);
+  color: var(--parchment);
+  font-size: clamp(1.4rem, 5.2vw, 2.75rem);
+  letter-spacing: 0.02em;
+  /* `min-width: 0`: sin esto, un hijo de un flex en columna nunca se
+     encoge por debajo de su ancho intrínseco, aunque su texto sí pueda
+     partirse — la causa real de que se saliera de la pantalla en móvil. */
+  min-width: 0;
+}
+
+.mq-intro-skip {
+  position: fixed;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  z-index: 1000;
+  min-height: 44px;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(233, 223, 206, 0.4);
+  background: rgba(20, 32, 25, 0.5);
+  color: var(--parchment);
+  font-size: 0.82rem;
+  transition:
+    background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.mq-intro-skip:hover,
+.mq-intro-skip:focus-visible {
+  background: rgba(20, 32, 25, 0.75);
+  border-color: var(--parchment);
+}
+
+/* --- La brújula empieza YA visible y centrada, avanza con aceleración
+   progresiva (ease-in, no ease-out) y se disuelve al atravesar el plano de
+   la pantalla, revelando el hero que ya está pintado debajo. */
+@keyframes mq-intro-mark {
+  0% {
+    transform: translateZ(0) scale(1);
+    opacity: 1;
+  }
+  72% {
+    transform: translateZ(34rem) scale(3.6);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(52rem) scale(6.2);
     opacity: 0;
   }
+}
 
-  .mq-video-modal-flythrough {
-    animation: none;
+@keyframes mq-intro-veil-out {
+  0% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 1;
+  }
+  100% {
     opacity: 0;
   }
+}
 
-  .mq-flythrough-mark {
-    animation: none;
+@keyframes mq-intro-fade-reduced {
+  0% {
+    opacity: 1;
+  }
+  100% {
     opacity: 0;
+  }
+}
+
+@keyframes mq-intro-veil-out-reduced {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No debería llegar a activarse (el guardián ya decide "reduced" antes de
+     pintar), pero si `data-intro="full"` llegara a colarse, que no anime. */
+  html[data-intro="full"]::before {
+    animation: mq-intro-veil-out-reduced 0.65s var(--ease-out) both;
+  }
+
+  html[data-intro="full"] .mq-intro-center {
+    animation: mq-intro-fade-reduced 0.65s var(--ease-out) both;
   }
 }

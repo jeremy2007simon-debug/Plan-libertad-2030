@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
-import { CompassMark } from "@/components/ui/Compass";
 import { trackEvent } from "@/lib/analytics";
 import { useScrollLock } from "@/lib/useScrollLock";
 
@@ -19,7 +18,7 @@ export interface HeroFilmStrings {
   watchAgain: string;
 }
 
-type Status = "loading" | "playing" | "error" | "ended";
+type Status = "loading" | "playing" | "error";
 
 const MP4_SRC = "/video/optimized/maisha-quest-intro-v2.mp4";
 const WEBM_SRC = "/video/optimized/maisha-quest-intro-v2.webm";
@@ -49,27 +48,18 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [status, setStatus] = useState<Status>("loading");
-  // Sobrevuelo de la brújula al terminar el vídeo — ver `handleEnded` más
-  // abajo. Es un estado aparte de `status === "ended"` porque ese último
-  // sigue existiendo brevemente mientras la transición corre por encima.
-  const [flythrough, setFlythrough] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const flythroughTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Cierre normal (Escape, botón de cierre) Y fin del vídeo comparten el
+  // mismo fundido breve de 220 ms: la animación de la brújula que avanza
+  // hacia la cámara vive solo en la entrada a la portada (`Intro.tsx`) —
+  // repetirla aquí la duplicaría.
   const requestClose = useCallback(() => {
     if (closeTimer.current) return;
-    // Cerrar (Escape o el botón de cierre) interrumpe el sobrevuelo en
-    // cualquier momento: nunca debe quedar bloqueada la salida mientras la
-    // brújula está en pantalla.
-    if (flythroughTimer.current) {
-      clearTimeout(flythroughTimer.current);
-      flythroughTimer.current = null;
-    }
-    setFlythrough(false);
     setClosing(true);
     try {
       videoRef.current?.pause();
@@ -89,31 +79,6 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
       triggerRef.current?.focus({ preventScroll: true });
     }, 220);
   }, []);
-
-  // Al terminar el vídeo (evento `ended` nativo), la brújula de la marca
-  // avanza hacia la cámara y atraviesa la pantalla, revelando la portada ya
-  // montada debajo sin otro clic. Con `prefers-reduced-motion` —o si el
-  // efecto no llegara a completarse— se reutiliza el fundido breve que ya
-  // usa el cierre normal (`requestClose`, 220 ms) en su lugar.
-  const handleEnded = useCallback(() => {
-    setStatus("ended");
-    const reduceMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      requestClose();
-      return;
-    }
-    setFlythrough(true);
-    flythroughTimer.current = setTimeout(() => {
-      flythroughTimer.current = null;
-      setOpen(false);
-      setFlythrough(false);
-      setClosing(false);
-      setStatus("loading");
-      triggerRef.current?.focus({ preventScroll: true });
-    }, 1900);
-  }, [requestClose]);
 
   const play = useCallback(() => {
     const media = videoRef.current;
@@ -181,7 +146,6 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
   useEffect(
     () => () => {
       if (closeTimer.current) clearTimeout(closeTimer.current);
-      if (flythroughTimer.current) clearTimeout(flythroughTimer.current);
     },
     [],
   );
@@ -227,7 +191,6 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
             aria-modal="true"
             aria-label={t.play}
             data-closing={closing || undefined}
-            data-flythrough={flythrough || undefined}
             className="mq-video-modal"
             onClick={(event) => {
               if (event.target === event.currentTarget) requestClose();
@@ -244,7 +207,7 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
                 onPlaying={() => setStatus("playing")}
                 onWaiting={() => setStatus("loading")}
                 onError={() => setStatus("error")}
-                onEnded={handleEnded}
+                onEnded={requestClose}
               >
                 <source src={MP4_SRC} type="video/mp4" />
                 <source src={WEBM_SRC} type="video/webm" />
@@ -263,20 +226,6 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
                   <Button type="button" variant="secondary" tone="dark" size="md" onClick={retry}>
                     {t.retry}
                   </Button>
-                </div>
-              )}
-
-              {/* Al terminar, la marca (la brújula real de la web, sin el
-                  nombre — el propio vídeo ya cierra con su rótulo "Maisha
-                  Quest" en el último plano, y repetirlo aquí lo duplicaría)
-                  avanza hacia la cámara y se disuelve mientras todo el
-                  overlay se desvanece con ella (`data-flythrough` en el
-                  contenedor, ver CSS), revelando la portada ya montada
-                  debajo. El botón de cierre sigue montado y por encima
-                  (z-index más alto) durante toda la secuencia. */}
-              {flythrough && (
-                <div className="mq-video-modal-flythrough" aria-hidden="true">
-                  <CompassMark className="mq-flythrough-mark" needle />
                 </div>
               )}
             </div>

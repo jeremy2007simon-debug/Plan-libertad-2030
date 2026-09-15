@@ -29,6 +29,7 @@ export const de: Dictionary = {
     whatsapp: "Maisha Quest über WhatsApp schreiben",
     callUs: "Maisha Quest anrufen",
     emailUs: "Maisha Quest eine E-Mail schreiben",
+    skipIntro: "Intro überspringen",
   },
 
   nav: {

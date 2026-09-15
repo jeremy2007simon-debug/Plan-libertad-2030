@@ -189,7 +189,7 @@ console.log("\n== 6. Reapertura: vídeo nuevo, arranca desde cero ==");
   await ctx.close();
 }
 
-console.log("\n== 7. Fin del vídeo: la brújula atraviesa la pantalla y se cierra sola ==");
+console.log("\n== 7. Fin del vídeo: fundido breve y cierre solo, sin repetir la entrada ==");
 {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await ctx.newPage();
@@ -197,40 +197,18 @@ console.log("\n== 7. Fin del vídeo: la brújula atraviesa la pantalla y se cier
   await page.getByRole("button", { name: PLAY_LABEL }).click();
   await page.waitForTimeout(700);
   await page.evaluate(() => document.querySelector("video").dispatchEvent(new Event("ended")));
-  await page.waitForTimeout(300);
 
-  const flythrough = page.locator(".mq-video-modal-flythrough");
-  if ((await flythrough.count()) === 0) fail("no aparece la brújula al terminar el vídeo");
-  else pass("la brújula de la marca aparece al terminar el vídeo");
-
-  const closeBtn = page.getByRole("button", { name: "Close video" });
-  if ((await closeBtn.count()) === 0) fail("el botón de cierre desaparece durante la transición");
-  else pass("el botón de cierre sigue disponible durante la transición");
-
-  await page.waitForSelector(".mq-video-modal", { state: "detached", timeout: 4000 }).catch(() => {});
+  await page.waitForSelector(".mq-video-modal", { state: "detached", timeout: 2000 }).catch(() => {});
   const stillOpen = (await page.getByRole("dialog").count()) > 0;
-  if (stillOpen) fail("el overlay no se cierra solo tras la transición");
-  else pass("el overlay se cierra solo, sin pedir otro clic, y revela la portada");
+  if (stillOpen) fail("el overlay no se cierra solo al terminar el vídeo");
+  else pass("el overlay se cierra solo con un fundido breve, sin pedir otro clic");
 
-  await ctx.close();
-}
+  // La animación de entrada (Intro) es solo para la primera carga de la
+  // home: que el vídeo termine no debe volver a activarla.
+  const introReplayed = await page.evaluate(() => document.documentElement.hasAttribute("data-intro"));
+  if (introReplayed) fail("terminar el vídeo repite la animación de entrada");
+  else pass("terminar el vídeo no repite la animación de entrada");
 
-console.log("\n== 7b. Escape interrumpe la transición al instante ==");
-{
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-  const page = await ctx.newPage();
-  await page.goto(`${BASE}/en`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: PLAY_LABEL }).click();
-  await page.waitForTimeout(700);
-  await page.evaluate(() => document.querySelector("video").dispatchEvent(new Event("ended")));
-  await page.waitForSelector(".mq-video-modal-flythrough", { state: "attached", timeout: 2000 });
-  await page.keyboard.press("Escape");
-  const closed = await page
-    .waitForSelector(".mq-video-modal", { state: "detached", timeout: 1000 })
-    .then(() => true)
-    .catch(() => false);
-  if (!closed) fail("Escape no cierra de inmediato durante la transición de la brújula");
-  else pass("Escape interrumpe la transición y cierra de inmediato");
   await ctx.close();
 }
 

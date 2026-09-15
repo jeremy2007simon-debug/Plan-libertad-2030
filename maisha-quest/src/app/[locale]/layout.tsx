@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { OrganizationSchema } from "@/components/seo/StructuredData";
 import { MotionScript } from "@/components/ui/motion";
+import { Intro, IntroGate, IntroScript } from "@/components/intro/Intro";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getPhotoAlt } from "@/i18n/alt";
 import { LOCALES, LOCALE_META, isLocale, localeHref } from "@/i18n/config";
@@ -114,8 +115,11 @@ export default async function LocaleLayout({
         {/* Dos caras recortadas, solo en chino: ver HanFonts. */}
         {han && <HanFonts />}
         <MotionScript />
+        <IntroGate />
       </head>
       <body>
+        <Intro t={t.a11y} />
+        <IntroScript />
         {/* Salto al contenido: primer elemento enfocable de la página. */}
         <a
           href="#main"

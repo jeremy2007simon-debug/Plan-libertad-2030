@@ -30,6 +30,7 @@ export const en = {
     whatsapp: "Message Maisha Quest on WhatsApp",
     callUs: "Call Maisha Quest",
     emailUs: "Email Maisha Quest",
+    skipIntro: "Skip intro",
   },
 
   nav: {
