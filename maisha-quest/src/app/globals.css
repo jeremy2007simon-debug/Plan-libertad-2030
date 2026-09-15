@@ -70,8 +70,8 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.33, 0, 0.15, 1);
   /* Aceleración progresiva: arranca lenta y gana velocidad, al contrario que
-     las otras dos curvas. Solo la usa el avance de la marca en la entrada a
-     la portada (`mq-intro-mark`), que pide explícitamente ese efecto. */
+     las otras dos curvas. Solo la usa el hueco que crece en la entrada a la
+     portada (`mq-intro-hole-grow`), que pide explícitamente ese efecto. */
   --ease-intro-advance: cubic-bezier(0.6, 0, 0.9, 0.35);
   --dur-slow: 900ms;
   --dur-media: 1100ms;
@@ -1671,7 +1671,11 @@ html[data-intro]::before {
 }
 
 html[data-intro="full"]::before {
-  animation: mq-intro-veil-out 1.8s var(--ease-soft) both;
+  /* Puente muy breve: solo cubre el instante entre el primer píxel y que el
+     `<svg>` de la máscara (mismo color, mismo `#mq-intro`) tome el relevo —
+     si durase tanto como el hueco que crece, quedaría opaco justo detrás de
+     él y taparía la portada que ese hueco debería revelar. */
+  animation: mq-intro-veil-out 0.4s var(--ease-out) both;
 }
 
 html[data-intro="reduced"]::before {
@@ -1686,17 +1690,38 @@ html[data-intro] #mq-intro {
   display: block;
 }
 
-.mq-intro-stage {
+/* El `<svg>` que pinta el color de marca y recorta en él el hueco que
+   crece — ver el docblock de `Intro.tsx` para la composición completa. Va
+   DEBAJO de `.mq-intro-stage` en el orden del DOM a propósito: así la
+   brújula y el nombre reales se pintan encima mientras están visibles, sin
+   necesidad de un `z-index` mayor. */
+.mq-intro-reveal {
   position: fixed;
   inset: 0;
   z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Radio de partida: el mismo tamaño con el que se ve el aro exterior de la
+   brújula real (`.mq-intro-compass`) en el centro de la pantalla — el hueco
+   no empieza de la nada, empieza siendo la propia brújula. */
+.mq-intro-hole {
+  r: clamp(2.5rem, 8.5vw, 4.25rem);
+}
+
+html[data-intro="full"] .mq-intro-hole {
+  animation: mq-intro-hole-grow 1.8s var(--ease-intro-advance) both;
+}
+
+.mq-intro-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Necesario para que `translateZ` en `.mq-intro-center` sea profundidad de
-     verdad, no un escalado plano — la propia entrega pide distinguir una
-     animación 3D real de "ampliar una imagen". */
-  perspective: 70rem;
 }
 
 .mq-intro-center {
@@ -1714,10 +1739,14 @@ html[data-intro] #mq-intro {
 }
 
 html[data-intro="full"] .mq-intro-center {
-  animation: mq-intro-mark 1.8s var(--ease-intro-advance) both;
+  /* Se disuelve en el primer tercio del recorrido del hueco (ver
+     `mq-intro-brand-fade`): justo antes de que el hueco crezca más allá de
+     su propio tamaño, para no dejar la brújula nítida flotando sobre la
+     portada que ya empieza a verse a través de él. */
+  animation: mq-intro-brand-fade 1.8s var(--ease-out) both;
 }
 
-html[data-intro="reduced"] .mq-intro-center {
+html[data-intro="reduced"] #mq-intro {
   animation: mq-intro-fade-reduced 0.65s var(--ease-out) both;
 }
 
@@ -1764,29 +1793,41 @@ html[data-intro="reduced"] .mq-intro-center {
   border-color: var(--parchment);
 }
 
-/* --- La brújula empieza YA visible y centrada, avanza con aceleración
-   progresiva (ease-in, no ease-out) y se disuelve al atravesar el plano de
-   la pantalla, revelando el hero que ya está pintado debajo. */
-@keyframes mq-intro-mark {
+/* --- El hueco: empieza del tamaño del aro real de la brújula y crece con
+   aceleración progresiva (la misma curva `ease-in` que ya se usaba para el
+   avance anterior) hasta superar la diagonal de cualquier pantalla —
+   `150vmax` no cabe entero ni en el móvil más alargado ni en el monitor más
+   ancho. A través de él se ve la portada real, no un color de relleno. */
+@keyframes mq-intro-hole-grow {
   0% {
-    transform: translateZ(0) scale(1);
-    opacity: 1;
-  }
-  72% {
-    transform: translateZ(34rem) scale(3.6);
-    opacity: 1;
+    r: clamp(2.5rem, 8.5vw, 4.25rem);
   }
   100% {
-    transform: translateZ(52rem) scale(6.2);
+    r: 150vmax;
+  }
+}
+
+/* --- La brújula y el nombre, ya visibles y completos en el primer
+   fotograma, se disuelven en el primer tercio del recorrido — un fundido
+   discreto, no la propia transición (esa la lleva el hueco de arriba). */
+@keyframes mq-intro-brand-fade {
+  0%,
+  32% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  58% {
     opacity: 0;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.04);
   }
 }
 
 @keyframes mq-intro-veil-out {
   0% {
-    opacity: 1;
-  }
-  52% {
     opacity: 1;
   }
   100% {
@@ -1819,7 +1860,12 @@ html[data-intro="reduced"] .mq-intro-center {
     animation: mq-intro-veil-out-reduced 0.65s var(--ease-out) both;
   }
 
-  html[data-intro="full"] .mq-intro-center {
+  html[data-intro="full"] #mq-intro {
     animation: mq-intro-fade-reduced 0.65s var(--ease-out) both;
+  }
+
+  html[data-intro="full"] .mq-intro-center,
+  html[data-intro="full"] .mq-intro-hole {
+    animation: none;
   }
 }

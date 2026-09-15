@@ -1,7 +1,8 @@
 /**
- * Animación de entrada de la home (`src/components/intro/Intro.tsx`): la
- * marca, ya centrada y visible, avanza hacia la cámara y atraviesa la
- * pantalla, revelando el hero real que hay debajo.
+ * Animación de entrada de la home (`src/components/intro/Intro.tsx`): un
+ * hueco circular (mask SVG), anclado en el aro real de la brújula, crece
+ * hasta salir de la pantalla — a través de él se ve la portada real que
+ * hay detrás, ya pintada desde el primer fotograma.
  *
  * Se ejecuta en cada carga real de la home — primera visita y cada
  * recarga — sin `sessionStorage`, y nunca en navegación interna, cambio de
@@ -14,11 +15,13 @@
  *      repite.
  *  4. El botón de saltar y Escape la retiran al instante; el scroll
  *     funciona con normalidad justo después.
- *  5. `prefers-reduced-motion`: fundido breve (`data-intro="reduced"`), no
- *     el avance 3D.
+ *  5. `prefers-reduced-motion`: fundido breve (`data-intro="reduced"`), sin
+ *     que el hueco llegue a crecer.
  *  6. El botón de la película sigue funcionando con normalidad después.
  *  7. Móvil: el logo se ve completo y centrado al empezar (fotograma 0%,
  *     sin la animación en marcha, que lo agranda a propósito).
+ *  8. El hueco de la máscara empieza del tamaño del aro de la brújula y
+ *     crece con el tiempo — la propia mecánica de la revelación.
  *
  * Como Playwright es un navegador automatizado (`navigator.webdriver`), el
  * guardián de la introducción la salta por defecto: casi todas las pruebas
@@ -141,7 +144,7 @@ console.log("\n== 4. Saltar y Escape ==");
   await page2.close();
 }
 
-console.log("\n== 5. Movimiento reducido: fundido breve, no avance 3D ==");
+console.log("\n== 5. Movimiento reducido: fundido breve, sin que el hueco crezca ==");
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   // `emulateMedia`, no la opción `reducedMotion` del contexto: esta última,
@@ -201,6 +204,27 @@ console.log("\n== 7. Móvil: el logo se ve completo al empezar ==");
   if (!fits) fail(`el logo no se ve completo en móvil al empezar: ${JSON.stringify(box)} vs viewport ${JSON.stringify(viewport)}`);
   else pass("el logo se ve completo y centrado en móvil al empezar");
   await page2.close();
+}
+
+console.log("\n== 8. El hueco de la máscara empieza pequeño (tamaño de la brújula) y crece ==");
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto(`${BASE}/es?intro=1`, { waitUntil: "domcontentloaded" });
+  const r0 = await page.evaluate(() => {
+    const c = document.querySelector(".mq-intro-hole");
+    return c ? parseFloat(getComputedStyle(c).r) : null;
+  });
+  if (r0 === null || r0 <= 15 || r0 >= 120) fail(`el hueco no empieza del tamaño de la brújula (r inicial: ${r0})`);
+  else pass(`el hueco empieza del tamaño de la brújula (r inicial: ${r0}px)`);
+
+  await page.waitForTimeout(900);
+  const rMid = await page.evaluate(() => {
+    const c = document.querySelector(".mq-intro-hole");
+    return c ? parseFloat(getComputedStyle(c).r) : null;
+  });
+  if (rMid === null || rMid <= r0 + 50) fail(`el hueco no crece con el tiempo (r inicial: ${r0}, a mitad: ${rMid})`);
+  else pass(`el hueco crece con el tiempo (r inicial: ${r0}px → a mitad: ${Math.round(rMid)}px)`);
+  await page.close();
 }
 
 await browser.close();

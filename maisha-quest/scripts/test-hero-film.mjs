@@ -2,11 +2,11 @@
  * Botón de reproducción de la portada + reproductor bajo demanda del vídeo
  * de 35 s (`src/components/home/HeroFilmButton.tsx`).
  *
- * Sustituye a `test-intro.mjs`: la arquitectura anterior probaba una capa que
- * se activaba sola dentro del hero al entrar. Esa capa ya no existe — el
- * cliente pidió que el vídeo pasara de invitación implícita a explícita: la
- * portada se ve y funciona de inmediato, y el vídeo solo existe si alguien
- * pulsa el botón circular, en un overlay aparte. Esta versión comprueba:
+ * Es aparte de la animación de entrada de la propia portada (`Intro.tsx`,
+ * probada en `test-intro.mjs`): esta invitación es explícita — la portada se
+ * ve y funciona de inmediato, y el vídeo completo (con su audio) solo existe
+ * si alguien pulsa el botón circular, en un overlay aparte. Esta versión
+ * comprueba:
  *
  *  1. Primera visita: la portada se ve entera de inmediato, el scroll
  *     funciona sin tocar nada, y NO se pide el vídeo.
@@ -19,10 +19,10 @@
  *  5. El botón de cierre (×) hace lo mismo.
  *  6. Se puede reabrir después de cerrar, y el <video> es un elemento nuevo
  *     (arranca desde cero, no heredado del cierre anterior).
- *  7. Al terminar el vídeo (evento `ended`), la brújula de la marca avanza
- *     sola hacia la cámara y el overlay se cierra solo, sin pedir un clic
- *     más — sustituye al panel estático "Watch again" / "Close video" de
- *     antes. Escape sigue cerrando al instante en mitad de esa transición.
+ *  7. Al terminar el vídeo (evento `ended`), el overlay se cierra solo con
+ *     el mismo fundido breve que Escape o el botón de cierre, sin pedir un
+ *     clic más y sin repetir la animación de entrada de la portada (esa
+ *     vive solo en `Intro.tsx`, aparte).
  *  8. Un fallo de red real (404 en los dos formatos) entra en el estado de
  *     error con un botón de reintentar, no se queda cargando para siempre.
  *  9. `prefers-reduced-motion`: el overlay se sigue pudiendo abrir y cerrar,
@@ -32,6 +32,8 @@
  *     completo visible, sin recortar el rótulo final) y no desborda.
  * 12. El scroll de fondo se bloquea mientras el overlay está abierto y se
  *     restaura, en la misma posición, al cerrarlo.
+ * 13. Lleva un póster optimizado — cubre el instante entre abrir el overlay
+ *     y que lleguen los primeros fotogramas, nunca antes del clic.
  *
  * Uso
  * ---
@@ -331,6 +333,23 @@ console.log("\n== 12. Scroll de fondo bloqueado mientras está abierto, restaura
   if (Math.abs(after - before) > 2) fail(`la posición de scroll cambia al cerrar (${before} → ${after})`);
   else pass(`la posición de scroll se conserva al cerrar (${before} → ${after})`);
 
+  await ctx.close();
+}
+
+console.log("\n== 13. Póster: cubre el instante entre el clic y los primeros fotogramas ==");
+{
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const page = await ctx.newPage();
+  await page.goto(`${BASE}/en`, { waitUntil: "networkidle" });
+  const posterBeforeClick = await page.evaluate(() => !document.querySelector("video"));
+  if (!posterBeforeClick) fail("el <video> (y su póster) existen antes del clic");
+  else pass("el póster no se pide antes del clic — el <video> no existe todavía");
+
+  await page.getByRole("button", { name: PLAY_LABEL }).click();
+  await page.waitForTimeout(300);
+  const poster = await page.evaluate(() => document.querySelector("video")?.getAttribute("poster"));
+  if (!poster) fail("el <video> del overlay no lleva atributo poster");
+  else pass(`el <video> lleva un póster (${poster})`);
   await ctx.close();
 }
 

@@ -4,8 +4,13 @@ import type { Dictionary } from "@/i18n/messages/en";
 
 /**
  * Animación de entrada de la portada: la marca, centrada y ya visible,
- * avanza hacia quien mira y atraviesa la pantalla, revelando el hero real
- * que lleva ahí pintado desde el primer fotograma.
+ * funciona como una MÁSCARA — el aro real de la brújula se agranda hasta
+ * salir de la pantalla, y a través de ese círculo que crece se ve la
+ * portada real que lleva ahí pintada desde el primer fotograma. No es un
+ * icono que se acerca a la cámara: es un hueco circular, anclado en la
+ * propia geometría del aro exterior de la brújula (el `r={21}` de
+ * `CompassMark`, no una forma inventada), que revela la portada a medida
+ * que crece.
  *
  * Se ejecuta en CADA carga real de la home (primera visita y cada recarga),
  * nunca al navegar entre páginas internas, cambiar de idioma o abrir/cerrar
@@ -15,12 +20,32 @@ import type { Dictionary } from "@/i18n/messages/en";
  *
  * Cómo está hecha
  * ----------------
- * TODO el movimiento es CSS (`perspective` + `translateZ` + `scale` sobre la
- * brújula y el nombre reales, no un PNG ampliado). No hay vídeo, ni canvas,
- * ni librería de animación. El HTML sale del servidor y no se ve nunca salvo
- * que el guardián ponga `data-intro` en el `<html>` ANTES del primer
- * fotograma — así no hay un destello de la portada antes de que la capa la
- * tape. Sin JavaScript no hay introducción y la portada se ve entera.
+ * Dos capas superpuestas, ambas CSS/SVG puro (sin canvas, vídeo ni librería
+ * de animación):
+ *
+ *  1. CAPA TRASERA: la portada real, ya en el HTML servido, sin esperar a
+ *     nada — nunca parpadea porque nunca se oculta a sí misma.
+ *  2. CAPA DELANTERA: un `<svg>` a pantalla completa que pinta el color de
+ *     marca con un `<mask>` — un círculo (`.mq-intro-hole`) recorta un hueco
+ *     en esa capa. El hueco EMPIEZA del tamaño exacto del aro de la
+ *     brújula (mismo centro, mismo radio relativo) y crece con
+ *     `r: 0% → 150vmax` hasta superar la diagonal de cualquier pantalla.
+ *     Encima de esa capa, la brújula y el nombre reales (vectoriales, no un
+ *     PNG ampliado) se ven nítidos y completos en el fotograma 0 y se
+ *     disuelven en el primer tercio del recorrido — justo antes de que el
+ *     hueco crezca más allá de su propio tamaño, para no dejar el icono
+ *     flotando sobre la portada ya visible.
+ *
+ * `r`, `cx` y `cy` de un `<circle>` son propiedades CSS animables de forma
+ * nativa (Chrome, Firefox y Safari/iOS desde hace varias versiones): no
+ * hace falta JavaScript para mover nada, así que un fallo de hidratación no
+ * puede dejar el hueco a medias — como mucho, el navegador no anima el
+ * `r` y el aviso de seguridad de `IntroScript` retira la capa igual.
+ *
+ * El HTML sale del servidor y la capa no se ve nunca salvo que el guardián
+ * ponga `data-intro` en el `<html>` ANTES del primer fotograma — así no hay
+ * un destello de la portada antes de que la capa la tape. Sin JavaScript no
+ * hay introducción y la portada se ve entera.
  *
  * Accesibilidad
  * -------------
@@ -28,11 +53,26 @@ import type { Dictionary } from "@/i18n/messages/en";
  * el botón de saltar, que también responde a Escape. No es un diálogo: no
  * atrapa el foco ni bloquea el scroll, así que nada queda que "restaurar".
  * Con `prefers-reduced-motion` la capa igual aparece, pero como un fundido
- * breve y plano — nunca un avance 3D — y desaparece antes.
+ * breve y plano de todo el bloque — nunca un hueco que crece — y desaparece
+ * antes.
  */
 export function Intro({ t }: { t: Dictionary["a11y"] }) {
   return (
     <div id="mq-intro">
+      <svg className="mq-intro-reveal" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="mq-intro-grad" cx="50%" cy="42%" r="85%">
+            <stop offset="0%" stopColor="var(--forest)" />
+            <stop offset="72%" stopColor="var(--canopy)" />
+          </radialGradient>
+          <mask id="mq-intro-hole-mask" maskUnits="userSpaceOnUse" x="-10%" y="-10%" width="120%" height="120%">
+            <rect x="-10%" y="-10%" width="120%" height="120%" fill="white" />
+            <circle className="mq-intro-hole" cx="50%" cy="42%" fill="black" />
+          </mask>
+        </defs>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#mq-intro-grad)" mask="url(#mq-intro-hole-mask)" />
+      </svg>
+
       <div className="mq-intro-stage" aria-hidden="true">
         <div className="mq-intro-center">
           <CompassMark className="mq-intro-compass" strokeWidth={0.9} />
@@ -134,7 +174,7 @@ export function IntroScript() {
   var reduced=d.getAttribute('data-intro')==='reduced';
   setTimeout(end,reduced?650:2100);
   if(node)node.addEventListener('animationend',function(e){
-    if(e.animationName==='mq-intro-mark'||e.animationName==='mq-intro-fade-reduced')end();
+    if(e.animationName==='mq-intro-hole-grow'||e.animationName==='mq-intro-fade-reduced')end();
   });
 })();`;
   return <script dangerouslySetInnerHTML={{ __html: source }} />;

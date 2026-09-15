@@ -22,17 +22,20 @@ type Status = "loading" | "playing" | "error";
 
 const MP4_SRC = "/video/optimized/maisha-quest-intro-v2.mp4";
 const WEBM_SRC = "/video/optimized/maisha-quest-intro-v2.webm";
+const POSTER_SRC = "/video/optimized/maisha-quest-intro-v2-poster.webp";
 
 /**
  * Botón circular de la portada + reproductor del vídeo de 35 s bajo demanda.
  *
- * Sustituye a la introducción anterior (`src/components/intro/Intro.tsx`,
- * retirada): el cliente pidió que el vídeo dejara de ser un paso previo a la
- * portada —con o sin reproducción automática— y pasara a ser una invitación
- * explícita. Aquí la portada se ve y funciona de inmediato; el `<video>` no
- * existe en el DOM hasta el primer clic, así que no se descarga ni un byte
- * antes de eso, ni siquiera el póster: el botón es interfaz propia, no una
- * miniatura del vídeo.
+ * Es una invitación explícita, no un paso previo a la portada: el vídeo
+ * completo (con su audio) es opcional y vive detrás de este botón, aparte
+ * de la animación de entrada de la propia portada (`Intro.tsx`, que no
+ * reproduce nada, solo revela el hero). La portada se ve y funciona de
+ * inmediato; el `<video>` no existe en el DOM hasta el primer clic, así que
+ * no se descarga ni un byte de vídeo antes de eso —el botón es interfaz
+ * propia, no una miniatura—. El póster solo se pide al montar el `<video>`,
+ * es decir, tras ese mismo clic: cubre el instante entre abrir el overlay y
+ * que lleguen los primeros fotogramas, nunca antes.
  *
  * Controles nativos (`controls`) en vez de unos hechos a mano: dan pausa,
  * avance, volumen y pantalla completa accesibles por teclado sin reinventar
@@ -203,6 +206,7 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
                 playsInline
                 controls
                 preload="none"
+                poster={POSTER_SRC}
                 aria-label={t.play}
                 onPlaying={() => setStatus("playing")}
                 onWaiting={() => setStatus("loading")}
