@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/analytics";
@@ -31,11 +31,23 @@ const POSTER_SRC = "/video/optimized/maisha-quest-intro-v2-poster.webp";
  * completo (con su audio) es opcional y vive detrás de este botón, aparte
  * de la animación de entrada de la propia portada (`Intro.tsx`, que no
  * reproduce nada, solo revela el hero). La portada se ve y funciona de
- * inmediato; el `<video>` no existe en el DOM hasta el primer clic, así que
- * no se descarga ni un byte de vídeo antes de eso —el botón es interfaz
- * propia, no una miniatura—. El póster solo se pide al montar el `<video>`,
- * es decir, tras ese mismo clic: cubre el instante entre abrir el overlay y
- * que lleguen los primeros fotogramas, nunca antes.
+ * inmediato.
+ *
+ * `play()` se llama de forma SÍNCRONA dentro del propio `onClick` del botón,
+ * no en un efecto que reacciona al estado `open`. Con `open &&` montando el
+ * `<video>` recién en el clic, `videoRef.current` no existe todavía en ese
+ * instante: la llamada real a `.play()` quedaba en un efecto que React
+ * ejecuta un instante después de que el DOM se actualice. La mayoría de
+ * navegadores lo toleran iguel, pero algunos —notablemente Safari, con su
+ * política de activación de usuario más estricta— pueden dejar de considerar
+ * eso "resultado directo" del gesto y bloquear la reproducción con sonido en
+ * silencio. Por eso el `<video>` vive montado de forma permanente (oculto
+ * por CSS mientras `open` es `false`, no desmontado) desde que el componente
+ * termina de hidratarse: así `.play()` se invoca en la misma pila de
+ * llamadas que el propio clic, sin ningún salto de turno de por medio.
+ * `preload="none"` sigue impidiendo cualquier descarga del archivo de vídeo
+ * hasta esa llamada — un `<video>` montado y oculto no descarga nada por sí
+ * solo, la descarga la dispara `.play()`/`.load()`, no el montaje.
  *
  * Controles nativos (`controls`) en vez de unos hechos a mano: dan pausa,
  * avance, volumen y pantalla completa accesibles por teclado sin reinventar
@@ -47,7 +59,23 @@ const POSTER_SRC = "/video/optimized/maisha-quest-intro-v2-poster.webp";
  * vídeo de fondo de la introducción anterior, que arrancaba solo y necesitaba
  * silenciarse para que el navegador lo permitiera.
  */
+/** No cambia tras el primer render: basta un snapshot fijo por lado. */
+function subscribeNever() {
+  return () => {};
+}
+
 export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
+  // Evita renderizar el portal en el servidor, donde `document` no existe:
+  // antes lo evitaba el propio `open &&` (siempre falso en el primer
+  // render); ahora que el portal ya no depende de `open`, hace falta esta
+  // comprobación aparte. `useSyncExternalStore` en vez de un efecto que
+  // llama a `setState`: evita el render en cascada que eso provoca, para
+  // un valor que de todas formas nunca vuelve a cambiar tras montar.
+  const mounted = useSyncExternalStore(
+    subscribeNever,
+    () => true,
+    () => false,
+  );
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [status, setStatus] = useState<Status>("loading");
@@ -64,8 +92,9 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
   const requestClose = useCallback(() => {
     if (closeTimer.current) return;
     setClosing(true);
+    const media = videoRef.current;
     try {
-      videoRef.current?.pause();
+      media?.pause();
     } catch {
       // Un `pause()` sobre un elemento que todavía no ha cargado nada puede
       // lanzar en algún navegador; cerrar el overlay no depende de que tenga
@@ -75,6 +104,17 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
       closeTimer.current = null;
       setOpen(false);
       setClosing(false);
+      try {
+        // El `<video>` ya no se desmonta al cerrar (ver docblock): `load()`
+        // es lo que de verdad libera el búfer decodificado y las conexiones
+        // de red, dejándolo otra vez en el estado de `preload="none"" — sin
+        // esto, un elemento que sigue montado podría retener el vídeo
+        // decodificado en memoria aunque esté en pausa y oculto.
+        media?.load();
+      } catch {
+        // Ídem: `load()` no tiene por qué tener éxito para que el overlay
+        // se cierre.
+      }
       // `{ preventScroll: true }`: sin esto, devolver el foco a un botón que
       // ha quedado fuera de la ventana (se abrió el vídeo, se hizo scroll, se
       // cerró) salta la página de vuelta a él — justo lo contrario de
@@ -98,14 +138,6 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
     media.load();
     media.play().catch(() => setStatus("error"));
   }, []);
-
-  // Arranca en cuanto el <video> existe en el DOM — el propio montaje
-  // condicional (`open &&` más abajo) es lo que retrasa la descarga hasta
-  // este momento, nunca antes.
-  useEffect(() => {
-    if (!open) return;
-    play();
-  }, [open, play]);
 
   useScrollLock(open);
 
@@ -160,6 +192,10 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
           ref={triggerRef}
           type="button"
           onClick={() => {
+            // `play()` primero, en la misma pila de llamadas que el clic:
+            // ver el docblock del componente. `setOpen` puede ir después,
+            // ya diferido por React, sin perder el gesto.
+            play();
             setOpen(true);
             trackEvent("video_play");
           }}
@@ -186,13 +222,23 @@ export function HeroFilmButton({ t }: { t: HeroFilmStrings }) {
           "containing block" de cualquier descendiente `position: fixed`. Sin
           el portal, el overlay quedaría encajado en el hueco de esa fila en
           vez de cubrir la ventana entera. */}
-      {open &&
+      {mounted &&
         createPortal(
           <div
             ref={overlayRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={t.play}
+            // Solo diálogo mientras está realmente abierto: el contenedor
+            // vive montado de forma permanente (ver el docblock del
+            // componente), pero un elemento oculto con `role="dialog"` fijo
+            // seguiría respondiendo a `querySelector('[role="dialog"]')` en
+            // cualquier otro sitio de la página —un `display: none` no
+            // protege de eso, solo del árbol de accesibilidad— y podía
+            // confundirse con un diálogo de verdad abierto en otro
+            // componente (así se detectó: rompía la prueba del menú del
+            // sitio, no algo hipotético).
+            role={open ? "dialog" : undefined}
+            aria-modal={open ? "true" : undefined}
+            aria-label={open ? t.play : undefined}
+            data-open={open || undefined}
             data-closing={closing || undefined}
             className="mq-video-modal"
             onClick={(event) => {

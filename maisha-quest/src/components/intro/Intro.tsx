@@ -20,27 +20,32 @@ import type { Dictionary } from "@/i18n/messages/en";
  *
  * Cómo está hecha
  * ----------------
- * Dos capas superpuestas, ambas CSS/SVG puro (sin canvas, vídeo ni librería
- * de animación):
+ * Dos capas superpuestas, ambas SVG puro (sin canvas, vídeo ni librería de
+ * animación):
  *
  *  1. CAPA TRASERA: la portada real, ya en el HTML servido, sin esperar a
  *     nada — nunca parpadea porque nunca se oculta a sí misma.
  *  2. CAPA DELANTERA: un `<svg>` a pantalla completa que pinta el color de
  *     marca con un `<mask>` — un círculo (`.mq-intro-hole`) recorta un hueco
  *     en esa capa. El hueco EMPIEZA del tamaño exacto del aro de la
- *     brújula (mismo centro, mismo radio relativo) y crece con
- *     `r: 0% → 150vmax` hasta superar la diagonal de cualquier pantalla.
- *     Encima de esa capa, la brújula y el nombre reales (vectoriales, no un
- *     PNG ampliado) se ven nítidos y completos en el fotograma 0 y se
- *     disuelven en el primer tercio del recorrido — justo antes de que el
- *     hueco crezca más allá de su propio tamaño, para no dejar el icono
- *     flotando sobre la portada ya visible.
+ *     brújula (mismo centro, mismo radio relativo) y crece hasta superar la
+ *     diagonal de cualquier pantalla. Encima de esa capa, la brújula y el
+ *     nombre reales (vectoriales, no un PNG ampliado) se ven nítidos y
+ *     completos en el fotograma 0 y se disuelven en el primer tercio del
+ *     recorrido — justo antes de que el hueco crezca más allá de su propio
+ *     tamaño, para no dejar el icono flotando sobre la portada ya visible.
  *
- * `r`, `cx` y `cy` de un `<circle>` son propiedades CSS animables de forma
- * nativa (Chrome, Firefox y Safari/iOS desde hace varias versiones): no
- * hace falta JavaScript para mover nada, así que un fallo de hidratación no
- * puede dejar el hueco a medias — como mucho, el navegador no anima el
- * `r` y el aviso de seguridad de `IntroScript` retira la capa igual.
+ * El crecimiento lo lleva un `@keyframes` de CSS animando `r` — la propiedad
+ * geométrica del círculo, no `transform`. Se probaron dos alternativas antes
+ * de quedarse con esta, las dos descartadas por un defecto real, no una
+ * sospecha: `transform: scale()` sobre un círculo DENTRO de un `<mask>` no
+ * creció de forma concéntrica (se corría hacia una esquina); y mover `r` a
+ * mano con `requestAnimationFrame` + `setAttribute` en cada fotograma —en
+ * teoría más portable al no depender de ningún soporte CSS— producía una
+ * corrupción visual real del icono a mitad de la transición, reproducida en
+ * capturas Y en vídeo grabado fotograma a fotograma, no solo en una prueba
+ * puntual. El `@keyframes` sobre `r` es la única de las tres que se verificó
+ * correcta en ambas comprobaciones.
  *
  * El HTML sale del servidor y la capa no se ve nunca salvo que el guardián
  * ponga `data-intro` en el `<html>` ANTES del primer fotograma — así no hay
@@ -67,7 +72,10 @@ export function Intro({ t }: { t: Dictionary["a11y"] }) {
           </radialGradient>
           <mask id="mq-intro-hole-mask" maskUnits="userSpaceOnUse" x="-10%" y="-10%" width="120%" height="120%">
             <rect x="-10%" y="-10%" width="120%" height="120%" fill="white" />
-            <circle className="mq-intro-hole" cx="50%" cy="42%" fill="black" />
+            {/* `r={64}` es un valor de partida razonable si, por lo que sea,
+                la regla CSS de abajo no llega a aplicarse — nunca un hueco
+                invisible (r a 0) por defecto. */}
+            <circle className="mq-intro-hole" cx="50%" cy="42%" r={64} fill="black" />
           </mask>
         </defs>
         <rect x="0" y="0" width="100%" height="100%" fill="url(#mq-intro-grad)" mask="url(#mq-intro-hole-mask)" />
@@ -144,9 +152,11 @@ export function IntroGate() {
 /**
  * Cierre de la introducción.
  *
- * El movimiento no lo lleva este script: lo lleva el CSS. Esto solo la
- * retira —al terminar, al pulsar «saltar» o al pulsar Escape—, quita el
- * atributo del `<html>` y borra el nodo del DOM.
+ * El movimiento no lo lleva este script: lo lleva el CSS (`@keyframes` sobre
+ * `r`, ver el docblock de `Intro()` para por qué esta es la única de las
+ * tres técnicas probadas que no tuvo un defecto real). Esto solo la retira
+ * —al terminar, al pulsar «saltar» o al pulsar Escape—, quita el atributo
+ * del `<html>` y borra el nodo del DOM.
  *
  * El cierre nunca depende solo de `animationend`: un temporizador es la
  * garantía real (si el efecto no llegara a completarse, o el navegador no

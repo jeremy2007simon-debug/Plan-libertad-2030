@@ -32,8 +32,10 @@
  *     completo visible, sin recortar el rótulo final) y no desborda.
  * 12. El scroll de fondo se bloquea mientras el overlay está abierto y se
  *     restaura, en la misma posición, al cerrarlo.
- * 13. Lleva un póster optimizado — cubre el instante entre abrir el overlay
- *     y que lleguen los primeros fotogramas, nunca antes del clic.
+ * 13. Lleva un póster optimizado (32 KB, no sujeto a `preload`) que cubre el
+ *     instante entre abrir el overlay y que lleguen los primeros
+ *     fotogramas — el archivo de vídeo en sí (`.mp4`/`.webm`, 16,4 MB) es
+ *     el que sigue sin pedirse hasta el clic.
  *
  * Uso
  * ---
@@ -146,9 +148,20 @@ console.log("\n== 4. Escape: cierra, pausa, devuelve el foco ==");
   if (dialogCount) fail("el diálogo sigue abierto tras Escape");
   else pass("Escape cierra el diálogo");
 
-  const videoGone = await page.evaluate(() => !document.querySelector("video"));
-  if (!videoGone) fail("el <video> sigue en el DOM tras cerrar (podría seguir sonando)");
-  else pass("el <video> se desmonta al cerrar — audio y vídeo detenidos de raíz");
+  // El <video> ya no se desmonta al cerrar — vive montado de forma
+  // permanente (oculto por CSS) para poder llamar a `.play()` de forma
+  // síncrona dentro del propio clic (ver el docblock de
+  // `HeroFilmButton.tsx`). Lo que de verdad importa es que quede en pausa,
+  // sin búfer decodificado ni conexión de red abierta — `pause()` + `load()`,
+  // no la desaparición del nodo.
+  const videoState = await page.evaluate(() => {
+    const v = document.querySelector("video");
+    return v ? { paused: v.paused, networkState: v.networkState, hidden: getComputedStyle(v.closest(".mq-video-modal")).display === "none" } : null;
+  });
+  if (!videoState) fail("no se encuentra el <video> tras cerrar");
+  else if (!videoState.paused) fail("el vídeo sigue reproduciéndose tras cerrar (podría seguir sonando)");
+  else if (!videoState.hidden) fail("el overlay del vídeo no queda oculto tras cerrar");
+  else pass("el vídeo queda en pausa y el overlay oculto tras cerrar — sin audio pendiente");
 
   const focused = await page.evaluate(() => document.activeElement?.getAttribute("aria-label"));
   if (focused !== PLAY_LABEL) fail(`el foco no vuelve al botón que abrió el vídeo (quedó en: ${focused})`);
@@ -338,12 +351,23 @@ console.log("\n== 12. Scroll de fondo bloqueado mientras está abierto, restaura
 
 console.log("\n== 13. Póster: cubre el instante entre el clic y los primeros fotogramas ==");
 {
+  // El <video> vive montado de forma permanente (oculto por CSS, ver el
+  // docblock de `HeroFilmButton.tsx`) para poder llamar a `.play()` de forma
+  // síncrona dentro del clic. El póster (una imagen de 32 KB) sí se pide
+  // desde el primer instante —no depende de `preload`, que solo gobierna el
+  // propio `<video>`— y es un cambio deliberado: lo que de verdad importa
+  // ("no descargues los 16,4 MB completos al cargar la home") es que el
+  // archivo de vídeo en sí (`.mp4`/`.webm`) no se pida antes del clic.
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await ctx.newPage();
+  const videoRequestedBeforeClick = [];
+  page.on("request", (r) => {
+    if (/maisha-quest-intro-v2\.(mp4|webm)/.test(r.url())) videoRequestedBeforeClick.push(r.url());
+  });
   await page.goto(`${BASE}/en`, { waitUntil: "networkidle" });
-  const posterBeforeClick = await page.evaluate(() => !document.querySelector("video"));
-  if (!posterBeforeClick) fail("el <video> (y su póster) existen antes del clic");
-  else pass("el póster no se pide antes del clic — el <video> no existe todavía");
+  if (videoRequestedBeforeClick.length)
+    fail(`se pide el archivo de vídeo antes del clic: ${videoRequestedBeforeClick[0]}`);
+  else pass("el archivo de vídeo (no el póster) no se pide antes del clic");
 
   await page.getByRole("button", { name: PLAY_LABEL }).click();
   await page.waitForTimeout(300);

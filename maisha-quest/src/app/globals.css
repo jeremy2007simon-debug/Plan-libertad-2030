@@ -1573,10 +1573,16 @@ p {
    cierre— y los tres estados (carga, error, fin). */
 
 .mq-video-modal {
+  /* Oculto por defecto: el propio `<video>` vive montado de forma
+     permanente (ver el docblock de `HeroFilmButton.tsx` — es lo que permite
+     llamar a `.play()` en la misma pila del clic), así que aquí es el CSS,
+     no el montaje, quien decide si el overlay se ve. `display: none` lo
+     saca del árbol de accesibilidad y del orden de tabulación mientras está
+     cerrado, igual que hacía antes desmontarlo. */
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 70;
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: max(1.25rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right))
@@ -1584,8 +1590,12 @@ p {
   background: rgba(var(--scrim), 0.92);
   backdrop-filter: blur(6px);
   opacity: 1;
-  animation: mq-panel-fade-in 260ms var(--ease-out) both;
   transition: opacity 220ms var(--ease-soft);
+}
+
+.mq-video-modal[data-open] {
+  display: flex;
+  animation: mq-panel-fade-in 260ms var(--ease-out) both;
 }
 
 .mq-video-modal[data-closing] {
@@ -1706,7 +1716,12 @@ html[data-intro] #mq-intro {
 
 /* Radio de partida: el mismo tamaño con el que se ve el aro exterior de la
    brújula real (`.mq-intro-compass`) en el centro de la pantalla — el hueco
-   no empieza de la nada, empieza siendo la propia brújula. */
+   no empieza de la nada, empieza siendo la propia brújula. El crecimiento en
+   sí lo anima este `r` por CSS, no `transform: scale()` ni
+   `requestAnimationFrame` — las otras dos técnicas se probaron y las dos
+   tuvieron un defecto real y comprobado (ver el docblock de `Intro()`), así
+   que esta, la única sin ningún defecto encontrado en las pruebas, es la que
+   se queda. */
 .mq-intro-hole {
   r: clamp(2.5rem, 8.5vw, 4.25rem);
 }
@@ -1794,10 +1809,10 @@ html[data-intro="reduced"] #mq-intro {
 }
 
 /* --- El hueco: empieza del tamaño del aro real de la brújula y crece con
-   aceleración progresiva (la misma curva `ease-in` que ya se usaba para el
-   avance anterior) hasta superar la diagonal de cualquier pantalla —
-   `150vmax` no cabe entero ni en el móvil más alargado ni en el monitor más
-   ancho. A través de él se ve la portada real, no un color de relleno. */
+   aceleración progresiva (arranca lenta, gana velocidad) hasta superar la
+   diagonal de cualquier pantalla — `150vmax` no cabe entero ni en el móvil
+   más alargado ni en el monitor más ancho. A través del hueco se ve la
+   portada real, no un color de relleno. */
 @keyframes mq-intro-hole-grow {
   0% {
     r: clamp(2.5rem, 8.5vw, 4.25rem);
