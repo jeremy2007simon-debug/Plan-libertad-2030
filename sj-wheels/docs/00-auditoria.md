@@ -366,3 +366,28 @@ Nada del MVP la requiere. Se puede construir todo dentro del tema. La necesitar�
 6. **Precios**: confirmar que la escala por diámetro (699–1399 €) es intencional.
 7. **Política de venta con compatibilidad pendiente**: ¿se permite comprar sujeto a verificación,
    o solo se permite consultar?
+
+---
+
+## 9. Acciones ejecutadas tras la auditoría (autorizadas por el propietario)
+
+| Acción | Resultado |
+|---|---|
+| Copia de trabajo del tema | `SJ Wheels — DEV (no publicar)` — `OnlineStoreTheme/196061626701`, rol `UNPUBLISHED`. Horizon `MAIN` intacto |
+| Habilitar español | Locale `es` habilitado y **publicado** |
+| Archivar producto de prueba | `Product/10895724151117` → `ARCHIVED`. La tienda pasa a 0 productos `ACTIVE` |
+
+### Pendiente de ejecutar en el admin de Shopify (no expuesto en la Admin API)
+
+1. **Idioma principal → Español.** `ShopLocaleInput` no admite `primary`, y `MarketUpdateInput` no
+   admite `defaultLocale`. Español ya está habilitado y publicado; solo falta marcarlo como
+   predeterminado en *Configuración → Idiomas → Cambiar idioma predeterminado*.
+2. **Nombre de la tienda → SJ Wheels.** No existe mutación `shopUpdate` en la Admin API.
+   *Configuración → Detalles de la tienda → Nombre*.
+
+Hasta que (1) se complete, el tema seguirá sirviendo `lang="en"`.
+
+### No modificado (por decisión expresa)
+
+- `vendor` de los 439 productos: se mantiene "NovaCore".
+- Precios, envíos, políticas comerciales y estado `DRAFT` del catálogo.
