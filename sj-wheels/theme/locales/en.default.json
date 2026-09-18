@@ -431,15 +431,17 @@
       "from": "From"
     },
     "compare": {
-      "add": "Compare",
-      "remove": "Remove from comparison",
-      "open": "Compare wheels",
-      "title": "Wheel comparison",
-      "empty": "Add up to 3 wheels to compare them.",
-      "full": "You have reached the maximum number of wheels to compare.",
-      "clear": "Clear comparison",
-      "differences": "Differences only"
-    },
+  "add": "Compare",
+  "remove": "Remove from comparison",
+  "open": "Compare wheels",
+  "title": "Wheel comparison",
+  "empty": "Add up to 3 wheels to compare them.",
+  "full": "You have reached the maximum number of wheels to compare.",
+  "clear": "Clear comparison",
+  "differences": "Differences only",
+  "fit": "Fitment",
+  "remove_short": "Remove"
+},
     "collection": {
       "results": "results",
       "filters": "Filters",

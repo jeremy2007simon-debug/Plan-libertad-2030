@@ -1,0 +1,594 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */{
+  "sections": {
+    "hero_jVaWmY": {
+      "type": "hero",
+      "blocks": {
+        "text_YLPk4p": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Las llantas que encajan con tu coche</p>",
+            "text_color": "{{ settings.color_palette.background }}",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_H9gpTf": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Ver catálogo",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button-custom",
+            "custom_button_background": "rgba(0,0,0,0)",
+            "custom_button_text": "{{ settings.color_palette.background }}",
+            "custom_button_border": "{{ settings.color_palette.background }}",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_YLPk4p",
+        "button_H9gpTf"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "space-between",
+        "vertical_alignment": "flex-end",
+        "align_baseline": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
+        "gap": 24,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "background_color": "rgba(0,0,0,0)",
+        "toggle_overlay": true,
+        "overlay_color": "#12121266",
+        "overlay_style": "solid",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 100,
+        "padding-block-end": 72
+      }
+    },
+    "product_list_fa6P9H": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_YFtzcL": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h3>Llantas destacadas</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_MWeP9V": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "Ver todo",
+                "open_in_new_tab": false,
+                "style_class": "link",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_YFtzcL",
+            "product_list_button_MWeP9V"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_677WP3": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_YXxMTj": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_JQzVV4": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "sjw_card_specs": {
+              "type": "sjw-card-specs",
+              "settings": {
+                "show_specs": true,
+                "show_sku": false,
+                "show_compare": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_677WP3",
+            "product_title_YXxMTj",
+            "price_JQzVV4",
+            "sjw_card_specs"
+          ]
+        }
+      },
+      "name": "t:names.product_list",
+      "settings": {
+        "collection": "all",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 28,
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "sjw_topbar": {
+      "type": "sjw-topbar",
+      "blocks": {
+        "m1": {
+          "type": "message",
+          "settings": {
+            "text": "Compatibilidad revisada antes del envío",
+            "icon": "dot"
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "Juegos completos de 4 llantas",
+            "icon": "dot"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "Entrega a domicilio",
+            "icon": "dot"
+          }
+        },
+        "m4": {
+          "type": "message",
+          "settings": {
+            "text": "Atención por WhatsApp",
+            "icon": "dot"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
+      "settings": {
+        "background_color": "#121418"
+      }
+    },
+    "sjw_selector": {
+      "type": "sjw-vehicle-selector",
+      "settings": {
+        "eyebrow": "Compatibilidad revisada",
+        "heading": "Las llantas que encajan con tu coche",
+        "subheading": "Selecciona tu vehículo y descubre diseños compatibles con sus medidas técnicas.",
+        "cta_label": "Buscar llantas compatibles",
+        "redirect_url": "",
+        "compact": false,
+        "background_color": "#121418"
+      }
+    },
+    "sjw_benefits": {
+      "type": "sjw-benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Compatibilidad revisada",
+            "text": "Comprobamos marca, modelo, año, PCD, ET y buje antes de enviar tu pedido."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Juego completo",
+            "text": "El precio corresponde al juego de 4 llantas, salvo que la ficha indique otra cosa."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Entrega a domicilio",
+            "text": "Recibes las llantas en la dirección que indiques en el pedido."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Asesoramiento personalizado",
+            "text": "Si dudas con la medida, te ayudamos por WhatsApp antes de comprar."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "",
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_categories": {
+      "type": "sjw-categories",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "llantas-18-pulgadas",
+            "title": "18 pulgadas"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "llantas-19-pulgadas",
+            "title": "19 pulgadas"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "llantas-20-pulgadas",
+            "title": "20 pulgadas"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "llantas-22-pulgadas",
+            "title": "22 pulgadas"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "eyebrow": "Catálogo",
+        "heading": "Comprar por diámetro",
+        "link_label": "Ver todo el catálogo",
+        "link_url": "shopify://collections/all",
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_steps": {
+      "type": "sjw-steps",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Introduce tu vehículo",
+            "text": "Marca, modelo, año y motorización cuando haga falta."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Elige tus llantas",
+            "text": "Te mostramos el estado de compatibilidad de cada diseño."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Revisamos antes del envío",
+            "text": "Comprobamos las medidas una última vez antes de preparar tu pedido."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "Así de simple",
+        "heading": "Cómo funciona",
+        "background_color": "#121418"
+      }
+    },
+    "sjw_guide": {
+      "type": "sjw-tech-guide",
+      "blocks": {
+        "t1": {
+          "type": "term",
+          "settings": {
+            "term": "Diámetro",
+            "definition": "El tamaño de la llanta en pulgadas. Debe estar entre los que admite tu coche."
+          }
+        },
+        "t2": {
+          "type": "term",
+          "settings": {
+            "term": "Anchura",
+            "definition": "Lo ancha que es la llanta, también en pulgadas. Condiciona qué neumático puedes montar."
+          }
+        },
+        "t3": {
+          "type": "term",
+          "settings": {
+            "term": "PCD",
+            "definition": "El número de tornillos y la distancia entre ellos, por ejemplo 5x112. Tiene que coincidir exactamente."
+          }
+        },
+        "t4": {
+          "type": "term",
+          "settings": {
+            "term": "ET",
+            "definition": "El desplazamiento en milímetros. Decide cuánto entra o sale la rueda respecto al paso de rueda."
+          }
+        },
+        "t5": {
+          "type": "term",
+          "settings": {
+            "term": "Buje central",
+            "definition": "El agujero central en milímetros. Si es mayor que el de tu coche, hacen falta centradores."
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "settings": {
+        "eyebrow": "Guía técnica",
+        "heading": "Qué significa cada medida",
+        "text": "Cinco datos deciden si una llanta encaja en tu coche. Estos son, en lenguaje claro.",
+        "diagram_alt": "Esquema de una llanta con el diámetro, el círculo de tornillos (PCD) y el buje central señalados.",
+        "link_label": "",
+        "link_url": "",
+        "background_color": "#121418"
+      }
+    },
+    "sjw_faq": {
+      "type": "sjw-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿El precio es por llanta o por juego?",
+            "answer": "<p>Salvo que la ficha del producto indique lo contrario, el precio corresponde al juego completo de 4 llantas.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Los neumáticos están incluidos?",
+            "answer": "<p>No. Los neumáticos no están incluidos salvo que la ficha del producto lo indique expresamente.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo sé que las llantas encajan en mi coche?",
+            "answer": "<p>Selecciona tu vehículo y verás el estado de compatibilidad de cada llanta. Comparamos PCD, diámetro, ET y buje central. Además revisamos la compatibilidad una última vez antes del envío.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué significa «Necesita confirmación técnica»?",
+            "answer": "<p>Que todavía no tenemos verificada esa combinación concreta de llanta y vehículo. Puedes escribirnos y lo comprobamos contigo antes de que compres.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "eyebrow": "Dudas frecuentes",
+        "heading": "Preguntas frecuentes",
+        "text": "",
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_cta": {
+      "type": "sjw-cta",
+      "settings": {
+        "eyebrow": "¿Necesitas ayuda?",
+        "heading": "Te ayudamos a acertar con la medida",
+        "text": "Dinos marca, modelo y año de tu coche y te confirmamos qué llantas le encajan.",
+        "primary_label": "Buscar llantas compatibles",
+        "primary_url": "/",
+        "background_color": "#121418"
+      }
+    }
+  },
+  "order": [
+    "sjw_topbar",
+    "hero_jVaWmY",
+    "sjw_selector",
+    "sjw_benefits",
+    "sjw_categories",
+    "product_list_fa6P9H",
+    "sjw_steps",
+    "sjw_guide",
+    "sjw_faq",
+    "sjw_cta"
+  ]
+}

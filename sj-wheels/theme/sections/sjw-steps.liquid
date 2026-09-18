@@ -1,0 +1,55 @@
+{%- comment -%} SJ Wheels — Cómo funciona. {%- endcomment -%}
+<section class="sjw-root sjw-section sjw-grid-bg" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container">
+    {%- if section.settings.eyebrow != blank -%}<p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
+    <ol class="sjw-steps">
+      {%- for block in section.blocks -%}
+        <li class="sjw-step" {{ block.shopify_attributes }}>
+          <span class="sjw-step__n" aria-hidden="true">{{ forloop.index }}</span>
+          <div class="sjw-stack-2">
+            <h3 class="sjw-h3">{{ block.settings.title }}</h3>
+            {%- if block.settings.text != blank -%}<p class="sjw-body">{{ block.settings.text }}</p>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .sjw-steps { display: grid; gap: var(--sjw-s4); margin: var(--sjw-s5) 0 0; padding: 0; list-style: none;
+               counter-reset: sjw-step; grid-template-columns: 1fr; }
+  @media (min-width: 800px) { .sjw-steps { grid-template-columns: repeat(3, 1fr); gap: var(--sjw-s5); } }
+  .sjw-step { display: flex; gap: var(--sjw-s4); align-items: flex-start;
+              padding-top: var(--sjw-s4); border-top: 2px solid var(--sjw-metal); }
+  .sjw-step__n { flex: none; width: 2.25rem; height: 2.25rem; border-radius: 50%;
+                 display: grid; place-items: center; background: var(--sjw-orange-soft);
+                 color: var(--sjw-orange); font-weight: 800; font-size: .875rem; }
+</style>
+
+{% schema %}
+{
+  "name": "Cómo funciona",
+  "tag": "section",
+  "blocks": [
+    { "type": "step", "name": "Paso", "settings": [
+      { "type": "text", "id": "title", "label": "Título" },
+      { "type": "textarea", "id": "text", "label": "Texto" }
+    ]}
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Así de simple" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Cómo funciona" },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#121418" }
+  ],
+  "presets": [{
+    "name": "Cómo funciona",
+    "blocks": [
+      { "type": "step", "settings": { "title": "Introduce tu vehículo", "text": "Marca, modelo, año y motorización cuando haga falta." } },
+      { "type": "step", "settings": { "title": "Elige tus llantas", "text": "Te mostramos el estado de compatibilidad de cada diseño." } },
+      { "type": "step", "settings": { "title": "Revisamos antes del envío", "text": "Comprobamos las medidas una última vez antes de preparar tu pedido." } }
+    ]
+  }]
+}
+{% endschema %}

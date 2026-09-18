@@ -1,0 +1,74 @@
+{%- comment -%} SJ Wheels — Categorías. Solo enlaza a colecciones reales. {%- endcomment -%}
+<section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container">
+    <div class="sjw-cats__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.link_url != blank and section.settings.link_label != blank -%}
+        <a class="sjw-btn sjw-btn--ghost sjw-btn--sm" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <ul class="sjw-cats" role="list">
+      {%- for block in section.blocks -%}
+        {%- assign col = collections[block.settings.collection] -%}
+        {%- if col != blank and col.products_count > 0 -%}
+          <li {{ block.shopify_attributes }}>
+            <a class="sjw-card sjw-card--interactive sjw-cat" href="{{ col.url }}">
+              {%- if col.featured_image -%}
+                <img class="sjw-cat__img"
+                     src="{{ col.featured_image | image_url: width: 480 }}"
+                     srcset="{{ col.featured_image | image_url: width: 320 }} 320w, {{ col.featured_image | image_url: width: 640 }} 640w"
+                     sizes="(min-width: 1000px) 25vw, 45vw"
+                     width="480" height="360" loading="lazy" decoding="async"
+                     alt="{{ col.featured_image.alt | default: col.title | escape }}">
+              {%- else -%}
+                <span class="sjw-cat__img sjw-cat__img--empty sjw-grid-bg" aria-hidden="true"></span>
+              {%- endif -%}
+              <span class="sjw-cat__body">
+                <span class="sjw-cat__title">{{ block.settings.title | default: col.title }}</span>
+                <span class="sjw-small">{{ col.products_count }} {{ 'sjw.collection.results' | t }}</span>
+              </span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sjw-cats__head { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: flex-end;
+                    justify-content: space-between; margin-bottom: var(--sjw-s5); }
+  .sjw-cats { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
+              grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 800px)  { .sjw-cats { grid-template-columns: repeat(4, 1fr); } }
+  .sjw-cat { display: grid; text-decoration: none; color: inherit; }
+  .sjw-cat__img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--sjw-metal); }
+  .sjw-cat__img--empty { aspect-ratio: 4 / 3; }
+  .sjw-cat__body { display: grid; gap: 2px; padding: var(--sjw-s3) var(--sjw-s4) var(--sjw-s4); }
+  .sjw-cat__title { font-weight: 600; font-size: .9375rem; }
+</style>
+
+{% schema %}
+{
+  "name": "Categorías",
+  "tag": "section",
+  "blocks": [
+    { "type": "category", "name": "Categoría", "settings": [
+      { "type": "collection", "id": "collection", "label": "Colección" },
+      { "type": "text", "id": "title", "label": "Título (opcional)", "info": "Si lo dejas vacío se usa el nombre de la colección." }
+    ]}
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Catálogo" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Comprar por diámetro" },
+    { "type": "text", "id": "link_label", "label": "Texto del enlace", "default": "Ver todo" },
+    { "type": "url", "id": "link_url", "label": "Enlace" },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#090A0C" }
+  ],
+  "presets": [{ "name": "Categorías", "blocks": [{ "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }] }]
+}
+{% endschema %}

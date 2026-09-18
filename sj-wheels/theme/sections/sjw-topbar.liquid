@@ -1,0 +1,61 @@
+{%- comment -%} SJ Wheels — Barra superior de mensajes. Todo editable. {%- endcomment -%}
+<div class="sjw-root sjw-topbar" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container sjw-topbar__inner">
+    <ul class="sjw-topbar__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="sjw-topbar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != 'none' -%}
+            <span class="sjw-topbar__dot" aria-hidden="true"></span>
+          {%- endif -%}
+          <span>{{ block.settings.text }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .sjw-topbar { border-bottom: var(--sjw-border); font-size: .75rem; }
+  .sjw-topbar__inner { padding-block: var(--sjw-s2); }
+  .sjw-topbar__list {
+    display: flex; gap: var(--sjw-s5); margin: 0; padding: 0; list-style: none;
+    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .sjw-topbar__list::-webkit-scrollbar { display: none; }
+  .sjw-topbar__item {
+    display: flex; align-items: center; gap: var(--sjw-s2);
+    white-space: nowrap; color: var(--sjw-text-muted);
+  }
+  .sjw-topbar__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sjw-orange); flex: none; }
+  @media (min-width: 900px) { .sjw-topbar__list { justify-content: center; } }
+</style>
+
+{% schema %}
+{
+  "name": "Barra de mensajes",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Mensaje",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Compatibilidad revisada antes del envío" },
+        { "type": "select", "id": "icon", "label": "Punto de color",
+          "options": [{ "value": "dot", "label": "Sí" }, { "value": "none", "label": "No" }], "default": "dot" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#121418" }
+  ],
+  "presets": [{
+    "name": "Barra de mensajes",
+    "blocks": [
+      { "type": "message", "settings": { "text": "Compatibilidad revisada antes del envío" } },
+      { "type": "message", "settings": { "text": "Juegos completos de 4 llantas" } },
+      { "type": "message", "settings": { "text": "Entrega a domicilio" } },
+      { "type": "message", "settings": { "text": "Atención por WhatsApp" } }
+    ]
+  }]
+}
+{% endschema %}

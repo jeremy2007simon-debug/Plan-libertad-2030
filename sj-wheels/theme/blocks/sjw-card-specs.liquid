@@ -1,0 +1,83 @@
+{%- comment -%}
+  SJ Wheels — Medidas, estado de compatibilidad y comparador en la tarjeta.
+  Se añade dentro de la tarjeta de producto de Horizon.
+{%- endcomment -%}
+{%- liquid
+  assign p = closest.product | default: product
+  assign mf = p.metafields.custom
+  assign sku = p.selected_or_first_available_variant.sku
+  assign units = mf.units_per_set.value | default: settings.sjw_default_units_per_set | default: 4
+  assign set_label = settings.sjw_set_label | default: 'Juego de 4'
+-%}
+
+{%- if p != blank -%}
+<div class="sjw-root sjw-cardspecs" data-sjw-product data-product-id="{{ p.id }}" {{ block.shopify_attributes }}>
+  {% render 'sjw-product-fitment-data', product: p %}
+
+  <div class="sjw-cardspecs__badges">
+    {% render 'sjw-fitment-badge', product: p, size: 'sm' %}
+    {%- if units > 1 -%}
+      <span class="sjw-badge sjw-badge--set">{{ set_label }}</span>
+    {%- endif -%}
+  </div>
+
+  {%- if block.settings.show_specs -%}
+    <ul class="sjw-cardspecs__list" role="list">
+      {%- if mf.wheel_diameter.value != blank -%}
+        <li><abbr title="{{ 'sjw.spec.diameter' | t }}">Ø</abbr> {{ mf.wheel_diameter.value }}"</li>
+      {%- endif -%}
+      {%- if mf.wheel_width.value != blank -%}
+        <li>{{ mf.wheel_width.value }}"</li>
+      {%- endif -%}
+      {%- if mf.bolt_pattern.value != blank -%}
+        <li>{{ mf.bolt_pattern.value }}</li>
+      {%- endif -%}
+      {%- if mf.offset_et.value != blank -%}
+        <li>ET {{ mf.offset_et.value }}</li>
+      {%- endif -%}
+      {%- if mf.finish.value != blank -%}
+        <li>{{ mf.finish.value }}</li>
+      {%- endif -%}
+    </ul>
+  {%- endif -%}
+
+  {%- if block.settings.show_sku and sku != blank -%}
+    <p class="sjw-small sjw-mono">{{ 'sjw.product.sku' | t }}: {{ sku }}</p>
+  {%- endif -%}
+
+  {%- if settings.sjw_enable_compare and block.settings.show_compare -%}
+    <button type="button" class="sjw-btn sjw-btn--ghost sjw-btn--sm sjw-cardspecs__compare"
+            data-sjw-compare-toggle
+            data-product-id="{{ p.id }}"
+            data-handle="{{ p.handle }}"
+            aria-pressed="false">
+      {{ 'sjw.compare.add' | t }}
+    </button>
+  {%- endif -%}
+</div>
+{%- endif -%}
+
+<style>
+  .sjw-cardspecs { display: grid; gap: var(--sjw-s2); padding-top: var(--sjw-s2); }
+  .sjw-cardspecs__badges { display: flex; flex-wrap: wrap; gap: var(--sjw-s2); }
+  .sjw-cardspecs__list {
+    display: flex; flex-wrap: wrap; gap: var(--sjw-s1) var(--sjw-s3);
+    margin: 0; padding: 0; list-style: none;
+    font-size: .75rem; color: var(--sjw-text-muted); font-variant-numeric: tabular-nums;
+  }
+  .sjw-cardspecs__list abbr { text-decoration: none; border: 0; }
+  .sjw-cardspecs__compare { justify-self: start; }
+  .sjw-cardspecs__compare[aria-pressed="true"] { color: var(--sjw-orange); }
+</style>
+
+{% schema %}
+{
+  "name": "Medidas y compatibilidad",
+  "settings": [
+    { "type": "checkbox", "id": "show_specs", "label": "Mostrar medidas", "default": true },
+    { "type": "checkbox", "id": "show_sku", "label": "Mostrar referencia", "default": true },
+    { "type": "checkbox", "id": "show_compare", "label": "Mostrar botón de comparar", "default": true }
+  ],
+  "presets": [{ "name": "Medidas y compatibilidad" }]
+}
+{% endschema %}

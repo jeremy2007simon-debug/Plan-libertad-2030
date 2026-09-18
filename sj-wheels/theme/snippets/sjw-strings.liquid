@@ -8,6 +8,13 @@
     fitment_pending: {{ 'sjw.fitment.pending' | t | json }},
     fitment_no:      {{ 'sjw.fitment.no'      | t | json }},
     fitment_unknown: {{ 'sjw.fitment.select_vehicle' | t | json }},
+    needs_spacers:   {{ 'sjw.fitment.needs_spacers' | t | json }},
+    guard_blocked:   {{ 'sjw.fitment.guard_blocked'    | t | json }},
+    guard_no_vehicle:{{ 'sjw.fitment.guard_no_vehicle' | t | json }},
+    guard_pending:   {{ 'sjw.fitment.guard_pending'    | t | json }},
+    guard_inquire:   {{ 'sjw.fitment.guard_inquire'    | t | json }},
+    guard_confirmed: {{ 'sjw.fitment.guard_confirmed'  | t | json }},
+
     no_vehicle:      {{ 'sjw.selector.none'   | t | json }},
     vehicle_saved:   {{ 'sjw.selector.saved'  | t | json }},
     step_make:       {{ 'sjw.selector.make'       | t | json }},
@@ -15,14 +22,30 @@
     step_generation: {{ 'sjw.selector.generation' | t | json }},
     step_year:       {{ 'sjw.selector.year'       | t | json }},
     step_engine:     {{ 'sjw.selector.engine'     | t | json }},
-    needs_spacers:   {{ 'sjw.fitment.needs_spacers' | t | json }},
+
+    pending_data:    {{ 'sjw.product.pending_data' | t | json }},
+    spec_diameter:   {{ 'sjw.spec.diameter' | t | json }},
+    spec_width:      {{ 'sjw.spec.width'    | t | json }},
+    spec_pcd:        {{ 'sjw.spec.pcd'      | t | json }},
+    spec_et:         {{ 'sjw.spec.et'       | t | json }},
+    spec_bore:       {{ 'sjw.spec.bore'     | t | json }},
+    spec_finish:     {{ 'sjw.spec.finish'   | t | json }},
+    spec_units:      {{ 'sjw.spec.units'    | t | json }},
+
+    compare_add:     {{ 'sjw.compare.add'    | t | json }},
+    compare_remove:  {{ 'sjw.compare.remove' | t | json }},
+    compare_title:   {{ 'sjw.compare.title'  | t | json }},
+    compare_empty:   {{ 'sjw.compare.empty'  | t | json }},
+    compare_full:    {{ 'sjw.compare.full'   | t | json }},
+    compare_clear:   {{ 'sjw.compare.clear'  | t | json }},
+    compare_fit:     {{ 'sjw.compare.fit'    | t | json }},
+
     wa_product:      {{ 'sjw.whatsapp.product'    | t | json }},
     wa_no_results:   {{ 'sjw.whatsapp.no_results' | t | json }},
     wa_cart:         {{ 'sjw.whatsapp.cart'       | t | json }},
     wa_general:      {{ 'sjw.whatsapp.general'    | t | json }},
     wa_no_vehicle:   {{ 'sjw.whatsapp.no_vehicle' | t | json }},
     wa_no_sku:       {{ 'sjw.whatsapp.no_sku'     | t | json }},
-    wa_cart_empty:   {{ 'sjw.whatsapp.cart_empty' | t | json }},
-    compare_full:    {{ 'sjw.compare.full' | t | json }}
+    wa_cart_empty:   {{ 'sjw.whatsapp.cart_empty' | t | json }}
   };
 </script>

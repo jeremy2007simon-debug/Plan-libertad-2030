@@ -1,0 +1,63 @@
+{%- comment -%}
+  SJ Wheels — Barra del vehículo seleccionado para las páginas de catálogo.
+  Muestra el vehículo guardado y permite cambiarlo o quitarlo sin salir de la página.
+{%- endcomment -%}
+{%- assign wa_label = 'sjw.selector.empty_cta' | t -%}
+{% render 'sjw-vehicle-catalog' %}
+
+<div class="sjw-root sjw-vbar" data-sjw-vehicle-bar>
+  <div class="sjw-container sjw-vbar__inner">
+    <div class="sjw-vbar__state">
+      <span class="sjw-badge sjw-badge--neutral" data-sjw-no-vehicle hidden>
+        {{ 'sjw.fitment.select_vehicle' | t }}
+      </span>
+      <span class="sjw-vbar__vehicle" data-sjw-has-vehicle hidden>
+        <span class="sjw-small">{{ 'sjw.selector.your_vehicle' | t }}</span>
+        <strong data-sjw-vehicle-label></strong>
+      </span>
+    </div>
+
+    <div class="sjw-vbar__actions">
+      <a class="sjw-btn sjw-btn--secondary sjw-btn--sm" href="{{ section.settings.selector_url | default: '/' }}#sjw-vehicle-picker">
+        <span data-sjw-no-vehicle hidden>{{ 'sjw.selector.open' | t }}</span>
+        <span data-sjw-has-vehicle hidden>{{ 'sjw.selector.change' | t }}</span>
+      </a>
+      <button type="button" class="sjw-btn sjw-btn--ghost sjw-btn--sm" data-sjw-clear-vehicle data-sjw-has-vehicle hidden>
+        {{ 'sjw.selector.reset' | t }}
+      </button>
+      {% render 'sjw-whatsapp', context: 'no_results', style: 'ghost', label: wa_label %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .sjw-vbar { position: sticky; top: var(--header-height, 0px); z-index: var(--sjw-z-sticky);
+              background: var(--sjw-graphite); border-block: var(--sjw-border);
+              backdrop-filter: saturate(140%) blur(6px); }
+  .sjw-vbar__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                     gap: var(--sjw-s3); padding-block: var(--sjw-s2); }
+  .sjw-vbar__state { display: flex; align-items: center; gap: var(--sjw-s3); min-height: 38px; }
+  .sjw-vbar__vehicle { display: flex; flex-direction: column; line-height: 1.25; }
+  .sjw-vbar__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s2); }
+</style>
+
+<script>
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-sjw-clear-vehicle]');
+    if (!btn) return;
+    window.SJWGarage.clear();
+    window.SJWAnalytics.track('vehiculo_eliminado', {});
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Barra de vehículo",
+  "tag": "div",
+  "settings": [
+    { "type": "url", "id": "selector_url", "label": "Página del buscador de vehículo",
+      "info": "A dónde llevar al cliente para elegir o cambiar su coche." }
+  ],
+  "presets": [{ "name": "Barra de vehículo" }]
+}
+{% endschema %}

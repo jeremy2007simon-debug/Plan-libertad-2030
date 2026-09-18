@@ -1,0 +1,54 @@
+{%- comment -%} SJ Wheels — Beneficios. {%- endcomment -%}
+<section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sjw-h2 sjw-benefits__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <ul class="sjw-benefits" role="list">
+      {%- for block in section.blocks -%}
+        <li class="sjw-card sjw-benefit" {{ block.shopify_attributes }}>
+          <span class="sjw-benefit__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="sjw-h3">{{ block.settings.title }}</h3>
+          {%- if block.settings.text != blank -%}<p class="sjw-body">{{ block.settings.text }}</p>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sjw-benefits__title { margin-bottom: var(--sjw-s5); }
+  .sjw-benefits { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
+                  grid-template-columns: 1fr; }
+  @media (min-width: 640px)  { .sjw-benefits { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .sjw-benefits { grid-template-columns: repeat(4, 1fr); } }
+  .sjw-benefit { display: grid; gap: var(--sjw-s2); padding: var(--sjw-s5); align-content: start; }
+  .sjw-benefit__num { font-size: .75rem; font-weight: 700; letter-spacing: var(--sjw-tracking-eyebrow);
+                      color: var(--sjw-orange); }
+</style>
+
+{% schema %}
+{
+  "name": "Beneficios",
+  "tag": "section",
+  "blocks": [
+    { "type": "benefit", "name": "Beneficio", "settings": [
+      { "type": "text", "id": "title", "label": "Título", "default": "Compatibilidad revisada" },
+      { "type": "textarea", "id": "text", "label": "Texto" }
+    ]}
+  ],
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título de la sección" },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#090A0C" }
+  ],
+  "presets": [{
+    "name": "Beneficios",
+    "blocks": [
+      { "type": "benefit", "settings": { "title": "Compatibilidad revisada", "text": "Comprobamos marca, modelo, año, PCD, ET y buje antes de enviar tu pedido." } },
+      { "type": "benefit", "settings": { "title": "Juego completo", "text": "El precio corresponde al juego de 4 llantas, salvo que la ficha indique otra cosa." } },
+      { "type": "benefit", "settings": { "title": "Entrega a domicilio", "text": "Recibes las llantas en la dirección que indiques en el pedido." } },
+      { "type": "benefit", "settings": { "title": "Asesoramiento personalizado", "text": "Si dudas con la medida, te ayudamos por WhatsApp antes de comprar." } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,93 @@
+{%- comment -%}
+  SJ Wheels — Guía técnica visual: diámetro, anchura, PCD, ET y buje.
+  El dibujo es un SVG en línea: sin peticiones extra y escala sin perder nitidez.
+{%- endcomment -%}
+<section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container sjw-guide">
+    <div class="sjw-guide__intro">
+      {%- if section.settings.eyebrow != blank -%}<p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="sjw-lead">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.link_url != blank -%}
+        <a class="sjw-btn sjw-btn--secondary" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <figure class="sjw-guide__fig">
+      <svg viewBox="0 0 320 320" role="img" aria-labelledby="sjw-guide-title-{{ section.id }}">
+        <title id="sjw-guide-title-{{ section.id }}">{{ section.settings.diagram_alt }}</title>
+        <circle cx="160" cy="160" r="128" fill="none" stroke="var(--sjw-metal)" stroke-width="2"/>
+        <circle cx="160" cy="160" r="112" fill="none" stroke="var(--sjw-text-faint)" stroke-width="1" stroke-dasharray="4 5"/>
+        <circle cx="160" cy="160" r="34"  fill="none" stroke="var(--sjw-orange)" stroke-width="2"/>
+        {%- comment -%} Cinco tornillos: representación del PCD {%- endcomment -%}
+        <g fill="var(--sjw-text-muted)">
+          <circle cx="160" cy="102" r="6"/><circle cx="215" cy="142" r="6"/>
+          <circle cx="194" cy="207" r="6"/><circle cx="126" cy="207" r="6"/>
+          <circle cx="105" cy="142" r="6"/>
+        </g>
+        <circle cx="160" cy="160" r="60" fill="none" stroke="var(--sjw-text-faint)" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="32" y1="160" x2="288" y2="160" stroke="var(--sjw-orange)" stroke-width="1.5"/>
+        <text x="160" y="152" text-anchor="middle" fill="var(--sjw-orange)" font-size="12" font-weight="700">DIÁMETRO</text>
+        <text x="160" y="248" text-anchor="middle" fill="var(--sjw-text-muted)" font-size="11">PCD</text>
+        <text x="160" y="164" text-anchor="middle" fill="var(--sjw-text-muted)" font-size="10">BUJE</text>
+      </svg>
+    </figure>
+
+    <dl class="sjw-guide__terms">
+      {%- for block in section.blocks -%}
+        <div class="sjw-guide__term" {{ block.shopify_attributes }}>
+          <dt>{{ block.settings.term }}</dt>
+          <dd class="sjw-body">{{ block.settings.definition }}</dd>
+        </div>
+      {%- endfor -%}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .sjw-guide { display: grid; gap: var(--sjw-s6); grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 900px) { .sjw-guide { grid-template-columns: 1fr 1fr; } }
+  .sjw-guide__intro { display: grid; gap: var(--sjw-s3); justify-items: start; }
+  .sjw-guide__fig { margin: 0; display: grid; place-items: center; }
+  .sjw-guide__fig svg { width: min(100%, 22rem); height: auto; }
+  .sjw-guide__terms { display: grid; gap: var(--sjw-s3); margin: 0; grid-column: 1 / -1; }
+  @media (min-width: 700px) { .sjw-guide__terms { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); } }
+  .sjw-guide__term { padding: var(--sjw-s4); border: var(--sjw-border); border-radius: var(--sjw-r-md);
+                     background: var(--sjw-graphite); display: grid; gap: var(--sjw-s2); }
+  .sjw-guide__term dt { font-weight: 700; font-size: .9375rem; }
+  .sjw-guide__term dd { margin: 0; }
+</style>
+
+{% schema %}
+{
+  "name": "Guía técnica",
+  "tag": "section",
+  "blocks": [
+    { "type": "term", "name": "Término", "settings": [
+      { "type": "text", "id": "term", "label": "Término" },
+      { "type": "textarea", "id": "definition", "label": "Definición" }
+    ]}
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Guía técnica" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Qué significa cada medida" },
+    { "type": "textarea", "id": "text", "label": "Texto",
+      "default": "Cinco datos deciden si una llanta encaja en tu coche. Estos son, en lenguaje claro." },
+    { "type": "text", "id": "diagram_alt", "label": "Descripción del dibujo",
+      "default": "Esquema de una llanta con el diámetro, el círculo de tornillos (PCD) y el buje central señalados." },
+    { "type": "text", "id": "link_label", "label": "Texto del enlace", "default": "Ver la guía completa" },
+    { "type": "url", "id": "link_url", "label": "Enlace" },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#121418" }
+  ],
+  "presets": [{
+    "name": "Guía técnica",
+    "blocks": [
+      { "type": "term", "settings": { "term": "Diámetro", "definition": "El tamaño de la llanta en pulgadas. Debe estar entre los que admite tu coche." } },
+      { "type": "term", "settings": { "term": "Anchura", "definition": "Lo ancha que es la llanta, también en pulgadas. Condiciona qué neumático puedes montar." } },
+      { "type": "term", "settings": { "term": "PCD", "definition": "El número de tornillos y la distancia entre ellos, por ejemplo 5x112. Tiene que coincidir exactamente." } },
+      { "type": "term", "settings": { "term": "ET", "definition": "El desplazamiento en milímetros. Decide cuánto entra o sale la rueda respecto al paso de rueda." } },
+      { "type": "term", "settings": { "term": "Buje central", "definition": "El agujero central en milímetros. Si es mayor que el de tu coche, hacen falta centradores." } }
+    ]
+  }]
+}
+{% endschema %}

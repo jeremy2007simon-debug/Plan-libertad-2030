@@ -426,7 +426,9 @@
       "empty": "Añade hasta 3 llantas para compararlas.",
       "full": "Ya has añadido el máximo de llantas a comparar.",
       "clear": "Vaciar comparador",
-      "differences": "Solo diferencias"
+      "differences": "Solo diferencias",
+      "fit": "Compatibilidad",
+      "remove_short": "Quitar"
     },
     "collection": {
       "results": "resultados",

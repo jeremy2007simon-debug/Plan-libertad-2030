@@ -1,0 +1,42 @@
+{%- comment -%} SJ Wheels — Llamada final a la acción. {%- endcomment -%}
+{%- assign wa_label = 'sjw.whatsapp.cta' | t -%}
+<section class="sjw-root sjw-section sjw-grid-bg" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container sjw-cta">
+    <div class="sjw-cta__text">
+      {%- if section.settings.eyebrow != blank -%}<p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="sjw-lead">{{ section.settings.text }}</p>{%- endif -%}
+      <p class="sjw-small">{{ 'sjw.fitment.final_check' | t }}</p>
+    </div>
+    <div class="sjw-cta__actions">
+      {%- if section.settings.primary_url != blank -%}
+        <a class="sjw-btn sjw-btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }}</a>
+      {%- endif -%}
+      {% render 'sjw-whatsapp', context: 'general', style: 'secondary', label: wa_label %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sjw-cta { display: grid; gap: var(--sjw-s5); align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .sjw-cta { grid-template-columns: 1fr auto; gap: var(--sjw-s7); } }
+  .sjw-cta__text { display: grid; gap: var(--sjw-s3); }
+  .sjw-cta__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
+</style>
+
+{% schema %}
+{
+  "name": "Llamada final",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "¿Necesitas ayuda?" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Te ayudamos a acertar con la medida" },
+    { "type": "textarea", "id": "text", "label": "Texto",
+      "default": "Dinos marca, modelo y año de tu coche y te confirmamos qué llantas le encajan." },
+    { "type": "text", "id": "primary_label", "label": "Texto del botón principal", "default": "Buscar llantas compatibles" },
+    { "type": "url", "id": "primary_url", "label": "Enlace del botón principal" },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#121418" }
+  ],
+  "presets": [{ "name": "Llamada final" }]
+}
+{% endschema %}
