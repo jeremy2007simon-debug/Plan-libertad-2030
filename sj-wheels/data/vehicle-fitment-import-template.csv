@@ -1,0 +1,4 @@
+accion,vehiculo_id,marca,modelo,generacion,anio_desde,anio_hasta,pcd,buje_mm,et_min,et_max,diametros,anchura_min,anchura_max,sku_producto,verificacion,evidencia,verificado_por,fecha_verificacion
+crear_vehiculo,bmw-serie-3-g20,BMW,Serie 3,G20,2019,2025,5x112,66.6,30,45,"17,18,19,20",7.5,9.0,,verified,Manual del fabricante BMW G20 pag. 412,Nombre Apellido,2026-09-18
+vincular,bmw-serie-3-g20,,,,,,,,,,,,,OYL260416001,verified,Medicion propia + prueba de montaje 2026-09-12,Nombre Apellido,2026-09-18
+vincular,bmw-serie-3-g20,,,,,,,,,,,,,OYL260416002,pending,Pendiente de prueba de montaje,Nombre Apellido,2026-09-18

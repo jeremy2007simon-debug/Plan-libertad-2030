@@ -20,11 +20,24 @@
 
   var S = { OK: 'ok', PENDING: 'pending', NO: 'no', UNKNOWN: 'unknown' };
 
+  /**
+   * Convierte a número. Acepta la coma decimal del proveedor ("72,5") y
+   * rechaza cualquier cosa que no sea un número limpio: "8.5 J" o "20X90"
+   * devuelven null en vez de un 8.5 o un 20 inventados por parseFloat.
+   */
   function num(value) {
-    if (value === null || value === undefined || value === '') return null;
-    var n = parseFloat(value);
+    if (value === null || value === undefined) return null;
+    if (typeof value === 'number') return isFinite(value) ? value : null;
+    var s = String(value).trim().replace(/\s+/g, '');
+    if (!s) return null;
+    if (s.indexOf(',') !== -1 && s.indexOf('.') === -1) s = s.replace(',', '.');
+    if (!/^-?\d+(\.\d+)?$/.test(s)) return null;
+    var n = parseFloat(s);
     return isFinite(n) ? n : null;
   }
+
+  /** Anchura de llanta plausible en pulgadas. Fuera de esto, el dato es basura. */
+  function widthOk(w) { return w !== null && w >= 4 && w <= 16; }
 
   /** Normaliza "5X112", "5x112 ", "5*112" → "5x112". */
   function pcd(value) {
@@ -74,6 +87,52 @@
     else if (bP < bV - 0.05) reasons.push({ field: 'center_bore', expected: '≥ ' + bV + ' mm', got: bP + ' mm' });
     else if (bP > bV + 0.05) needsSpacers = true;
 
+    /* --- 5. Anchura: solo como control de cordura -------------------------
+       La anchura no descarta por sí sola, pero un valor imposible (el famoso
+       "20X90" del proveedor) no puede darse por bueno: pasa a dato ausente.  */
+    if (p.width !== null && p.width !== undefined && p.width !== '') {
+      if (!widthOk(num(p.width))) missing.push('anchura_producto_anomala');
+    }
+
+    /* --- 6. Año -----------------------------------------------------------
+       Si se consulta un año concreto, debe caer dentro de la generación.
+       Sin year_to, la generación se considera en producción.                 */
+    var yQ = num(v.selectedYear), yF = num(v.yearFrom), yT = num(v.yearTo);
+    if (yQ !== null) {
+      if (yF === null) missing.push('anios_vehiculo');
+      else if (yQ < yF || (yT !== null && yQ > yT)) {
+        reasons.push({ field: 'year', expected: yF + (yT === null ? ' en adelante' : ' a ' + yT), got: yQ });
+      }
+    }
+
+    /* --- 7. Eje trasero (configuración escalonada) ------------------------
+       Si la llanta trasera es distinta, sus medidas se comprueban igual.     */
+    var rE = num(p.rearEt), rD = num(p.rearDiameter), rB = num(p.rearCenterBore);
+    var rearDeclared = (p.rearEt !== null && p.rearEt !== undefined && p.rearEt !== '') ||
+                       (p.rearDiameter !== null && p.rearDiameter !== undefined && p.rearDiameter !== '') ||
+                       (p.rearWidth !== null && p.rearWidth !== undefined && p.rearWidth !== '');
+    if (rearDeclared) {
+      if (p.rearEt !== null && p.rearEt !== undefined && p.rearEt !== '') {
+        if (rE === null) missing.push('et_trasero_producto');
+        else if (vMin !== null && vMax !== null && (rE < vMin || rE > vMax)) {
+          reasons.push({ field: 'rear_et', expected: vMin + ' a ' + vMax, got: rE });
+        }
+      }
+      if (p.rearDiameter !== null && p.rearDiameter !== undefined && p.rearDiameter !== '') {
+        if (rD === null) missing.push('diametro_trasero_producto');
+        else if (dList.length && dList.indexOf(rD) === -1) {
+          reasons.push({ field: 'rear_diameter', expected: dList.join('", "') + '"', got: rD + '"' });
+        }
+      }
+      if (p.rearWidth !== null && p.rearWidth !== undefined && p.rearWidth !== '') {
+        if (!widthOk(num(p.rearWidth))) missing.push('anchura_trasera_anomala');
+      }
+      if (rB !== null && bV !== null) {
+        if (rB < bV - 0.05) reasons.push({ field: 'rear_center_bore', expected: '≥ ' + bV + ' mm', got: rB + ' mm' });
+        else if (rB > bV + 0.05) needsSpacers = true;
+      }
+    }
+
     /* --- Resolución ------------------------------------------------------- */
     // Un rechazo numérico con datos completos es definitivo.
     if (reasons.length) {
@@ -108,6 +167,7 @@
     STATUS: S,
     evaluate: evaluate,
     readProduct: readProduct,
-    normalizeBoltPattern: pcd
+    normalizeBoltPattern: pcd,
+    toNumber: num
   };
 })();
