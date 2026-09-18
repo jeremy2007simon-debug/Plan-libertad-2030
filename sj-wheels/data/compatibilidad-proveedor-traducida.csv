@@ -1,0 +1,284 @@
+sku,handle,pista_original,traduccion_es,fiabilidad_traduccion,estado_traduccion,fragmentos_aplicados,notas,estado_pista,verificacion_tecnica,visible_para_el_cliente
+OYL260416005,oyl260416005-16-volkswagen,VWPassat领驭 2005,Volkswagen Passat Lingyu 2005,media,traducido_mercado_chino,领驭,"领驭: Volkswagen Passat Lingyu, variante exclusiva del mercado chino.",pista_ilegible,pendiente,no
+OYL260416011,oyl260416011-18-mercedes-benz,BENZ C级 威霆,Mercedes-Benz Clase C Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 威霆","威霆: Mercedes Vito, nombre chino 威霆. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416012,oyl260416012-18-volkswagen,VW途岳,Volkswagen Tharu,alta,traducido,途岳,"途岳: Volkswagen Tharu, del mercado chino; en Europa no se vende con ese nombre.",pista_ilegible,pendiente,no
+OYL260416013,oyl260416013-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416014,oyl260416014-18-bmw,BMW 3系前轮 2019,BMW Serie 3 rueda delantera 2019,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系 前轮,前轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416015,oyl260416015-18-bmw,BMW 3系后轮 2019,BMW Serie 3 rueda trasera 2019,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系 后轮,后轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416016,oyl260416016-17-audi,AUDIA4/改装车型,Audi A4/modelos con conversión,media,traducido_mercado_chino,改装车型,改装车型: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416017,oyl260416017-18-vehiculos-europeos,改装,conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416019,oyl260416019-19-vehiculos-europeos,改装,conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416022,oyl260416022-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416024,oyl260416024-20-bmw,BMW *5后轮,BMW *5 rueda trasera,alta,traducido,后轮,后轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416025,oyl260416025-20-bmw,BMW *5后轮,BMW *5 rueda trasera,alta,traducido,后轮,后轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416040,oyl260416040-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416041,oyl260416041-17-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416042,oyl260416042-20-bmw,BMW *5前轮,BMW *5 rueda delantera,alta,traducido,前轮,前轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416043,oyl260416043-20-bmw,BMW *5前轮,BMW *5 rueda delantera,alta,traducido,前轮,前轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416044,oyl260416044-20-bmw,BMW *5后轮,BMW *5 rueda trasera,alta,traducido,后轮,后轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416045,oyl260416045-20-bmw,BMW *5前轮,BMW *5 rueda delantera,alta,traducido,前轮,前轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416046,oyl260416046-20-bmw,BMW *5后轮,BMW *5 rueda trasera,alta,traducido,后轮,后轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416047,oyl260416047-20-bmw,BMW *5前轮,BMW *5 rueda delantera,alta,traducido,前轮,前轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416048,oyl260416048-20-bmw,BMW *5后轮,BMW *5 rueda trasera,alta,traducido,后轮,后轮: Configuración escalonada.,pista_ilegible,pendiente,no
+OYL260416058,oyl260416058-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416081,oyl260416081-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416082,oyl260416082-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416083,oyl260416083-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416084,oyl260416084-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416085,oyl260416085-17-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416086,oyl260416086-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416087,oyl260416087-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416088,oyl260416088-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416104,oyl260416104-18-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416105,oyl260416105-18-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416106,oyl260416106-18-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416107,oyl260416107-18-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416108,oyl260416108-19-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416109,oyl260416109-19-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416110,oyl260416110-20-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416111,oyl260416111-20-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416112,oyl260416112-20-mercedes-benz,BENZ S级新,Mercedes-Benz Clase S generación nueva,media,traducido_mercado_chino,"([A-Z]{1,3})\s*级 新",新: No dice a partir de qué año: hay que acotarlo.,pista_ilegible,pendiente,no
+OYL260416113,oyl260416113-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416114,oyl260416114-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416115,oyl260416115-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416116,oyl260416116-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416118,oyl260416118-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416119,oyl260416119-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416120,oyl260416120-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416121,oyl260416121-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416122,oyl260416122-20-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416123,oyl260416123-20-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416124,oyl260416124-20-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416125,oyl260416125-20-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416127,oyl260416127-18-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416128,oyl260416128-18-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416129,oyl260416129-19-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416130,oyl260416130-19-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416131,oyl260416131-20-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416132,oyl260416132-20-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416133,oyl260416133-21-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416134,oyl260416134-21-mercedes-benz,BENZ S级贴AMG标,Mercedes-Benz Clase S con emblema AMG (no es un AMG de fábrica),media,traducido_mercado_chino,"贴\s*([A-Za-z0-9\-]+)\s*标 ([A-Z]{1,3})\s*级",Insignia colocada: el vehículo no es esa versión de fábrica.,pista_ilegible,pendiente,no
+OYL260416146,oyl260416146-19-mercedes-benz,BENZ S级老 迈巴赫威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫威霆 老","迈巴赫威霆: Mercedes no vende un ""Maybach Vito"": suele ser una Vito con conversión estética Maybach. No identifica un vehículo homologado. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416147,oyl260416147-19-mercedes-benz,BENZ S级老 迈巴赫威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫威霆 老","迈巴赫威霆: Mercedes no vende un ""Maybach Vito"": suele ser una Vito con conversión estética Maybach. No identifica un vehículo homologado. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416148,oyl260416148-20-mercedes-benz,BENZ S级老 迈巴赫威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫威霆 老","迈巴赫威霆: Mercedes no vende un ""Maybach Vito"": suele ser una Vito con conversión estética Maybach. No identifica un vehículo homologado. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416149,oyl260416149-20-mercedes-benz,BENZ S级老 迈巴赫威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫威霆 老","迈巴赫威霆: Mercedes no vende un ""Maybach Vito"": suele ser una Vito con conversión estética Maybach. No identifica un vehículo homologado. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416150,oyl260416150-20-mercedes-benz,BENZ S级老 迈巴赫威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫威霆 老","迈巴赫威霆: Mercedes no vende un ""Maybach Vito"": suele ser una Vito con conversión estética Maybach. No identifica un vehículo homologado. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416151,oyl260416151-19-mercedes-benz,BENZ S级老 迈巴赫 威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 威霆 老","威霆: Mercedes Vito, nombre chino 威霆. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416152,oyl260416152-19-mercedes-benz,BENZ S级老 迈巴赫 威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 威霆 老","威霆: Mercedes Vito, nombre chino 威霆. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416153,oyl260416153-20-mercedes-benz,BENZ S级老 迈巴赫 威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 威霆 老","威霆: Mercedes Vito, nombre chino 威霆. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416154,oyl260416154-20-mercedes-benz,BENZ S级老 迈巴赫 威霆,Mercedes-Benz Clase S generación anterior Maybach Vito,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 威霆 老","威霆: Mercedes Vito, nombre chino 威霆. | 老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea",pista_ilegible,pendiente,no
+OYL260416157,oyl260416157-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416158,oyl260416158-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416159,oyl260416159-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416160,oyl260416160-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416161,oyl260416161-20-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416162,oyl260416162-20-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416163,oyl260416163-20-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416164,oyl260416164-20-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416165,oyl260416165-20-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416166,oyl260416166-20-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416167,oyl260416167-21-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416168,oyl260416168-21-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416169,oyl260416169-21-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416170,oyl260416170-21-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416171,oyl260416171-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416172,oyl260416172-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416173,oyl260416173-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416174,oyl260416174-18-volkswagen,VW全系,Volkswagen toda la gama,media,traducido_mercado_chino,全系,全系: Una gama entera no es una compatibilidad: cada generación lleva medidas distintas.,pista_ilegible,pendiente,no
+OYL260416175,oyl260416175-18-volkswagen,VW全系,Volkswagen toda la gama,media,traducido_mercado_chino,全系,全系: Una gama entera no es una compatibilidad: cada generación lleva medidas distintas.,pista_ilegible,pendiente,no
+OYL260416176,oyl260416176-19-volkswagen,(VWMagotan-2024/2025/改）,(Volkswagen Magotan-2024/2025/modificado ）,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416177,oyl260416177-19-volkswagen,(VWMagotan-2024/2025/改）,(Volkswagen Magotan-2024/2025/modificado ）,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416178,oyl260416178-17-volkswagen,VW全系,Volkswagen toda la gama,media,traducido_mercado_chino,全系,全系: Una gama entera no es una compatibilidad: cada generación lleva medidas distintas.,pista_ilegible,pendiente,no
+OYL260416179,oyl260416179-18-volkswagen,VW全系,Volkswagen toda la gama,media,traducido_mercado_chino,全系,全系: Una gama entera no es una compatibilidad: cada generación lleva medidas distintas.,pista_ilegible,pendiente,no
+OYL260416184,oyl260416184-19-bmw,BMW M5-2021/改装,BMW M5-2021/conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416185,oyl260416185-19-bmw,BMW M5-2021/改装,BMW M5-2021/conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416186,oyl260416186-20-bmw,BMW 改装,BMW conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416187,oyl260416187-20-bmw,BMW 改装,BMW conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416189,oyl260416189-18-audi,AUDIA4/A6/改装车型,Audi A4/A6/modelos con conversión,media,traducido_mercado_chino,改装车型,改装车型: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416194,oyl260416194-19-mercedes-benz,BENZ 迈巴赫改装,Mercedes-Benz conversión Maybach,baja,ambiguo,迈巴赫改装,"迈巴赫改装: Conversión estética de posventa, no un modelo de fábrica.",pista_ilegible,pendiente,no
+OYL260416195,oyl260416195-20-mercedes-benz,BENZ 迈巴赫改装,Mercedes-Benz conversión Maybach,baja,ambiguo,迈巴赫改装,"迈巴赫改装: Conversión estética de posventa, no un modelo de fábrica.",pista_ilegible,pendiente,no
+OYL260416196,oyl260416196-21-mercedes-benz,BENZ 迈巴赫改装,Mercedes-Benz conversión Maybach,baja,ambiguo,迈巴赫改装,"迈巴赫改装: Conversión estética de posventa, no un modelo de fábrica.",pista_ilegible,pendiente,no
+OYL260416197,oyl260416197-21-mercedes-benz,BENZ 迈巴赫改装,Mercedes-Benz conversión Maybach,baja,ambiguo,迈巴赫改装,"迈巴赫改装: Conversión estética de posventa, no un modelo de fábrica.",pista_ilegible,pendiente,no
+OYL260416198,oyl260416198-18-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416199,oyl260416199-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416200,oyl260416200-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416201,oyl260416201-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416202,oyl260416202-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416203,oyl260416203-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416204,oyl260416204-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416205,oyl260416205-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416206,oyl260416206-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416207,oyl260416207-20-bmw,BMW M4/改,BMW M4/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416208,oyl260416208-20-bmw,BMW M4/改,BMW M4/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416210,oyl260416210-19-vehiculos-europeos,改装,conversión de posventa,media,traducido_mercado_chino,改装,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416215,oyl260416215-18-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416216,oyl260416216-18-mercedes-benz,BENZ S级老 迈巴赫(球）,"Mercedes-Benz Clase S generación anterior Maybach ( ""bola"" ）",baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老 球",老: No dice hasta qué año: hay que acotarlo. | 球: Fragmento suelto sin significado claro en este contexto. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416217,oyl260416217-19-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416218,oyl260416218-19-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416219,oyl260416219-20-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416220,oyl260416220-20-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416221,oyl260416221-21-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416222,oyl260416222-20-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416223,oyl260416223-20-mercedes-benz,BENZ S级老 迈巴赫,Mercedes-Benz Clase S generación anterior Maybach,baja,ambiguo,"([A-Z]{1,3})\s*级 迈巴赫 老",老: No dice hasta qué año: hay que acotarlo. | la pista mezcla dos vehículos distintos en la misma línea,pista_ilegible,pendiente,no
+OYL260416224,oyl260416224-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416225,oyl260416225-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416226,oyl260416226-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416227,oyl260416227-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416235,oyl260416235-18-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416236,oyl260416236-18-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416237,oyl260416237-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416238,oyl260416238-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416239,oyl260416239-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416240,oyl260416240-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416241,oyl260416241-19-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416242,oyl260416242-20-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416243,oyl260416243-20-bmw,BMW 5系7系,BMW Serie 5 y Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416244,oyl260416244-18-mercedes-benz,BENZ C级,Mercedes-Benz Clase C,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416245,oyl260416245-18-mercedes-benz,BENZ C级,Mercedes-Benz Clase C,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416246,oyl260416246-18-mercedes-benz,BENZ C级,Mercedes-Benz Clase C,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416249,oyl260416249-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416250,oyl260416250-19-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416251,oyl260416251-20-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416252,oyl260416252-20-mercedes-benz,BENZ E级,Mercedes-Benz Clase E,alta,traducido,"([A-Z]{1,3})\s*级",,pista_ilegible,pendiente,no
+OYL260416253,oyl260416253-17-bmw,BMW M4 鸟巢,"BMW M4 ""nido de pájaro""",baja,ambiguo,鸟巢,"鸟巢: Apodo del dibujo de los radios, no identifica ningún vehículo.",pista_ilegible,pendiente,no
+OYL260416254,oyl260416254-17-bmw,BMW M4 鸟巢,"BMW M4 ""nido de pájaro""",baja,ambiguo,鸟巢,"鸟巢: Apodo del dibujo de los radios, no identifica ningún vehículo.",pista_ilegible,pendiente,no
+OYL260416255,oyl260416255-18-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416256,oyl260416256-18-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416257,oyl260416257-18-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416282,oyl260416282-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416283,oyl260416283-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416284,oyl260416284-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416285,oyl260416285-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416286,oyl260416286-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416287,oyl260416287-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416288,oyl260416288-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416289,oyl260416289-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416290,oyl260416290-20-bmw,BMW M/改,BMW M/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416291,oyl260416291-20-bmw,BMW M/改,BMW M/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416292,oyl260416292-20-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416293,oyl260416293-20-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416294,oyl260416294-18-mercedes-benz,BENZ 迈巴赫,Mercedes-Benz Maybach,alta,traducido,迈巴赫,,pista_ilegible,pendiente,no
+OYL260416295,oyl260416295-19-mercedes-benz,BENZ 迈巴赫,Mercedes-Benz Maybach,alta,traducido,迈巴赫,,pista_ilegible,pendiente,no
+OYL260416296,oyl260416296-19-mercedes-benz,BENZ 迈巴赫,Mercedes-Benz Maybach,alta,traducido,迈巴赫,,pista_ilegible,pendiente,no
+OYL260416297,oyl260416297-18-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416298,oyl260416298-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416299,oyl260416299-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416300,oyl260416300-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416301,oyl260416301-19-bmw,BMW 5系,BMW Serie 5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416306,oyl260416306-18-mercedes-benz,BENZ AMG CLS欧版/改装,Mercedes-Benz AMG CLS versión europea/conversión de posventa,media,traducido_mercado_chino,改装 欧版,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416307,oyl260416307-19-mercedes-benz,BENZ AMG CLS欧版/改装,Mercedes-Benz AMG CLS versión europea/conversión de posventa,media,traducido_mercado_chino,改装 欧版,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416308,oyl260416308-19-mercedes-benz,BENZ AMG CLS欧版/改装,Mercedes-Benz AMG CLS versión europea/conversión de posventa,media,traducido_mercado_chino,改装 欧版,改装: Vehículo modificado: las medidas de fábrica pueden no aplicar.,pista_ilegible,pendiente,no
+OYL260416309,oyl260416309-19-bmw,BMW 1/2/3系,BMW Serie 1/2/3,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416310,oyl260416310-19-bmw,BMW 1/2/3系,BMW Serie 1/2/3,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416311,oyl260416311-19-bmw,BMW 1/2/3系,BMW Serie 1/2/3,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416312,oyl260416312-19-bmw,BMW 1/2/3系,BMW Serie 1/2/3,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416313,oyl260416313-20-bmw,BMW 1/2/3系,BMW Serie 1/2/3,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416314,oyl260416314-17-bmw,BMW 7系,BMW Serie 7,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416315,oyl260416315-18-bmw,BMW M/改,BMW M/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416316,oyl260416316-18-bmw,BMW M/改,BMW M/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416317,oyl260416317-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416318,oyl260416318-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416319,oyl260416319-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416320,oyl260416320-19-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416321,oyl260416321-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416322,oyl260416322-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416323,oyl260416323-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416324,oyl260416324-20-bmw,BMW 3/5系,BMW Serie 3/5,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416325,oyl260416325-20-bmw,BMW X3-2023/改,BMW X3-2023/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416326,oyl260416326-20-bmw,BMW X3-2023/改,BMW X3-2023/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416327,oyl260416327-20-bmw,BMW X3-2023/改,BMW X3-2023/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416328,oyl260416328-20-bmw,BMW X3-2023/改,BMW X3-2023/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416329,oyl260416329-17-volkswagen,VWCC海外版19寸改18/改,Volkswagen CC versión de exportación 19 cambio de diámetro 18/modificado,baja,ambiguo,海外版 寸改 改,海外版: Versión fuera de China; no necesariamente la europea. | 寸改: Indica una llanta de pulgadas distintas a las de fábrica. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416330,oyl260416330-19-volkswagen,VWCC海外版19寸改18/改,Volkswagen CC versión de exportación 19 cambio de diámetro 18/modificado,baja,ambiguo,海外版 寸改 改,海外版: Versión fuera de China; no necesariamente la europea. | 寸改: Indica una llanta de pulgadas distintas a las de fábrica. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416331,oyl260416331-20-volkswagen,VWCC海外版19寸改18/改,Volkswagen CC versión de exportación 19 cambio de diámetro 18/modificado,baja,ambiguo,海外版 寸改 改,海外版: Versión fuera de China; no necesariamente la europea. | 寸改: Indica una llanta de pulgadas distintas a las de fábrica. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416332,oyl260416332-21-mercedes-benz,BENZ EQS AMG-2024/改,Mercedes-Benz EQS AMG-2024/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416333,oyl260416333-21-mercedes-benz,BENZ EQS AMG-2024/改,Mercedes-Benz EQS AMG-2024/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416334,oyl260416334-19-audi,AUDIRS3/改,Audi RS3/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416335,oyl260416335-20-audi,AUDIRS3/改,Audi RS3/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416336,oyl260416336-20-audi,AUDI/改,AUDI/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416337,oyl260416337-20-bmw,BMW 540i/改,BMW 540i/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416338,oyl260416338-20-bmw,BMW 540i/改,BMW 540i/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416339,oyl260416339-19-bmw,BMW M5新能源-2025/改,BMW M5 energías nuevas (híbrido o eléctrico) -2025/modificado,baja,ambiguo,新能源 改,新能源: Categoría administrativa china: abarca híbrido enchufable y eléctrico. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416340,oyl260416340-19-bmw,BMW M5新能源-2025/改,BMW M5 energías nuevas (híbrido o eléctrico) -2025/modificado,baja,ambiguo,新能源 改,新能源: Categoría administrativa china: abarca híbrido enchufable y eléctrico. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416341,oyl260416341-20-bmw,BMW M5新能源-2025/改,BMW M5 energías nuevas (híbrido o eléctrico) -2025/modificado,baja,ambiguo,新能源 改,新能源: Categoría administrativa china: abarca híbrido enchufable y eléctrico. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416342,oyl260416342-20-bmw,BMW M5新能源-2025/改,BMW M5 energías nuevas (híbrido o eléctrico) -2025/modificado,baja,ambiguo,新能源 改,新能源: Categoría administrativa china: abarca híbrido enchufable y eléctrico. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416343,oyl260416343-19-mercedes-benz,BENZ E级/S级/改,Mercedes-Benz Clase E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416344,oyl260416344-20-mercedes-benz,BENZ E级/S级/改,Mercedes-Benz Clase E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416345,oyl260416345-20-mercedes-benz,BENZ E级/S级/改,Mercedes-Benz Clase E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416347,oyl260416347-19-bmw,BMW 740/改,BMW 740/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416349,oyl260416349-17-volkswagen,VW速腾-2023,Volkswagen Sagitar -2023,media,traducido_mercado_chino,速腾,"速腾: Volkswagen Sagitar, del mercado chino; equivale al Jetta.",pista_ilegible,pendiente,no
+OYL260416351,oyl260416351-19-mercedes-benz,BENZ E级海外版/改,Mercedes-Benz Clase E versión de exportación/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 海外版 改",海外版: Versión fuera de China; no necesariamente la europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416352,oyl260416352-20-mercedes-benz,BENZ E级海外版/改,Mercedes-Benz Clase E versión de exportación/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 海外版 改",海外版: Versión fuera de China; no necesariamente la europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416353,oyl260416353-20-mercedes-benz,BENZ E级海外版/改,Mercedes-Benz Clase E versión de exportación/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 海外版 改",海外版: Versión fuera de China; no necesariamente la europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416354,oyl260416354-19-volkswagen,VWCC黄金海岸版,Volkswagen CC edición Gold Coast,baja,ambiguo,黄金海岸版,黄金海岸版: Edición especial del mercado chino sin equivalente conocido en Europa.,pista_ilegible,pendiente,no
+OYL260416355,oyl260416355-19-volkswagen,VW途观L/途观X-2021-2025,Volkswagen Tiguan L/Tiguan X-2021-2025,alta,traducido,途观,途观: Volkswagen Tiguan.,pista_ilegible,pendiente,no
+OYL260416356,oyl260416356-21-volkswagen,VW揽境-2021-2024,Volkswagen Talagon -2021-2024,media,traducido_mercado_chino,揽境,"揽境: Volkswagen Talagon, SUV del mercado chino.",pista_ilegible,pendiente,no
+OYL260416357,oyl260416357-17-mercedes-benz,BENZ AMG C63S/改,Mercedes-Benz AMG C63S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416359,oyl260416359-18-mercedes-benz,BENZ AMG C63S/改,Mercedes-Benz AMG C63S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416360,oyl260416360-19-mercedes-benz,BENZ AMG C63S/改,Mercedes-Benz AMG C63S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416361,oyl260416361-19-mercedes-benz,BENZ AMG C63S/改,Mercedes-Benz AMG C63S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416362,oyl260416362-20-mercedes-benz,BENZ AMG C63S/改,Mercedes-Benz AMG C63S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416367,oyl260416367-20-audi,AUDIA6 Avant 海外版-2025/改）,Audi A6 Avant versión de exportación -2025/modificado ）,baja,ambiguo,海外版 改,海外版: Versión fuera de China; no necesariamente la europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416368,oyl260416368-21-audi,AUDIA6 Avant 海外版-2025/改）,Audi A6 Avant versión de exportación -2025/modificado ）,baja,ambiguo,海外版 改,海外版: Versión fuera de China; no necesariamente la europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416370,oyl260416370-21-audi,AUDISQ5/SQ7-2025/改,Audi SQ5/SQ7-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416371,oyl260416371-22-audi,AUDISQ5/SQ7-2025/改,Audi SQ5/SQ7-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416372,oyl260416372-19-audi,AUDIRS5 Avant-2025/改,Audi RS5 Avant-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416373,oyl260416373-20-audi,AUDIRS5 Avant-2025/改,Audi RS5 Avant-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416374,oyl260416374-20-audi,AUDIRS5 Avant-2025/改,Audi RS5 Avant-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416377,oyl260416377-21-audi,AUDIRS5 Avant-2025/改,Audi RS5 Avant-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416379,oyl260416379-20-audi,AUDIS3-2021-22海外版/改）,Audi S3-2021-22 versión de exportación/modificado ）,baja,ambiguo,海外版 改,海外版: Versión fuera de China; no necesariamente la europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416380,oyl260416380-18-volkswagen,VW途观/高尔夫8 R-line/改,Volkswagen Tiguan/Golf 8 R-line/modificado,baja,ambiguo,高尔夫 途观 改,高尔夫: Volkswagen Golf. | 途观: Volkswagen Tiguan. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416381,oyl260416381-18-volkswagen,VW途观/高尔夫8 R-line/改,Volkswagen Tiguan/Golf 8 R-line/modificado,baja,ambiguo,高尔夫 途观 改,高尔夫: Volkswagen Golf. | 途观: Volkswagen Tiguan. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416382,oyl260416382-19-volkswagen,VW途观/高尔夫8 R-line/改,Volkswagen Tiguan/Golf 8 R-line/modificado,baja,ambiguo,高尔夫 途观 改,高尔夫: Volkswagen Golf. | 途观: Volkswagen Tiguan. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416387,oyl260416387-19-mercedes-benz,BENZ AMG CLE53-2024-25/改,Mercedes-Benz AMG CLE53-2024-25/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416388,oyl260416388-20-mercedes-benz,BENZ AMG CLE53-2024-25/改,Mercedes-Benz AMG CLE53-2024-25/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416389,oyl260416389-20-mercedes-benz,BENZ AMG CLE53-2024-25/改,Mercedes-Benz AMG CLE53-2024-25/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416390,oyl260416390-17-volkswagen,VW高尔夫R海外版-2025/改,Volkswagen Golf R versión de exportación -2025/modificado,baja,ambiguo,海外版 高尔夫 改,海外版: Versión fuera de China; no necesariamente la europea. | 高尔夫: Volkswagen Golf. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416391,oyl260416391-19-mercedes-benz,BENZ AMG GT-2024/E350/改；,Mercedes-Benz AMG GT-2024/E350/modificado ；,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416392,oyl260416392-19-mercedes-benz,BENZ AMG GT-2024/E350/改；,Mercedes-Benz AMG GT-2024/E350/modificado ；,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416393,oyl260416393-20-mercedes-benz,BENZ AMG GT-2024/E350/改；,Mercedes-Benz AMG GT-2024/E350/modificado ；,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416394,oyl260416394-20-mercedes-benz,BENZ E/S/改,Mercedes-Benz E/S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416395,oyl260416395-20-mercedes-benz,BENZ E/S/改,Mercedes-Benz E/S/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416396,oyl260416396-19-audi,AUDIRS3 Sportback-2025/改,Audi RS3 Sportback-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416397,oyl260416397-20-mercedes-benz,BENZ AMG G63-2025/改,Mercedes-Benz AMG G63-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416398,oyl260416398-20-mercedes-benz,BENZ AMG G63-2025/改,Mercedes-Benz AMG G63-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416399,oyl260416399-20-mercedes-benz,BENZ AMG G63-2025/改,Mercedes-Benz AMG G63-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416400,oyl260416400-20-mercedes-benz,BENZ AMG G63-2025/改,Mercedes-Benz AMG G63-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416401,oyl260416401-22-mercedes-benz,BENZ AMG G63-2025/改,Mercedes-Benz AMG G63-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416402,oyl260416402-22-mercedes-benz,BENZ AMG G63-2025/改,Mercedes-Benz AMG G63-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416403,oyl260416403-20-bmw,BMW X3-2025/改,BMW X3-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416404,oyl260416404-20-bmw,BMW X3-2025/改,BMW X3-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416405,oyl260416405-18-volkswagen,VW高尔夫GTI-2025/改,Volkswagen Golf GTI-2025/modificado,baja,ambiguo,高尔夫 改,高尔夫: Volkswagen Golf. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416406,oyl260416406-20-bmw,BMW X4 M40i-2022/改,BMW X4 M40i-2022/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416407,oyl260416407-20-bmw,BMW X4 M40i-2022/改,BMW X4 M40i-2022/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416408,oyl260416408-20-bmw,BMW 530Li-2025(尊享型M运动),BMW 530Li-2025( acabado Zunxiang M deportivo ),media,traducido_mercado_chino,尊享型 运动,尊享型: Nombre de acabado del mercado chino. | 运动: Acabado Sport.,pista_ilegible,pendiente,no
+OYL260416409,oyl260416409-20-bmw,BMW 530Li-2025(尊享型M运动),BMW 530Li-2025( acabado Zunxiang M deportivo ),media,traducido_mercado_chino,尊享型 运动,尊享型: Nombre de acabado del mercado chino. | 运动: Acabado Sport.,pista_ilegible,pendiente,no
+OYL260416410,oyl260416410-20-bmw,BMW 530Li-2025(尊享型M运动),BMW 530Li-2025( acabado Zunxiang M deportivo ),media,traducido_mercado_chino,尊享型 运动,尊享型: Nombre de acabado del mercado chino. | 运动: Acabado Sport.,pista_ilegible,pendiente,no
+OYL260416411,oyl260416411-20-bmw,BMW 530Li-2025(尊享型M运动),BMW 530Li-2025( acabado Zunxiang M deportivo ),media,traducido_mercado_chino,尊享型 运动,尊享型: Nombre de acabado del mercado chino. | 运动: Acabado Sport.,pista_ilegible,pendiente,no
+OYL260416412,oyl260416412-21-bmw,BMW 740Li-2023(领先/尊享豪华版),BMW 740Li-2023( acabado Lingxian/acabado Zunxiang de lujo ),media,traducido_mercado_chino,尊享豪华版 领先,尊享豪华版: Nombre de acabado del mercado chino; no existe como tal en Europa. | 领先: Nombre de acabado del mercado chino.,pista_ilegible,pendiente,no
+OYL260416413,oyl260416413-21-bmw,BMW 740Li-2023(领先/尊享豪华版),BMW 740Li-2023( acabado Lingxian/acabado Zunxiang de lujo ),media,traducido_mercado_chino,尊享豪华版 领先,尊享豪华版: Nombre de acabado del mercado chino; no existe como tal en Europa. | 领先: Nombre de acabado del mercado chino.,pista_ilegible,pendiente,no
+OYL260416414,oyl260416414-21-bmw,BMW 740Li-2023(领先/尊享豪华版),BMW 740Li-2023( acabado Lingxian/acabado Zunxiang de lujo ),media,traducido_mercado_chino,尊享豪华版 领先,尊享豪华版: Nombre de acabado del mercado chino; no existe como tal en Europa. | 领先: Nombre de acabado del mercado chino.,pista_ilegible,pendiente,no
+OYL260416415,oyl260416415-21-bmw,BMW 740Li-2023(领先/尊享豪华版),BMW 740Li-2023( acabado Lingxian/acabado Zunxiang de lujo ),media,traducido_mercado_chino,尊享豪华版 领先,尊享豪华版: Nombre de acabado del mercado chino; no existe como tal en Europa. | 领先: Nombre de acabado del mercado chino.,pista_ilegible,pendiente,no
+OYL260416416,oyl260416416-21-mercedes-benz,BENZ AMG GLE53-2025/改,Mercedes-Benz AMG GLE53-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416417,oyl260416417-21-mercedes-benz,BENZ AMG GLE53-2025/改,Mercedes-Benz AMG GLE53-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416418,oyl260416418-22-mercedes-benz,BENZ AMG GLE53-2025/改,Mercedes-Benz AMG GLE53-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416419,oyl260416419-22-mercedes-benz,BENZ AMG GLE53-2025/改,Mercedes-Benz AMG GLE53-2025/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416421,oyl260416421-19-bmw,BMW 3系-2025,BMW Serie 3 -2025,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416422,oyl260416422-19-bmw,BMW 3系-2025,BMW Serie 3 -2025,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416423,oyl260416423-19-bmw,BMW 3系-2025,BMW Serie 3 -2025,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416424,oyl260416424-19-bmw,BMW 3系-2025,BMW Serie 3 -2025,alta,traducido,([0-9]+(?:/[0-9]+)*)\s*系,,pista_ilegible,pendiente,no
+OYL260416425,oyl260416425-22-mercedes-benz,BENZ AMG GLE Coupe-2024/ 改,Mercedes-Benz AMG GLE Coupe-2024/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416426,oyl260416426-19-mercedes-benz,BENZ E/S级/改,Mercedes-Benz E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416427,oyl260416427-19-mercedes-benz,BENZ E/S级/改,Mercedes-Benz E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416428,oyl260416428-20-mercedes-benz,BENZ E/S级/改,Mercedes-Benz E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416429,oyl260416429-20-mercedes-benz,BENZ E/S级/改,Mercedes-Benz E/Clase S/modificado,baja,ambiguo,"([A-Z]{1,3})\s*级 改",改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416430,oyl260416430-20-bmw,BMW 530Li-2025(尊享型M运动)BMW 520d-2024欧版,BMW 530Li-2025( acabado Zunxiang M deportivo )BMW 520d-2024 versión europea,media,traducido_mercado_chino,尊享型 欧版 运动,尊享型: Nombre de acabado del mercado chino. | 运动: Acabado Sport.,pista_ilegible,pendiente,no
+OYL260416431,oyl260416431-20-bmw,BMW 530Li-2025(尊享型M运动)BMW 520d-2024欧版,BMW 530Li-2025( acabado Zunxiang M deportivo )BMW 520d-2024 versión europea,media,traducido_mercado_chino,尊享型 欧版 运动,尊享型: Nombre de acabado del mercado chino. | 运动: Acabado Sport.,pista_ilegible,pendiente,no
+OYL260416432,oyl260416432-21-mercedes-benz,BENZ GLS/GLE 450豪华版-2025,Mercedes-Benz GLS/GLE 450 versión de lujo -2025,media,traducido_mercado_chino,豪华版,豪华版: Nombre de acabado del mercado chino.,pista_ilegible,pendiente,no
+OYL260416433,oyl260416433-22-mercedes-benz,BENZ GLS/GLE 450豪华版-2025,Mercedes-Benz GLS/GLE 450 versión de lujo -2025,media,traducido_mercado_chino,豪华版,豪华版: Nombre de acabado del mercado chino.,pista_ilegible,pendiente,no
+OYL260416434,oyl260416434-18-volkswagen,VW西雅特Seat Cupra/改,Volkswagen SEAT Seat Cupra/modificado,baja,ambiguo,西雅特 改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416435,oyl260416435-18-volkswagen,VW高尔夫GTI / 改,Volkswagen Golf GTI/modificado,baja,ambiguo,高尔夫 改,高尔夫: Volkswagen Golf. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416436,oyl260416436-18-volkswagen,VW / 改,Volkswagen/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416437,oyl260416437-19-volkswagen,VW / 改,Volkswagen/modificado,baja,ambiguo,改,改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416438,oyl260416438-20-bmw,BMW 540i-2025(加拿大版)/改,BMW 540i-2025( versión canadiense )/modificado,baja,ambiguo,加拿大版 改,加拿大版: Mercado norteamericano: puede llevar medidas distintas a la versión europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no
+OYL260416439,oyl260416439-20-bmw,BMW 540i-2025(加拿大版)/改,BMW 540i-2025( versión canadiense )/modificado,baja,ambiguo,加拿大版 改,加拿大版: Mercado norteamericano: puede llevar medidas distintas a la versión europea. | 改: Por sí solo no dice qué se ha modificado.,pista_ilegible,pendiente,no

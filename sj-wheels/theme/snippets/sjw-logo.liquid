@@ -1,0 +1,81 @@
+{%- comment -%}
+  SJ Wheels — Logotipo.
+
+  Uso:
+    {% render 'sjw-logo', lugar: 'header' %}   → cabecera
+    {% render 'sjw-logo', lugar: 'footer' %}   → pie
+    {% render 'sjw-logo', lugar: 'mobile' %}   → cabecera en móvil
+
+  DOS ARCHIVOS, DOS USOS
+  ----------------------
+  · sjw_logo       El archivo tal cual lo entrega el propietario. Puede ser
+                   cuadrado y llevar su propio fondo. Se pinta dentro de una
+                   placa del mismo color de fondo, para que no parezca un
+                   recorte pegado encima del tema.
+  · sjw_logo_wide  Versión horizontal, idealmente con fondo transparente.
+                   Si existe, manda en la cabecera: un cuadrado en una barra
+                   de 64 px de alto obliga a encogerlo hasta que no se lee.
+
+  Mientras no haya ninguna imagen cargada se pinta el nombre en texto. Nunca
+  se dibujan las letras del logotipo a mano ni se convierte a SVG: si el
+  archivo es un PNG o un JPG, se sirve como tal.
+
+  La proporción se respeta siempre: se fija solo la altura y el ancho se
+  calcula con la proporción real del archivo.
+{%- endcomment -%}
+
+{%- liquid
+  assign lugar = lugar | default: 'header'
+  assign ancho_img = settings.sjw_logo_wide
+  assign cuadrado  = settings.sjw_logo
+  assign img = ancho_img | default: cuadrado
+  assign es_ancho = false
+  if ancho_img != blank
+    assign es_ancho = true
+  endif
+
+  assign alto = settings.sjw_logo_height_desktop | default: 40
+  if lugar == 'mobile'
+    assign alto = settings.sjw_logo_height_mobile | default: 32
+  endif
+  if lugar == 'footer'
+    assign alto = settings.sjw_logo_height_footer | default: 48
+  endif
+
+  assign clases = 'sjw-logo sjw-logo--' | append: lugar
+  if es_ancho == false and img != blank
+    assign clases = clases | append: ' sjw-logo--placa'
+  endif
+
+  assign nombre = shop.name
+  if settings.sjw_logo_alt != blank
+    assign nombre = settings.sjw_logo_alt
+  endif
+-%}
+
+<span class="{{ clases }}" style="--sjw-logo-h: {{ alto }}px;">
+  {%- if img != blank -%}
+    {%- liquid
+      assign ancho_px = alto | times: img.aspect_ratio | round
+      assign ancho_2x = ancho_px | times: 2
+    -%}
+    <img
+      class="sjw-logo__img"
+      src="{{ img | image_url: height: 96 }}"
+      srcset="{{ img | image_url: width: ancho_px }} 1x, {{ img | image_url: width: ancho_2x }} 2x"
+      width="{{ ancho_px }}"
+      height="{{ alto }}"
+      alt="{{ nombre }}"
+      loading="eager"
+      decoding="async"
+    >
+  {%- else -%}
+    {%- comment -%}
+      Reserva tipográfica mientras no hay archivo. No imita el logotipo:
+      es el nombre escrito con la tipografía del tema.
+    {%- endcomment -%}
+    <span class="sjw-logo__texto" aria-label="{{ nombre }}">
+      <span class="sjw-logo__sj">SJ</span><span class="sjw-logo__w">WHEELS</span>
+    </span>
+  {%- endif -%}
+</span>

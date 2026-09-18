@@ -1,0 +1,52 @@
+{%- comment -%}
+  SJ Wheels — Bloque de logotipo.
+
+  Se puede colocar en cualquier sección del tema desde el personalizador
+  (cabecera, pie, portada). El archivo se carga una sola vez en
+  Personalizador → Configuración → SJ Wheels → Logotipo, y todos los bloques
+  lo comparten.
+{%- endcomment -%}
+{%- liquid
+  assign lugar = block.settings.lugar | default: 'header'
+  assign destino = block.settings.enlace
+-%}
+<div class="sjw-root sjw-logo-bloque sjw-logo-bloque--{{ block.settings.alineacion }}" {{ block.shopify_attributes }}>
+  {%- if destino != blank -%}
+    <a class="sjw-logo-bloque__enlace" href="{{ destino }}">
+      {% render 'sjw-logo', lugar: lugar %}
+    </a>
+  {%- else -%}
+    {% render 'sjw-logo', lugar: lugar %}
+  {%- endif -%}
+</div>
+
+<style>
+  .sjw-logo-bloque { display: flex; }
+  .sjw-logo-bloque--izquierda { justify-content: flex-start; }
+  .sjw-logo-bloque--centro    { justify-content: center; }
+  .sjw-logo-bloque--derecha   { justify-content: flex-end; }
+  .sjw-logo-bloque__enlace { display: inline-flex; text-decoration: none; border-radius: var(--sjw-r-md); }
+  .sjw-logo-bloque__enlace:focus-visible { outline: none; box-shadow: var(--sjw-focus-ring); }
+</style>
+
+{% schema %}
+{
+  "name": "Logotipo SJ Wheels",
+  "settings": [
+    { "type": "select", "id": "lugar", "label": "Tamaño",
+      "options": [
+        { "value": "header", "label": "Cabecera (escritorio)" },
+        { "value": "mobile", "label": "Cabecera (móvil)" },
+        { "value": "footer", "label": "Pie" }
+      ], "default": "footer" },
+    { "type": "select", "id": "alineacion", "label": "Alineación",
+      "options": [
+        { "value": "izquierda", "label": "Izquierda" },
+        { "value": "centro", "label": "Centro" },
+        { "value": "derecha", "label": "Derecha" }
+      ], "default": "izquierda" },
+    { "type": "url", "id": "enlace", "label": "Enlace (opcional)" }
+  ],
+  "presets": [{ "name": "Logotipo SJ Wheels" }]
+}
+{% endschema %}

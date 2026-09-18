@@ -69,7 +69,16 @@ for p in list(T.glob('sections/sjw-*.liquid')) + list(T.glob('blocks/sjw-*.liqui
     try:
         sc = json.loads(m.group(1))
         if 'name' not in sc: errors.append(f'{p.name}: schema sin "name"')
-        if len(sc.get('name','')) > 25: warnings.append(f'{p.name}: nombre de schema largo')
+        # Shopify rechaza el archivo ENTERO, en silencio, si el nombre pasa de
+        # 25 caracteres: themeFilesUpsert devuelve userErrors vacío y el archivo
+        # no llega al tema. Nos costó una sección. Por eso es error, no aviso.
+        nombre = sc.get('name', '')
+        if len(nombre) > 25:
+            errors.append(f'{p.name}: el nombre del schema tiene {len(nombre)} caracteres '
+                          f'(máximo 25, Shopify rechaza el archivo en silencio): "{nombre}"')
+        for pr in sc.get('presets', []):
+            if len(pr.get('name', '')) > 25:
+                errors.append(f'{p.name}: el nombre de un preset pasa de 25 caracteres: "{pr.get("name")}"')
     except Exception as e:
         errors.append(f'{p.name}: schema con JSON inválido → {e}')
 ok('schemas válidos')
@@ -147,6 +156,38 @@ for p in sjw:
         if term in low:
             warnings.append(f'{p.name}: revisar el término "{term}" (afirmación sin respaldo o urgencia)')
 ok('sin urgencia falsa')
+
+# --- 15. La guardia de compra cubre TODAS las vías de compra ---------------
+# Se lee la lista VIAS_DE_COMPRA de verdad, no el archivo entero: si se leyera
+# el archivo, un selector mencionado en un comentario daría el visto bueno.
+guard = (T / "assets" / "sjw-buy-guard.js").read_text()
+m = re.search(r'var VIAS_DE_COMPRA = \[(.*?)\]\.join', guard, re.S)
+if not m:
+    errors.append('sjw-buy-guard.js: no se encuentra la lista VIAS_DE_COMPRA')
+    vias = set()
+else:
+    vias = set(re.findall(r"'([^']+)'", m.group(1)))
+for via in ('shopify-accelerated-checkout', '.shopify-payment-button',
+            '[data-shopify="payment-button"]', 'button[name="add"]', '[type="submit"]'):
+    if via not in vias:
+        errors.append(f'sjw-buy-guard.js: la vía de compra "{via}" no está en VIAS_DE_COMPRA')
+if not re.search(r"addEventListener\('click'.{0,80}?,\s*true\s*\)", guard, re.S):
+    errors.append('sjw-buy-guard.js: falta el interceptor de clic en fase de captura')
+ok('la guardia cubre todas las vías de compra')
+
+# --- 16. Ninguna propiedad de línea puede leerse como aprobación -----------
+# El navegador nunca puede escribir una verificación técnica: los textos que
+# viajan al pedido llevan "sin verificar" y la revisión sale siempre pendiente.
+props_es = flat(load_jsonc(T / "locales" / "es.json")).get('sjw.fitment.prop_review', '')
+if 'endiente' not in props_es:
+    errors.append('sjw.fitment.prop_review debe dejar la revisión técnica en pendiente')
+for clave in ('prop_ok', 'prop_pending', 'prop_no', 'prop_unknown'):
+    v = flat(load_jsonc(T / "locales" / "es.json")).get('sjw.fitment.' + clave, '')
+    if 'sin verificar' not in v.lower():
+        errors.append(f'sjw.fitment.{clave} debe dejar claro que el dato no está verificado: "{v}"')
+if "this.props['Revisión técnica'].value = t('prop_review'" not in guard:
+    errors.append('sjw-buy-guard.js: la revisión técnica debe ser constante, no depender del estado')
+ok('ninguna propiedad de línea se lee como aprobación técnica')
 
 print(f'{checks} comprobaciones ejecutadas\n')
 if warnings:

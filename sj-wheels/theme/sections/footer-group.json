@@ -6,8 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
@@ -49,6 +48,14 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "sjw_logo_footer": {
+              "type": "sjw-logo",
+              "settings": {
+                "lugar": "footer",
+                "alineacion": "izquierda",
+                "enlace": "/"
+              }
+            },
             "text_LWt8Pz": {
               "type": "text",
               "settings": {
@@ -99,6 +106,7 @@
             }
           },
           "block_order": [
+            "sjw_logo_footer",
             "text_LWt8Pz",
             "text_f9CFLH"
           ]

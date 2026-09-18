@@ -390,6 +390,30 @@
       "change": "Change vehicle",
       "open": "Select my car"
     },
+    "request": {
+      "eyebrow": "Fitment",
+      "what_we_check": "What we check, and what we never assume",
+      "what_we_check_body": "A person compares your vehicle's measurements against the wheel: bolt pattern, diameter, offset and centre bore, and also width, load rating, brake caliper clearance, the intended tyre, whether the front and rear axles take different sizes, and the fitting conditions. None of those checks is enough on its own, and if any figure contradicts another we confirm nothing.",
+      "name": "Your name",
+      "email": "Your email",
+      "make_model": "Make, model and generation",
+      "make_model_ph": "BMW 3 Series G20",
+      "year": "Year of registration",
+      "engine": "Engine or trim",
+      "engine_ph": "320d xDrive",
+      "current_size": "Size currently fitted",
+      "current_size_ph": "8Jx18 ET34, 225/45 R18",
+      "reference": "Reference of the wheel you want",
+      "reference_ph": "OYL260416001",
+      "reference_help": "You will find it on the product page, in the technical panel.",
+      "message": "Anything else we should know",
+      "message_ph": "Bigger brakes, spacers already fitted, intended use…",
+      "submit": "Send the request",
+      "privacy": "We use these details only to reply to you.",
+      "sent_title": "Request received",
+      "sent_body": "We will reply to the email you gave us. If the vehicle fits, we will add it to the database so the finder recognises it from now on.",
+      "error_title": "Please check these fields"
+    },
     "fitment": {
       "ok": "Fits your vehicle",
       "pending": "Needs technical confirmation",
@@ -401,6 +425,11 @@
       "guard_no_vehicle": "Tell us your vehicle so we can check these wheels fit.",
       "guard_pending": "We will check fitment before dispatch. Confirm your vehicle details to continue.",
       "guard_inquire": "These wheels need technical confirmation. Message us and we will check them with you.",
+      "prop_ok": "Measurements match according to the site (not verified)",
+      "prop_pending": "Needs technical confirmation (not verified)",
+      "prop_no": "The site indicated it does NOT fit (not verified)",
+      "prop_unknown": "No vehicle given (not verified)",
+      "prop_review": "Pending review before dispatch",
       "guard_confirmed": "Vehicle details confirmed by the customer"
     },
     "spec": {

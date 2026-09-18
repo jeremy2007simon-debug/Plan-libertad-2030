@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "solicitud": {
+      "type": "sjw-fitment-request",
+      "settings": {
+        "heading": "Cuéntanos tu vehículo y lo comprobamos",
+        "intro": "Si tu coche no está en el buscador, o una llanta aparece como «Necesita confirmación técnica», escríbenos con estos datos y te respondemos.",
+        "background_color": "#090A0C"
+      }
+    }
+  },
+  "order": [
+    "solicitud"
+  ]
+}

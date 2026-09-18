@@ -1,0 +1,83 @@
+diseno_compartido,productos_en_el_grupo,acabados_distintos_en_el_grupo,acabado_codigo,productos_con_este_acabado,diametros_del_grupo,gravedad,accion,skus
+wheel-design-014,2,2,b,1,18,media,foto propia por acabado,OYL260416015
+wheel-design-014,2,2,s,1,18,media,foto propia por acabado,OYL260416014
+wheel-design-018,2,2,b,1,20,media,foto propia por acabado,OYL260416024
+wheel-design-018,2,2,mg,1,20,media,foto propia por acabado,OYL260416025
+wheel-design-019,8,2,mb,1,"19,20,21,22",media,foto propia por acabado,OYL260416033
+wheel-design-019,8,2,miyb,7,"19,20,21,22",media,foto propia por acabado,OYL260416026 OYL260416027 OYL260416028 OYL260416029 OYL260416030 OYL260416031 OYL260416032
+wheel-design-020,6,3,miyb,4,"19,20,22",alta,foto propia por acabado,OYL260416035 OYL260416036 OYL260416037 OYL260416038
+wheel-design-020,6,3,miyb+r,1,"19,20,22",alta,foto propia por acabado,OYL260416039
+wheel-design-020,6,3,myb,1,"19,20,22",alta,foto propia por acabado,OYL260416034
+wheel-design-023,7,2,mb,4,20,media,foto propia por acabado,OYL260416043 OYL260416044 OYL260416047 OYL260416048
+wheel-design-023,7,2,mg,3,20,media,foto propia por acabado,OYL260416042 OYL260416045 OYL260416046
+wheel-design-024,3,2,b,1,"20,22",media,foto propia por acabado,OYL260416050
+wheel-design-024,3,2,mb,2,"20,22",media,foto propia por acabado,OYL260416049 OYL260416051
+wheel-design-025,3,2,b,2,22,media,foto propia por acabado,OYL260416053 OYL260416054
+wheel-design-025,3,2,mb,1,22,media,foto propia por acabado,OYL260416052
+wheel-design-029,6,2,mb,3,"17,18,19,20",media,foto propia por acabado,OYL260416059 OYL260416061 OYL260416064
+wheel-design-029,6,2,mg,3,"17,18,19,20",media,foto propia por acabado,OYL260416060 OYL260416062 OYL260416063
+wheel-design-030,16,3,b,4,"19,20,22",alta,foto propia por acabado,OYL260416069 OYL260416072 OYL260416077 OYL260416078
+wheel-design-030,16,3,mb,8,"19,20,22",alta,foto propia por acabado,OYL260416065 OYL260416066 OYL260416067 OYL260416068 OYL260416070 OYL260416071 OYL260416075 OYL260416076
+wheel-design-030,16,3,mb+b,4,"19,20,22",alta,foto propia por acabado,OYL260416073 OYL260416074 OYL260416079 OYL260416080
+wheel-design-033,2,2,mg,1,18,media,foto propia por acabado,OYL260416084
+wheel-design-033,2,2,mg-d,1,18,media,foto propia por acabado,OYL260416083
+wheel-design-034,3,2,b,1,"17,19",media,foto propia por acabado,OYL260416087
+wheel-design-034,3,2,mb,2,"17,19",media,foto propia por acabado,OYL260416085 OYL260416086
+wheel-design-036,4,2,mb,2,"19,20",media,foto propia por acabado,OYL260416090 OYL260416092
+wheel-design-036,4,2,mg,2,"19,20",media,foto propia por acabado,OYL260416089 OYL260416091
+wheel-design-038,8,3,(vacio),2,"17,18,19,20,21",alta,foto propia por acabado,OYL260416095 OYL260416098
+wheel-design-038,8,3,mb+l,5,"17,18,19,20,21",alta,foto propia por acabado,OYL260416094 OYL260416096 OYL260416099 OYL260416100 OYL260416101
+wheel-design-038,8,3,ybz,1,"17,18,19,20,21",alta,foto propia por acabado,OYL260416097
+wheel-design-039,2,2,b,1,"20,23",media,foto propia por acabado,OYL260416103
+wheel-design-039,2,2,mb,1,"20,23",media,foto propia por acabado,OYL260416102
+wheel-design-040,9,2,mb,5,"18,19,20",media,foto propia por acabado,OYL260416104 OYL260416105 OYL260416109 OYL260416111 OYL260416112
+wheel-design-040,9,2,mg,4,"18,19,20",media,foto propia por acabado,OYL260416106 OYL260416107 OYL260416108 OYL260416110
+wheel-design-041,13,3,mb,6,"18,19,20",alta,foto propia por acabado,OYL260416115 OYL260416116 OYL260416120 OYL260416121 OYL260416122 OYL260416123
+wheel-design-041,13,3,mbi,5,"18,19,20",alta,foto propia por acabado,OYL260416113 OYL260416114 OYL260416117 OYL260416118 OYL260416119
+wheel-design-041,13,3,mib,2,"18,19,20",alta,foto propia por acabado,OYL260416124 OYL260416125
+wheel-design-044,11,2,mb,10,"19,20,21,22",media,foto propia por acabado,OYL260416135 OYL260416136 OYL260416137 OYL260416138 OYL260416139 OYL260416140 OYL260416141 OYL260416142 OYL260416143 OYL260416144
+wheel-design-044,11,2,mg,1,"19,20,21,22",media,foto propia por acabado,OYL260416145
+wheel-design-045,5,2,cb,1,"19,20",media,foto propia por acabado,OYL260416150
+wheel-design-045,5,2,p,4,"19,20",media,foto propia por acabado,OYL260416146 OYL260416147 OYL260416148 OYL260416149
+wheel-design-050,3,2,b,2,19,media,foto propia por acabado,OYL260416172 OYL260416173
+wheel-design-050,3,2,mb,1,19,media,foto propia por acabado,OYL260416171
+wheel-design-051,4,2,b,2,"18,19",media,foto propia por acabado,OYL260416174 OYL260416176
+wheel-design-051,4,2,s,2,"18,19",media,foto propia por acabado,OYL260416175 OYL260416177
+wheel-design-059,8,2,b,6,"19,20",media,foto propia por acabado,OYL260416201 OYL260416202 OYL260416203 OYL260416204 OYL260416207 OYL260416208
+wheel-design-059,8,2,mb,2,"19,20",media,foto propia por acabado,OYL260416205 OYL260416206
+wheel-design-066,9,2,mb,8,"18,19,20",media,foto propia por acabado,OYL260416235 OYL260416236 OYL260416237 OYL260416238 OYL260416239 OYL260416240 OYL260416242 OYL260416243
+wheel-design-066,9,2,mg,1,"18,19,20",media,foto propia por acabado,OYL260416241
+wheel-design-070,5,2,b,4,"17,18",media,foto propia por acabado,OYL260416254 OYL260416255 OYL260416256 OYL260416257
+wheel-design-070,5,2,mb,1,"17,18",media,foto propia por acabado,OYL260416253
+wheel-design-072,16,5,b,3,"19,20,21,22,23",alta,foto propia por acabado,OYL260416260 OYL260416269 OYL260416273
+wheel-design-072,16,5,b+p,2,"19,20,21,22,23",alta,foto propia por acabado,OYL260416262 OYL260416264
+wheel-design-072,16,5,matte black,4,"19,20,21,22,23",alta,foto propia por acabado,OYL260416261 OYL260416267 OYL260416271 OYL260416275
+wheel-design-072,16,5,mb,4,"19,20,21,22,23",alta,foto propia por acabado,OYL260416263 OYL260416266 OYL260416270 OYL260416274
+wheel-design-072,16,5,mb+x,3,"19,20,21,22,23",alta,foto propia por acabado,OYL260416265 OYL260416268 OYL260416272
+wheel-design-073,6,2,b,3,"18,20,21",media,foto propia por acabado,OYL260416277 OYL260416279 OYL260416281
+wheel-design-073,6,2,mb,3,"18,20,21",media,foto propia por acabado,OYL260416276 OYL260416278 OYL260416280
+wheel-design-074,12,2,b,7,"18,19,20",media,foto propia por acabado,OYL260416283 OYL260416285 OYL260416289 OYL260416290 OYL260416291 OYL260416292 OYL260416293
+wheel-design-074,12,2,mb,5,"18,19,20",media,foto propia por acabado,OYL260416282 OYL260416284 OYL260416286 OYL260416287 OYL260416288
+wheel-design-079,5,2,b,3,"19,20",media,foto propia por acabado,OYL260416309 OYL260416310 OYL260416313
+wheel-design-079,5,2,matte black,2,"19,20",media,foto propia por acabado,OYL260416311 OYL260416312
+wheel-design-081,10,2,b,9,"18,19,20",media,foto propia por acabado,OYL260416315 OYL260416316 OYL260416317 OYL260416318 OYL260416320 OYL260416321 OYL260416322 OYL260416323 OYL260416324
+wheel-design-081,10,2,mb,1,"18,19,20",media,foto propia por acabado,OYL260416319
+wheel-design-082,4,2,b,2,20,media,foto propia por acabado,OYL260416327 OYL260416328
+wheel-design-082,4,2,mg,2,20,media,foto propia por acabado,OYL260416325 OYL260416326
+wheel-design-088,4,2,b,2,"19,20",media,foto propia por acabado,OYL260416340 OYL260416342
+wheel-design-088,4,2,mb,2,"19,20",media,foto propia por acabado,OYL260416339 OYL260416341
+wheel-design-101,3,3,matte black,1,"20,22",alta,foto propia por acabado,OYL260416364
+wheel-design-101,3,3,mbi+c,1,"20,22",alta,foto propia por acabado,OYL260416365
+wheel-design-101,3,3,w,1,"20,22",alta,foto propia por acabado,OYL260416366
+wheel-design-104,5,3,mb,1,"20,21",alta,foto propia por acabado,OYL260416373
+wheel-design-104,5,3,ms,1,"20,21",alta,foto propia por acabado,OYL260416374
+wheel-design-104,5,3,sgmf,3,"20,21",alta,foto propia por acabado,OYL260416375 OYL260416376 OYL260416378
+wheel-design-106,3,2,mb,2,"18,19",media,foto propia por acabado,OYL260416380 OYL260416382
+wheel-design-106,3,2,smh,1,"18,19",media,foto propia por acabado,OYL260416381
+wheel-design-113,6,3,matt black machined,1,"20,22",alta,foto propia por acabado,OYL260416402
+wheel-design-113,6,3,mb,3,"20,22",alta,foto propia por acabado,OYL260416397 OYL260416398 OYL260416401
+wheel-design-113,6,3,mg,2,"20,22",alta,foto propia por acabado,OYL260416399 OYL260416400
+wheel-design-117,4,2,mb,2,20,media,foto propia por acabado,OYL260416409 OYL260416411
+wheel-design-117,4,2,mg,2,20,media,foto propia por acabado,OYL260416408 OYL260416410
+wheel-design-118,4,2,gmf+chromeinsert,2,21,media,foto propia por acabado,OYL260416414 OYL260416415
+wheel-design-118,4,2,mb,2,21,media,foto propia por acabado,OYL260416412 OYL260416413

@@ -15,6 +15,15 @@
     guard_inquire:   {{ 'sjw.fitment.guard_inquire'    | t | json }},
     guard_confirmed: {{ 'sjw.fitment.guard_confirmed'  | t | json }},
 
+    // Textos que viajan al pedido como propiedades de línea. Llevan
+    // "sin verificar" incorporado a propósito: lo que escribe el navegador
+    // nunca puede leerse como una aprobación técnica.
+    prop_ok:         {{ 'sjw.fitment.prop_ok'      | t | json }},
+    prop_pending:    {{ 'sjw.fitment.prop_pending' | t | json }},
+    prop_no:         {{ 'sjw.fitment.prop_no'      | t | json }},
+    prop_unknown:    {{ 'sjw.fitment.prop_unknown' | t | json }},
+    prop_review:     {{ 'sjw.fitment.prop_review'  | t | json }},
+
     no_vehicle:      {{ 'sjw.selector.none'   | t | json }},
     vehicle_saved:   {{ 'sjw.selector.saved'  | t | json }},
     step_make:       {{ 'sjw.selector.make'       | t | json }},

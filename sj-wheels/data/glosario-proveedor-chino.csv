@@ -1,0 +1,42 @@
+fragmento_original,traduccion_es,fiabilidad,nota
+迈巴赫威霆,Maybach Vito,baja,"Mercedes no vende un ""Maybach Vito"": suele ser una Vito con conversión estética Maybach. No identifica un vehículo homologado."
+迈巴赫改装,conversión Maybach,baja,"Conversión estética de posventa, no un modelo de fábrica."
+改装车型,modelos con conversión,media,Vehículo modificado: las medidas de fábrica pueden no aplicar.
+尊享豪华版,acabado Zunxiang de lujo,media,Nombre de acabado del mercado chino; no existe como tal en Europa.
+黄金海岸版,edición Gold Coast,baja,Edición especial del mercado chino sin equivalente conocido en Europa.
+加拿大版,versión canadiense,alta,Mercado norteamericano: puede llevar medidas distintas a la versión europea.
+级海外版,Clase — versión de exportación,media,Versión fuera de China; no necesariamente la europea.
+新能源,energías nuevas (híbrido o eléctrico),media,Categoría administrativa china: abarca híbrido enchufable y eléctrico.
+尊享型,acabado Zunxiang,media,Nombre de acabado del mercado chino.
+迈巴赫,Maybach,alta,
+系前轮,Serie — rueda delantera,alta,Configuración escalonada: la medida es solo del eje delantero.
+系后轮,Serie — rueda trasera,alta,Configuración escalonada: la medida es solo del eje trasero.
+海外版,versión de exportación,media,Versión fuera de China; no necesariamente la europea.
+西雅特,SEAT,alta,
+高尔夫,Golf,alta,Volkswagen Golf.
+级贴,Clase — con emblema,alta,
+改装,conversión de posventa,media,Vehículo modificado: las medidas de fábrica pueden no aplicar.
+豪华版,versión de lujo,media,Nombre de acabado del mercado chino.
+级老,Clase — generación anterior,alta,No dice qué años abarca: hay que acotarlos.
+级新,Clase — generación nueva,alta,No dice qué años abarca: hay que acotarlos.
+全系,toda la gama,media,Una gama entera no es una compatibilidad: cada generación lleva medidas distintas.
+前轮,rueda delantera,alta,Configuración escalonada.
+后轮,rueda trasera,alta,Configuración escalonada.
+威霆,Vito,alta,"Mercedes Vito, nombre chino 威霆."
+途观,Tiguan,alta,Volkswagen Tiguan.
+途岳,Tharu,alta,"Volkswagen Tharu, del mercado chino; en Europa no se vende con ese nombre."
+领驭,Lingyu,media,"Volkswagen Passat Lingyu, variante exclusiva del mercado chino."
+速腾,Sagitar,media,"Volkswagen Sagitar, del mercado chino; equivale al Jetta."
+揽境,Talagon,media,"Volkswagen Talagon, SUV del mercado chino."
+欧版,versión europea,alta,
+领先,acabado Lingxian,media,Nombre de acabado del mercado chino.
+运动,deportivo,alta,Acabado Sport.
+寸改,cambio de diámetro,media,Indica una llanta de pulgadas distintas a las de fábrica.
+鸟巢,"""nido de pájaro""",baja,"Apodo del dibujo de los radios, no identifica ningún vehículo."
+改,modificado,baja,Por sí solo no dice qué se ha modificado.
+级,Clase,alta,Mercedes-Benz: E级 = Clase E.
+系,Serie,alta,BMW: 5系 = Serie 5.
+标,emblema,alta,"Suele ir con 贴: insignia colocada, no un modelo de fábrica."
+新,generación nueva,media,No dice a partir de qué año: hay que acotarlo.
+老,generación anterior,media,No dice hasta qué año: hay que acotarlo.
+球,"""bola""",baja,Fragmento suelto sin significado claro en este contexto.

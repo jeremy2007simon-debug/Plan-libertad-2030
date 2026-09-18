@@ -378,6 +378,30 @@
       "change": "Cambiar vehículo",
       "open": "Seleccionar mi coche"
     },
+    "request": {
+      "eyebrow": "Compatibilidad",
+      "what_we_check": "Qué revisamos, y qué no damos por hecho",
+      "what_we_check_body": "Una persona compara las medidas de tu vehículo con las de la llanta: PCD, diámetro, ET y buje central, y además anchura, carga soportada, espacio para la pinza de freno, neumático previsto, si el eje delantero y el trasero llevan medidas distintas y las condiciones de montaje. Ninguna de esas comprobaciones basta por sí sola, y si algún dato se contradice no confirmamos nada.",
+      "name": "Tu nombre",
+      "email": "Tu correo",
+      "make_model": "Marca, modelo y generación",
+      "make_model_ph": "BMW Serie 3 G20",
+      "year": "Año de matriculación",
+      "engine": "Motorización o versión",
+      "engine_ph": "320d xDrive",
+      "current_size": "Medida que llevas montada ahora",
+      "current_size_ph": "8Jx18 ET34, 225/45 R18",
+      "reference": "Referencia de la llanta que te interesa",
+      "reference_ph": "OYL260416001",
+      "reference_help": "La encuentras en la ficha del producto, en la ficha técnica.",
+      "message": "Cualquier otra cosa que debamos saber",
+      "message_ph": "Frenos de mayor tamaño, separadores ya montados, uso previsto…",
+      "submit": "Enviar la solicitud",
+      "privacy": "Usamos estos datos solo para responderte.",
+      "sent_title": "Solicitud recibida",
+      "sent_body": "Te responderemos al correo que nos has dejado. Si el vehículo encaja, lo añadiremos a la base para que el buscador lo reconozca en adelante.",
+      "error_title": "Revisa estos campos"
+    },
     "fitment": {
       "ok": "Compatible con tu vehículo",
       "pending": "Necesita confirmación técnica",
@@ -389,6 +413,11 @@
       "guard_no_vehicle": "Indica tu vehículo para poder comprobar que estas llantas le encajan.",
       "guard_pending": "Revisaremos la compatibilidad antes del envío. Confirma los datos de tu vehículo para continuar.",
       "guard_inquire": "Estas llantas necesitan confirmación técnica. Escríbenos y las revisamos contigo.",
+      "prop_ok": "Las medidas encajan según la web (sin verificar)",
+      "prop_pending": "Necesita confirmación técnica (sin verificar)",
+      "prop_no": "La web indicaba que NO encaja (sin verificar)",
+      "prop_unknown": "Sin vehículo indicado (sin verificar)",
+      "prop_review": "Pendiente de revisión antes del envío",
       "guard_confirmed": "Datos del vehículo confirmados por el cliente"
     },
     "spec": {

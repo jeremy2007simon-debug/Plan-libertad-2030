@@ -324,3 +324,34 @@
 .sjw-stack-2 { display: grid; gap: var(--sjw-s2); }
 .sjw-row     { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sjw-s3); }
 .sjw-divider { height: 1px; background: var(--sjw-metal); border: 0; margin: 0; }
+
+/* --- Logotipo ------------------------------------------------------------
+   La altura manda y el ancho se deduce de la proporción real del archivo:
+   así el logotipo nunca se deforma, venga en el formato que venga.          */
+.sjw-logo { display: inline-flex; align-items: center; line-height: 0; }
+.sjw-logo__img {
+  display: block;
+  height: var(--sjw-logo-h);
+  width: auto;                /* la proporción manda sobre cualquier ancho */
+  max-width: 100%;
+  object-fit: contain;
+}
+/* Un archivo con su propio fondo se presenta como placa, con el mismo radio
+   y un margen medido. Sin esto, un cuadrado oscuro sobre fondo oscuro parece
+   un recorte mal pegado, y con margen de sobra ocupa media cabecera. */
+.sjw-logo--placa .sjw-logo__img {
+  border-radius: var(--sjw-r-md);
+  background: var(--sjw-carbon);
+}
+.sjw-logo--header { max-width: min(220px, 45vw); }
+.sjw-logo--mobile { max-width: min(160px, 52vw); }
+.sjw-logo--footer { max-width: min(260px, 70vw); }
+
+.sjw-logo__texto {
+  display: inline-flex; align-items: baseline; gap: .35em;
+  font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  font-size: calc(var(--sjw-logo-h) * .5);
+  color: var(--sjw-warm-white);
+}
+.sjw-logo__sj { color: var(--sjw-orange); }
+.sjw-logo__w  { font-weight: 600; letter-spacing: .22em; }

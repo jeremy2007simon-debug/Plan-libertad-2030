@@ -2122,6 +2122,63 @@
     "settings": [
       {
         "type": "header",
+        "content": "Logotipo"
+      },
+      {
+        "type": "paragraph",
+        "content": "El archivo se sirve tal cual: si es PNG o JPG no se convierte a vectorial. La altura manda y el ancho se calcula con la proporción real, así que el logotipo nunca se deforma."
+      },
+      {
+        "type": "image_picker",
+        "id": "sjw_logo",
+        "label": "Logotipo (archivo original)",
+        "info": "Sirve aunque sea cuadrado y traiga su propio fondo. En la cabecera se pinta como placa."
+      },
+      {
+        "type": "image_picker",
+        "id": "sjw_logo_wide",
+        "label": "Logotipo horizontal (recomendado para la cabecera)",
+        "info": "Versión apaisada, idealmente con fondo transparente. Si existe, se usa en la cabecera en lugar del archivo cuadrado."
+      },
+      {
+        "type": "text",
+        "id": "sjw_logo_alt",
+        "label": "Texto alternativo",
+        "default": "SJ Wheels",
+        "info": "Lo que lee un lector de pantalla. Solo el nombre, sin describir el dibujo."
+      },
+      {
+        "type": "range",
+        "id": "sjw_logo_height_desktop",
+        "label": "Altura en la cabecera (escritorio)",
+        "min": 24,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "sjw_logo_height_mobile",
+        "label": "Altura en la cabecera (móvil)",
+        "min": 20,
+        "max": 56,
+        "step": 2,
+        "unit": "px",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "sjw_logo_height_footer",
+        "label": "Altura en el pie",
+        "min": 24,
+        "max": 96,
+        "step": 2,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "header",
         "content": "Contacto"
       },
       {
