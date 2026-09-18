@@ -1,0 +1,6 @@
+
+# Banco de pruebas visual: se regenera con banco-visual.py
+sj-wheels/tests/visual/harness.html
+sj-wheels/tests/visual/captura-*.png
+sj-wheels/tests/visual/vista-*.png
+sj-wheels/tests/visual/informe.json

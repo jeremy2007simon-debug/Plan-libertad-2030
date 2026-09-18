@@ -18,8 +18,8 @@
 </section>
 
 <style>
-  .sjw-cta { display: grid; gap: var(--sjw-s5); align-items: center; grid-template-columns: 1fr; }
-  @media (min-width: 900px) { .sjw-cta { grid-template-columns: 1fr auto; gap: var(--sjw-s7); } }
+  .sjw-cta { display: grid; gap: var(--sjw-s5); align-items: center; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 900px) { .sjw-cta { grid-template-columns: minmax(0, 1fr) auto; gap: var(--sjw-s7); } }
   .sjw-cta__text { display: grid; gap: var(--sjw-s3); }
   .sjw-cta__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
 </style>

@@ -65,8 +65,8 @@
 {%- endif -%}
 
 <style>
-  .sjw-faq { display: grid; gap: var(--sjw-s5); grid-template-columns: 1fr; align-items: start; }
-  @media (min-width: 900px) { .sjw-faq { grid-template-columns: 22rem 1fr; gap: var(--sjw-s7); } }
+  .sjw-faq { display: grid; gap: var(--sjw-s5); grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 900px) { .sjw-faq { grid-template-columns: 22rem minmax(0, 1fr); gap: var(--sjw-s7); } }
   .sjw-faq .sjw-lead { margin-top: var(--sjw-s2); }
 </style>
 

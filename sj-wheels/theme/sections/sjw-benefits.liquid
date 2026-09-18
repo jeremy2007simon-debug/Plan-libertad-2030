@@ -19,9 +19,9 @@
 <style>
   .sjw-benefits__title { margin-bottom: var(--sjw-s5); }
   .sjw-benefits { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
-                  grid-template-columns: 1fr; }
-  @media (min-width: 640px)  { .sjw-benefits { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .sjw-benefits { grid-template-columns: repeat(4, 1fr); } }
+                  grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px)  { .sjw-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .sjw-benefits { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .sjw-benefit { display: grid; gap: var(--sjw-s2); padding: var(--sjw-s5); align-content: start; }
   .sjw-benefit__num { font-size: .75rem; font-weight: 700; letter-spacing: var(--sjw-tracking-eyebrow);
                       color: var(--sjw-orange); }

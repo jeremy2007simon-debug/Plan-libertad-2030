@@ -96,9 +96,9 @@
   .sjw-selector__lead { max-width: 46rem; }
   .sjw-selector__widget { display: block; }
   .sjw-selector__form { display: grid; gap: var(--sjw-s4); }
-  .sjw-selector__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: 1fr; }
-  @media (min-width: 640px)  { .sjw-selector__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .sjw-selector__grid { grid-template-columns: repeat(3, 1fr); } }
+  .sjw-selector__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px)  { .sjw-selector__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .sjw-selector__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .sjw-selector__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
   .sjw-selector__actions .sjw-btn--primary { flex: 1 1 16rem; }
   .sjw-selector__disclaimer { margin: 0; }

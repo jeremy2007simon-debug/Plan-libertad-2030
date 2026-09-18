@@ -5,6 +5,19 @@
 
 .sjw-root { color: var(--sjw-warm-white); }
 
+/* El cálculo de anchos no puede depender del reset de Horizon: si algún día
+   cambia, todos los contenedores desbordarían. Se fija aquí, solo para lo
+   nuestro, sin tocar ningún elemento del tema base. */
+[class*="sjw-"],
+[class*="sjw-"]::before,
+[class*="sjw-"]::after { box-sizing: border-box; }
+
+/* Un hijo de grid o de flex no se encoge por debajo de su contenido salvo que
+   se le diga. Sin esto, un nombre de colección largo ensancha la columna y
+   saca la página del viewport en móvil. Va antes que todo lo demás para que
+   cualquier min-width posterior (botones, campos) mande sobre esta regla. */
+[class*="sjw-"] { min-width: 0; }
+
 /* --- Contenedor ---------------------------------------------------------- */
 .sjw-container {
   width: 100%;
@@ -20,7 +33,7 @@
 
 /* --- Tipografía ---------------------------------------------------------- */
 .sjw-eyebrow {
-  font-size: .6875rem;
+  font-size: .75rem;
   font-weight: 600;
   letter-spacing: var(--sjw-tracking-eyebrow);
   text-transform: uppercase;
@@ -76,8 +89,13 @@
               transform var(--sjw-dur-fast) var(--sjw-ease);
 }
 .sjw-btn:active { transform: translateY(1px); }
+/* Inactivo: superficie neutra y texto atenuado, no un 45 % de opacidad.
+   Con opacidad la etiqueta se fundía con el fondo y no se leía. */
 .sjw-btn[disabled], .sjw-btn[aria-disabled="true"] {
-  opacity: .45; cursor: not-allowed; transform: none;
+  --_bg: var(--sjw-metal-soft);
+  --_fg: var(--sjw-text-faint);
+  --_bd: var(--sjw-metal);
+  cursor: not-allowed; transform: none;
 }
 
 .sjw-btn--primary   { --_bg: var(--sjw-orange); --_fg: #0B0B0C; --_bd: var(--sjw-orange); }
@@ -94,7 +112,9 @@
 .sjw-btn--whatsapp:hover:not([disabled]) { --_bg: #24A35F; --_bd: #24A35F; }
 
 .sjw-btn--block { width: 100%; }
-.sjw-btn--sm { min-height: 38px; padding: 0 var(--sjw-s3); font-size: .8125rem; border-radius: var(--sjw-r-md); }
+.sjw-btn--sm { min-height: 38px; min-width: 44px; padding: 0 var(--sjw-s3); font-size: .8125rem; border-radius: var(--sjw-r-md); }
+/* En pantalla táctil ningún control baja de 44 px: es el mínimo de WCAG 2.5.8. */
+@media (pointer: coarse) { .sjw-btn--sm { min-height: 44px; } }
 
 .sjw-btn-icon {
   display: inline-flex; align-items: center; justify-content: center;
@@ -209,7 +229,7 @@
 
 /* --- Tabla de especificaciones ------------------------------------------- */
 .sjw-specs { display: grid; gap: 1px; background: var(--sjw-metal); border: var(--sjw-border); border-radius: var(--sjw-r-md); overflow: hidden; }
-@media (min-width: 600px) { .sjw-specs { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 600px) { .sjw-specs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 .sjw-spec {
   display: flex; align-items: baseline; justify-content: space-between; gap: var(--sjw-s3);
   padding: var(--sjw-s3) var(--sjw-s4);

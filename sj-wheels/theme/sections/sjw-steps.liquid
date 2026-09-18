@@ -19,8 +19,8 @@
 
 <style>
   .sjw-steps { display: grid; gap: var(--sjw-s4); margin: var(--sjw-s5) 0 0; padding: 0; list-style: none;
-               counter-reset: sjw-step; grid-template-columns: 1fr; }
-  @media (min-width: 800px) { .sjw-steps { grid-template-columns: repeat(3, 1fr); gap: var(--sjw-s5); } }
+               counter-reset: sjw-step; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 800px) { .sjw-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sjw-s5); } }
   .sjw-step { display: flex; gap: var(--sjw-s4); align-items: flex-start;
               padding-top: var(--sjw-s4); border-top: 2px solid var(--sjw-metal); }
   .sjw-step__n { flex: none; width: 2.25rem; height: 2.25rem; border-radius: 50%;
