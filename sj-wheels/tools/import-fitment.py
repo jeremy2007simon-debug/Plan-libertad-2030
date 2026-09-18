@@ -184,21 +184,38 @@ def valida(path, inf):
 
 
 def mutaciones(inf):
-    """Genera las mutaciones GraphQL. No se envian: se escriben en un archivo."""
+    """Genera las mutaciones GraphQL. No se envian: se escriben en un archivo.
+
+    Las claves son las de la definicion real del metaobjeto `vehicle` en la
+    tienda (make, model, generation, year_start, year_end, bolt_pattern,
+    center_bore, allowed_diameters, et_min, et_max, notes, verification_status).
+    El metaobjeto no tiene campos para anchura ni para autor de la verificacion:
+    esos datos se vuelcan en `notes` para que no se pierdan.
+    """
     partes = []
     for n, v in enumerate(inf.vehiculos):
+        notas = []
+        if v['anchura_min'] is not None or v['anchura_max'] is not None:
+            notas.append('Anchuras admitidas: %s a %s pulgadas' % (
+                '?' if v['anchura_min'] is None else f'{v["anchura_min"]:g}',
+                '?' if v['anchura_max'] is None else f'{v["anchura_max"]:g}'))
+        if v['evidencia']:
+            notas.append('Evidencia: ' + v['evidencia'])
+        if v['verificado_por']:
+            notas.append('Verificado por: ' + v['verificado_por'])
+        if v['fecha_verificacion']:
+            notas.append('Fecha de verificacion: ' + v['fecha_verificacion'])
+
         campos = [
             ('make', v['marca']), ('model', v['modelo']), ('generation', v['generacion']),
-            ('year_from', str(v['anio_desde'])), ('year_to', str(v['anio_hasta'] or '')),
+            ('year_start', str(v['anio_desde'])),
+            ('year_end', '' if v['anio_hasta'] is None else str(v['anio_hasta'])),
             ('bolt_pattern', v['pcd']), ('center_bore', f'{v["buje_mm"]:g}'),
-            ('offset_min', '' if v['et_min'] is None else f'{v["et_min"]:g}'),
-            ('offset_max', '' if v['et_max'] is None else f'{v["et_max"]:g}'),
-            ('diameters', json.dumps([str(d) for d in v['diametros']])),
-            ('width_min', '' if v['anchura_min'] is None else f'{v["anchura_min"]:g}'),
-            ('width_max', '' if v['anchura_max'] is None else f'{v["anchura_max"]:g}'),
-            ('verification', v['verificacion']),
-            ('source', v['evidencia']), ('verified_by', v['verificado_por']),
-            ('verified_at', v['fecha_verificacion']),
+            ('allowed_diameters', json.dumps(v['diametros'], separators=(',', ':'))),
+            ('et_min', '' if v['et_min'] is None else f'{v["et_min"]:g}'),
+            ('et_max', '' if v['et_max'] is None else f'{v["et_max"]:g}'),
+            ('verification_status', v['verificacion']),
+            ('notes', '\n'.join(notas)),
         ]
         fs = ','.join('{key:%s,value:%s}' % (json.dumps(k), json.dumps(val))
                       for k, val in campos if val != '')

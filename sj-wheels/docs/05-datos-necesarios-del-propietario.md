@@ -126,22 +126,28 @@ queda de forma permanente en «Necesita confirmación técnica». Es el estado s
 no es lo que se quiere vender.
 
 ### 19. Base de vehículos reales 🟠
-Formato: un metaobject `vehicle` por generación de modelo. Columnas:
+Formato: una fila `crear_vehiculo` por generación de modelo en
+`sj-wheels/data/vehicle-fitment-import-template.csv`. El importador traduce cada columna al
+campo real del metaobjeto `vehicle` que ya existe en la tienda:
 
-| Campo | Ejemplo | Obligatorio |
-|---|---|---|
-| `make` | BMW | Sí |
-| `model` | Serie 3 | Sí |
-| `generation` | G20 | Sí |
-| `year_from` | 2019 | Sí |
-| `year_to` | 2025 (vacío = en producción) | No |
-| `bolt_pattern` | 5x112 | Sí |
-| `center_bore` | 66.6 | Sí |
-| `offset_min` | 30 | Sí |
-| `offset_max` | 45 | Sí |
-| `diameters` | 17,18,19,20 | Sí |
-| `verification` | `verified` / `pending` | Sí |
-| `source` | quién lo confirmó y cuándo | Sí |
+| Columna del CSV | Campo del metaobjeto | Ejemplo | Obligatorio |
+|---|---|---|---|
+| `marca` | `make` | BMW | Sí |
+| `modelo` | `model` | Serie 3 | Sí |
+| `generacion` | `generation` | G20 | Sí |
+| `anio_desde` | `year_start` | 2019 | Sí |
+| `anio_hasta` | `year_end` | 2025 (vacío = en producción) | No |
+| `pcd` | `bolt_pattern` | 5x112 | Sí |
+| `buje_mm` | `center_bore` | 66.6 | Sí |
+| `et_min` | `et_min` | 30 | Recomendado |
+| `et_max` | `et_max` | 45 | Recomendado |
+| `diametros` | `allowed_diameters` | 17,18,19,20 | Sí |
+| `verificacion` | `verification_status` | `verified` / `pending` | Sí |
+| `anchura_min` / `anchura_max` | van a `notes` | 7.5 / 9.0 | No |
+| `evidencia`, `verificado_por`, `fecha_verificacion` | van a `notes` | quién lo confirmó y con qué | Sí para `verified` |
+
+Sin `et_min` y `et_max` el motor no puede descartar una llanta por desplazamiento: quedará
+siempre en «Necesita confirmación técnica».
 
 En `sj-wheels/data/cola-vehiculos-prioritaria.csv` está la **cola de los 20 grupos de vehículo
 prioritarios**, ordenada por cuántos productos del catálogo desbloquea cada uno.
