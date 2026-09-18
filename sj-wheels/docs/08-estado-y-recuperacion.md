@@ -34,7 +34,7 @@ así que no basta con mirar la respuesta de la mutación.
 |---|---|
 | Rama | `claude/focused-tesla-q9yurp` |
 | Base | `ca9373e` (último commit de `main` antes de empezar) |
-| Commits propios | 9 |
+| Commits propios | 11 |
 | Árbol de trabajo | limpio tras cada commit |
 | Historial ajeno | **sin reescribir**. No hay rebase, ni amend, ni force-push |
 | Trabajo ajeno | intacto: nada fuera de `sj-wheels/` y `.gitignore` se ha modificado |
@@ -54,6 +54,8 @@ así que no basta con mirar la respuesta de la mutación.
 | 7 | `7583fa3` | Recupera las 76 fichas cuya imagen no llegó a importarse | Estabilización | `data/auditoria-imagenes.csv`, `data/prioridad-fotos.csv`, `data/plantilla-imagenes-nuevas.csv`, `docs/06-imagenes.md` | 2026-09-18 19:53 | Sí | El commit sí. **Las 76 imágenes subidas a Shopify, no**: se quitan desde el admin, producto a producto |
 | 8 | `6f7da35` | Amplía el motor y añade las herramientas de datos reales | Estabilización | `theme/assets/sjw-fitment.js`, `tools/import-fitment.py`, `data/compatibilidad-proveedor-normalizada.csv`, `data/cola-vehiculos-*.csv`, `docs/05-…` | 2026-09-18 20:01 | Sí | Sí. Solo afecta al tema de desarrollo |
 | 9 | `dd52149` | Corrige 8 defectos de maquetación y accesibilidad | Estabilización | 9 archivos de `theme/`, `tests/visual/`, `docs/07-…`, `.gitignore` | 2026-09-18 20:35 | Sí | Sí. Solo afecta al tema de desarrollo |
+| 10 | `84e52ed` | Registra el estado verificado, el historial y el punto de restauración | Estabilización | `docs/08-…`, `docs/05-…`, `tools/import-fitment.py` | 2026-09-18 20:40 | Sí | Sí. Documentación y una corrección del importador |
+| 11 | *(este)* | Entrega de la fase de estabilización | Estabilización | `docs/09-entrega-estabilizacion.md` | 2026-09-18 | Sí | Sí. Solo documentación |
 
 Ningún commit toca archivos fuera de `sj-wheels/` salvo `.gitignore`, que es nuevo.
 
