@@ -1,0 +1,28 @@
+{%- comment -%}
+  Puente entre los archivos de traducción del tema y el JavaScript.
+  Ningún texto importante vive dentro del JS: todo sale de locales/*.json.
+{%- endcomment -%}
+<script>
+  window.SJWStrings = {
+    fitment_ok:      {{ 'sjw.fitment.ok'      | t | json }},
+    fitment_pending: {{ 'sjw.fitment.pending' | t | json }},
+    fitment_no:      {{ 'sjw.fitment.no'      | t | json }},
+    fitment_unknown: {{ 'sjw.fitment.select_vehicle' | t | json }},
+    no_vehicle:      {{ 'sjw.selector.none'   | t | json }},
+    vehicle_saved:   {{ 'sjw.selector.saved'  | t | json }},
+    step_make:       {{ 'sjw.selector.make'       | t | json }},
+    step_model:      {{ 'sjw.selector.model'      | t | json }},
+    step_generation: {{ 'sjw.selector.generation' | t | json }},
+    step_year:       {{ 'sjw.selector.year'       | t | json }},
+    step_engine:     {{ 'sjw.selector.engine'     | t | json }},
+    needs_spacers:   {{ 'sjw.fitment.needs_spacers' | t | json }},
+    wa_product:      {{ 'sjw.whatsapp.product'    | t | json }},
+    wa_no_results:   {{ 'sjw.whatsapp.no_results' | t | json }},
+    wa_cart:         {{ 'sjw.whatsapp.cart'       | t | json }},
+    wa_general:      {{ 'sjw.whatsapp.general'    | t | json }},
+    wa_no_vehicle:   {{ 'sjw.whatsapp.no_vehicle' | t | json }},
+    wa_no_sku:       {{ 'sjw.whatsapp.no_sku'     | t | json }},
+    wa_cart_empty:   {{ 'sjw.whatsapp.cart_empty' | t | json }},
+    compare_full:    {{ 'sjw.compare.full' | t | json }}
+  };
+</script>

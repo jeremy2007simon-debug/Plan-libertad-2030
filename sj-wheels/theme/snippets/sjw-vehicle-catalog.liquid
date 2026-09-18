@@ -1,0 +1,33 @@
+{%- comment -%}
+  Publica el catálogo de vehículos (metaobjects `vehicle`) como JSON para el
+  selector. Fuente única de verdad: los metaobjects de Shopify.
+
+  Si todavía no hay vehículos creados, el array sale vacío y el selector
+  muestra su estado vacío con ayuda por WhatsApp. Nunca se inventan vehículos.
+{%- endcomment -%}
+{%- liquid
+  assign vehicles = shop.metaobjects.vehicle.values
+-%}
+<script type="application/json" id="sjw-vehicle-catalog">
+[
+{%- for v in vehicles -%}
+  {
+    "id": {{ v.system.id | json }},
+    "make": {{ v.make.value | default: '' | json }},
+    "model": {{ v.model.value | default: '' | json }},
+    "generation": {{ v.generation.value | default: '' | json }},
+    "yearStart": {{ v.year_start.value | default: 0 | json }},
+    "yearEnd": {{ v.year_end.value | default: 0 | json }},
+    "engine": {{ v.engine.value | default: '' | json }},
+    "bodyType": {{ v.body_type.value | default: '' | json }},
+    "boltPattern": {{ v.bolt_pattern.value | default: '' | json }},
+    "centerBore": {{ v.center_bore.value | default: 0 | json }},
+    "allowedDiameters": {{ v.allowed_diameters.value | default: empty | json }},
+    "etMin": {{ v.et_min.value | default: 0 | json }},
+    "etMax": {{ v.et_max.value | default: 0 | json }},
+    "notes": {{ v.notes.value | default: '' | json }},
+    "verification": {{ v.verification_status.value | default: 'unverified' | json }}
+  }{%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}
+]
+</script>

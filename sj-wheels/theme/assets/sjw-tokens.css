@@ -1,0 +1,105 @@
+/* ==========================================================================
+   SJ Wheels — Design tokens
+   Capa aditiva sobre Horizon. No sustituye el sistema de color del tema:
+   se apoya en él y añade lo que el tema base no tiene.
+   ========================================================================== */
+
+:root {
+  /* --- Superficies ------------------------------------------------------ */
+  --sjw-carbon:        #090A0C;  /* fondo principal */
+  --sjw-graphite:      #121418;  /* tarjetas, paneles */
+  --sjw-metal:         #242830;  /* bordes, separadores, superficie elevada */
+  --sjw-metal-soft:    #1A1D23;  /* hover sobre grafito */
+
+  /* --- Texto ------------------------------------------------------------ */
+  --sjw-warm-white:    #F5F5F2;
+  --sjw-text-muted:    #A7ABB3;
+  --sjw-text-faint:    #6E737D;
+
+  /* --- Marca ------------------------------------------------------------ */
+  --sjw-orange:        #FF5A1F;
+  --sjw-orange-hover:  #FF7340;
+  --sjw-orange-press:  #E84A12;
+  --sjw-orange-soft:   rgba(255, 90, 31, 0.12);
+
+  /* --- Estados de compatibilidad ---------------------------------------- */
+  /* Verde técnico, ámbar y rojo controlado. Contraste AA sobre grafito.    */
+  --sjw-ok:            #3FBF7F;
+  --sjw-ok-soft:       rgba(63, 191, 127, 0.12);
+  --sjw-ok-border:     rgba(63, 191, 127, 0.38);
+
+  --sjw-pending:       #F0A02C;
+  --sjw-pending-soft:  rgba(240, 160, 44, 0.12);
+  --sjw-pending-border:rgba(240, 160, 44, 0.38);
+
+  --sjw-error:         #F0544F;
+  --sjw-error-soft:    rgba(240, 84, 79, 0.12);
+  --sjw-error-border:  rgba(240, 84, 79, 0.38);
+
+  --sjw-info:          #5AA9FF;
+  --sjw-info-soft:     rgba(90, 169, 255, 0.12);
+
+  /* --- Espaciado (escala de 4) ------------------------------------------ */
+  --sjw-s1: 0.25rem;  --sjw-s2: 0.5rem;   --sjw-s3: 0.75rem;
+  --sjw-s4: 1rem;     --sjw-s5: 1.5rem;   --sjw-s6: 2rem;
+  --sjw-s7: 3rem;     --sjw-s8: 4rem;     --sjw-s9: 6rem;
+
+  /* --- Radios ----------------------------------------------------------- */
+  --sjw-r-sm: 4px;  --sjw-r-md: 8px;  --sjw-r-lg: 14px;  --sjw-r-pill: 999px;
+
+  /* --- Bordes ----------------------------------------------------------- */
+  --sjw-border:        1px solid var(--sjw-metal);
+  --sjw-border-strong: 1px solid #343A45;
+
+  /* --- Sombras: discretas, nunca exageradas ----------------------------- */
+  --sjw-shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --sjw-shadow-md: 0 4px 16px rgba(0,0,0,.45);
+  --sjw-shadow-lg: 0 12px 40px rgba(0,0,0,.55);
+
+  /* --- Movimiento ------------------------------------------------------- */
+  --sjw-dur-fast: 180ms;
+  --sjw-dur-base: 240ms;
+  --sjw-dur-slow: 350ms;
+  --sjw-ease: cubic-bezier(.2, .7, .3, 1);
+
+  /* --- Tipografía ------------------------------------------------------- */
+  --sjw-tracking-tight:  -0.02em;
+  --sjw-tracking-display:-0.03em;
+  --sjw-tracking-eyebrow: 0.14em;
+
+  /* --- Foco visible ----------------------------------------------------- */
+  --sjw-focus-ring: 0 0 0 2px var(--sjw-carbon), 0 0 0 4px var(--sjw-orange);
+
+  /* --- Capas ------------------------------------------------------------ */
+  --sjw-z-sticky: 40;
+  --sjw-z-drawer: 60;
+  --sjw-z-modal:  80;
+  --sjw-z-toast:  90;
+
+  /* --- Rejilla técnica de fondo (sutil) --------------------------------- */
+  --sjw-grid-line: rgba(255,255,255,.035);
+}
+
+/* Foco visible coherente en todo lo interactivo. Nunca se elimina. */
+.sjw-root :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--sjw-focus-ring);
+  border-radius: var(--sjw-r-sm);
+}
+
+/* Respeto estricto de prefers-reduced-motion: se anula todo el movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sjw-dur-fast: 0ms;
+    --sjw-dur-base: 0ms;
+    --sjw-dur-slow: 0ms;
+  }
+  .sjw-root *,
+  .sjw-root *::before,
+  .sjw-root *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

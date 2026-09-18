@@ -1,0 +1,306 @@
+/* ==========================================================================
+   SJ Wheels — Componentes
+   Todo va prefijado .sjw- para no colisionar nunca con Horizon.
+   ========================================================================== */
+
+.sjw-root { color: var(--sjw-warm-white); }
+
+/* --- Contenedor ---------------------------------------------------------- */
+.sjw-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--sjw-s4);
+}
+@media (min-width: 750px)  { .sjw-container { padding-inline: var(--sjw-s6); } }
+@media (min-width: 1200px) { .sjw-container { padding-inline: var(--sjw-s7); } }
+
+.sjw-section { padding-block: var(--sjw-s7); }
+@media (min-width: 750px) { .sjw-section { padding-block: var(--sjw-s8); } }
+
+/* --- Tipografía ---------------------------------------------------------- */
+.sjw-eyebrow {
+  font-size: .6875rem;
+  font-weight: 600;
+  letter-spacing: var(--sjw-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--sjw-orange);
+  margin: 0 0 var(--sjw-s2);
+}
+.sjw-display {
+  font-size: clamp(2rem, 6vw, 4.25rem);
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: var(--sjw-tracking-display);
+  margin: 0;
+  text-wrap: balance;
+}
+.sjw-h2 {
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: var(--sjw-tracking-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+.sjw-h3 {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: var(--sjw-tracking-tight);
+  margin: 0;
+}
+.sjw-lead  { font-size: 1.0625rem; line-height: 1.6; color: var(--sjw-text-muted); margin: 0; }
+.sjw-body  { font-size: .9375rem;  line-height: 1.65; color: var(--sjw-text-muted); margin: 0; }
+.sjw-small { font-size: .8125rem;  line-height: 1.5;  color: var(--sjw-text-faint); margin: 0; }
+.sjw-mono  { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+/* --- Botones ------------------------------------------------------------- */
+.sjw-btn {
+  --_bg: transparent; --_fg: var(--sjw-warm-white); --_bd: var(--sjw-metal);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--sjw-s2);
+  min-height: 48px;                 /* área táctil cómoda */
+  padding: 0 var(--sjw-s5);
+  border: 1px solid var(--_bd);
+  border-radius: var(--sjw-r-lg);
+  background: var(--_bg);
+  color: var(--_fg);
+  font: inherit; font-size: .9375rem; font-weight: 600;
+  letter-spacing: .01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--sjw-dur-fast) var(--sjw-ease),
+              border-color var(--sjw-dur-fast) var(--sjw-ease),
+              color var(--sjw-dur-fast) var(--sjw-ease),
+              transform var(--sjw-dur-fast) var(--sjw-ease);
+}
+.sjw-btn:active { transform: translateY(1px); }
+.sjw-btn[disabled], .sjw-btn[aria-disabled="true"] {
+  opacity: .45; cursor: not-allowed; transform: none;
+}
+
+.sjw-btn--primary   { --_bg: var(--sjw-orange); --_fg: #0B0B0C; --_bd: var(--sjw-orange); }
+.sjw-btn--primary:hover:not([disabled]) { --_bg: var(--sjw-orange-hover); --_bd: var(--sjw-orange-hover); }
+.sjw-btn--primary:active:not([disabled]){ --_bg: var(--sjw-orange-press); }
+
+.sjw-btn--secondary { --_bg: transparent; --_fg: var(--sjw-warm-white); --_bd: #3A404B; }
+.sjw-btn--secondary:hover:not([disabled]) { --_bg: var(--sjw-metal); --_bd: #4A515E; }
+
+.sjw-btn--ghost { --_bd: transparent; --_fg: var(--sjw-text-muted); }
+.sjw-btn--ghost:hover:not([disabled]) { --_fg: var(--sjw-warm-white); --_bg: var(--sjw-metal-soft); }
+
+.sjw-btn--whatsapp { --_bg: #1F8F53; --_fg: #fff; --_bd: #1F8F53; }
+.sjw-btn--whatsapp:hover:not([disabled]) { --_bg: #24A35F; --_bd: #24A35F; }
+
+.sjw-btn--block { width: 100%; }
+.sjw-btn--sm { min-height: 38px; padding: 0 var(--sjw-s3); font-size: .8125rem; border-radius: var(--sjw-r-md); }
+
+.sjw-btn-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border: 1px solid var(--sjw-metal); border-radius: var(--sjw-r-md);
+  background: transparent; color: var(--sjw-text-muted); cursor: pointer;
+  transition: color var(--sjw-dur-fast) var(--sjw-ease), background var(--sjw-dur-fast) var(--sjw-ease);
+}
+.sjw-btn-icon:hover { color: var(--sjw-warm-white); background: var(--sjw-metal-soft); }
+
+/* --- Campos de formulario ------------------------------------------------ */
+.sjw-field { display: flex; flex-direction: column; gap: var(--sjw-s2); }
+.sjw-label {
+  font-size: .75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--sjw-text-muted);
+}
+.sjw-input, .sjw-select {
+  min-height: 48px;
+  width: 100%;
+  padding: 0 var(--sjw-s3);
+  background: var(--sjw-carbon);
+  border: 1px solid var(--sjw-metal);
+  border-radius: var(--sjw-r-md);
+  color: var(--sjw-warm-white);
+  font: inherit; font-size: .9375rem;
+  transition: border-color var(--sjw-dur-fast) var(--sjw-ease);
+}
+.sjw-select {
+  appearance: none;
+  padding-right: var(--sjw-s6);
+  background-image: linear-gradient(45deg, transparent 50%, var(--sjw-text-muted) 50%),
+                    linear-gradient(135deg, var(--sjw-text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 21px, calc(100% - 14px) 21px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+.sjw-input:hover, .sjw-select:hover:not([disabled]) { border-color: #3A404B; }
+.sjw-input::placeholder { color: var(--sjw-text-faint); }
+.sjw-select[disabled] { opacity: .45; cursor: not-allowed; }
+.sjw-input[aria-invalid="true"], .sjw-select[aria-invalid="true"] { border-color: var(--sjw-error); }
+
+.sjw-field-error {
+  display: flex; align-items: center; gap: var(--sjw-s2);
+  font-size: .8125rem; color: var(--sjw-error);
+}
+
+.sjw-checkbox {
+  display: flex; align-items: flex-start; gap: var(--sjw-s3);
+  cursor: pointer; font-size: .875rem; line-height: 1.45;
+  color: var(--sjw-text-muted);
+}
+.sjw-checkbox input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--sjw-orange); cursor: pointer; }
+
+/* --- Tarjetas ------------------------------------------------------------ */
+.sjw-card {
+  background: var(--sjw-graphite);
+  border: var(--sjw-border);
+  border-radius: var(--sjw-r-lg);
+  overflow: hidden;
+  transition: border-color var(--sjw-dur-base) var(--sjw-ease),
+              transform var(--sjw-dur-base) var(--sjw-ease);
+}
+.sjw-card--interactive:hover { border-color: #3A404B; transform: translateY(-2px); }
+.sjw-card__body { padding: var(--sjw-s4); }
+
+/* --- Badges de estado ---------------------------------------------------- */
+/* El color nunca es la única señal: siempre icono + texto. */
+.sjw-badge {
+  display: inline-flex; align-items: center; gap: var(--sjw-s2);
+  padding: var(--sjw-s1) var(--sjw-s3);
+  border-radius: var(--sjw-r-pill);
+  border: 1px solid transparent;
+  font-size: .75rem; font-weight: 600; line-height: 1.5;
+  white-space: nowrap;
+}
+.sjw-badge__icon { flex: none; width: 14px; height: 14px; }
+.sjw-badge--ok      { color: var(--sjw-ok);      background: var(--sjw-ok-soft);      border-color: var(--sjw-ok-border); }
+.sjw-badge--pending { color: var(--sjw-pending); background: var(--sjw-pending-soft); border-color: var(--sjw-pending-border); }
+.sjw-badge--error   { color: var(--sjw-error);   background: var(--sjw-error-soft);   border-color: var(--sjw-error-border); }
+.sjw-badge--neutral { color: var(--sjw-text-muted); background: var(--sjw-metal); border-color: var(--sjw-metal); }
+.sjw-badge--set     { color: var(--sjw-warm-white); background: var(--sjw-metal); border-color: #3A404B; }
+
+/* --- Chips (filtros activos) --------------------------------------------- */
+.sjw-chips { display: flex; flex-wrap: wrap; gap: var(--sjw-s2); }
+.sjw-chip {
+  display: inline-flex; align-items: center; gap: var(--sjw-s2);
+  min-height: 34px; padding: 0 var(--sjw-s3);
+  background: var(--sjw-metal); border: 1px solid #333944;
+  border-radius: var(--sjw-r-pill);
+  color: var(--sjw-warm-white); font-size: .8125rem;
+  text-decoration: none; cursor: pointer;
+  transition: background var(--sjw-dur-fast) var(--sjw-ease);
+}
+.sjw-chip:hover { background: #2C313B; }
+.sjw-chip__x { font-size: 1rem; line-height: 1; color: var(--sjw-text-muted); }
+
+/* --- Mensajes ------------------------------------------------------------ */
+.sjw-note {
+  display: flex; gap: var(--sjw-s3);
+  padding: var(--sjw-s3) var(--sjw-s4);
+  border: 1px solid var(--sjw-metal);
+  border-left-width: 3px;
+  border-radius: var(--sjw-r-md);
+  background: var(--sjw-graphite);
+  font-size: .875rem; line-height: 1.55; color: var(--sjw-text-muted);
+}
+.sjw-note__icon { flex: none; width: 18px; height: 18px; margin-top: 2px; }
+.sjw-note--ok      { border-left-color: var(--sjw-ok); }
+.sjw-note--pending { border-left-color: var(--sjw-pending); }
+.sjw-note--error   { border-left-color: var(--sjw-error); }
+.sjw-note--info    { border-left-color: var(--sjw-info); }
+
+/* --- Tabla de especificaciones ------------------------------------------- */
+.sjw-specs { display: grid; gap: 1px; background: var(--sjw-metal); border: var(--sjw-border); border-radius: var(--sjw-r-md); overflow: hidden; }
+@media (min-width: 600px) { .sjw-specs { grid-template-columns: 1fr 1fr; } }
+.sjw-spec {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--sjw-s3);
+  padding: var(--sjw-s3) var(--sjw-s4);
+  background: var(--sjw-graphite);
+}
+.sjw-spec__k { font-size: .8125rem; color: var(--sjw-text-muted); }
+.sjw-spec__v { font-size: .9375rem; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.sjw-spec__v--empty { color: var(--sjw-text-faint); font-weight: 400; font-style: italic; }
+
+/* --- Acordeón ------------------------------------------------------------ */
+.sjw-acc { border-top: var(--sjw-border); }
+.sjw-acc__item { border-bottom: var(--sjw-border); }
+.sjw-acc__head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sjw-s3);
+  width: 100%; min-height: 56px; padding: var(--sjw-s3) 0;
+  background: none; border: 0; cursor: pointer;
+  color: var(--sjw-warm-white); font: inherit; font-size: .9375rem; font-weight: 600;
+  text-align: left;
+}
+.sjw-acc__sign { flex: none; width: 16px; height: 16px; position: relative; }
+.sjw-acc__sign::before, .sjw-acc__sign::after {
+  content: ""; position: absolute; inset: 50% 0 auto 0; height: 1.5px;
+  background: var(--sjw-text-muted);
+  transition: transform var(--sjw-dur-fast) var(--sjw-ease);
+}
+.sjw-acc__sign::after { transform: rotate(90deg); }
+.sjw-acc__head[aria-expanded="true"] .sjw-acc__sign::after { transform: rotate(0deg); }
+.sjw-acc__panel { padding-bottom: var(--sjw-s4); }
+.sjw-acc__panel[hidden] { display: none; }
+
+/* --- Drawer -------------------------------------------------------------- */
+.sjw-drawer {
+  position: fixed; inset: 0 0 0 auto;
+  width: min(420px, 100%);
+  z-index: var(--sjw-z-drawer);
+  background: var(--sjw-graphite);
+  border-left: var(--sjw-border);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--sjw-dur-slow) var(--sjw-ease);
+}
+.sjw-drawer[open], .sjw-drawer.is-open { transform: translateX(0); }
+.sjw-drawer__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sjw-s3); padding: var(--sjw-s4); border-bottom: var(--sjw-border);
+}
+.sjw-drawer__body { flex: 1; overflow-y: auto; padding: var(--sjw-s4); }
+.sjw-drawer__foot { padding: var(--sjw-s4); border-top: var(--sjw-border); }
+.sjw-overlay {
+  position: fixed; inset: 0; z-index: calc(var(--sjw-z-drawer) - 1);
+  background: rgba(0,0,0,.6);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--sjw-dur-base) var(--sjw-ease);
+}
+.sjw-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+/* --- Skeleton loader ----------------------------------------------------- */
+.sjw-skel {
+  background: linear-gradient(90deg, var(--sjw-metal) 25%, #2C313B 37%, var(--sjw-metal) 63%);
+  background-size: 400% 100%;
+  animation: sjw-shimmer 1.4s ease infinite;
+  border-radius: var(--sjw-r-sm);
+}
+.sjw-skel--text { height: .75rem; margin-block: .25rem; }
+.sjw-skel--line { height: 48px; }
+@keyframes sjw-shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* --- Estado vacío -------------------------------------------------------- */
+.sjw-empty {
+  display: grid; gap: var(--sjw-s4); justify-items: center; text-align: center;
+  padding: var(--sjw-s8) var(--sjw-s4);
+  border: 1px dashed var(--sjw-metal); border-radius: var(--sjw-r-lg);
+}
+.sjw-empty__title { font-size: 1.125rem; font-weight: 700; margin: 0; }
+.sjw-empty__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); justify-content: center; }
+
+/* --- Rejilla técnica decorativa ------------------------------------------ */
+.sjw-grid-bg {
+  background-image:
+    linear-gradient(var(--sjw-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sjw-grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* --- Utilidades ---------------------------------------------------------- */
+.sjw-visually-hidden {
+  position: absolute !important; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.sjw-stack   { display: grid; gap: var(--sjw-s4); }
+.sjw-stack-2 { display: grid; gap: var(--sjw-s2); }
+.sjw-row     { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sjw-s3); }
+.sjw-divider { height: 1px; background: var(--sjw-metal); border: 0; margin: 0; }

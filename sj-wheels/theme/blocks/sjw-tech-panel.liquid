@@ -1,0 +1,92 @@
+{%- comment -%}
+  SJ Wheels — Panel técnico del producto.
+  Todos los valores salen de metafields. Si un dato falta, se dice que falta:
+  nunca se rellena con una suposición.
+{%- endcomment -%}
+{%- liquid
+  assign p = closest.product | default: product
+  assign mf = p.metafields.custom
+  assign pending = 'sjw.product.pending_data' | t
+  assign units = mf.units_per_set.value | default: settings.sjw_default_units_per_set | default: 4
+  assign variant = p.selected_or_first_available_variant
+
+  assign l_diameter = 'sjw.spec.diameter' | t
+  assign l_width = 'sjw.spec.width' | t
+  assign l_pcd = 'sjw.spec.pcd' | t
+  assign l_et = 'sjw.spec.et' | t
+  assign l_bore = 'sjw.spec.bore' | t
+  assign l_finish = 'sjw.spec.finish' | t
+  assign l_load = 'sjw.spec.load' | t
+  assign l_weight = 'sjw.spec.weight' | t
+  assign l_units = 'sjw.spec.units' | t
+  assign l_tires = 'sjw.spec.tires' | t
+  assign l_bolts = 'sjw.spec.bolts' | t
+  assign l_delivery = 'sjw.spec.delivery' | t
+  assign yes = 'sjw.common.included' | t
+  assign no = 'sjw.common.not_included' | t
+-%}
+
+<div class="sjw-root sjw-tech" {{ block.shopify_attributes }}>
+  {%- if block.settings.heading != blank -%}
+    <h3 class="sjw-h3">{{ block.settings.heading }}</h3>
+  {%- endif -%}
+
+  <dl class="sjw-specs">
+    {% render 'sjw-spec', k: l_diameter, v: mf.wheel_diameter.value, suffix: '"' %}
+    {% render 'sjw-spec', k: l_width, v: mf.wheel_width.value, suffix: '"' %}
+    {% render 'sjw-spec', k: l_pcd, v: mf.bolt_pattern.value %}
+    {% render 'sjw-spec', k: l_et, v: mf.offset_et.value, prefix: 'ET ' %}
+    {% render 'sjw-spec', k: l_bore, v: mf.center_bore.value, suffix: ' mm' %}
+    {% render 'sjw-spec', k: l_finish, v: mf.finish.value %}
+    {% render 'sjw-spec', k: l_load, v: mf.load_rating.value, suffix: ' kg' %}
+
+    <div class="sjw-spec">
+      <dt class="sjw-spec__k">{{ l_weight }}</dt>
+      <dd class="sjw-spec__v{% if variant.weight == 0 %} sjw-spec__v--empty{% endif %}">
+        {%- if variant.weight > 0 -%}
+          {{ variant.weight | weight_with_unit: variant.weight_unit }}
+        {%- else -%}
+          {{ pending }}
+        {%- endif -%}
+      </dd>
+    </div>
+
+    <div class="sjw-spec">
+      <dt class="sjw-spec__k">{{ l_units }}</dt>
+      <dd class="sjw-spec__v">{{ units }}</dd>
+    </div>
+
+    <div class="sjw-spec">
+      <dt class="sjw-spec__k">{{ l_tires }}</dt>
+      <dd class="sjw-spec__v">{% if mf.tires_included.value == true %}{{ yes }}{% else %}{{ no }}{% endif %}</dd>
+    </div>
+
+    <div class="sjw-spec">
+      <dt class="sjw-spec__k">{{ l_bolts }}</dt>
+      <dd class="sjw-spec__v">{% if mf.bolts_included.value == true %}{{ yes }}{% else %}{{ no }}{% endif %}</dd>
+    </div>
+  </dl>
+
+  {%- assign delivery = mf.estimated_delivery.value | default: settings.sjw_default_delivery -%}
+  {%- if delivery != blank -%}
+    <p class="sjw-small">{{ l_delivery }}: {{ delivery }}</p>
+  {%- endif -%}
+
+  {%- if mf.compatibility_notes.value != blank -%}
+    <div class="sjw-note sjw-note--info"><span>{{ mf.compatibility_notes.value }}</span></div>
+  {%- endif -%}
+</div>
+
+<style>
+  .sjw-tech { display: grid; gap: var(--sjw-s3); }
+</style>
+
+{% schema %}
+{
+  "name": "Panel técnico",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Ficha técnica" }
+  ],
+  "presets": [{ "name": "Panel técnico" }]
+}
+{% endschema %}

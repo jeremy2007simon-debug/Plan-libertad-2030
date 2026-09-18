@@ -1,0 +1,81 @@
+{%- comment -%}
+  SJ Wheels — Estado de compatibilidad y guardia de compra en la ficha.
+  Se renderiza en servidor con el estado seguro y JavaScript lo resuelve.
+{%- endcomment -%}
+{%- liquid
+  assign p = closest.product | default: product
+  assign mode = block.settings.pending_mode | default: 'allow'
+-%}
+
+{% render 'sjw-strings' %}
+{% render 'sjw-vehicle-catalog' %}
+
+<div class="sjw-root sjw-fit" data-sjw-product-main data-sjw-product {{ block.shopify_attributes }}>
+  {% render 'sjw-product-fitment-data', product: p %}
+
+  <div class="sjw-fit__head">
+    {% render 'sjw-fitment-badge', product: p %}
+    <span class="sjw-small" data-sjw-has-vehicle hidden>
+      {{ 'sjw.selector.your_vehicle' | t }}: <strong data-sjw-vehicle-label></strong>
+    </span>
+  </div>
+
+  <sjw-buy-guard
+    class="sjw-fit__guard"
+    data-product-id="{{ p.id }}"
+    data-pending-mode="{{ mode }}"
+    data-form-selector="form[action*='/cart/add']"
+  >
+    <p class="sjw-note sjw-note--pending sjw-fit__msg" data-sjw-guard-message tabindex="-1" hidden></p>
+
+    <div class="sjw-fit__blocked" data-sjw-guard-blocked hidden>
+      <div class="sjw-row">
+        <a class="sjw-btn sjw-btn--secondary sjw-btn--sm" href="#sjw-vehicle-picker">
+          {{ 'sjw.product.change_vehicle' | t }}
+        </a>
+        <a class="sjw-btn sjw-btn--ghost sjw-btn--sm" href="{{ routes.all_products_collection_url }}">
+          {{ 'sjw.product.see_alternatives' | t }}
+        </a>
+      </div>
+    </div>
+
+    <div data-sjw-confirm-wrap hidden>
+      <label class="sjw-checkbox">
+        <input type="checkbox" data-sjw-confirm>
+        <span>{{ 'sjw.product.confirm_vehicle' | t }}</span>
+      </label>
+    </div>
+  </sjw-buy-guard>
+
+  <p class="sjw-small">{{ 'sjw.fitment.final_check' | t }}</p>
+
+  {% render 'sjw-whatsapp', context: 'product', product: p, style: 'secondary', block: true %}
+</div>
+
+<style>
+  .sjw-fit { display: grid; gap: var(--sjw-s3); padding: var(--sjw-s4); background: var(--sjw-graphite);
+             border: var(--sjw-border); border-radius: var(--sjw-r-lg); }
+  .sjw-fit__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sjw-s3); }
+  .sjw-fit__guard { display: grid; gap: var(--sjw-s3); }
+  .sjw-fit__msg { margin: 0; }
+</style>
+
+<script src="{{ 'sjw-buy-guard.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Compatibilidad y compra",
+  "settings": [
+    {
+      "type": "select", "id": "pending_mode", "label": "Cuando la compatibilidad está pendiente",
+      "options": [
+        { "value": "allow",   "label": "Permitir comprar con confirmación del cliente" },
+        { "value": "inquire", "label": "Solo permitir consulta por WhatsApp" }
+      ],
+      "default": "allow",
+      "info": "En ambos casos la compatibilidad se revisa antes del envío."
+    }
+  ],
+  "presets": [{ "name": "Compatibilidad y compra" }]
+}
+{% endschema %}

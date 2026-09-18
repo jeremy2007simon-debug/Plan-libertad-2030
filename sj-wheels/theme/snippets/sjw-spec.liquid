@@ -1,0 +1,10 @@
+{%- comment -%}
+  Una fila del panel técnico. Si el valor no existe, lo dice claramente.
+  Parámetros: k (etiqueta), v (valor), prefix, suffix
+{%- endcomment -%}
+<div class="sjw-spec">
+  <dt class="sjw-spec__k">{{ k }}</dt>
+  <dd class="sjw-spec__v{% if v == blank %} sjw-spec__v--empty{% endif %}">
+    {%- if v != blank -%}{{ prefix }}{{ v }}{{ suffix }}{%- else -%}{{ 'sjw.product.pending_data' | t }}{%- endif -%}
+  </dd>
+</div>

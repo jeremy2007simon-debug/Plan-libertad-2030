@@ -1,0 +1,21 @@
+{%- comment -%}
+  Badge de estado de compatibilidad.
+
+  Se renderiza en servidor con el estado seguro ("Selecciona tu vehículo") y
+  JavaScript lo actualiza cuando hay un vehículo guardado. El color nunca es la
+  única señal: siempre lleva icono y texto.
+
+  Parámetros: product (obligatorio), size ('sm' opcional)
+{%- endcomment -%}
+<span
+  class="sjw-badge sjw-badge--neutral sjw-fitment-badge{% if size == 'sm' %} sjw-badge--sm{% endif %}"
+  data-sjw-fitment-badge
+  data-product-id="{{ product.id }}"
+  role="status"
+>
+  <svg class="sjw-badge__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+    <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M8 4.75v4M8 11.1v.15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <span class="sjw-fitment-badge__text">{{ 'sjw.fitment.select_vehicle' | t }}</span>
+</span>

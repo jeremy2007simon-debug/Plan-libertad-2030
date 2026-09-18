@@ -1,0 +1,128 @@
+{%- comment -%}
+  SJ Wheels — Buscador por vehículo.
+  Es la función principal de la tienda. Editable desde el personalizador.
+{%- endcomment -%}
+
+{% render 'sjw-vehicle-catalog' %}
+
+{%- assign wa_label = 'sjw.selector.empty_cta' | t -%}
+
+<section
+  class="sjw-root sjw-section"
+  style="background: {{ section.settings.background_color }};"
+  aria-labelledby="sjw-selector-title-{{ section.id }}"
+>
+  <div class="sjw-container">
+    <div class="sjw-selector{% if section.settings.compact %} sjw-selector--compact{% endif %}">
+
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      <h2 class="sjw-h2" id="sjw-selector-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="sjw-lead sjw-selector__lead">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <sjw-vehicle-selector
+        class="sjw-selector__widget"
+        {% if section.settings.redirect_url != blank %}data-redirect="{{ section.settings.redirect_url }}"{% endif %}
+      >
+        <form data-sjw-selector-form class="sjw-selector__form" novalidate>
+          <div class="sjw-selector__grid">
+            {%- assign steps = 'make,model,generation,year,engine' | split: ',' -%}
+            {%- for step in steps -%}
+              {%- liquid
+                assign key = 'sjw.selector.' | append: step
+                assign lbl = key | t
+              -%}
+              <div class="sjw-field" data-sjw-step-wrapper hidden>
+                <label class="sjw-label" for="sjw-{{ step }}-{{ section.id }}">{{ lbl }}</label>
+                <select
+                  class="sjw-select"
+                  id="sjw-{{ step }}-{{ section.id }}"
+                  data-step="{{ step }}"
+                  data-placeholder="{{ lbl }}"
+                >
+                  <option value="">{{ lbl }}</option>
+                </select>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div class="sjw-selector__actions">
+            <button type="submit" class="sjw-btn sjw-btn--primary" data-sjw-selector-submit disabled aria-disabled="true">
+              {{ section.settings.cta_label | default: 'Buscar llantas compatibles' }}
+            </button>
+            <button type="button" class="sjw-btn sjw-btn--ghost sjw-btn--sm" data-sjw-selector-reset hidden>
+              {{ 'sjw.selector.reset' | t }}
+            </button>
+          </div>
+
+          <p class="sjw-small sjw-selector__disclaimer">{{ 'sjw.fitment.final_check' | t }}</p>
+          <p class="sjw-visually-hidden" role="status" aria-live="polite" data-sjw-selector-status></p>
+        </form>
+
+        {%- comment -%} Estado vacío: aún no hay vehículos cargados en la tienda. {%- endcomment -%}
+        <div class="sjw-empty" data-sjw-selector-empty hidden>
+          <p class="sjw-empty__title">{{ 'sjw.selector.empty_title' | t }}</p>
+          <p class="sjw-body">{{ 'sjw.selector.empty_body' | t }}</p>
+          <div class="sjw-empty__actions">
+            {% render 'sjw-whatsapp', context: 'no_results', label: wa_label %}
+            <a class="sjw-btn sjw-btn--secondary" href="{{ routes.all_products_collection_url }}">
+              {{ 'sjw.selector.empty_browse' | t }}
+            </a>
+          </div>
+        </div>
+      </sjw-vehicle-selector>
+
+      {%- comment -%} Vehículo ya guardado. {%- endcomment -%}
+      <div class="sjw-selector__saved sjw-note sjw-note--info" data-sjw-has-vehicle hidden>
+        <svg class="sjw-note__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 17h14M6.5 17V9.8L8.2 6h7.6l1.7 3.8V17" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <circle cx="8" cy="17" r="1.7" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="16" cy="17" r="1.7" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <span>{{ 'sjw.selector.your_vehicle' | t }}: <strong data-sjw-vehicle-label></strong></span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .sjw-selector { display: grid; gap: var(--sjw-s4); max-width: 68rem; }
+  .sjw-selector__lead { max-width: 46rem; }
+  .sjw-selector__widget { display: block; }
+  .sjw-selector__form { display: grid; gap: var(--sjw-s4); }
+  .sjw-selector__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: 1fr; }
+  @media (min-width: 640px)  { .sjw-selector__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .sjw-selector__grid { grid-template-columns: repeat(3, 1fr); } }
+  .sjw-selector__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
+  .sjw-selector__actions .sjw-btn--primary { flex: 1 1 16rem; }
+  .sjw-selector__disclaimer { margin: 0; }
+  .sjw-selector--compact { gap: var(--sjw-s3); }
+</style>
+
+<script src="{{ 'sjw-selector.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Buscador por vehículo",
+  "tag": "section",
+  "class": "sjw-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Compatibilidad revisada" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Las llantas que encajan con tu coche" },
+    { "type": "textarea", "id": "subheading", "label": "Texto de apoyo",
+      "default": "Selecciona tu vehículo y descubre diseños compatibles con sus medidas técnicas." },
+    { "type": "text", "id": "cta_label", "label": "Texto del botón", "default": "Buscar llantas compatibles" },
+    { "type": "url", "id": "redirect_url", "label": "Ir a esta página tras elegir el vehículo",
+      "info": "Déjalo vacío para quedarse en la misma página." },
+    { "type": "checkbox", "id": "compact", "label": "Versión compacta", "default": false },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#121418" }
+  ],
+  "presets": [{ "name": "Buscador por vehículo" }]
+}
+{% endschema %}
