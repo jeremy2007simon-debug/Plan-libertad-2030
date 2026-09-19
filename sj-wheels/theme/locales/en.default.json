@@ -472,6 +472,7 @@
       "from": "From"
     },
     "compare": {
+      "close": "Close the comparison",
   "add": "Compare",
   "remove": "Remove from comparison",
   "open": "Compare wheels",

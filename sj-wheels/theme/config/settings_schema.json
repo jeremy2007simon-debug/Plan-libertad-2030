@@ -2202,7 +2202,7 @@
         "type": "text",
         "id": "sjw_default_delivery",
         "label": "Plazo de entrega por defecto",
-        "default": "Canarias 25–30 días. Para Península, consultar plazo antes de finalizar el pedido.",
+        "default": "Consúltanos el plazo de esta referencia a tu dirección antes de comprar.",
         "info": "Se usa cuando un producto no tiene su propio plazo. Solo texto que puedas sostener."
       },
       {

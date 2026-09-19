@@ -5,7 +5,14 @@
 
 {% render 'sjw-vehicle-catalog' %}
 
-{%- assign wa_label = 'sjw.selector.empty_cta' | t -%}
+{%- liquid
+  assign wa_label = 'sjw.selector.empty_cta' | t
+  # Cuántos vehículos verificados hay. Se decide en el servidor: si no hay
+  # ninguno, el formulario no se llega a pintar. Antes dependía de JavaScript
+  # y el cliente veía un instante los desplegables vacíos, o los veía siempre
+  # si el script tardaba o fallaba.
+  assign hay_vehiculos = shop.metaobjects.vehicle.values.size
+-%}
 
 {%- comment -%}
   El id es el destino de los enlaces "#sjw-vehicle-picker" que hay en la barra
@@ -35,6 +42,7 @@
         class="sjw-selector__widget"
         {% if section.settings.redirect_url != blank %}data-redirect="{{ section.settings.redirect_url }}"{% endif %}
       >
+        {%- if hay_vehiculos > 0 -%}
         <form data-sjw-selector-form class="sjw-selector__form" novalidate>
           <div class="sjw-selector__grid">
             {%- assign steps = 'make,model,generation,year,engine' | split: ',' -%}
@@ -69,9 +77,10 @@
           <p class="sjw-small sjw-selector__disclaimer">{{ 'sjw.fitment.final_check' | t }}</p>
           <p class="sjw-visually-hidden" role="status" aria-live="polite" data-sjw-selector-status></p>
         </form>
+        {%- endif -%}
 
         {%- comment -%} Estado vacío: aún no hay vehículos cargados en la tienda. {%- endcomment -%}
-        <div class="sjw-empty" data-sjw-selector-empty hidden>
+        <div class="sjw-empty" data-sjw-selector-empty {% if hay_vehiculos > 0 %}hidden{% endif %}>
           <p class="sjw-empty__title">{{ 'sjw.selector.empty_title' | t }}</p>
           <p class="sjw-body">{{ 'sjw.selector.empty_body' | t }}</p>
           <div class="sjw-empty__actions">

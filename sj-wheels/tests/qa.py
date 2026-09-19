@@ -43,17 +43,23 @@ ok('renders sjw resueltos')
 def flat(d, pre=''):
     out = {}
     for k, v in d.items():
-        out.update(flat(v, pre+k+'.')) if isinstance(v, dict) else out.update({pre+k: v})
+        if isinstance(v, dict): out.update(flat(v, pre + k + '.'))
+        else: out[pre + k] = v
     return out
-es = flat(load_jsonc(T/'locales/es.json'))
-en = flat(load_jsonc(T/'locales/en.default.json'))
-used = set()
+
+es = flat(load_jsonc(T / 'locales' / 'es.json'))
+en = flat(load_jsonc(T / 'locales' / 'en.default.json'))
+# Se miran todas las claves, no solo las sjw.*: el comparador usaba
+# 'accessibility.close', que no existe en Horizon, y salía en pantalla como
+# "Translation missing". Y se miran también los atributos, no solo el texto.
 for p in sjw:
-    used |= set(re.findall(r"'(sjw\.[a-z0-9_.]+)'\s*\|\s*t", p.read_text()))
-for key in sorted(used):
-    if key not in es: errors.append(f'falta la clave {key} en locales/es.json')
-    if key not in en: errors.append(f'falta la clave {key} en locales/en.default.json')
-ok(f'{len(used)} claves de traducción verificadas')
+    for m in re.finditer(r"'([a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+)'\s*\|\s*t\b", p.read_text()):
+        clave = m.group(1)
+        if clave not in es:
+            errors.append(f'{p.name}: la clave de traducción "{clave}" no existe en locales/es.json')
+        elif clave not in en:
+            errors.append(f'{p.name}: la clave de traducción "{clave}" no existe en locales/en.default.json')
+ok('claves de traducción resueltas')
 
 # --- 5. Paridad ES/EN del grupo sjw ----------------------------------------
 a = {k for k in es if k.startswith('sjw.')}

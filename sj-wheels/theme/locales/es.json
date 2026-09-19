@@ -460,6 +460,7 @@
       "from": "Desde"
     },
     "compare": {
+      "close": "Cerrar el comparador",
       "add": "Comparar",
       "remove": "Quitar del comparador",
       "open": "Comparar llantas",

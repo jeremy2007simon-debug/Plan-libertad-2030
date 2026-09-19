@@ -172,7 +172,23 @@
     panel.setAttribute('hidden', '');
     if (overlay) overlay.classList.remove('is-open');
     document.removeEventListener('keydown', onEsc);
-    lastFocus?.focus();
+
+    /* Devolver el foco al disparador. Si el elemento que lo tenía ya no es
+       enfocable (o era el <body>), el foco se quedaba dentro del panel, que
+       acaba de ocultarse: el teclado se perdía en un elemento invisible. */
+    var destino = null;
+    if (lastFocus && document.contains(lastFocus) && lastFocus !== document.body &&
+        !lastFocus.closest('[data-sjw-compare-panel]') && lastFocus.offsetWidth + lastFocus.offsetHeight > 0) {
+      destino = lastFocus;
+    } else {
+      destino = document.querySelector('[data-sjw-compare-open]:not([hidden])');
+    }
+    if (destino) {
+      destino.focus();
+    } else if (document.activeElement && document.activeElement.closest('[data-sjw-compare-panel]')) {
+      document.activeElement.blur();
+    }
+    lastFocus = null;
   }
 
   function onEsc(e) { if (e.key === 'Escape') closePanel(); }

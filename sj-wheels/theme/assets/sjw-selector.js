@@ -225,6 +225,8 @@
     }
 
     showEmptyCatalog() {
+      /* Sin base de vehículos, Liquid ya no pinta el formulario. Esto cubre el
+         caso de que el catálogo llegue vacío por otro motivo. */
       if (this.formEl) this.formEl.hidden = true;
       if (this.emptyEl) this.emptyEl.hidden = false;
       window.SJWAnalytics.track('busqueda_sin_resultados', { motivo: 'catalogo_de_vehiculos_vacio' });
