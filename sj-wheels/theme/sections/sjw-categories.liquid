@@ -19,19 +19,21 @@
         {%- if section.settings.eyebrow != blank -%}<p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
         <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
       </div>
-      {%- if visibles > 0 and section.settings.link_url != blank and section.settings.link_label != blank -%}
-        <a class="sjw-btn sjw-btn--ghost sjw-btn--sm" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
+      {%- capture link_destino -%}{% render 'sjw-url', ruta: section.settings.link_url %}{%- endcapture -%}
+      {%- if visibles > 0 and link_destino != blank and section.settings.link_label != blank -%}
+        <a class="sjw-btn sjw-btn--ghost sjw-btn--sm" href="{{ link_destino }}">{{ section.settings.link_label }}</a>
       {%- endif -%}
     </div>
 
     {%- if visibles == 0 -%}
       <div class="sjw-note sjw-note--info sjw-cats__vacio">
-        <span class="sjw-note__icon" aria-hidden="true">i</span>
+        {% render 'sjw-icono', nombre: 'info' %}
         <div>
           <strong>{{ 'sjw.collection.catalog_pending_title' | t }}</strong>
           <p class="sjw-small">{{ 'sjw.collection.catalog_pending_body' | t }}</p>
           <p class="sjw-cats__accion">
-            <a class="sjw-btn sjw-btn--primary sjw-btn--sm" href="{{ routes.root_url }}pages/solicitud-de-compatibilidad">
+            {%- capture u_pages_solicitud_de_compatibilidad -%}{% render 'sjw-url', ruta: '/pages/solicitud-de-compatibilidad' %}{%- endcapture -%}
+            <a class="sjw-btn sjw-btn--primary sjw-btn--sm" href="{{ u_pages_solicitud_de_compatibilidad }}">
               {{ 'sjw.collection.catalog_pending_cta' | t }}
             </a>
           </p>

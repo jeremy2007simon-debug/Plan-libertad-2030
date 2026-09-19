@@ -10,7 +10,10 @@
     </div>
     <div class="sjw-cta__actions">
       {%- if section.settings.primary_url != blank -%}
-        <a class="sjw-btn sjw-btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }}</a>
+        {%- capture cta_url -%}{% render 'sjw-url', ruta: section.settings.primary_url %}{%- endcapture -%}
+        {%- if cta_url != blank -%}
+          <a class="sjw-btn sjw-btn--primary" href="{{ cta_url }}">{{ section.settings.primary_label }}</a>
+        {%- endif -%}
       {%- endif -%}
       {% render 'sjw-whatsapp', context: 'general', style: 'secondary', label: wa_label %}
     </div>

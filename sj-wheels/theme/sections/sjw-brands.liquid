@@ -1,0 +1,133 @@
+{%- comment -%}
+  SJ Wheels — Marcas de vehículo.
+
+  Solo pinta las marcas cuya colección existe de verdad en la tienda. Si una
+  colección no está, su bloque no se dibuja: no se crea una entrada que lleve
+  a ninguna parte.
+
+  No se usan los logotipos de los fabricantes: son marcas registradas de
+  terceros y no tenemos licencia. Se resuelve con tipografía.
+{%- endcomment -%}
+
+{%- liquid
+  assign disponibles = 0
+  for block in section.blocks
+    assign col = collections[block.settings.collection]
+    if col != blank and col.handle == block.settings.collection
+      assign disponibles = disponibles | plus: 1
+    endif
+  endfor
+-%}
+
+<section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
+  <div class="sjw-container">
+    <div class="sjw-brands__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.usar_h1 -%}
+        <h1 class="sjw-h2">{{ section.settings.heading }}</h1>
+      {%- else -%}
+        <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="sjw-lead sjw-brands__lead">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if disponibles == 0 -%}
+      <div class="sjw-note sjw-note--info">
+        {% render 'sjw-icono', nombre: 'info' %}
+        <div>
+          <strong>{{ 'sjw.brands.empty_title' | t }}</strong>
+          <p class="sjw-small">{{ 'sjw.brands.empty_body' | t }}</p>
+        </div>
+      </div>
+    {%- else -%}
+      <ul class="sjw-brands" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign col = collections[block.settings.collection] -%}
+          {%- if col != blank and col.handle == block.settings.collection -%}
+            {%- assign nombre = block.settings.title | default: col.title -%}
+            <li {{ block.shopify_attributes }}>
+              <a class="sjw-card sjw-card--interactive sjw-brand" href="{{ col.url }}">
+                <span class="sjw-brand__marca" aria-hidden="true">{{ nombre | slice: 0, 2 | upcase }}</span>
+                <span class="sjw-brand__cuerpo">
+                  <span class="sjw-brand__nombre">{{ nombre }}</span>
+                  {%- if col.products_count > 0 -%}
+                    <span class="sjw-small">{{ col.products_count }} {{ 'sjw.collection.results' | t }}</span>
+                  {%- else -%}
+                    <span class="sjw-small sjw-brand__pendiente">{{ 'sjw.brands.preparing' | t }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.medidas != blank -%}
+                    <span class="sjw-small sjw-brand__medidas">{{ block.settings.medidas }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="sjw-brand__flecha" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" width="16" height="16" fill="none" focusable="false">
+                    <path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- capture destino_consulta -%}{% render 'sjw-url', ruta: '/pages/solicitud-de-compatibilidad' %}{%- endcapture -%}
+    {%- if destino_consulta != blank -%}
+      <p class="sjw-brands__pie sjw-small">
+        {{ 'sjw.brands.other' | t }}
+        <a href="{{ destino_consulta }}">{{ 'sjw.brands.other_cta' | t }}</a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .sjw-brands__head { display: grid; gap: var(--sjw-s3); margin-bottom: var(--sjw-s6); }
+  .sjw-brands__lead { max-width: 52ch; }
+  .sjw-brands { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
+                grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px)  { .sjw-brands { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .sjw-brands { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sjw-brand { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center;
+               gap: var(--sjw-s4); padding: var(--sjw-s5); text-decoration: none; color: inherit; }
+  .sjw-brand__marca {
+    display: grid; place-items: center; width: 3rem; height: 3rem; flex: none;
+    border-radius: var(--sjw-r-md); background: var(--sjw-metal);
+    font-weight: 800; font-size: .9375rem; letter-spacing: .04em; color: var(--sjw-warm-white);
+  }
+  .sjw-brand__cuerpo { display: grid; gap: 2px; }
+  .sjw-brand__nombre { font-weight: 600; font-size: 1rem; }
+  .sjw-brand__pendiente { color: var(--sjw-text-faint); }
+  .sjw-brand__medidas { color: var(--sjw-text-faint); }
+  .sjw-brand__flecha { color: var(--sjw-text-faint); transition: transform var(--sjw-dur-fast) var(--sjw-ease); }
+  .sjw-brand:hover .sjw-brand__flecha { transform: translateX(3px); color: var(--sjw-orange); }
+  @media (prefers-reduced-motion: reduce) { .sjw-brand__flecha { transition: none; } }
+  .sjw-brands__pie { margin: var(--sjw-s6) 0 0; }
+</style>
+
+{% schema %}
+{
+  "name": "Marcas de vehículo",
+  "tag": "section",
+  "blocks": [
+    { "type": "marca", "name": "Marca", "settings": [
+      { "type": "collection", "id": "collection", "label": "Colección" },
+      { "type": "text", "id": "title", "label": "Nombre (opcional)" },
+      { "type": "text", "id": "medidas", "label": "Medidas habituales", "info": "Solo si el dato es real." }
+    ]}
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Catálogo" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Marcas de vehículo" },
+    { "type": "textarea", "id": "text", "label": "Texto" },
+    { "type": "checkbox", "id": "usar_h1", "label": "El título es el H1 de la página", "default": false },
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#090A0C" }
+  ],
+  "presets": [{ "name": "Marcas de vehículo" }]
+}
+{% endschema %}

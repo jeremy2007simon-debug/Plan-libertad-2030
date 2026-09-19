@@ -472,6 +472,23 @@
       "fit": "Compatibilidad",
       "remove_short": "Quitar"
     },
+    "brands": {
+      "empty_title": "Todavía no hay marcas preparadas",
+      "empty_body": "Estamos organizando el catálogo por marca de vehículo. Mientras tanto podemos comprobarlo a mano.",
+      "preparing": "Catálogo en preparación",
+      "other": "¿Tu coche no está aquí?",
+      "other_cta": "Cuéntanos qué tienes y lo comprobamos."
+    },
+    "seo": {
+      "home": "Inicio",
+      "page": "Página"
+    },
+    "search": {
+      "empty_title": "No hemos encontrado llantas para esa búsqueda",
+      "empty_body": "Prueba con otra medida (por ejemplo 18 5x112) o con el nombre del modelo. Si lo prefieres, dinos qué coche tienes y comprobamos las medidas por ti.",
+      "empty_cta": "Consultar compatibilidad",
+      "see_all": "Ver todo el catálogo"
+    },
     "collection": {
       "catalog_pending_title": "El catálogo todavía no está publicado",
       "catalog_pending_body": "Estamos preparando las fichas: medidas, fotografías y revisión técnica. Mientras tanto podemos comprobar a mano qué llantas encajan en tu coche.",
@@ -487,8 +504,6 @@
       "filters": "Filtros",
       "clear_filters": "Limpiar filtros",
       "sort": "Ordenar por",
-      "empty_title": "No encontramos llantas con estos criterios",
-      "empty_body": "Prueba a quitar algún filtro o escríbenos y te ayudamos a encontrar la medida que necesitas.",
       "compatible_only": "Solo compatibles con mi vehículo",
       "view": "Ver llanta"
     },

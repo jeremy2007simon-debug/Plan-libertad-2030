@@ -1,0 +1,50 @@
+{%- comment -%}
+  SJ Wheels — Iconos de estado.
+
+  Sustituyen a las letras sueltas ("i", "!", "✓", "✕") que se usaban como
+  icono: un lector de pantalla leía «i» y no aportaba nada. Estos SVG son
+  decorativos y quedan ocultos a los lectores; el significado lo lleva
+  siempre el texto que va al lado.
+
+  Uso: {% render 'sjw-icono', nombre: 'info' %}
+  Nombres: info · ok · pendiente · error · vehiculo
+{%- endcomment -%}
+{%- liquid
+  assign n = nombre | default: 'info'
+  assign clase = 'sjw-note__icon sjw-icono'
+  if extra != blank
+    assign clase = clase | append: ' ' | append: extra
+  endif
+-%}
+<span class="{{ clase }}" aria-hidden="true">
+  {%- case n -%}
+    {%- when 'ok' -%}
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" focusable="false">
+        <path d="M4 10.5l4 4 8-8.5" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    {%- when 'pendiente' -%}
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" focusable="false">
+        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M10 6v4.6l3 1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    {%- when 'error' -%}
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" focusable="false">
+        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M7 7l6 6M13 7l-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    {%- when 'vehiculo' -%}
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" focusable="false">
+        <path d="M5 17h14M6.5 17V9.8L8.2 6h7.6l1.7 3.8V17" stroke="currentColor"
+              stroke-width="1.6" stroke-linejoin="round"/>
+        <circle cx="8" cy="17" r="1.7" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="16" cy="17" r="1.7" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+    {%- else -%}
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" focusable="false">
+        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M10 9v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <circle cx="10" cy="6.2" r="1" fill="currentColor"/>
+      </svg>
+  {%- endcase -%}
+</span>

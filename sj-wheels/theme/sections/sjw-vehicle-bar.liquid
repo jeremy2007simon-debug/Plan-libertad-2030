@@ -5,6 +5,32 @@
 {%- assign wa_label = 'sjw.selector.empty_cta' | t -%}
 {% render 'sjw-vehicle-catalog' %}
 
+{%- comment -%}
+  Destino del botón de vehículo.
+
+  Mientras no haya vehículos verificados, el selector no existe: el botón
+  lleva a la consulta manual. En cuanto haya base, vuelve al ancla del
+  selector en la portada.
+
+  El ancla se cuelga de `routes.root_url`, que ya viene localizado. Los
+  ajustes de tipo `url` que escribe el personalizador también llegan
+  localizados, así que NO pasan por el resolutor: eso duplicaba el prefijo y
+  producía "/eses#…".
+{%- endcomment -%}
+{%- liquid
+  assign hay_vehiculos = shop.metaobjects.vehicle.values.size
+  assign destino_selector = routes.root_url | append: '#sjw-vehicle-picker'
+  assign etiqueta_abrir = 'sjw.selector.open' | t
+  assign etiqueta_cambiar = 'sjw.selector.change' | t
+  if hay_vehiculos == 0
+    assign pagina_consulta = pages['solicitud-de-compatibilidad']
+    if pagina_consulta != blank
+      assign destino_selector = pagina_consulta.url
+      assign etiqueta_abrir = 'sjw.selector.empty_form' | t
+      assign etiqueta_cambiar = 'sjw.selector.empty_form' | t
+    endif
+  endif
+-%}
 <div class="sjw-root sjw-vbar" data-sjw-vehicle-bar>
   <div class="sjw-container sjw-vbar__inner">
     <div class="sjw-vbar__state">
@@ -18,9 +44,9 @@
     </div>
 
     <div class="sjw-vbar__actions">
-      <a class="sjw-btn sjw-btn--secondary sjw-btn--sm" href="{{ section.settings.selector_url | default: '/' }}#sjw-vehicle-picker">
-        <span data-sjw-no-vehicle hidden>{{ 'sjw.selector.open' | t }}</span>
-        <span data-sjw-has-vehicle hidden>{{ 'sjw.selector.change' | t }}</span>
+      <a class="sjw-btn sjw-btn--secondary sjw-btn--sm" href="{{ destino_selector }}">
+        <span data-sjw-no-vehicle hidden>{{ etiqueta_abrir }}</span>
+        <span data-sjw-has-vehicle hidden>{{ etiqueta_cambiar }}</span>
       </a>
       <button type="button" class="sjw-btn sjw-btn--ghost sjw-btn--sm" data-sjw-clear-vehicle data-sjw-has-vehicle hidden>
         {{ 'sjw.selector.reset' | t }}

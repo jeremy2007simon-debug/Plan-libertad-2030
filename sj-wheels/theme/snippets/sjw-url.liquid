@@ -1,0 +1,90 @@
+{%- comment -%}
+  SJ Wheels — Resolutor de rutas localizadas.
+
+  Uso:
+    {%- capture destino -%}{%- render 'sjw-url', ruta: '/pages/envios' -%}{%- endcapture -%}
+    <a href="{{ destino }}">…</a>
+
+  Por qué existe. `routes.root_url` vale "/" en el idioma principal y "/es" en
+  el secundario, SIN barra final. Concatenar "{{ routes.root_url }}pages/x"
+  producía "/espages/x" en español. Y escribir "/pages/x" a pelo saca al
+  visitante del idioma activo.
+
+  La forma correcta en Shopify es pedirle la URL al propio objeto
+  (pages[handle].url, collections[handle].url) o usar routes.*, que ya vienen
+  localizados. Eso es lo que hace este snippet, para cualquier idioma y
+  mercado, sin concatenar el locale a mano.
+
+  Si el recurso no existe, devuelve vacío: quien lo use debe comprobarlo y no
+  pintar un enlace muerto.
+{%- endcomment -%}
+{%- liquid
+  assign r = ruta | default: '' | strip
+  assign salida = ''
+  # Shopify Liquid no tiene `starts_with`: se compara el primer carácter.
+  assign primer = r | slice: 0
+
+  if r == '' or r == '/'
+    assign salida = routes.root_url
+  elsif r contains '://' or r contains 'mailto:' or r contains 'tel:'
+    assign salida = r
+  elsif primer == '#'
+    assign salida = r
+  elsif r contains 'shopify://'
+    assign salida = r
+  else
+    assign limpia = r | remove_first: '/' | split: '?' | first | split: '#' | first
+    assign trozos = limpia | split: '/'
+    assign tipo = trozos[0]
+    assign handle = trozos[1]
+
+    case tipo
+      when 'pages'
+        assign objeto = pages[handle]
+        if objeto != blank
+          assign salida = objeto.url
+        endif
+      when 'collections'
+        if handle == 'all'
+          assign salida = routes.all_products_collection_url
+        else
+          assign objeto = collections[handle]
+          if objeto != blank and objeto.handle == handle
+            assign salida = objeto.url
+          endif
+        endif
+      when 'products'
+        assign objeto = all_products[handle]
+        if objeto != blank
+          assign salida = objeto.url
+        endif
+      when 'cart'
+        assign salida = routes.cart_url
+      when 'search'
+        assign salida = routes.search_url
+      when 'account'
+        assign salida = routes.account_url
+      when 'blogs'
+        assign objeto = blogs[handle]
+        if objeto != blank
+          assign salida = objeto.url
+        endif
+      else
+        assign salida = routes.root_url | append: limpia
+    endcase
+
+    comment
+      Se conservan la cadena de consulta y el ancla del original.
+    endcomment
+    if salida != ''
+      if r contains '?'
+        assign cola = r | split: '?' | last
+        assign salida = salida | append: '?' | append: cola
+      elsif r contains '#'
+        assign ancla = r | split: '#' | last
+        assign salida = salida | append: '#' | append: ancla
+      endif
+    endif
+  endif
+-%}
+{{- salida -}}

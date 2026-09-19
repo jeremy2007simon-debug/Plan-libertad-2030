@@ -325,15 +325,20 @@
   {% endif %}
 {% endcapture %}
 
+{%- comment -%}
+  SJ Wheels: usaba shop.name ("My Store 2") y componía la url con page.url,
+  que está vacío fuera de las páginas. Ahora usa el nombre de marca del tema
+  y la raíz localizada.
+{%- endcomment -%}
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Organization",
-    "name": {{ shop.name | json }},
+    "name": {{ settings.sjw_brand_name | default: shop.name | json }},
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "url": {{ request.origin | append: page.url | json }}
+    "url": {{ request.origin | append: routes.root_url | json }}
   }
 </script>
 

@@ -29,7 +29,7 @@
       {% if intro != blank %}<p class="sjw-lead">{{ intro }}</p>{% endif %}
 
       <div class="sjw-note sjw-note--info">
-        <span class="sjw-note__icon" aria-hidden="true">i</span>
+        {% render 'sjw-icono', nombre: 'info' %}
         <div>
           <strong>{{ 'sjw.request.what_we_check' | t }}</strong>
           <p class="sjw-small">{{ 'sjw.request.what_we_check_body' | t }}</p>
@@ -40,7 +40,7 @@
     {% form 'contact', class: 'sjw-req__form', id: 'sjw-fitment-request' %}
       {%- if form.posted_successfully? -%}
         <div class="sjw-note sjw-note--ok" role="status" tabindex="-1" data-sjw-req-ok>
-          <span class="sjw-note__icon" aria-hidden="true">✓</span>
+          {% render 'sjw-icono', nombre: 'ok' %}
           <div>
             <strong>{{ 'sjw.request.sent_title' | t }}</strong>
             <p class="sjw-small">{{ 'sjw.request.sent_body' | t }}</p>
@@ -50,7 +50,7 @@
 
       {%- if form.errors -%}
         <div class="sjw-note sjw-note--error" role="alert" tabindex="-1">
-          <span class="sjw-note__icon" aria-hidden="true">✕</span>
+          {% render 'sjw-icono', nombre: 'error' %}
           <div>
             <strong>{{ 'sjw.request.error_title' | t }}</strong>
             <ul class="sjw-small">

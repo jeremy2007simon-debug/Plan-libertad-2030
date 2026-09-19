@@ -22,8 +22,14 @@
     assign usar_imagen = true
   endif
   assign cta2_label = section.settings.secondary_label
-  assign cta2_url = section.settings.secondary_url
 -%}
+
+{%- comment -%}
+  Las URL configurables pasan por el resolutor: un ajuste guardado como
+  "/pages/x" sacaba al visitante del idioma activo.
+{%- endcomment -%}
+{%- capture cta1_url -%}{% render 'sjw-url', ruta: section.settings.primary_url %}{%- endcapture -%}
+{%- capture cta2_url -%}{% render 'sjw-url', ruta: section.settings.secondary_url %}{%- endcapture -%}
 
 <section class="sjw-root sjw-hero" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container sjw-hero__inner">
@@ -39,10 +45,13 @@
         <p class="sjw-lead sjw-hero__lead">{{ section.settings.text }}</p>
       {%- endif -%}
 
+      {%- comment -%} Un botón sin destino resuelto no se pinta. {%- endcomment -%}
       <div class="sjw-hero__acciones">
-        <a class="sjw-btn sjw-btn--primary" href="{{ section.settings.primary_url }}">
-          {{ section.settings.primary_label }}
-        </a>
+        {%- if cta1_url != blank -%}
+          <a class="sjw-btn sjw-btn--primary" href="{{ cta1_url }}">
+            {{ section.settings.primary_label }}
+          </a>
+        {%- endif -%}
         {%- if cta2_label != blank and cta2_url != blank -%}
           <a class="sjw-btn sjw-btn--secondary" href="{{ cta2_url }}">{{ cta2_label }}</a>
         {%- endif -%}

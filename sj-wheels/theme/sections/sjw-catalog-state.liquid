@@ -23,6 +23,11 @@
     assign filtros_activos = filtros_activos | plus: 1
   endif
 
+  assign url_sin_filtros = collection.url
+  if url_sin_filtros == blank
+    assign url_sin_filtros = routes.all_products_collection_url
+  endif
+
   assign estado = 'con_resultados'
   if mostrados == 0
     if filtros_activos > 0
@@ -44,10 +49,12 @@
           <p class="sjw-empty__title">{{ 'sjw.collection.catalog_pending_title' | t }}</p>
           <p class="sjw-body">{{ 'sjw.collection.catalog_pending_body' | t }}</p>
           <div class="sjw-empty__actions">
-            <a class="sjw-btn sjw-btn--primary" href="{{ routes.root_url }}pages/solicitud-de-compatibilidad">
+            {%- capture u_pages_solicitud_de_compatibilidad -%}{% render 'sjw-url', ruta: '/pages/solicitud-de-compatibilidad' %}{%- endcapture -%}
+            <a class="sjw-btn sjw-btn--primary" href="{{ u_pages_solicitud_de_compatibilidad }}">
               {{ 'sjw.collection.catalog_pending_cta' | t }}
             </a>
-            <a class="sjw-btn sjw-btn--secondary" href="{{ routes.root_url }}pages/guia-de-medidas">
+            {%- capture u_pages_guia_de_medidas -%}{% render 'sjw-url', ruta: '/pages/guia-de-medidas' %}{%- endcapture -%}
+            <a class="sjw-btn sjw-btn--secondary" href="{{ u_pages_guia_de_medidas }}">
               {{ 'sjw.collection.guide_cta' | t }}
             </a>
           </div>
@@ -65,7 +72,7 @@
           <p class="sjw-empty__title">{{ 'sjw.collection.filters_title' | t }}</p>
           <p class="sjw-body">{{ 'sjw.collection.filters_body' | t }}</p>
           <div class="sjw-empty__actions">
-            <a class="sjw-btn sjw-btn--primary" href="{{ collection.url }}">
+            <a class="sjw-btn sjw-btn--primary" href="{{ url_sin_filtros }}">
               {{ 'sjw.collection.filters_clear' | t }}
             </a>
           </div>

@@ -2186,6 +2186,34 @@
       },
       {
         "type": "header",
+        "content": "SEO de la portada"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shopify usa el nombre administrativo de la tienda como título de la portada y no trae metadescripción. Estos dos campos lo sustituyen sin tocar la configuración de la tienda."
+      },
+      {
+        "type": "text",
+        "id": "sjw_seo_title",
+        "label": "Título SEO de la portada",
+        "default": "SJ Wheels | Llantas para BMW, Audi, Mercedes y Volkswagen",
+        "info": "Lo ideal son 50–60 caracteres."
+      },
+      {
+        "type": "textarea",
+        "id": "sjw_seo_description",
+        "label": "Metadescripción de la portada",
+        "default": "Llantas para BMW, Audi, Mercedes-Benz y Volkswagen. Consulta medidas y solicita una revisión técnica de compatibilidad antes de hacer tu pedido.",
+        "info": "Lo ideal son 140–160 caracteres."
+      },
+      {
+        "type": "image_picker",
+        "id": "sjw_share_image",
+        "label": "Imagen al compartir",
+        "info": "1200 × 630 px. Si no hay ninguna, se usa el logotipo."
+      },
+      {
+        "type": "header",
         "content": "Contacto"
       },
       {

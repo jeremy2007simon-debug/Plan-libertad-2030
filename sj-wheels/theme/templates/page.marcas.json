@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "marcas": {
+      "type": "sjw-brands",
+      "blocks": {
+        "bmw":  { "type": "marca", "settings": { "collection": "llantas-bmw", "title": "BMW" } },
+        "audi": { "type": "marca", "settings": { "collection": "llantas-audi", "title": "Audi" } },
+        "mb":   { "type": "marca", "settings": { "collection": "llantas-mercedes-benz", "title": "Mercedes-Benz" } },
+        "vw":   { "type": "marca", "settings": { "collection": "llantas-volkswagen", "title": "Volkswagen" } }
+      },
+      "block_order": ["bmw", "audi", "mb", "vw"],
+      "settings": {
+        "eyebrow": "Catálogo",
+        "heading": "Marcas de vehículo",
+        "text": "Organizamos las llantas por la marca del coche al que van destinadas. Elige la tuya para ver las medidas que trabajamos.",
+        "usar_h1": true,
+        "background_color": "#090A0C"
+      }
+    }
+  },
+  "order": ["marcas"]
+}

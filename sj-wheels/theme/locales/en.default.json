@@ -484,6 +484,23 @@
   "fit": "Fitment",
   "remove_short": "Remove"
 },
+    "brands": {
+      "empty_title": "No brands ready yet",
+      "empty_body": "We are organising the catalogue by vehicle brand. In the meantime we can check by hand.",
+      "preparing": "Catalogue in preparation",
+      "other": "Is your car not here?",
+      "other_cta": "Tell us what you drive and we will check."
+    },
+    "seo": {
+      "home": "Home",
+      "page": "Page"
+    },
+    "search": {
+      "empty_title": "We found no wheels for that search",
+      "empty_body": "Try another size (for example 18 5x112) or the model name. If you prefer, tell us which car you have and we will check the measurements for you.",
+      "empty_cta": "Ask about fitment",
+      "see_all": "See the whole catalogue"
+    },
     "collection": {
       "catalog_pending_title": "The catalogue is not published yet",
       "catalog_pending_body": "We are preparing the listings: measurements, photography and technical review. In the meantime we can check by hand which wheels fit your car.",
@@ -499,8 +516,6 @@
       "filters": "Filters",
       "clear_filters": "Clear filters",
       "sort": "Sort by",
-      "empty_title": "No wheels match these filters",
-      "empty_body": "Try removing a filter, or message us and we will help you find the size you need.",
       "compatible_only": "Only ones that fit my vehicle",
       "view": "View wheel"
     },

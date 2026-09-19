@@ -117,7 +117,10 @@
     "sjw_whatsapp_number": "",
     "logo": "shopify://shop_images/sj-wheels-wordmark.png",
     "favicon": "shopify://shop_images/sj-wheels-favicon.png",
-    "sjw_brand_name": "SJ Wheels"
+    "sjw_brand_name": "SJ Wheels",
+    "sjw_seo_title": "SJ Wheels | Llantas para BMW, Audi, Mercedes y Volkswagen",
+    "sjw_seo_description": "Llantas para BMW, Audi, Mercedes-Benz y Volkswagen. Consulta medidas y solicita una revisión técnica de compatibilidad antes de hacer tu pedido.",
+    "sjw_share_image": "shopify://shop_images/sj-wheels-wordmark.png"
   },
   "presets": {
     "Horizon": {

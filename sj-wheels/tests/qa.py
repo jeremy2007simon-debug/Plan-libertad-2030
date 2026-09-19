@@ -195,6 +195,34 @@ if "this.props['Revisión técnica'].value = t('prop_review'" not in guard:
     errors.append('sjw-buy-guard.js: la revisión técnica debe ser constante, no depender del estado')
 ok('ninguna propiedad de línea se lee como aprobación técnica')
 
+# --- 17. Llaves literales dentro de cadenas Liquid -------------------------
+# Shopify rechaza el archivo ENTERO, en silencio, si una cadena Liquid contiene
+# una llave literal. Pasó con "?q={search_term_string}" de schema.org: la
+# solución es sacar las llaves fuera de la etiqueta Liquid.
+todos_liquid = list(T.glob('sections/*.liquid')) + list(T.glob('snippets/*.liquid')) + \
+               list(T.glob('blocks/*.liquid')) + [T / 'layout' / 'theme.liquid']
+for p in todos_liquid:
+    texto = p.read_text()
+    for m in re.finditer(r"\{\{(?:[^}]|\}(?!\}))*\}\}|\{%(?:[^%]|%(?!\}))*%\}", texto):
+        for cadena in re.findall(r"'([^']*)'", m.group(0)):
+            if '{' in cadena or '}' in cadena:
+                errors.append(f'{p.name}: llave literal dentro de una cadena Liquid '
+                              f'(Shopify rechaza el archivo en silencio): "{cadena[:40]}"')
+ok('sin llaves literales en cadenas Liquid')
+
+# --- 18. Rutas internas escritas a mano ------------------------------------
+# `routes.root_url` vale "/es" sin barra final: concatenar "pages/x" producía
+# "/espages/x". Las rutas internas pasan por el resolutor sjw-url.
+for p in sjw:
+    if p.name == 'sjw-url.liquid':
+        continue                      # es el propio resolutor: documenta el patrón
+    texto = p.read_text()
+    if re.search(r'routes\.root_url\s*\}\}(pages|collections|products|blogs)', texto):
+        errors.append(f'{p.name}: concatena routes.root_url con una ruta; usa el snippet sjw-url')
+    for m in re.finditer(r'href="(/(?:pages|collections|products|search|cart|account)/[^"]*)"', texto):
+        errors.append(f'{p.name}: ruta interna sin localizar → {m.group(1)}')
+ok('rutas internas localizadas')
+
 print(f'{checks} comprobaciones ejecutadas\n')
 if warnings:
     print(f'AVISOS ({len(warnings)}):')

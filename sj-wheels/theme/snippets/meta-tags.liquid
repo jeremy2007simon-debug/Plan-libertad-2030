@@ -1,0 +1,219 @@
+{% doc %}
+  Renders all meta tags for the page including Open Graph, Twitter Cards, and SEO tags.
+
+  @param {object} [product] - The product object, available on product pages for price meta tags.
+{% enddoc %}
+
+{%- comment -%}
+  SJ Wheels. Cambios sobre el archivo de Horizon, todos comentados:
+
+  1. La marca sale de `settings.sjw_brand_name`, no de `shop.name`. El nombre
+     administrativo de la tienda sigue siendo "My Store 2" y aparecía en el
+     <title>, en og:site_name y en Twitter Cards.
+  2. La portada recibe título y descripción propios desde los ajustes del tema.
+     `page_title` en la portada es el nombre de la tienda, y no había
+     metadescripción.
+  3. Se añaden hreflang y x-default a partir de los idiomas publicados.
+  4. og:image tiene respaldo: la imagen social del tema y, si no, el logotipo.
+  5. Se añade og:locale.
+{%- endcomment -%}
+
+<meta charset="utf-8">
+<meta
+  http-equiv="X-UA-Compatible"
+  content="IE=edge"
+>
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+<meta
+  name="theme-color"
+  content="{{ settings.page_background_color | default: '#090A0C' }}"
+>
+
+{%- liquid
+  assign sjw_marca = settings.sjw_brand_name | default: shop.name
+
+  assign og_title = page_title | default: sjw_marca
+  assign og_url = canonical_url | default: request.origin
+  assign og_type = 'website'
+  assign og_description = page_description | default: shop.description
+
+  # La portada: Shopify devuelve el nombre de la tienda como page_title y no
+  # trae descripción. Los ajustes del tema mandan aquí.
+  if request.page_type == 'index'
+    if settings.sjw_seo_title != blank
+      assign og_title = settings.sjw_seo_title
+    else
+      assign og_title = sjw_marca
+    endif
+    if settings.sjw_seo_description != blank
+      assign og_description = settings.sjw_seo_description
+    endif
+  endif
+
+  if og_description == blank
+    assign og_description = settings.sjw_seo_description
+  endif
+
+  if request.page_type == 'product'
+    assign og_type = 'product'
+  elsif request.page_type == 'article'
+    assign og_type = 'article'
+  elsif request.page_type == 'password'
+    assign og_url = request.origin
+  endif
+
+  assign imagen_social = page_image | default: settings.sjw_share_image | default: settings.logo
+-%}
+
+<meta
+  property="og:site_name"
+  content="{{ sjw_marca }}"
+>
+<meta
+  property="og:url"
+  content="{{ og_url }}"
+>
+<meta
+  property="og:title"
+  content="{{ og_title | escape }}"
+>
+<meta
+  property="og:type"
+  content="{{ og_type }}"
+>
+<meta
+  property="og:description"
+  content="{{ og_description | escape }}"
+>
+<meta
+  property="og:locale"
+  content="{{ request.locale.iso_code }}"
+>
+
+{%- if imagen_social != blank -%}
+  <meta
+    property="og:image"
+    content="{{ imagen_social | image_url: width: 1200 | prepend: 'https:' }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="{{ imagen_social | image_url: width: 1200 | prepend: 'https:' }}"
+  >
+  <meta
+    property="og:image:alt"
+    content="{{ sjw_marca | escape }}"
+  >
+{%- endif -%}
+
+{%- if request.page_type == 'product' -%}
+  <meta
+    property="og:price:amount"
+    content="{{ product.price | money_without_currency | strip_html }}"
+  >
+  <meta
+    property="og:price:currency"
+    content="{{ cart.currency.iso_code }}"
+  >
+{%- endif -%}
+
+{%- if settings.social_twitter_link != blank -%}
+  <meta
+    name="twitter:site"
+    content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}"
+  >
+{%- endif -%}
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+>
+<meta
+  name="twitter:title"
+  content="{{ og_title | escape }}"
+>
+<meta
+  name="twitter:description"
+  content="{{ og_description | escape }}"
+>
+{%- if imagen_social != blank -%}
+  <meta
+    name="twitter:image"
+    content="{{ imagen_social | image_url: width: 1200 | prepend: 'https:' }}"
+  >
+{%- endif -%}
+
+<title>
+  {%- if request.page_type == 'index' -%}
+    {{- og_title -}}
+  {%- else -%}
+    {{- page_title -}}
+    {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'sjw.seo.page' | t }} {{ current_page }}{% endif -%}
+    {%- unless page_title contains sjw_marca %} | {{ sjw_marca }}{% endunless -%}
+  {%- endif -%}
+</title>
+
+<link
+  rel="canonical"
+  href="{{ canonical_url }}"
+>
+
+{%- if og_description != blank -%}
+  <meta
+    name="description"
+    content="{{ og_description | escape }}"
+  >
+{%- endif -%}
+
+{%- comment -%}
+  hreflang.
+
+  Se usa `localization.available_languages`, que trae cada idioma con su
+  `root_url` resuelto. Es lo correcto según la documentación de Shopify.
+
+  Dato comprobado en la vista previa: en el dominio shopifypreview.com,
+  `localization.available_languages.size` vale 1 y `shop.published_locales.size`
+  también, aunque la página se sirva en español con routes.root_url = "/es".
+  Ese dominio no expone la localización completa a Liquid. Por eso el idioma
+  de la página actual se declara siempre aparte: así la etiqueta es correcta
+  en cualquier caso, y en el dominio real se añaden los demás idiomas.
+{%- endcomment -%}
+{%- liquid
+  assign ruta = request.path
+  unless routes.root_url == '/'
+    assign ruta = request.path | remove_first: routes.root_url
+  endunless
+  if ruta == blank
+    assign ruta = '/'
+  endif
+  assign actual = request.locale.iso_code
+  assign ya_puesto = false
+-%}
+{%- for idioma in localization.available_languages -%}
+  {%- liquid
+    assign raiz = idioma.root_url | default: '/'
+    assign base = raiz
+    if raiz == '/'
+      assign base = ''
+    endif
+    if ruta == '/'
+      assign destino = request.origin | append: raiz
+    else
+      assign destino = request.origin | append: base | append: ruta
+    endif
+    if idioma.iso_code == actual
+      assign ya_puesto = true
+    endif
+  -%}
+  <link rel="alternate" hreflang="{{ idioma.iso_code }}" href="{{ destino }}">
+  {%- if idioma.primary -%}
+    <link rel="alternate" hreflang="x-default" href="{{ destino }}">
+  {%- endif -%}
+{%- endfor -%}
+{%- unless ya_puesto -%}
+  <link rel="alternate" hreflang="{{ actual }}" href="{{ canonical_url }}">
+{%- endunless -%}
+
+{%- render 'sjw-structured-data' -%}

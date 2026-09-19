@@ -88,7 +88,8 @@
               Sin vehículos verificados, la vía real es el formulario, no un
               WhatsApp que puede no estar configurado ni un catálogo vacío.
             {%- endcomment -%}
-            <a class="sjw-btn sjw-btn--primary" href="{{ routes.root_url }}pages/solicitud-de-compatibilidad">
+            {%- capture u_pages_solicitud_de_compatibilidad -%}{% render 'sjw-url', ruta: '/pages/solicitud-de-compatibilidad' %}{%- endcapture -%}
+            <a class="sjw-btn sjw-btn--primary" href="{{ u_pages_solicitud_de_compatibilidad }}">
               {{ 'sjw.selector.empty_form' | t }}
             </a>
             {% render 'sjw-whatsapp', context: 'no_results', label: wa_label %}
@@ -103,11 +104,7 @@
 
       {%- comment -%} Vehículo ya guardado. {%- endcomment -%}
       <div class="sjw-selector__saved sjw-note sjw-note--info" data-sjw-has-vehicle hidden>
-        <svg class="sjw-note__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 17h14M6.5 17V9.8L8.2 6h7.6l1.7 3.8V17" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-          <circle cx="8" cy="17" r="1.7" stroke="currentColor" stroke-width="1.6"/>
-          <circle cx="16" cy="17" r="1.7" stroke="currentColor" stroke-width="1.6"/>
-        </svg>
+        {% render 'sjw-icono', nombre: 'vehiculo' %}
         <span>{{ 'sjw.selector.your_vehicle' | t }}: <strong data-sjw-vehicle-label></strong></span>
       </div>
 
