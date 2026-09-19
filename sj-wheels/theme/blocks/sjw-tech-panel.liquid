@@ -18,6 +18,7 @@
   assign l_finish = 'sjw.spec.finish' | t
   assign l_load = 'sjw.spec.load' | t
   assign l_weight = 'sjw.spec.weight' | t
+  assign l_weight_each = 'sjw.spec.weight_each' | t
   assign l_units = 'sjw.spec.units' | t
   assign l_tires = 'sjw.spec.tires' | t
   assign l_bolts = 'sjw.spec.bolts' | t
@@ -33,6 +34,7 @@
 {%- endcomment -%}
 <style>
   .sjw-tech { display: grid; gap: var(--sjw-s3); }
+  .sjw-spec__nota { display: block; font-weight: 400; font-size: .8125rem; color: var(--sjw-text-muted); }
 </style>
 
 <div class="sjw-root sjw-tech" {{ block.shopify_attributes }}>
@@ -49,11 +51,25 @@
     {% render 'sjw-spec', k: l_finish, v: mf.finish.value %}
     {% render 'sjw-spec', k: l_load, v: mf.load_rating.value, suffix: ' kg' %}
 
+    {%- comment -%}
+      `variant.weight` viene siempre en gramos, pase lo que pase en el
+      `weight_unit`: imprimirlo tal cual daba cifras absurdas. El filtro
+      `weight_with_unit` hace la conversión. Y como estos productos son juegos
+      completos, el peso del envío se acompaña del peso por llanta, que es el
+      dato que el cliente busca. La división sale del peso real guardado; no
+      se inventa ninguna cifra.
+    {%- endcomment -%}
     <div class="sjw-spec">
       <dt class="sjw-spec__k">{{ l_weight }}</dt>
       <dd class="sjw-spec__v{% if variant.weight == 0 %} sjw-spec__v--empty{% endif %}">
         {%- if variant.weight > 0 -%}
           {{ variant.weight | weight_with_unit: variant.weight_unit }}
+          {%- if units > 1 -%}
+            {%- assign peso_unidad = variant.weight | divided_by: units -%}
+            <span class="sjw-spec__nota">
+              ({{ peso_unidad | weight_with_unit: variant.weight_unit }} {{ l_weight_each }})
+            </span>
+          {%- endif -%}
         {%- else -%}
           {{ pending }}
         {%- endif -%}

@@ -59,19 +59,25 @@ function t(nombre, real, esperado) {
 
   async function escenario(vehiculo, producto = PRODUCTO, marcarConfirmacion = false) {
     const page = await browser.newPage();
-    // El garaje se inyecta como doble: aquí no se prueba localStorage.
-    await page.addInitScript((v) => {
-      window.SJWGarage = {
-        _v: v, _subs: [],
-        get() { return this._v; },
-        label(x) { return [x.make, x.model, x.generation].filter(Boolean).join(' '); },
-        subscribe(fn) { this._subs.push(fn); },
-        set(x) { this._v = x; this._subs.forEach((f) => f()); }
-      };
-      window.SJWAnalytics = { track() {} };
-      window.SJWStrings = {};
-    }, vehiculo);
     await page.setContent(pagina(producto));
+
+    /* Los dobles se inyectan DESPUÉS del contenido, no con addInitScript:
+       `setContent` no vuelve a ejecutar los scripts de inicio, así que el
+       garaje no llegaba a existir, la guardia fallaba al leerlo y la prueba
+       medía un error del banco, no del tema. */
+    await page.addScriptTag({
+      content: `
+        window.SJWGarage = {
+          _v: ${JSON.stringify(vehiculo)}, _subs: [],
+          get() { return this._v; },
+          label(x) { return [x.make, x.model, x.generation].filter(Boolean).join(' '); },
+          subscribe(fn) { this._subs.push(fn); },
+          set(x) { this._v = x; this._subs.forEach((f) => f()); }
+        };
+        window.SJWAnalytics = { track() {} };
+        window.SJWStrings = {};
+      `,
+    });
     await page.addScriptTag({ content: leer('sjw-fitment.js') });
     await page.addScriptTag({ content: leer('sjw-buy-guard.js') });
     await page.waitForTimeout(60);
@@ -175,6 +181,75 @@ function t(nombre, real, esperado) {
   const pr3 = await props(p);
   t('metafield ausente · el resultado es pendiente, no compatible',
     /confirmaci[oó]n t[eé]cnica/i.test(pr3['Resultado mostrado en la web'] || ''), true);
+  await p.close();
+
+  /* --- 7. Cambio de variante: la confirmación anterior deja de valer --- */
+  p = await escenario(VEHICULO, PRODUCTO, true);
+  t('antes de cambiar de variante · la compra está abierta',
+    await p.locator('#add').isDisabled(), false);
+  await p.evaluate(() => document.dispatchEvent(new CustomEvent('variant:update', { bubbles: true })));
+  await p.waitForTimeout(60);
+  t('tras cambiar de variante · la casilla se desmarca',
+    await p.locator('[data-sjw-confirm]').isChecked(), false);
+  t('tras cambiar de variante · la compra vuelve a cerrarse',
+    await p.locator('#add').isDisabled(), true);
+  t('tras cambiar de variante · el formulario no se envía',
+    await intentaComprar(p, '#add'), false);
+  await p.close();
+
+  /* --- 8. Recargar la página no conserva la confirmación --------------- */
+  p = await escenario(VEHICULO, PRODUCTO, true);
+  t('confirmado antes de recargar · la compra está abierta',
+    await p.locator('#add').isDisabled(), false);
+  await p.close();
+  p = await escenario(VEHICULO);   // misma visita, página nueva
+  t('tras recargar · la casilla vuelve sin marcar',
+    await p.locator('[data-sjw-confirm]').isChecked(), false);
+  t('tras recargar · la compra vuelve a estar cerrada',
+    await p.locator('#add').isDisabled(), true);
+  await p.close();
+
+  /* --- 9. Manipular el DOM desde el navegador no abre la compra -------- */
+  p = await escenario(VEHICULO);   // con vehículo, sin confirmar
+  await p.evaluate(() => {
+    /* Lo que haría alguien desde las herramientas del navegador. */
+    document.getElementById('add').disabled = false;
+    document.getElementById('add').removeAttribute('aria-disabled');
+    document.getElementById('add').style.pointerEvents = '';
+    document.getElementById('acc').removeAttribute('inert');
+    document.getElementById('shoppay').disabled = false;
+    document.querySelector('[data-sjw-confirm-wrap]').hidden = true;
+  });
+  await p.waitForTimeout(40);
+  t('DOM manipulado · añadir al carrito sigue sin enviar',
+    await intentaComprar(p, '#add'), false);
+  t('DOM manipulado · el botón acelerado sigue sin enviar',
+    await intentaComprar(p, '#shoppay'), false);
+  /* La guardia vuelve a poner cada cosa en su sitio en el siguiente repintado:
+     lo que manda es su veredicto, no los atributos del DOM. */
+  t('DOM manipulado · la casilla vuelve a mostrarse',
+    await p.locator('[data-sjw-confirm-wrap]').evaluate((e) => e.hidden), false);
+  t('DOM manipulado · añadir vuelve a estar deshabilitado',
+    await p.locator('#add').isDisabled(), true);
+
+  /* Y por la vía legítima sí se abre: la guardia no está simplemente rota. */
+  await p.locator('[data-sjw-confirm]').check();
+  await p.waitForTimeout(40);
+  t('tras confirmar de verdad · la compra se abre',
+    await p.locator('#add').isDisabled(), false);
+  t('tras confirmar de verdad · el formulario se envía',
+    await intentaComprar(p, '#add'), true);
+  await p.close();
+
+  /* --- 10. Sin el motor de compatibilidad, la compra queda cerrada ----- */
+  p = await browser.newPage();
+  await p.setContent(pagina(PRODUCTO));
+  await p.addScriptTag({ content: leer('sjw-buy-guard.js') });   // sin sjw-fitment.js ni garaje
+  await p.waitForTimeout(80);
+  t('sin el motor cargado · añadir al carrito deshabilitado',
+    await p.locator('#add').isDisabled(), true);
+  t('sin el motor cargado · el formulario no se envía',
+    await intentaComprar(p, '#add'), false);
   await p.close();
 
   await browser.close();

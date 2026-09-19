@@ -108,7 +108,26 @@
          botones acelerados, que no siempre disparan el submit del formulario. */
       this.form.addEventListener('click', this.onClick.bind(this), true);
 
-      window.SJWGarage.subscribe(this.apply.bind(this));
+      if (window.SJWGarage && typeof window.SJWGarage.subscribe === 'function') {
+        window.SJWGarage.subscribe(this.apply.bind(this));
+      }
+
+      /* Al cambiar de variante, la confirmación anterior deja de valer: el
+         cliente confirmó otra cosa. Se desmarca y la compra vuelve a cerrarse
+         hasta que la marque de nuevo. */
+      var reiniciar = this.reiniciarConfirmacion.bind(this);
+      ['variant:update', 'variant:change', 'variantChange', 'shopify:variant:change']
+        .forEach(function (nombre) { document.addEventListener(nombre, reiniciar); });
+      this.form.addEventListener('change', function (ev) {
+        if (ev.target && ev.target.name === 'id') reiniciar();
+      });
+
+      this.apply();
+    }
+
+    /** Olvida la confirmación y vuelve a cerrar la compra. */
+    reiniciarConfirmacion() {
+      if (this.confirmBox) this.confirmBox.checked = false;
       this.apply();
     }
 
@@ -139,6 +158,12 @@
     }
 
     state() {
+      /* Si por lo que sea el motor o el garaje no han cargado, no se supone
+         nada: se trata como "sin vehículo", que deja la compra cerrada. Un
+         fallo de carga nunca puede abrir una vía de compra. */
+      if (!window.SJWFitment || !window.SJWGarage) {
+        return { status: 'unknown', product: null, vehicle: null };
+      }
       var product = window.SJWFitment.readProduct(this.dataEl);
       var vehicle = window.SJWGarage.get();
       if (!product) return { status: 'unknown', product: null, vehicle: vehicle };
