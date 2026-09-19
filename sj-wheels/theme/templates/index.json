@@ -37,7 +37,8 @@
           "type": "message",
           "settings": {
             "text": "Atención por WhatsApp",
-            "icon": "dot"
+            "icon": "dot",
+            "requiere": "whatsapp"
           }
         }
       },
@@ -56,7 +57,7 @@
       "settings": {
         "eyebrow": "Tu vehículo",
         "heading": "¿Qué coche tienes?",
-        "subheading": "Todavía no hay vehículos verificados en la base, así que la consulta se hace por formulario y la revisa una persona.",
+        "subheading": "Selecciona tu vehículo y verás el estado de compatibilidad de cada diseño.",
         "cta_label": "Buscar llantas compatibles",
         "redirect_url": "",
         "compact": false,
@@ -91,7 +92,7 @@
           "type": "benefit",
           "settings": {
             "title": "Asesoramiento personalizado",
-            "text": "Si dudas con la medida, te ayudamos por WhatsApp antes de comprar."
+            "text": "Si dudas con la medida, la revisamos contigo antes de que compres."
           }
         }
       },
@@ -150,42 +151,6 @@
         "link_label": "Ver todo el catálogo",
         "link_url": "shopify://collections/all",
         "background_color": "#090A0C"
-      }
-    },
-    "sjw_steps": {
-      "type": "sjw-steps",
-      "blocks": {
-        "s1": {
-          "type": "step",
-          "settings": {
-            "title": "Introduce tu vehículo",
-            "text": "Marca, modelo, año y motorización cuando haga falta."
-          }
-        },
-        "s2": {
-          "type": "step",
-          "settings": {
-            "title": "Elige tus llantas",
-            "text": "Te mostramos el estado de compatibilidad de cada diseño."
-          }
-        },
-        "s3": {
-          "type": "step",
-          "settings": {
-            "title": "Revisamos antes del envío",
-            "text": "Comprobamos las medidas una última vez antes de preparar tu pedido."
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3"
-      ],
-      "settings": {
-        "eyebrow": "Así de simple",
-        "heading": "Cómo funciona",
-        "background_color": "#121418"
       }
     },
     "sjw_guide": {
@@ -346,7 +311,6 @@
     "sjw_selector",
     "sjw_benefits",
     "sjw_categories",
-    "sjw_steps",
     "sjw_guide",
     "sjw_faq",
     "sjw_cta"

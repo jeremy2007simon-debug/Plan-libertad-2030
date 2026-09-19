@@ -12,6 +12,15 @@
     endif
   endfor
 -%}
+{%- comment -%}
+  Un título "Comprar por diámetro" sobre una disculpa no vende nada y repite lo
+  que ya cuentan la portada y la consulta guiada. Mientras no haya ninguna
+  colección con productos visibles, la sección no se pinta; reaparece sola el
+  día que el catálogo se publique.
+{%- endcomment -%}
+{%- assign pintar = true -%}
+{%- if visibles == 0 and section.settings.ocultar_si_vacio -%}{%- assign pintar = false -%}{%- endif -%}
+{%- if pintar -%}
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container">
     <div class="sjw-cats__head">
@@ -68,6 +77,7 @@
     </ul>
   </div>
 </section>
+{%- endif -%}
 
 <style>
   .sjw-cats__head { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: flex-end;
@@ -100,6 +110,8 @@
     { "type": "text", "id": "heading", "label": "Título", "default": "Comprar por diámetro" },
     { "type": "text", "id": "link_label", "label": "Texto del enlace", "default": "Ver todo" },
     { "type": "url", "id": "link_url", "label": "Enlace" },
+    { "type": "checkbox", "id": "ocultar_si_vacio", "label": "Ocultar mientras no haya productos", "default": true,
+      "info": "Evita anunciar un catálogo que todavía no se puede comprar." },
     { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#090A0C" }
   ],
   "presets": [{ "name": "Categorías", "blocks": [{ "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }] }]

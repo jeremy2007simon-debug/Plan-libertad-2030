@@ -489,6 +489,19 @@
       "empty_cta": "Consultar compatibilidad",
       "see_all": "Ver todo el catálogo"
     },
+    "consulta": {
+      "lead": "Revisamos la compatibilidad a mano, con la ficha técnica de tu coche delante. Funciona así:",
+      "paso1_title": "Indícanos tu vehículo",
+      "paso1_body": "Marca, modelo, año y motorización. Si tienes la ficha técnica a mano, mejor.",
+      "paso2_title": "Revisamos las medidas",
+      "paso2_body": "Comprobamos PCD, diámetro, ancho, ET y buje contra los datos del fabricante.",
+      "paso3_title": "Te enviamos opciones compatibles",
+      "paso3_body": "Solo los diseños que encajan, con su medida y lo que implica cada uno.",
+      "paso4_title": "Confirmas tu pedido",
+      "paso4_body": "Decides tú. No preparamos ningún envío sin tu confirmación.",
+      "cta": "Indicar mi vehículo",
+      "alt": "Ver la guía de medidas"
+    },
     "collection": {
       "catalog_pending_title": "El catálogo todavía no está publicado",
       "catalog_pending_body": "Estamos preparando las fichas: medidas, fotografías y revisión técnica. Mientras tanto podemos comprobar a mano qué llantas encajan en tu coche.",

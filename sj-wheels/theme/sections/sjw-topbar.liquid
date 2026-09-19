@@ -3,6 +3,14 @@
   <div class="sjw-container sjw-topbar__inner">
     <ul class="sjw-topbar__list" role="list">
       {%- for block in section.blocks -%}
+        {%- comment -%}
+          Un mensaje puede depender de un canal: si el canal no está
+          configurado, no se promete. Así la barra nunca anuncia una atención
+          por WhatsApp que no existe.
+        {%- endcomment -%}
+        {%- if block.settings.requiere == 'whatsapp' and settings.sjw_whatsapp_number == blank -%}
+          {%- continue -%}
+        {%- endif -%}
         <li class="sjw-topbar__item" {{ block.shopify_attributes }}>
           {%- if block.settings.icon != 'none' -%}
             <span class="sjw-topbar__dot" aria-hidden="true"></span>
@@ -41,7 +49,13 @@
       "settings": [
         { "type": "text", "id": "text", "label": "Texto", "default": "Compatibilidad revisada antes del envío" },
         { "type": "select", "id": "icon", "label": "Punto de color",
-          "options": [{ "value": "dot", "label": "Sí" }, { "value": "none", "label": "No" }], "default": "dot" }
+          "options": [{ "value": "dot", "label": "Sí" }, { "value": "none", "label": "No" }], "default": "dot" },
+        { "type": "select", "id": "requiere", "label": "Mostrar solo si está configurado",
+          "info": "Evita prometer un canal que todavía no existe.",
+          "options": [
+            { "value": "none", "label": "Mostrar siempre" },
+            { "value": "whatsapp", "label": "Solo con número de WhatsApp" }
+          ], "default": "none" }
       ]
     }
   ],
@@ -54,7 +68,7 @@
       { "type": "message", "settings": { "text": "Compatibilidad revisada antes del envío" } },
       { "type": "message", "settings": { "text": "Juegos completos de 4 llantas" } },
       { "type": "message", "settings": { "text": "Entrega a domicilio" } },
-      { "type": "message", "settings": { "text": "Atención por WhatsApp" } }
+      { "type": "message", "settings": { "text": "Atención por WhatsApp", "requiere": "whatsapp" } }
     ]
   }]
 }

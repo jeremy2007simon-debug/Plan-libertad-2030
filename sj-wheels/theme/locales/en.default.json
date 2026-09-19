@@ -501,6 +501,19 @@
       "empty_cta": "Ask about fitment",
       "see_all": "See the whole catalogue"
     },
+    "consulta": {
+      "lead": "We check fitment by hand, with your car's technical sheet in front of us. Here is how it works:",
+      "paso1_title": "Tell us your vehicle",
+      "paso1_body": "Make, model, year and engine. Better still if you have the technical sheet to hand.",
+      "paso2_title": "We check the measurements",
+      "paso2_body": "We compare PCD, diameter, width, ET and centre bore against the manufacturer's data.",
+      "paso3_title": "We send you the wheels that fit",
+      "paso3_body": "Only the designs that fit, with their size and what each one involves.",
+      "paso4_title": "You confirm your order",
+      "paso4_body": "It is your call. We prepare no shipment without your confirmation.",
+      "cta": "Tell us my vehicle",
+      "alt": "See the sizing guide"
+    },
     "collection": {
       "catalog_pending_title": "The catalogue is not published yet",
       "catalog_pending_body": "We are preparing the listings: measurements, photography and technical review. In the meantime we can check by hand which wheels fit your car.",

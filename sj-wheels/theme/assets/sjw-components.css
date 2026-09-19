@@ -319,6 +319,96 @@
   background-size: 64px 64px;
 }
 
+/* --- `hidden` manda -------------------------------------------------------
+   El atributo `hidden` de HTML se apoya en `display: none` de la hoja del
+   navegador, y cualquier regla de autor la gana. Como casi todos estos
+   componentes declaran `display`, un elemento marcado como oculto seguía
+   viéndose: la nota "Tu vehículo" aparecía en la portada sin haber elegido
+   coche, y lo mismo pasaba con los campos del buscador y el botón de reinicio.
+   Esta regla lo zanja para todo el sistema.                                  */
+.sjw-root [hidden],
+.sjw-root[hidden],
+[hidden][class*="sjw-"] { display: none !important; }
+
+/* --- Estados de acción ----------------------------------------------------
+   Cargando, hecho y error sobre el mismo botón: el cliente ve siempre en qué
+   punto está sin que el botón cambie de tamaño ni salte el diseño.           */
+.sjw-btn[aria-busy="true"] { pointer-events: none; color: transparent; position: relative; }
+.sjw-btn[aria-busy="true"]::after {
+  content: ""; position: absolute; inset: 50% auto auto 50%;
+  width: 1.05em; height: 1.05em; margin: -0.525em 0 0 -0.525em;
+  border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%;
+  color: var(--_fg);
+  animation: sjw-spin .7s linear infinite;
+}
+@keyframes sjw-spin { to { transform: rotate(360deg); } }
+
+.sjw-btn[data-estado="hecho"] {
+  --_bg: var(--sjw-ok-soft); --_fg: var(--sjw-ok); --_bd: var(--sjw-ok-border);
+}
+.sjw-btn[data-estado="error"] {
+  --_bg: var(--sjw-error-soft); --_fg: var(--sjw-error); --_bd: var(--sjw-error-border);
+}
+
+/* Sin movimiento, el giro se sustituye por un latido de opacidad. */
+@media (prefers-reduced-motion: reduce) {
+  .sjw-btn[aria-busy="true"]::after {
+    animation: sjw-latido 1.2s ease-in-out infinite;
+    border-top-color: currentColor;
+  }
+  @keyframes sjw-latido { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+}
+
+/* --- Respuesta de un formulario ------------------------------------------ */
+.sjw-form-msg {
+  display: flex; align-items: flex-start; gap: var(--sjw-s2);
+  font-size: .875rem; line-height: 1.55; margin: 0;
+}
+.sjw-form-msg__icon { flex: none; width: 16px; height: 16px; margin-top: .15em; }
+.sjw-form-msg--ok    { color: var(--sjw-ok); }
+.sjw-form-msg--error { color: var(--sjw-error); }
+.sjw-form-msg--info  { color: var(--sjw-text-muted); }
+
+/* --- Imagen ausente -------------------------------------------------------
+   Marca de posición geométrica y neutra. No imita una fotografía ni sugiere
+   un diseño concreto: solo indica que esa imagen todavía no existe.          */
+.sjw-media { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--sjw-r-md); background: var(--sjw-graphite); }
+.sjw-media__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sjw-media--vacia {
+  display: grid; place-items: center; gap: var(--sjw-s3);
+  border: 1px dashed var(--sjw-metal);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,.04) 0 38%, transparent 39%),
+    linear-gradient(var(--sjw-grid-line) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, var(--sjw-grid-line) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--sjw-graphite);
+}
+.sjw-media--vacia__marca { width: 38%; max-width: 120px; color: var(--sjw-text-faint); opacity: .7; }
+.sjw-media--vacia__texto {
+  font-size: .75rem; letter-spacing: var(--sjw-tracking-eyebrow); text-transform: uppercase;
+  color: var(--sjw-text-faint); text-align: center; padding-inline: var(--sjw-s3);
+}
+
+/* --- Estados que faltaban en elementos ya existentes ---------------------- */
+.sjw-card--interactive:focus-within { border-color: var(--sjw-orange); }
+.sjw-card--interactive:active { transform: translateY(0); }
+.sjw-chip:active { background: var(--sjw-metal); }
+.sjw-chip[aria-pressed="true"] { border-color: var(--sjw-orange); color: var(--sjw-warm-white); background: var(--sjw-orange-soft); }
+.sjw-btn-icon[disabled], .sjw-btn-icon[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.sjw-btn-icon:active:not([disabled]) { transform: translateY(1px); }
+.sjw-input[disabled], .sjw-input[readonly] { opacity: .55; cursor: not-allowed; }
+
+/* --- Menú móvil: objetivo táctil ------------------------------------------
+   Horizon deja los enlaces de submenú del cajón en 34 px de alto. En un móvil
+   eso obliga a apuntar y el dedo falla. Se suben al mínimo cómodo de 44 px
+   desde esta hoja, sin tocar el archivo de Horizon. Los de primer nivel ya
+   venían en 47 px y se quedan como están.                                    */
+.menu-drawer__menu-item--child {
+  min-height: 44px;
+  padding-block: 9px;
+}
+
 /* --- Utilidades ---------------------------------------------------------- */
 .sjw-visually-hidden {
   position: absolute !important; width: 1px; height: 1px;

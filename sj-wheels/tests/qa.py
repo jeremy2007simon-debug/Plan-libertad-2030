@@ -223,6 +223,30 @@ for p in sjw:
         errors.append(f'{p.name}: ruta interna sin localizar → {m.group(1)}')
 ok('rutas internas localizadas')
 
+# --- 19. Plantillas JSON: `sections` y `order` deben coincidir -------------
+# Shopify rechaza en silencio una plantilla que define una sección y no la
+# lista en `order`. Se perdió un despliegue entero averiguándolo.
+import json as _json
+plantillas_json = sorted((T / 'templates').glob('*.json')) + sorted((T / 'sections').glob('*-group.json'))
+for p in plantillas_json:
+    crudo = p.read_text(encoding='utf-8')
+    crudo = re.sub(r'/\*.*?\*/', '', crudo, flags=re.S)
+    try:
+        datos = _json.loads(crudo)
+    except ValueError as e:
+        errors.append(f'{p.name}: JSON no válido ({e})')
+        continue
+    definidas = set(datos.get('sections', {}))
+    ordenadas = datos.get('order')
+    if ordenadas is None:
+        continue                      # plantilla sin orden explícito
+    ordenadas = set(ordenadas)
+    for huerfana in sorted(definidas - ordenadas):
+        errors.append(f'{p.name}: la sección "{huerfana}" está definida pero no aparece en «order»')
+    for fantasma in sorted(ordenadas - definidas):
+        errors.append(f'{p.name}: «order» nombra "{fantasma}", que no está definida')
+ok('plantillas JSON coherentes')
+
 print(f'{checks} comprobaciones ejecutadas\n')
 if warnings:
     print(f'AVISOS ({len(warnings)}):')

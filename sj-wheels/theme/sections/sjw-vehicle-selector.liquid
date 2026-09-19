@@ -34,8 +34,17 @@
 
       <h2 class="sjw-h2" id="sjw-selector-title-{{ section.id }}">{{ section.settings.heading }}</h2>
 
-      {%- if section.settings.subheading != blank -%}
-        <p class="sjw-lead sjw-selector__lead">{{ section.settings.subheading }}</p>
+      {%- comment -%}
+        Con buscador, el texto de apoyo es el del personalizador. Sin vehículos
+        cargados, lo escribe el tema: así no se repite tres veces que la base
+        está vacía, que era lo que veía el cliente.
+      {%- endcomment -%}
+      {%- if hay_vehiculos > 0 -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="sjw-lead sjw-selector__lead">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      {%- else -%}
+        <p class="sjw-lead sjw-selector__lead">{{ 'sjw.consulta.lead' | t }}</p>
       {%- endif -%}
 
       <sjw-vehicle-selector
@@ -79,25 +88,43 @@
         </form>
         {%- endif -%}
 
-        {%- comment -%} Estado vacío: aún no hay vehículos cargados en la tienda. {%- endcomment -%}
-        <div class="sjw-empty" data-sjw-selector-empty {% if hay_vehiculos > 0 %}hidden{% endif %}>
-          <p class="sjw-empty__title">{{ 'sjw.selector.empty_title' | t }}</p>
-          <p class="sjw-body">{{ 'sjw.selector.empty_body' | t }}</p>
-          <div class="sjw-empty__actions">
-            {%- comment -%}
-              Sin vehículos verificados, la vía real es el formulario, no un
-              WhatsApp que puede no estar configurado ni un catálogo vacío.
-            {%- endcomment -%}
+        {%- comment -%}
+          Sin vehículos verificados no hay buscador que enseñar, así que en su
+          lugar se explica el recorrido real de la consulta manual. Un solo
+          mensaje y una sola llamada a la acción.
+        {%- endcomment -%}
+        <div class="sjw-consulta" data-sjw-selector-empty {% if hay_vehiculos > 0 %}hidden{% endif %}>
+          <ol class="sjw-consulta__pasos" role="list">
+            {%- assign pasos = 'paso1,paso2,paso3,paso4' | split: ',' -%}
+            {%- for paso in pasos -%}
+              {%- liquid
+                assign k_title = 'sjw.consulta.' | append: paso | append: '_title'
+                assign k_body  = 'sjw.consulta.' | append: paso | append: '_body'
+              -%}
+              <li class="sjw-consulta__paso">
+                <span class="sjw-consulta__n" aria-hidden="true">{{ forloop.index }}</span>
+                <span class="sjw-consulta__texto">
+                  <span class="sjw-consulta__title">{{ k_title | t }}</span>
+                  <span class="sjw-consulta__body">{{ k_body | t }}</span>
+                </span>
+              </li>
+            {%- endfor -%}
+          </ol>
+
+          <div class="sjw-consulta__acciones">
             {%- capture u_pages_solicitud_de_compatibilidad -%}{% render 'sjw-url', ruta: '/pages/solicitud-de-compatibilidad' %}{%- endcapture -%}
             <a class="sjw-btn sjw-btn--primary" href="{{ u_pages_solicitud_de_compatibilidad }}">
-              {{ 'sjw.selector.empty_form' | t }}
+              {{ 'sjw.consulta.cta' | t }}
             </a>
+            {%- capture u_pages_guia_de_medidas -%}{% render 'sjw-url', ruta: '/pages/guia-de-medidas' %}{%- endcapture -%}
+            <a class="sjw-btn sjw-btn--secondary" href="{{ u_pages_guia_de_medidas }}">
+              {{ 'sjw.consulta.alt' | t }}
+            </a>
+            {%- comment -%}
+              El botón de WhatsApp solo aparece si hay número configurado: el
+              propio snippet no pinta nada cuando falta.
+            {%- endcomment -%}
             {% render 'sjw-whatsapp', context: 'no_results', label: wa_label %}
-            {%- if collections.all.products_count > 0 -%}
-              <a class="sjw-btn sjw-btn--secondary" href="{{ routes.all_products_collection_url }}">
-                {{ 'sjw.selector.empty_browse' | t }}
-              </a>
-            {%- endif -%}
           </div>
         </div>
       </sjw-vehicle-selector>
@@ -124,6 +151,34 @@
   .sjw-selector__actions .sjw-btn--primary { flex: 1 1 16rem; }
   .sjw-selector__disclaimer { margin: 0; }
   .sjw-selector--compact { gap: var(--sjw-s3); }
+
+  /* Consulta guiada: cuatro pasos, sin caja de "no hay nada". */
+  .sjw-consulta { display: grid; gap: var(--sjw-s5); }
+  .sjw-consulta__pasos {
+    display: grid; gap: var(--sjw-s4);
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0; padding: 0; list-style: none;
+    counter-reset: none;
+  }
+  @media (min-width: 720px)  { .sjw-consulta__pasos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1080px) { .sjw-consulta__pasos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sjw-consulta__paso {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sjw-s3);
+    align-items: start;
+    padding-top: var(--sjw-s4);
+    border-top: 2px solid var(--sjw-metal);
+  }
+  .sjw-consulta__n {
+    display: grid; place-items: center;
+    width: 1.75rem; height: 1.75rem;
+    border-radius: var(--sjw-r-pill);
+    background: var(--sjw-orange-soft); color: var(--sjw-orange);
+    font-size: .8125rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .sjw-consulta__texto { display: grid; gap: var(--sjw-s1); }
+  .sjw-consulta__title { font-size: .9375rem; font-weight: 700; color: var(--sjw-warm-white); }
+  .sjw-consulta__body  { font-size: .875rem; line-height: 1.55; color: var(--sjw-text-muted); }
+  .sjw-consulta__acciones { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
 </style>
 
 <script src="{{ 'sjw-selector.js' | asset_url }}" defer></script>
