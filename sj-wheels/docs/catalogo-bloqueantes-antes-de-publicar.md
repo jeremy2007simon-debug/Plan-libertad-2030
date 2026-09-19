@@ -50,32 +50,56 @@ prohíbe inventar precios, y la validación 4 y 5 del paso 4 no se pueden supera
 
 ---
 
-## Bloqueante 2 · El transporte contradice lo que dice la ficha
+## Bloqueante 2 · El transporte no está resuelto para un producto de 40–64 kg
 
-Perfil de envío actual (perfil general, el único):
+> **Corrección del 19-09-2026.** La primera versión de este documento decía que
+> España tenía «dos tarifas duplicadas» y que «no hay zona de Canarias». Las dos
+> afirmaciones eran erróneas. Al volver a leer el perfil de envío con la API
+> (`deliveryProfiles`) se ve lo siguiente, y es lo que vale.
 
-| Zona | Tarifa |
-|---|---|
-| España | «Estándar» 6,99 € **y** «Estándar» 0,00 €, las dos activas |
-| UE | «Estándar Internacional» 8,99 € |
-| Internacional (14 países) | «Estándar» 12,99 € |
+Perfil de envío: **«Perfil general»**, el único, marcado como predeterminado.
+Tres zonas:
 
-Tres problemas:
+| Zona | Países / provincias | Tarifa |
+|---|---|---|
+| España | ES completo: las 52 provincias, **incluidas Las Palmas, Santa Cruz de Tenerife, Ceuta, Melilla y Balears** | «Estándar» 6,99 € |
+| España | las mismas | «Estándar» 0,00 € **cuando el pedido llega a 55 €** |
+| UE (Unión Europea) | 26 países | «Estándar Internacional» 8,99 € |
+| Internacional | 14 países (EE. UU., Canadá, Reino Unido, Japón, Australia…) | «Estándar» 12,99 € |
 
-1. **Dos tarifas activas con el mismo nombre para España.** El cliente ve dos
-   opciones idénticas o Shopify elige una: en cualquier caso es ambiguo.
-2. **Una de ellas cobra 6,99 €** sobre un producto cuya ficha promete transporte
-   incluido. O la ficha miente o la tarifa sobra.
-3. **No hay zona de Canarias.** Canarias comparte el código de país ES pero está
-   fuera del territorio aduanero y del IVA de la UE. La tienda promete *«Envío a
-   península y Canarias»* y *«Canarias 25–30 días»*, y un juego de 60 kg a
-   Canarias no se despacha con una tarifa peninsular de 6,99 €. Un pedido
-   canario entraría hoy sin despacho aduanero previsto.
+Las dos filas de España **no son dos tarifas duplicadas**: son la misma
+definición de método (`DeliveryMethodDefinition/1294549385549`) con una
+condición de precio. Shopify muestra la condición como una fila aparte. El
+comportamiento real es: 6,99 € hasta 54,99 € de pedido y gratis a partir de
+55 €.
 
-**Decisión que necesito:** qué tarifa vale para España, si se borra la duplicada,
-y cómo se gestiona Canarias (zona propia, importe y plazo).
+Lo que sí es un problema, y es más grave que un duplicado:
 
----
+1. **Todos los productos del catálogo cuestan 599 € o más.** Con el umbral en
+   55 €, *ningún* pedido de una llanta pagaría nunca transporte: el cliente
+   siempre vería **0,00 €**. La tarifa de 6,99 € no llega a aplicarse jamás en
+   este catálogo.
+2. **Canarias, Ceuta y Melilla están dentro de la zona «España»** y se
+   facturan exactamente igual que la península, pese a estar fuera del
+   territorio aduanero y del IVA de la Unión Europea. Un pedido a Las Palmas
+   hoy saldría con transporte gratis y sin ninguna previsión de despacho de
+   importación, impuestos locales (IGIC) ni sobrecoste insular.
+3. **Ninguna tarifa tiene condición de peso.** Un juego de 4 llantas pesa entre
+   40 y 64 kg según la estimación actual. Un envío así no se transporta gratis a
+   ningún destino de España, y menos a las islas.
+4. **El peso que hoy llevan las variantes es el peso estimado del juego**, y es
+   el valor que Shopify usaría para calcular una tarifa por peso el día que se
+   cree. Está documentado en `13-auditoria-pesos.md`: no es una medición, y no
+   incluye el embalaje.
+
+**Decisiones que necesito, concretas:**
+
+- ¿El PVP incluye el transporte? Si es que sí, el umbral de envío gratis debe
+  bajar a 0 € y la tarifa de 6,99 € debe desaparecer, porque hoy dice lo
+  contrario de lo que decía la ficha. Si es que no, hay que dar una tarifa real.
+- ¿Qué se cobra y en qué plazo a Canarias, Ceuta y Melilla? Mientras no haya una
+  zona propia con su importe, no se puede publicar prometiendo entrega allí.
+- ¿Qué transportista y qué tarifa por peso se contratan para bultos de 40–64 kg?
 
 ## Bloqueante 3 · Hay chino del proveedor a la vista del cliente
 
