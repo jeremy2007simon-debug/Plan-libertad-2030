@@ -420,7 +420,17 @@
       "privacy": "We use these details only to reply to you.",
       "sent_title": "Request received",
       "sent_body": "We will reply to the email you gave us. If the vehicle fits, we will add it to the database so the finder recognises it from now on.",
-      "error_title": "Please check these fields"
+      "error_title": "Please check these fields",
+      "phone": "Phone",
+      "phone_ph": "600 00 00 00",
+      "phone_help": "Optional. We only use it if email is not getting us there.",
+      "required": "required",
+      "optional": "optional",
+      "restored": "We brought back what you had already typed.",
+      "err_required": "We need this to be able to reply to you.",
+      "err_email": "Check the email address: something seems to be missing.",
+      "err_summary_one": "One field still needs checking.",
+      "err_summary_many": "Some fields still need checking."
     },
     "hero": {
       "diagram_alt": "Diagram of a wheel: outer diameter, bolt circle, centre bore and spokes.",

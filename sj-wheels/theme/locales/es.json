@@ -408,7 +408,17 @@
       "privacy": "Usamos estos datos solo para responderte.",
       "sent_title": "Solicitud recibida",
       "sent_body": "Te responderemos al correo que nos has dejado. Si el vehículo encaja, lo añadiremos a la base para que el buscador lo reconozca en adelante.",
-      "error_title": "Revisa estos campos"
+      "error_title": "Revisa estos campos",
+      "phone": "Teléfono",
+      "phone_ph": "600 00 00 00",
+      "phone_help": "Opcional. Solo lo usamos si por correo no nos aclaramos.",
+      "required": "obligatorio",
+      "optional": "opcional",
+      "restored": "Hemos recuperado lo que ya habías escrito.",
+      "err_required": "Necesitamos este dato para poder responderte.",
+      "err_email": "Repasa el correo: parece que falta algo.",
+      "err_summary_one": "Falta un campo por revisar.",
+      "err_summary_many": "Faltan campos por revisar."
     },
     "hero": {
       "diagram_alt": "Esquema de una llanta: diámetro exterior, círculo de tornillos, buje central y radios.",

@@ -38,6 +38,12 @@
     </div>
 
     {% form 'contact', class: 'sjw-req__form', id: 'sjw-fitment-request' %}
+      {%- comment -%}
+        Marca de "enviado" para el script. Un atributo con guion dentro de la
+        etiqueta `form` es terreno resbaladizo en Liquid, así que va como
+        elemento propio.
+      {%- endcomment -%}
+      {%- if form.posted_successfully? -%}<span data-sjw-req-enviado hidden></span>{%- endif -%}
       {%- if form.posted_successfully? -%}
         <div class="sjw-note sjw-note--ok" role="status" tabindex="-1" data-sjw-req-ok>
           {% render 'sjw-icono', nombre: 'ok' %}
@@ -49,7 +55,7 @@
       {%- endif -%}
 
       {%- if form.errors -%}
-        <div class="sjw-note sjw-note--error" role="alert" tabindex="-1">
+        <div class="sjw-note sjw-note--error" role="alert" tabindex="-1" data-sjw-req-error>
           {% render 'sjw-icono', nombre: 'error' %}
           <div>
             <strong>{{ 'sjw.request.error_title' | t }}</strong>
@@ -64,14 +70,35 @@
 
       <div class="sjw-req__grid">
         <p class="sjw-field">
-          <label class="sjw-label" for="sjw-req-nombre">{{ 'sjw.request.name' | t }}</label>
+          <label class="sjw-label" for="sjw-req-nombre">
+            {{ 'sjw.request.name' | t }}
+            <span class="sjw-req__marca">{{ 'sjw.request.required' | t }}</span>
+          </label>
           <input class="sjw-input" id="sjw-req-nombre" type="text" name="contact[name]"
-                 autocomplete="name" required value="{{ form.name }}">
+                 autocomplete="name" required aria-required="true"
+                 {% if form.errors contains 'name' %}aria-invalid="true"{% endif %}
+                 value="{{ form.name }}">
         </p>
         <p class="sjw-field">
-          <label class="sjw-label" for="sjw-req-email">{{ 'sjw.request.email' | t }}</label>
+          <label class="sjw-label" for="sjw-req-email">
+            {{ 'sjw.request.email' | t }}
+            <span class="sjw-req__marca">{{ 'sjw.request.required' | t }}</span>
+          </label>
           <input class="sjw-input" id="sjw-req-email" type="email" name="contact[email]"
-                 autocomplete="email" required value="{{ form.email }}">
+                 autocomplete="email" required aria-required="true"
+                 {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+                 value="{{ form.email }}">
+        </p>
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-tel">
+            {{ 'sjw.request.phone' | t }}
+            <span class="sjw-req__marca sjw-req__marca--opcional">{{ 'sjw.request.optional' | t }}</span>
+          </label>
+          <input class="sjw-input" id="sjw-req-tel" type="tel" name="contact[phone]"
+                 autocomplete="tel" inputmode="tel"
+                 aria-describedby="sjw-req-tel-ayuda"
+                 placeholder="{{ 'sjw.request.phone_ph' | t }}">
+          <span class="sjw-small" id="sjw-req-tel-ayuda">{{ 'sjw.request.phone_help' | t }}</span>
         </p>
         {%- if section.settings.mostrar_motivo -%}
           <p class="sjw-field sjw-req__wide">
@@ -112,13 +139,16 @@
           <label class="sjw-label" for="sjw-req-ref">{{ 'sjw.request.reference' | t }}</label>
           <input class="sjw-input" id="sjw-req-ref" type="text"
                  name="contact[Referencia de la llanta]" data-sjw-req-reference
+                 aria-describedby="sjw-req-ref-ayuda"
                  placeholder="{{ 'sjw.request.reference_ph' | t }}">
-          <span class="sjw-small">{{ 'sjw.request.reference_help' | t }}</span>
+          <span class="sjw-small" id="sjw-req-ref-ayuda">{{ 'sjw.request.reference_help' | t }}</span>
         </p>
         <p class="sjw-field sjw-req__wide">
           <label class="sjw-label" for="sjw-req-msg">{{ 'sjw.request.message' | t }}</label>
           <textarea class="sjw-input sjw-req__area" id="sjw-req-msg" rows="4"
-                    name="contact[body]" placeholder="{{ 'sjw.request.message_ph' | t }}"></textarea>
+                    name="contact[body]"
+                    {% if form.errors contains 'body' %}aria-invalid="true"{% endif %}
+                    placeholder="{{ 'sjw.request.message_ph' | t }}">{{ form.body }}</textarea>
         </p>
       </div>
 
@@ -129,6 +159,11 @@
       <input type="hidden" name="contact[Vehículo guardado en la web (indicado por el cliente)]"
              data-sjw-req-vehicle value="">
 
+      <p class="sjw-form-msg sjw-form-msg--info" data-sjw-req-restaurado hidden role="status">
+        {% render 'sjw-icono', nombre: 'info' %}
+        <span>{{ 'sjw.request.restored' | t }}</span>
+      </p>
+
       <div class="sjw-req__actions">
         <button class="sjw-btn sjw-btn--primary" type="submit">{{ 'sjw.request.submit' | t }}</button>
         <span class="sjw-small">{{ 'sjw.request.privacy' | t }}</span>
@@ -138,21 +173,162 @@
 </section>
 
 <script>
-  /* Rellena la referencia desde ?ref= y el vehículo desde el garaje local.
-     Ambos campos quedan marcados como dato indicado por el cliente. */
+  /* Tres cosas, todas del lado del cliente:
+     1) rellena la referencia desde ?ref= y el vehículo guardado en el garaje;
+     2) guarda lo escrito mientras se escribe;
+     3) si el envío vuelve con error, devuelve el texto a su sitio.
+
+     Shopify solo repone en Liquid los campos que conoce (nombre, correo,
+     cuerpo). Los del vehículo son campos propios y se perdían enteros: el
+     cliente tenía que volver a escribirlo todo. Esto lo evita. Se usa
+     sessionStorage, que muere al cerrar la pestaña y no sale del navegador. */
   (function () {
+    var form = document.getElementById('sjw-fitment-request');
+    if (!form) return;
+
+    var CLAVE = 'sjw_solicitud_v1';
+    var enviado = !!form.querySelector('[data-sjw-req-enviado]');
+
+    function almacen() {
+      try { return window.sessionStorage; } catch (e) { return null; }
+    }
+
+    function campos() {
+      return Array.prototype.filter.call(
+        form.querySelectorAll('input[name], select[name], textarea[name]'),
+        function (el) { return el.type !== 'hidden' && el.type !== 'submit'; }
+      );
+    }
+
+    function guardar() {
+      var caja = almacen();
+      if (!caja) return;
+      var datos = {};
+      campos().forEach(function (el) { if (el.value) datos[el.name] = el.value; });
+      try { caja.setItem(CLAVE, JSON.stringify(datos)); } catch (e) { /* cuota llena */ }
+    }
+
+    function limpiar() {
+      var caja = almacen();
+      if (!caja) return;
+      try { caja.removeItem(CLAVE); } catch (e) { /* nada que hacer */ }
+    }
+
+    function restaurar() {
+      var caja = almacen();
+      if (!caja) return false;
+      var crudo;
+      try { crudo = caja.getItem(CLAVE); } catch (e) { return false; }
+      if (!crudo) return false;
+      var datos;
+      try { datos = JSON.parse(crudo); } catch (e) { limpiar(); return false; }
+      var repuesto = false;
+      campos().forEach(function (el) {
+        if (!el.value && datos[el.name]) { el.value = datos[el.name]; repuesto = true; }
+      });
+      return repuesto;
+    }
+
+    /* Referencia desde la ficha de producto. */
     var ref = new URLSearchParams(location.search).get('ref');
     if (ref) {
-      var campo = document.querySelector('[data-sjw-req-reference]');
-      if (campo && !campo.value) campo.value = ref;
+      var campoRef = form.querySelector('[data-sjw-req-reference]');
+      if (campoRef && !campoRef.value) campoRef.value = ref;
     }
-    var oculto = document.querySelector('[data-sjw-req-vehicle]');
+
+    /* Vehículo indicado por el cliente, como dato de apoyo. */
+    var oculto = form.querySelector('[data-sjw-req-vehicle]');
     if (oculto && window.SJWGarage) {
       var v = window.SJWGarage.get();
       if (v) oculto.value = window.SJWGarage.label(v);
     }
-    var ok = document.querySelector('[data-sjw-req-ok]');
+
+    if (enviado) {
+      limpiar();
+    } else if (restaurar()) {
+      var aviso = form.querySelector('[data-sjw-req-restaurado]');
+      if (aviso) aviso.hidden = false;
+    }
+
+    form.addEventListener('input', guardar);
+    form.addEventListener('change', guardar);
+
+    /* Validación propia, en el idioma de la tienda.
+       El navegador escribe sus avisos en el idioma de su interfaz, no en el de
+       la página, y los pinta en una burbuja que desaparece sola. Aquí el aviso
+       se queda junto al campo, queda anunciado por `aria-describedby` y el foco
+       va al primero que falla. Si este script no llega a ejecutarse, el
+       navegador sigue validando como siempre: `novalidate` se pone desde aquí. */
+    var TEXTOS = {
+      requerido: {{ 'sjw.request.err_required' | t | json }},
+      correo:    {{ 'sjw.request.err_email' | t | json }}
+    };
+
+    function huecoDeError(el) {
+      var id = el.id + '-error';
+      var hueco = document.getElementById(id);
+      if (!hueco) {
+        hueco = document.createElement('span');
+        hueco.className = 'sjw-field-error';
+        hueco.id = id;
+        hueco.hidden = true;
+        el.parentNode.appendChild(hueco);
+      }
+      return hueco;
+    }
+
+    function describir(el, id, poner) {
+      var lista = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+      var i = lista.indexOf(id);
+      if (poner && i === -1) lista.push(id);
+      if (!poner && i !== -1) lista.splice(i, 1);
+      if (lista.length) el.setAttribute('aria-describedby', lista.join(' '));
+      else el.removeAttribute('aria-describedby');
+    }
+
+    function limpiarError(el) {
+      var hueco = document.getElementById(el.id + '-error');
+      if (hueco) { hueco.hidden = true; hueco.textContent = ''; }
+      el.removeAttribute('aria-invalid');
+      describir(el, el.id + '-error', false);
+    }
+
+    function marcarError(el) {
+      var hueco = huecoDeError(el);
+      hueco.textContent = el.validity.typeMismatch ? TEXTOS.correo : TEXTOS.requerido;
+      hueco.hidden = false;
+      el.setAttribute('aria-invalid', 'true');
+      describir(el, hueco.id, true);
+    }
+
+    campos().forEach(function (el) {
+      el.addEventListener('blur', function () {
+        if (!el.willValidate) return;
+        if (el.checkValidity()) limpiarError(el);
+        else if (el.value) marcarError(el);
+      });
+      el.addEventListener('input', function () {
+        if (el.getAttribute('aria-invalid') === 'true' && el.checkValidity()) limpiarError(el);
+      });
+    });
+
+    form.setAttribute('novalidate', 'novalidate');
+
+    form.addEventListener('submit', function (evento) {
+      var fallan = campos().filter(function (el) { return el.willValidate && !el.checkValidity(); });
+      campos().forEach(function (el) { if (fallan.indexOf(el) === -1) limpiarError(el); });
+      fallan.forEach(marcarError);
+      if (fallan.length) {
+        evento.preventDefault();
+        fallan[0].focus();
+      }
+    });
+
+    /* El foco va al mensaje que explica qué ha pasado. */
+    var ok = form.querySelector('[data-sjw-req-ok]');
+    var mal = form.querySelector('[data-sjw-req-error]');
     if (ok) ok.focus();
+    else if (mal) mal.focus();
   })();
 </script>
 
@@ -166,6 +342,12 @@
   .sjw-req__wide { grid-column: 1 / -1; }
   .sjw-req__area { min-height: 7rem; padding-block: var(--sjw-s3); resize: vertical; }
   .sjw-req__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
+  .sjw-req__marca {
+    margin-inline-start: .5ch;
+    font-size: .6875rem; font-weight: 500; letter-spacing: .04em;
+    text-transform: lowercase; color: var(--sjw-orange);
+  }
+  .sjw-req__marca--opcional { color: var(--sjw-text-faint); }
 </style>
 
 {% schema %}
