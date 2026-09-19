@@ -31,10 +31,33 @@
     endif
   endif
 -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-vbar { position: sticky; top: var(--header-height, 0px); z-index: var(--sjw-z-sticky);
+              background: var(--sjw-graphite); border-block: var(--sjw-border);
+              backdrop-filter: saturate(140%) blur(6px); }
+  .sjw-vbar__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                     gap: var(--sjw-s3); padding-block: var(--sjw-s2); }
+  .sjw-vbar__state { display: flex; align-items: center; gap: var(--sjw-s3); min-height: 38px; }
+  .sjw-vbar__vehicle { display: flex; flex-direction: column; line-height: 1.25; }
+  .sjw-vbar__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sjw-s2); min-height: 38px; }
+</style>
+
 <div class="sjw-root sjw-vbar" data-sjw-vehicle-bar>
   <div class="sjw-container sjw-vbar__inner">
+    {%- comment -%}
+      El estado "sin vehículo" se pinta ya desde el servidor, sin `hidden`.
+      Es el estado de partida de cualquier visita nueva, y así la barra tiene
+      su tamaño definitivo antes de que corra el JavaScript: si se pintara
+      vacía y creciera después, empujaría toda la página hacia abajo. El
+      script solo lo oculta cuando hay vehículo guardado.
+    {%- endcomment -%}
     <div class="sjw-vbar__state">
-      <span class="sjw-badge sjw-badge--neutral" data-sjw-no-vehicle hidden>
+      <span class="sjw-badge sjw-badge--neutral" data-sjw-no-vehicle>
         {{ 'sjw.fitment.select_vehicle' | t }}
       </span>
       <span class="sjw-vbar__vehicle" data-sjw-has-vehicle hidden>
@@ -45,7 +68,7 @@
 
     <div class="sjw-vbar__actions">
       <a class="sjw-btn sjw-btn--secondary sjw-btn--sm" href="{{ destino_selector }}">
-        <span data-sjw-no-vehicle hidden>{{ etiqueta_abrir }}</span>
+        <span data-sjw-no-vehicle>{{ etiqueta_abrir }}</span>
         <span data-sjw-has-vehicle hidden>{{ etiqueta_cambiar }}</span>
       </a>
       <button type="button" class="sjw-btn sjw-btn--ghost sjw-btn--sm" data-sjw-clear-vehicle data-sjw-has-vehicle hidden>
@@ -56,16 +79,6 @@
   </div>
 </div>
 
-<style>
-  .sjw-vbar { position: sticky; top: var(--header-height, 0px); z-index: var(--sjw-z-sticky);
-              background: var(--sjw-graphite); border-block: var(--sjw-border);
-              backdrop-filter: saturate(140%) blur(6px); }
-  .sjw-vbar__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-                     gap: var(--sjw-s3); padding-block: var(--sjw-s2); }
-  .sjw-vbar__state { display: flex; align-items: center; gap: var(--sjw-s3); min-height: 38px; }
-  .sjw-vbar__vehicle { display: flex; flex-direction: column; line-height: 1.25; }
-  .sjw-vbar__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s2); }
-</style>
 
 <script>
   document.addEventListener('click', function (e) {

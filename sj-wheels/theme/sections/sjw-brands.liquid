@@ -19,6 +19,35 @@
   endfor
 -%}
 
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-brands__head { display: grid; gap: var(--sjw-s3); margin-bottom: var(--sjw-s6); }
+  .sjw-brands__lead { max-width: 52ch; }
+  .sjw-brands { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
+                grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px)  { .sjw-brands { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .sjw-brands { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sjw-brand { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center;
+               gap: var(--sjw-s4); padding: var(--sjw-s5); text-decoration: none; color: inherit; }
+  .sjw-brand__marca {
+    display: grid; place-items: center; width: 3rem; height: 3rem; flex: none;
+    border-radius: var(--sjw-r-md); background: var(--sjw-metal);
+    font-weight: 800; font-size: .9375rem; letter-spacing: .04em; color: var(--sjw-warm-white);
+  }
+  .sjw-brand__cuerpo { display: grid; gap: 2px; }
+  .sjw-brand__nombre { font-weight: 600; font-size: 1rem; }
+  .sjw-brand__pendiente { color: var(--sjw-text-faint); }
+  .sjw-brand__medidas { color: var(--sjw-text-faint); }
+  .sjw-brand__flecha { color: var(--sjw-text-faint); transition: transform var(--sjw-dur-fast) var(--sjw-ease); }
+  .sjw-brand:hover .sjw-brand__flecha { transform: translateX(3px); color: var(--sjw-orange); }
+  @media (prefers-reduced-motion: reduce) { .sjw-brand__flecha { transition: none; } }
+  .sjw-brands__pie { margin: var(--sjw-s6) 0 0; }
+</style>
+
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container">
     <div class="sjw-brands__head">
@@ -86,29 +115,6 @@
   </div>
 </section>
 
-<style>
-  .sjw-brands__head { display: grid; gap: var(--sjw-s3); margin-bottom: var(--sjw-s6); }
-  .sjw-brands__lead { max-width: 52ch; }
-  .sjw-brands { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
-                grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 640px)  { .sjw-brands { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1100px) { .sjw-brands { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .sjw-brand { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center;
-               gap: var(--sjw-s4); padding: var(--sjw-s5); text-decoration: none; color: inherit; }
-  .sjw-brand__marca {
-    display: grid; place-items: center; width: 3rem; height: 3rem; flex: none;
-    border-radius: var(--sjw-r-md); background: var(--sjw-metal);
-    font-weight: 800; font-size: .9375rem; letter-spacing: .04em; color: var(--sjw-warm-white);
-  }
-  .sjw-brand__cuerpo { display: grid; gap: 2px; }
-  .sjw-brand__nombre { font-weight: 600; font-size: 1rem; }
-  .sjw-brand__pendiente { color: var(--sjw-text-faint); }
-  .sjw-brand__medidas { color: var(--sjw-text-faint); }
-  .sjw-brand__flecha { color: var(--sjw-text-faint); transition: transform var(--sjw-dur-fast) var(--sjw-ease); }
-  .sjw-brand:hover .sjw-brand__flecha { transform: translateX(3px); color: var(--sjw-orange); }
-  @media (prefers-reduced-motion: reduce) { .sjw-brand__flecha { transition: none; } }
-  .sjw-brands__pie { margin: var(--sjw-s6) 0 0; }
-</style>
 
 {% schema %}
 {

@@ -10,6 +10,20 @@
   assign lugar = block.settings.lugar | default: 'header'
   assign destino = block.settings.enlace
 -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-logo-bloque { display: flex; }
+  .sjw-logo-bloque--izquierda { justify-content: flex-start; }
+  .sjw-logo-bloque--centro    { justify-content: center; }
+  .sjw-logo-bloque--derecha   { justify-content: flex-end; }
+  .sjw-logo-bloque__enlace { display: inline-flex; text-decoration: none; border-radius: var(--sjw-r-md); }
+  .sjw-logo-bloque__enlace:focus-visible { outline: none; box-shadow: var(--sjw-focus-ring); }
+</style>
+
 <div class="sjw-root sjw-logo-bloque sjw-logo-bloque--{{ block.settings.alineacion }}" {{ block.shopify_attributes }}>
   {%- if destino != blank -%}
     <a class="sjw-logo-bloque__enlace" href="{{ destino }}">
@@ -20,14 +34,6 @@
   {%- endif -%}
 </div>
 
-<style>
-  .sjw-logo-bloque { display: flex; }
-  .sjw-logo-bloque--izquierda { justify-content: flex-start; }
-  .sjw-logo-bloque--centro    { justify-content: center; }
-  .sjw-logo-bloque--derecha   { justify-content: flex-end; }
-  .sjw-logo-bloque__enlace { display: inline-flex; text-decoration: none; border-radius: var(--sjw-r-md); }
-  .sjw-logo-bloque__enlace:focus-visible { outline: none; box-shadow: var(--sjw-focus-ring); }
-</style>
 
 {% schema %}
 {

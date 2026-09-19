@@ -2,6 +2,17 @@
   SJ Wheels — Preguntas frecuentes.
   Emite datos estructurados FAQPage solo cuando hay preguntas reales escritas.
 {%- endcomment -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-faq { display: grid; gap: var(--sjw-s5); grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 900px) { .sjw-faq { grid-template-columns: 22rem minmax(0, 1fr); gap: var(--sjw-s7); } }
+  .sjw-faq .sjw-lead { margin-top: var(--sjw-s2); }
+</style>
+
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};"
          aria-labelledby="sjw-faq-{{ section.id }}">
   <div class="sjw-container sjw-faq">
@@ -64,11 +75,6 @@
   </script>
 {%- endif -%}
 
-<style>
-  .sjw-faq { display: grid; gap: var(--sjw-s5); grid-template-columns: minmax(0, 1fr); align-items: start; }
-  @media (min-width: 900px) { .sjw-faq { grid-template-columns: 22rem minmax(0, 1fr); gap: var(--sjw-s7); } }
-  .sjw-faq .sjw-lead { margin-top: var(--sjw-s2); }
-</style>
 
 <script src="{{ 'sjw-accordion.js' | asset_url }}" defer></script>
 

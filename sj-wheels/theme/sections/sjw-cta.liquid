@@ -1,5 +1,17 @@
 {%- comment -%} SJ Wheels — Llamada final a la acción. {%- endcomment -%}
 {%- assign wa_label = 'sjw.whatsapp.cta' | t -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-cta { display: grid; gap: var(--sjw-s5); align-items: center; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 900px) { .sjw-cta { grid-template-columns: minmax(0, 1fr) auto; gap: var(--sjw-s7); } }
+  .sjw-cta__text { display: grid; gap: var(--sjw-s3); }
+  .sjw-cta__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
+</style>
+
 <section class="sjw-root sjw-section sjw-grid-bg" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container sjw-cta">
     <div class="sjw-cta__text">
@@ -20,12 +32,6 @@
   </div>
 </section>
 
-<style>
-  .sjw-cta { display: grid; gap: var(--sjw-s5); align-items: center; grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 900px) { .sjw-cta { grid-template-columns: minmax(0, 1fr) auto; gap: var(--sjw-s7); } }
-  .sjw-cta__text { display: grid; gap: var(--sjw-s3); }
-  .sjw-cta__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
-</style>
 
 {% schema %}
 {

@@ -409,6 +409,24 @@
   padding-block: 9px;
 }
 
+/* El botón del menú medía 14 px de ancho: solo el icono, sin zona de toque
+   alrededor. WCAG 2.2 pide 24 px como mínimo y 44 es lo cómodo con el dedo. */
+.header__icon--menu {
+  min-width: 44px;
+  justify-content: center;
+}
+
+/* Los enlaces de las listas del pie medían 19 px de alto. Se llevan al mínimo
+   de 24 sin cambiar el ritmo vertical de la columna. */
+.menu__item > a,
+.menu__item > button,
+.policy-list-trigger,
+.footer-utilities__text a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
 /* --- Utilidades ---------------------------------------------------------- */
 .sjw-visually-hidden {
   position: absolute !important; width: 1px; height: 1px;

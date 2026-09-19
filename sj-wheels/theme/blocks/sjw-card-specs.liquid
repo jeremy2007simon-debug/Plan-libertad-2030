@@ -11,6 +11,24 @@
 -%}
 
 {%- if p != blank -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-cardspecs { display: grid; gap: var(--sjw-s2); padding-top: var(--sjw-s2); }
+  .sjw-cardspecs__badges { display: flex; flex-wrap: wrap; gap: var(--sjw-s2); }
+  .sjw-cardspecs__list {
+    display: flex; flex-wrap: wrap; gap: var(--sjw-s1) var(--sjw-s3);
+    margin: 0; padding: 0; list-style: none;
+    font-size: .75rem; color: var(--sjw-text-muted); font-variant-numeric: tabular-nums;
+  }
+  .sjw-cardspecs__list abbr { text-decoration: none; border: 0; }
+  .sjw-cardspecs__compare { justify-self: start; }
+  .sjw-cardspecs__compare[aria-pressed="true"] { color: var(--sjw-orange); }
+</style>
+
 <div class="sjw-root sjw-cardspecs" data-sjw-product data-product-id="{{ p.id }}" {{ block.shopify_attributes }}>
   {% render 'sjw-product-fitment-data', product: p %}
 
@@ -57,18 +75,6 @@
 </div>
 {%- endif -%}
 
-<style>
-  .sjw-cardspecs { display: grid; gap: var(--sjw-s2); padding-top: var(--sjw-s2); }
-  .sjw-cardspecs__badges { display: flex; flex-wrap: wrap; gap: var(--sjw-s2); }
-  .sjw-cardspecs__list {
-    display: flex; flex-wrap: wrap; gap: var(--sjw-s1) var(--sjw-s3);
-    margin: 0; padding: 0; list-style: none;
-    font-size: .75rem; color: var(--sjw-text-muted); font-variant-numeric: tabular-nums;
-  }
-  .sjw-cardspecs__list abbr { text-decoration: none; border: 0; }
-  .sjw-cardspecs__compare { justify-self: start; }
-  .sjw-cardspecs__compare[aria-pressed="true"] { color: var(--sjw-orange); }
-</style>
 
 {% schema %}
 {

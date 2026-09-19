@@ -21,6 +21,27 @@
 {%- assign pintar = true -%}
 {%- if visibles == 0 and section.settings.ocultar_si_vacio -%}{%- assign pintar = false -%}{%- endif -%}
 {%- if pintar -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-cats__head { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: flex-end;
+                    justify-content: space-between; margin-bottom: var(--sjw-s5); }
+  .sjw-cats { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
+              grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 800px)  { .sjw-cats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sjw-cat { display: grid; grid-template-columns: minmax(0, 1fr); text-decoration: none; color: inherit; }
+  .sjw-cat__img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--sjw-metal); }
+  .sjw-cat__img--empty { aspect-ratio: 4 / 3; }
+  .sjw-cat__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; padding: var(--sjw-s3) var(--sjw-s4) var(--sjw-s4); }
+  .sjw-cat__title { font-weight: 600; font-size: .9375rem; }
+  .sjw-cats__vacio { margin-top: var(--sjw-s4); }
+  .sjw-cats__accion { margin: var(--sjw-s3) 0 0; }
+  .sjw-cats:empty { display: none; }
+</style>
+
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container">
     <div class="sjw-cats__head">
@@ -79,21 +100,6 @@
 </section>
 {%- endif -%}
 
-<style>
-  .sjw-cats__head { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: flex-end;
-                    justify-content: space-between; margin-bottom: var(--sjw-s5); }
-  .sjw-cats { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
-              grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  @media (min-width: 800px)  { .sjw-cats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .sjw-cat { display: grid; grid-template-columns: minmax(0, 1fr); text-decoration: none; color: inherit; }
-  .sjw-cat__img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--sjw-metal); }
-  .sjw-cat__img--empty { aspect-ratio: 4 / 3; }
-  .sjw-cat__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; padding: var(--sjw-s3) var(--sjw-s4) var(--sjw-s4); }
-  .sjw-cat__title { font-weight: 600; font-size: .9375rem; }
-  .sjw-cats__vacio { margin-top: var(--sjw-s4); }
-  .sjw-cats__accion { margin: var(--sjw-s3) 0 0; }
-  .sjw-cats:empty { display: none; }
-</style>
 
 {% schema %}
 {

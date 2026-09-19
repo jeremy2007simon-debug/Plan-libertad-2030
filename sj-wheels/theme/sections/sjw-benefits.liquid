@@ -1,4 +1,20 @@
 {%- comment -%} SJ Wheels — Beneficios. {%- endcomment -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-benefits__title { margin-bottom: var(--sjw-s5); }
+  .sjw-benefits { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
+                  grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px)  { .sjw-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .sjw-benefits { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sjw-benefit { display: grid; gap: var(--sjw-s2); padding: var(--sjw-s5); align-content: start; }
+  .sjw-benefit__num { font-size: .75rem; font-weight: 700; letter-spacing: var(--sjw-tracking-eyebrow);
+                      color: var(--sjw-orange); }
+</style>
+
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container">
     {%- if section.settings.heading != blank -%}
@@ -16,16 +32,6 @@
   </div>
 </section>
 
-<style>
-  .sjw-benefits__title { margin-bottom: var(--sjw-s5); }
-  .sjw-benefits { display: grid; gap: var(--sjw-s3); margin: 0; padding: 0; list-style: none;
-                  grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 640px)  { .sjw-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1000px) { .sjw-benefits { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .sjw-benefit { display: grid; gap: var(--sjw-s2); padding: var(--sjw-s5); align-content: start; }
-  .sjw-benefit__num { font-size: .75rem; font-weight: 700; letter-spacing: var(--sjw-tracking-eyebrow);
-                      color: var(--sjw-orange); }
-</style>
 
 {% schema %}
 {

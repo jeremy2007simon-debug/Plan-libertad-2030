@@ -26,6 +26,15 @@
   assign no = 'sjw.common.not_included' | t
 -%}
 
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-tech { display: grid; gap: var(--sjw-s3); }
+</style>
+
 <div class="sjw-root sjw-tech" {{ block.shopify_attributes }}>
   {%- if block.settings.heading != blank -%}
     <h3 class="sjw-h3">{{ block.settings.heading }}</h3>
@@ -77,9 +86,6 @@
   {%- endif -%}
 </div>
 
-<style>
-  .sjw-tech { display: grid; gap: var(--sjw-s3); }
-</style>
 
 {% schema %}
 {

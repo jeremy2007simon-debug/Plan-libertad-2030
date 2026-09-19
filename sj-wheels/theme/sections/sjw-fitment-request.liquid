@@ -17,6 +17,30 @@
   assign intro  = section.settings.intro
 -%}
 
+{%- comment -%}
+  Los estilos van ANTES del marcado a propósito. Con la hoja al final, el
+  navegador llegaba a pintar la introducción sin la rejilla y luego aparecían
+  las separaciones: la página daba un salto de 36 px (CLS 0,138 medido en
+  móvil). Puestos delante, el primer pintado ya es el definitivo.
+{%- endcomment -%}
+<style>
+  .sjw-req { display: grid; gap: var(--sjw-s6); grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 900px) { .sjw-req { grid-template-columns: 22rem minmax(0, 1fr); gap: var(--sjw-s7); } }
+  .sjw-req__intro { display: grid; gap: var(--sjw-s3); }
+  .sjw-req__form { display: grid; gap: var(--sjw-s4); }
+  .sjw-req__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px) { .sjw-req__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .sjw-req__wide { grid-column: 1 / -1; }
+  .sjw-req__area { min-height: 7rem; padding-block: var(--sjw-s3); resize: vertical; }
+  .sjw-req__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
+  .sjw-req__marca {
+    margin-inline-start: .5ch;
+    font-size: .6875rem; font-weight: 500; letter-spacing: .04em;
+    text-transform: lowercase; color: var(--sjw-orange);
+  }
+  .sjw-req__marca--opcional { color: var(--sjw-text-faint); }
+</style>
+
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container sjw-req">
     <div class="sjw-req__intro">
@@ -331,24 +355,6 @@
     else if (mal) mal.focus();
   })();
 </script>
-
-<style>
-  .sjw-req { display: grid; gap: var(--sjw-s6); grid-template-columns: minmax(0, 1fr); align-items: start; }
-  @media (min-width: 900px) { .sjw-req { grid-template-columns: 22rem minmax(0, 1fr); gap: var(--sjw-s7); } }
-  .sjw-req__intro { display: grid; gap: var(--sjw-s3); }
-  .sjw-req__form { display: grid; gap: var(--sjw-s4); }
-  .sjw-req__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 640px) { .sjw-req__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .sjw-req__wide { grid-column: 1 / -1; }
-  .sjw-req__area { min-height: 7rem; padding-block: var(--sjw-s3); resize: vertical; }
-  .sjw-req__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
-  .sjw-req__marca {
-    margin-inline-start: .5ch;
-    font-size: .6875rem; font-weight: 500; letter-spacing: .04em;
-    text-transform: lowercase; color: var(--sjw-orange);
-  }
-  .sjw-req__marca--opcional { color: var(--sjw-text-faint); }
-</style>
 
 {% schema %}
 {

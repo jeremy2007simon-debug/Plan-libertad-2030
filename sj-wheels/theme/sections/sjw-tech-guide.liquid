@@ -2,6 +2,25 @@
   SJ Wheels — Guía técnica visual: diámetro, anchura, PCD, ET y buje.
   El dibujo es un SVG en línea: sin peticiones extra y escala sin perder nitidez.
 {%- endcomment -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-guide { display: grid; gap: var(--sjw-s6); grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 900px) { .sjw-guide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .sjw-guide__intro { display: grid; gap: var(--sjw-s3); justify-items: start; }
+  .sjw-guide__fig { margin: 0; display: grid; place-items: center; }
+  .sjw-guide__fig svg { width: min(100%, 22rem); height: auto; }
+  .sjw-guide__terms { display: grid; gap: var(--sjw-s3); margin: 0; grid-column: 1 / -1; }
+  @media (min-width: 700px) { .sjw-guide__terms { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); } }
+  .sjw-guide__term { padding: var(--sjw-s4); border: var(--sjw-border); border-radius: var(--sjw-r-md);
+                     background: var(--sjw-graphite); display: grid; gap: var(--sjw-s2); }
+  .sjw-guide__term dt { font-weight: 700; font-size: .9375rem; }
+  .sjw-guide__term dd { margin: 0; }
+</style>
+
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container sjw-guide">
     <div class="sjw-guide__intro">
@@ -44,19 +63,6 @@
   </div>
 </section>
 
-<style>
-  .sjw-guide { display: grid; gap: var(--sjw-s6); grid-template-columns: minmax(0, 1fr); align-items: start; }
-  @media (min-width: 900px) { .sjw-guide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
-  .sjw-guide__intro { display: grid; gap: var(--sjw-s3); justify-items: start; }
-  .sjw-guide__fig { margin: 0; display: grid; place-items: center; }
-  .sjw-guide__fig svg { width: min(100%, 22rem); height: auto; }
-  .sjw-guide__terms { display: grid; gap: var(--sjw-s3); margin: 0; grid-column: 1 / -1; }
-  @media (min-width: 700px) { .sjw-guide__terms { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); } }
-  .sjw-guide__term { padding: var(--sjw-s4); border: var(--sjw-border); border-radius: var(--sjw-r-md);
-                     background: var(--sjw-graphite); display: grid; gap: var(--sjw-s2); }
-  .sjw-guide__term dt { font-weight: 700; font-size: .9375rem; }
-  .sjw-guide__term dd { margin: 0; }
-</style>
 
 {% schema %}
 {

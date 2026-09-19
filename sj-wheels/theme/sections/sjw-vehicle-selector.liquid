@@ -19,6 +19,53 @@
   de vehículo y en la ficha de producto. Sin él, esos enlaces no llevaban a
   ninguna parte.
 {%- endcomment -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-selector { display: grid; gap: var(--sjw-s4); max-width: 68rem; }
+  .sjw-selector__lead { max-width: 46rem; }
+  .sjw-selector__widget { display: block; }
+  .sjw-selector__form { display: grid; gap: var(--sjw-s4); }
+  .sjw-selector__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 640px)  { .sjw-selector__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .sjw-selector__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .sjw-selector__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
+  .sjw-selector__actions .sjw-btn--primary { flex: 1 1 16rem; }
+  .sjw-selector__disclaimer { margin: 0; }
+  .sjw-selector--compact { gap: var(--sjw-s3); }
+
+  /* Consulta guiada: cuatro pasos, sin caja de "no hay nada". */
+  .sjw-consulta { display: grid; gap: var(--sjw-s5); }
+  .sjw-consulta__pasos {
+    display: grid; gap: var(--sjw-s4);
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0; padding: 0; list-style: none;
+    counter-reset: none;
+  }
+  @media (min-width: 720px)  { .sjw-consulta__pasos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1080px) { .sjw-consulta__pasos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sjw-consulta__paso {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sjw-s3);
+    align-items: start;
+    padding-top: var(--sjw-s4);
+    border-top: 2px solid var(--sjw-metal);
+  }
+  .sjw-consulta__n {
+    display: grid; place-items: center;
+    width: 1.75rem; height: 1.75rem;
+    border-radius: var(--sjw-r-pill);
+    background: var(--sjw-orange-soft); color: var(--sjw-orange);
+    font-size: .8125rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .sjw-consulta__texto { display: grid; gap: var(--sjw-s1); }
+  .sjw-consulta__title { font-size: .9375rem; font-weight: 700; color: var(--sjw-warm-white); }
+  .sjw-consulta__body  { font-size: .875rem; line-height: 1.55; color: var(--sjw-text-muted); }
+  .sjw-consulta__acciones { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
+</style>
+
 <section
   id="sjw-vehicle-picker"
   class="sjw-root sjw-section"
@@ -139,47 +186,6 @@
   </div>
 </section>
 
-<style>
-  .sjw-selector { display: grid; gap: var(--sjw-s4); max-width: 68rem; }
-  .sjw-selector__lead { max-width: 46rem; }
-  .sjw-selector__widget { display: block; }
-  .sjw-selector__form { display: grid; gap: var(--sjw-s4); }
-  .sjw-selector__grid { display: grid; gap: var(--sjw-s3); grid-template-columns: minmax(0, 1fr); }
-  @media (min-width: 640px)  { .sjw-selector__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1000px) { .sjw-selector__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .sjw-selector__actions { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); align-items: center; }
-  .sjw-selector__actions .sjw-btn--primary { flex: 1 1 16rem; }
-  .sjw-selector__disclaimer { margin: 0; }
-  .sjw-selector--compact { gap: var(--sjw-s3); }
-
-  /* Consulta guiada: cuatro pasos, sin caja de "no hay nada". */
-  .sjw-consulta { display: grid; gap: var(--sjw-s5); }
-  .sjw-consulta__pasos {
-    display: grid; gap: var(--sjw-s4);
-    grid-template-columns: minmax(0, 1fr);
-    margin: 0; padding: 0; list-style: none;
-    counter-reset: none;
-  }
-  @media (min-width: 720px)  { .sjw-consulta__pasos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1080px) { .sjw-consulta__pasos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .sjw-consulta__paso {
-    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sjw-s3);
-    align-items: start;
-    padding-top: var(--sjw-s4);
-    border-top: 2px solid var(--sjw-metal);
-  }
-  .sjw-consulta__n {
-    display: grid; place-items: center;
-    width: 1.75rem; height: 1.75rem;
-    border-radius: var(--sjw-r-pill);
-    background: var(--sjw-orange-soft); color: var(--sjw-orange);
-    font-size: .8125rem; font-weight: 700; font-variant-numeric: tabular-nums;
-  }
-  .sjw-consulta__texto { display: grid; gap: var(--sjw-s1); }
-  .sjw-consulta__title { font-size: .9375rem; font-weight: 700; color: var(--sjw-warm-white); }
-  .sjw-consulta__body  { font-size: .875rem; line-height: 1.55; color: var(--sjw-text-muted); }
-  .sjw-consulta__acciones { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); }
-</style>
 
 <script src="{{ 'sjw-selector.js' | asset_url }}" defer></script>
 

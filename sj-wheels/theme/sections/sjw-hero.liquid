@@ -31,6 +31,45 @@
 {%- capture cta1_url -%}{% render 'sjw-url', ruta: section.settings.primary_url %}{%- endcapture -%}
 {%- capture cta2_url -%}{% render 'sjw-url', ruta: section.settings.secondary_url %}{%- endcapture -%}
 
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-hero { padding-block: var(--sjw-s7) var(--sjw-s8); overflow: clip; }
+  .sjw-hero__inner {
+    display: grid; gap: var(--sjw-s6);
+    grid-template-columns: minmax(0, 1fr); align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .sjw-hero { padding-block: var(--sjw-s8) calc(var(--sjw-s8) * 1.2); }
+    .sjw-hero__inner { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: var(--sjw-s8); }
+  }
+  .sjw-hero__texto { display: grid; gap: var(--sjw-s4); justify-items: start; }
+  .sjw-hero__h1 {
+    margin: 0; max-width: 16ch;
+    font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.9rem);
+    line-height: 1.04; letter-spacing: -.02em; font-weight: 700;
+    color: var(--sjw-warm-white); text-wrap: balance;
+  }
+  .sjw-hero__lead { max-width: 46ch; }
+  .sjw-hero__acciones { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); margin-top: var(--sjw-s2); }
+  .sjw-hero__puntos {
+    display: flex; flex-wrap: wrap; gap: var(--sjw-s2) var(--sjw-s5);
+    margin: var(--sjw-s3) 0 0; padding: 0; list-style: none;
+    font-size: .8125rem; color: var(--sjw-text-muted);
+  }
+  .sjw-hero__puntos li { display: inline-flex; align-items: center; gap: var(--sjw-s2); }
+  .sjw-hero__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sjw-orange); flex: none; }
+
+  .sjw-hero__visual { display: grid; justify-items: center; }
+  .sjw-hero__img { display: block; width: 100%; height: auto; border-radius: var(--sjw-r-lg); }
+  .sjw-hero__esquema { margin: 0; display: grid; justify-items: center; gap: var(--sjw-s3); width: 100%; }
+  .sjw-hero__esquema svg { width: min(100%, 26rem); height: auto; display: block; }
+  .sjw-hero__esquema figcaption { text-align: center; max-width: 30ch; }
+</style>
+
 <section class="sjw-root sjw-hero" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container sjw-hero__inner">
 
@@ -124,39 +163,6 @@
   </div>
 </section>
 
-<style>
-  .sjw-hero { padding-block: var(--sjw-s7) var(--sjw-s8); overflow: clip; }
-  .sjw-hero__inner {
-    display: grid; gap: var(--sjw-s6);
-    grid-template-columns: minmax(0, 1fr); align-items: center;
-  }
-  @media (min-width: 1000px) {
-    .sjw-hero { padding-block: var(--sjw-s8) calc(var(--sjw-s8) * 1.2); }
-    .sjw-hero__inner { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: var(--sjw-s8); }
-  }
-  .sjw-hero__texto { display: grid; gap: var(--sjw-s4); justify-items: start; }
-  .sjw-hero__h1 {
-    margin: 0; max-width: 16ch;
-    font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.9rem);
-    line-height: 1.04; letter-spacing: -.02em; font-weight: 700;
-    color: var(--sjw-warm-white); text-wrap: balance;
-  }
-  .sjw-hero__lead { max-width: 46ch; }
-  .sjw-hero__acciones { display: flex; flex-wrap: wrap; gap: var(--sjw-s3); margin-top: var(--sjw-s2); }
-  .sjw-hero__puntos {
-    display: flex; flex-wrap: wrap; gap: var(--sjw-s2) var(--sjw-s5);
-    margin: var(--sjw-s3) 0 0; padding: 0; list-style: none;
-    font-size: .8125rem; color: var(--sjw-text-muted);
-  }
-  .sjw-hero__puntos li { display: inline-flex; align-items: center; gap: var(--sjw-s2); }
-  .sjw-hero__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sjw-orange); flex: none; }
-
-  .sjw-hero__visual { display: grid; justify-items: center; }
-  .sjw-hero__img { display: block; width: 100%; height: auto; border-radius: var(--sjw-r-lg); }
-  .sjw-hero__esquema { margin: 0; display: grid; justify-items: center; gap: var(--sjw-s3); width: 100%; }
-  .sjw-hero__esquema svg { width: min(100%, 26rem); height: auto; display: block; }
-  .sjw-hero__esquema figcaption { text-align: center; max-width: 30ch; }
-</style>
 
 {% schema %}
 {

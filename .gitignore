@@ -10,3 +10,6 @@ sj-wheels/tests/enlaces/spki.txt
 sj-wheels/.targets.json
 sj-wheels/.used.json
 sj-wheels/deploy-vars.json
+
+# Capturas por resolución: se regeneran con capturar.js
+sj-wheels/tests/responsive/capturas/

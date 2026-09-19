@@ -10,6 +10,19 @@
 {% render 'sjw-strings' %}
 {% render 'sjw-vehicle-catalog' %}
 
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-fit { display: grid; gap: var(--sjw-s3); padding: var(--sjw-s4); background: var(--sjw-graphite);
+             border: var(--sjw-border); border-radius: var(--sjw-r-lg); }
+  .sjw-fit__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sjw-s3); }
+  .sjw-fit__guard { display: grid; gap: var(--sjw-s3); }
+  .sjw-fit__msg { margin: 0; }
+</style>
+
 <div class="sjw-root sjw-fit" data-sjw-product-main data-sjw-product {{ block.shopify_attributes }}>
   {% render 'sjw-product-fitment-data', product: p %}
 
@@ -52,13 +65,6 @@
   {% render 'sjw-whatsapp', context: 'product', product: p, style: 'secondary', block: true %}
 </div>
 
-<style>
-  .sjw-fit { display: grid; gap: var(--sjw-s3); padding: var(--sjw-s4); background: var(--sjw-graphite);
-             border: var(--sjw-border); border-radius: var(--sjw-r-lg); }
-  .sjw-fit__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sjw-s3); }
-  .sjw-fit__guard { display: grid; gap: var(--sjw-s3); }
-  .sjw-fit__msg { margin: 0; }
-</style>
 
 <script src="{{ 'sjw-buy-guard.js' | asset_url }}" defer></script>
 

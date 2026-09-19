@@ -247,6 +247,24 @@ for p in plantillas_json:
         errors.append(f'{p.name}: «order» nombra "{fantasma}", que no está definida')
 ok('plantillas JSON coherentes')
 
+# --- 20. La hoja de estilos va antes del marcado ---------------------------
+# Con el <style> al final, el navegador puede pintar la sección sin él y la
+# página salta cuando aparece. Medido: 36 px en la solicitud de compatibilidad
+# (CLS 0,138 en móvil), 0 tras moverlo delante.
+MARCADO = re.compile(r'<(section|div|ul|ol|nav|header|footer|article|a|span|p|h[1-6])\b')
+for p in sorted(list((T / 'sections').glob('*.liquid')) + list((T / 'blocks').glob('*.liquid'))):
+    texto = p.read_text(encoding='utf-8')
+    if '<style>' not in texto:
+        continue
+    primero = MARCADO.search(texto)
+    if not primero:
+        continue
+    for m in re.finditer(r'<style>', texto):
+        if m.start() > primero.start():
+            errors.append(f'{p.name}: el bloque <style> va después del marcado; muévelo delante')
+            break
+ok('estilos antes del marcado')
+
 print(f'{checks} comprobaciones ejecutadas\n')
 if warnings:
     print(f'AVISOS ({len(warnings)}):')

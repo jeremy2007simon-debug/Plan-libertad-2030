@@ -1,7 +1,39 @@
 {%- comment -%} SJ Wheels — Barra superior de mensajes. Todo editable. {%- endcomment -%}
+{%- comment -%}
+  Los estilos van antes del marcado: con la hoja al final, el navegador puede
+  llegar a pintar la sección sin ella y la página da un salto cuando aparece.
+  Medido en la solicitud de compatibilidad: 36 px de desplazamiento (CLS 0,138).
+{%- endcomment -%}
+<style>
+  .sjw-topbar { border-bottom: var(--sjw-border); font-size: .75rem; }
+  .sjw-topbar__inner { padding-block: var(--sjw-s2); }
+  .sjw-topbar__list {
+    display: flex; gap: var(--sjw-s5); margin: 0; padding: 0; list-style: none;
+    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .sjw-topbar__list::-webkit-scrollbar { display: none; }
+  .sjw-topbar__list:focus-visible { outline: none; box-shadow: var(--sjw-focus-ring); border-radius: var(--sjw-r-sm); }
+  .sjw-topbar__item {
+    display: flex; align-items: center; gap: var(--sjw-s2);
+    white-space: nowrap; color: var(--sjw-text-muted);
+  }
+  .sjw-topbar__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sjw-orange); flex: none; }
+  @media (min-width: 900px) { .sjw-topbar__list { justify-content: center; } }
+</style>
+
 <div class="sjw-root sjw-topbar" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container sjw-topbar__inner">
-    <ul class="sjw-topbar__list" role="list">
+    {%- comment -%}
+      La lista se desplaza en horizontal cuando no cabe. Una zona que se
+      desplaza y no tiene dentro nada enfocable deja fuera a quien navega con
+      teclado, así que la lista recibe el foco y se anuncia con su nombre.
+    {%- endcomment -%}
+    <ul
+      class="sjw-topbar__list"
+      role="list"
+      tabindex="0"
+      aria-label="{{ section.settings.aria_label | default: 'Ventajas de comprar en SJ Wheels' }}"
+    >
       {%- for block in section.blocks -%}
         {%- comment -%}
           Un mensaje puede depender de un canal: si el canal no está
@@ -22,21 +54,6 @@
   </div>
 </div>
 
-<style>
-  .sjw-topbar { border-bottom: var(--sjw-border); font-size: .75rem; }
-  .sjw-topbar__inner { padding-block: var(--sjw-s2); }
-  .sjw-topbar__list {
-    display: flex; gap: var(--sjw-s5); margin: 0; padding: 0; list-style: none;
-    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  }
-  .sjw-topbar__list::-webkit-scrollbar { display: none; }
-  .sjw-topbar__item {
-    display: flex; align-items: center; gap: var(--sjw-s2);
-    white-space: nowrap; color: var(--sjw-text-muted);
-  }
-  .sjw-topbar__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sjw-orange); flex: none; }
-  @media (min-width: 900px) { .sjw-topbar__list { justify-content: center; } }
-</style>
 
 {% schema %}
 {
@@ -60,6 +77,8 @@
     }
   ],
   "settings": [
+    { "type": "text", "id": "aria_label", "label": "Nombre para lectores de pantalla",
+      "default": "Ventajas de comprar en SJ Wheels" },
     { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#121418" }
   ],
   "presets": [{
