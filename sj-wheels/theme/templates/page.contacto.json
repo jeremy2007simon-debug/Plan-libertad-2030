@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "contacto": {
+      "type": "sjw-fitment-request",
+      "settings": {
+        "heading": "Hablamos",
+        "intro": "Cuéntanos qué necesitas. Si es una duda de compatibilidad, añade los datos de tu coche y la referencia de la llanta: así te respondemos con una medida concreta y no con un «depende».",
+        "usar_h1": true,
+        "mostrar_motivo": true,
+        "background_color": "#090A0C"
+      }
+    }
+  },
+  "order": ["contacto"]
+}

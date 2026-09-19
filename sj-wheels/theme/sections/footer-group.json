@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
@@ -23,7 +24,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 6,
+            "gap": 12,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -56,40 +57,16 @@
                 "enlace": "/"
               }
             },
-            "text_LWt8Pz": {
+            "sjw_desc": {
               "type": "text",
               "settings": {
-                "text": "<h2>Novedades de SJ Wheels</h2>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_f9CFLH": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Nuevas medidas y diseños en el catálogo. Solo cuando hay algo que contar, y puedes darte de baja en cualquier momento.</p>",
+                "text": "<p>Llantas para turismo y SUV, con revisión técnica de compatibilidad antes de cada envío. Enviamos a península y Canarias.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "font_size": "0.875rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -107,56 +84,165 @@
           },
           "block_order": [
             "sjw_logo_footer",
-            "text_LWt8Pz",
-            "text_f9CFLH"
+            "sjw_desc"
           ]
         },
-        "email_signup_crihX7": {
-          "type": "email-signup",
+        "sjw_menu_catalogo": {
+          "type": "menu",
           "settings": {
+            "menu": "sjw-catalogo",
+            "heading": "Catálogo",
+            "menu_spacing": 10,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "sjw_menu_ayuda": {
+          "type": "menu",
+          "settings": {
+            "menu": "sjw-ayuda",
+            "heading": "Ayuda",
+            "menu_spacing": 10,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "sjw_grupo_news": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 10,
             "width": "fill",
             "custom_width": 100,
-            "heading_preset": "h3",
-            "border_style": "all",
-            "input_style": "custom",
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
             "border_width": 1,
-            "border_radius": 100,
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "input_text_color": "{{ settings.color_palette.color1 }}",
-            "input_border_color": "{{ settings.color_palette.color2 }}",
-            "input_type_preset": "paragraph",
-            "style_class": "button-unstyled",
-            "display_type": "arrow",
-            "label": "Sign up",
-            "integrated_button": true,
-            "button_type_preset": "paragraph",
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "open_in_new_tab": false,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {}
-        },
-        "sjw_footer_menu": {
-          "type": "menu",
-          "settings": {
-            "menu": "footer"
+          "blocks": {
+            "sjw_news_h": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Novedades de SJ Wheels</h2>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h6",
+                "font": "var(--font-body--family)",
+                "font_size": "0.875rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "sjw_news_t": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Nuevas medidas y diseños en el catálogo. Solo cuando hay algo que contar, y puedes darte de baja en cualquier momento.</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "0.8125rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "email_signup_crihX7": {
+              "type": "email-signup",
+              "settings": {
+                "width": "fill",
+                "custom_width": 100,
+                "heading_preset": "h3",
+                "border_style": "all",
+                "input_style": "custom",
+                "border_width": 1,
+                "border_radius": 100,
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.color1 }}",
+                "input_border_color": "{{ settings.color_palette.color2 }}",
+                "input_type_preset": "paragraph",
+                "style_class": "button-unstyled",
+                "display_type": "arrow",
+                "label": "Suscribirme",
+                "integrated_button": true,
+                "button_type_preset": "paragraph",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
           },
-          "blocks": {}
+          "block_order": [
+            "sjw_news_h",
+            "sjw_news_t",
+            "email_signup_crihX7"
+          ]
         }
       },
       "block_order": [
-        "sjw_footer_menu",
         "group_H6VpwJ",
-        "email_signup_crihX7"
+        "sjw_menu_catalogo",
+        "sjw_menu_ayuda",
+        "sjw_grupo_news"
       ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
-        "gap": 20,
+        "gap": 32,
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 30,
-        "padding-block-end": 30
+        "padding-block-start": 56,
+        "padding-block-end": 40
       }
     },
     "footer_utilities_jLGE8U": {
@@ -203,8 +289,8 @@
         "divider_thickness": 1,
         "divider_color": "{{ settings.color_palette.color2 }}",
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 20,
-        "padding-block-end": 48
+        "padding-block-start": 24,
+        "padding-block-end": 40
       }
     }
   },

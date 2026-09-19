@@ -18,6 +18,11 @@
    cualquier min-width posterior (botones, campos) mande sobre esta regla. */
 [class*="sjw-"] { min-width: 0; }
 
+/* La cabecera es pegajosa: sin esto, un enlace con ancla deja el destino
+   escondido debajo de ella. */
+:target,
+[id]:target { scroll-margin-block-start: calc(var(--header-height, 4.5rem) + var(--sjw-s5)); }
+
 /* --- Contenedor ---------------------------------------------------------- */
 .sjw-container {
   width: 100%;

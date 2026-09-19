@@ -1,0 +1,93 @@
+{%- comment -%}
+  SJ Wheels — Estado del catálogo.
+
+  Horizon, cuando una colección no devuelve nada, dice "prueba a quitar los
+  filtros" aunque no haya ninguno aplicado. Esta sección distingue los cuatro
+  estados y solo se pinta cuando hay algo que explicar.
+
+    catalogo_no_publicado : el catálogo existe pero ningún producto está visible
+    coleccion_vacia       : la colección no tiene productos asignados
+    filtros_sin_resultado : hay filtros aplicados y ninguno encaja
+    con_resultados        : no se pinta nada
+{%- endcomment -%}
+{%- liquid
+  assign total_tienda = collections.all.products_count
+  assign en_coleccion = collection.products_count
+  assign mostrados = collection.products.size
+
+  assign filtros_activos = 0
+  for f in collection.filters
+    assign filtros_activos = filtros_activos | plus: f.active_values.size
+  endfor
+  if collection.current_type != blank or collection.current_vendor != blank
+    assign filtros_activos = filtros_activos | plus: 1
+  endif
+
+  assign estado = 'con_resultados'
+  if mostrados == 0
+    if filtros_activos > 0
+      assign estado = 'filtros_sin_resultado'
+    elsif total_tienda == 0
+      assign estado = 'catalogo_no_publicado'
+    else
+      assign estado = 'coleccion_vacia'
+    endif
+  endif
+-%}
+
+{%- if estado != 'con_resultados' -%}
+  <section class="sjw-root sjw-catstate" style="background: {{ section.settings.background_color }};">
+    <div class="sjw-container">
+      <div class="sjw-empty sjw-catstate__caja" data-sjw-estado="{{ estado }}">
+
+        {%- if estado == 'catalogo_no_publicado' -%}
+          <p class="sjw-empty__title">{{ 'sjw.collection.catalog_pending_title' | t }}</p>
+          <p class="sjw-body">{{ 'sjw.collection.catalog_pending_body' | t }}</p>
+          <div class="sjw-empty__actions">
+            <a class="sjw-btn sjw-btn--primary" href="{{ routes.root_url }}pages/solicitud-de-compatibilidad">
+              {{ 'sjw.collection.catalog_pending_cta' | t }}
+            </a>
+            <a class="sjw-btn sjw-btn--secondary" href="{{ routes.root_url }}pages/guia-de-medidas">
+              {{ 'sjw.collection.guide_cta' | t }}
+            </a>
+          </div>
+
+        {%- elsif estado == 'coleccion_vacia' -%}
+          <p class="sjw-empty__title">{{ 'sjw.collection.empty_title' | t }}</p>
+          <p class="sjw-body">{{ 'sjw.collection.empty_body' | t }}</p>
+          <div class="sjw-empty__actions">
+            <a class="sjw-btn sjw-btn--primary" href="{{ routes.all_products_collection_url }}">
+              {{ 'sjw.collection.see_all' | t }}
+            </a>
+          </div>
+
+        {%- else -%}
+          <p class="sjw-empty__title">{{ 'sjw.collection.filters_title' | t }}</p>
+          <p class="sjw-body">{{ 'sjw.collection.filters_body' | t }}</p>
+          <div class="sjw-empty__actions">
+            <a class="sjw-btn sjw-btn--primary" href="{{ collection.url }}">
+              {{ 'sjw.collection.filters_clear' | t }}
+            </a>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+<style>
+  .sjw-catstate { padding-block: var(--sjw-s6); }
+  .sjw-catstate__caja { max-width: 44rem; margin-inline: auto; }
+</style>
+
+{% schema %}
+{
+  "name": "Estado del catálogo",
+  "tag": "section",
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#090A0C" }
+  ],
+  "presets": [{ "name": "Estado del catálogo" }]
+}
+{% endschema %}

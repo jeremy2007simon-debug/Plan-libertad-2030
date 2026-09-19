@@ -1,4 +1,17 @@
-{%- comment -%} SJ Wheels — Categorías. Solo enlaza a colecciones reales. {%- endcomment -%}
+{%- comment -%}
+  SJ Wheels — Categorías. Solo enlaza a colecciones con productos visibles.
+  Si no hay ninguna, no se deja un título con un hueco debajo: se explica por
+  qué está vacío y se ofrece la vía que sí funciona.
+{%- endcomment -%}
+{%- liquid
+  assign visibles = 0
+  for block in section.blocks
+    assign col = collections[block.settings.collection]
+    if col != blank and col.products_count > 0
+      assign visibles = visibles | plus: 1
+    endif
+  endfor
+-%}
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
   <div class="sjw-container">
     <div class="sjw-cats__head">
@@ -6,10 +19,25 @@
         {%- if section.settings.eyebrow != blank -%}<p class="sjw-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
         <h2 class="sjw-h2">{{ section.settings.heading }}</h2>
       </div>
-      {%- if section.settings.link_url != blank and section.settings.link_label != blank -%}
+      {%- if visibles > 0 and section.settings.link_url != blank and section.settings.link_label != blank -%}
         <a class="sjw-btn sjw-btn--ghost sjw-btn--sm" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
       {%- endif -%}
     </div>
+
+    {%- if visibles == 0 -%}
+      <div class="sjw-note sjw-note--info sjw-cats__vacio">
+        <span class="sjw-note__icon" aria-hidden="true">i</span>
+        <div>
+          <strong>{{ 'sjw.collection.catalog_pending_title' | t }}</strong>
+          <p class="sjw-small">{{ 'sjw.collection.catalog_pending_body' | t }}</p>
+          <p class="sjw-cats__accion">
+            <a class="sjw-btn sjw-btn--primary sjw-btn--sm" href="{{ routes.root_url }}pages/solicitud-de-compatibilidad">
+              {{ 'sjw.collection.catalog_pending_cta' | t }}
+            </a>
+          </p>
+        </div>
+      </div>
+    {%- endif -%}
 
     <ul class="sjw-cats" role="list">
       {%- for block in section.blocks -%}
@@ -50,6 +78,9 @@
   .sjw-cat__img--empty { aspect-ratio: 4 / 3; }
   .sjw-cat__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; padding: var(--sjw-s3) var(--sjw-s4) var(--sjw-s4); }
   .sjw-cat__title { font-weight: 600; font-size: .9375rem; }
+  .sjw-cats__vacio { margin-top: var(--sjw-s4); }
+  .sjw-cats__accion { margin: var(--sjw-s3) 0 0; }
+  .sjw-cats:empty { display: none; }
 </style>
 
 {% schema %}

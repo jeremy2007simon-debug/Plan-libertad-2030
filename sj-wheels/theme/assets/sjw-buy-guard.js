@@ -45,6 +45,43 @@
 
   class SJWBuyGuard extends HTMLElement {
     connectedCallback() {
+      /* Si algo falla al arrancar (otro script se cayó, el garaje no llegó,
+         el JSON del producto está roto) la guardia cierra la compra en vez de
+         quedarse callada. Fallar abriendo aquí significa vender una llanta que
+         no encaja. */
+      try {
+        this.arrancar();
+      } catch (e) {
+        this.cerrarPorFallo(e);
+      }
+    }
+
+    /** Última línea de defensa: sin guardia operativa, no se compra. */
+    cerrarPorFallo(e) {
+      if (window.console && console.warn) {
+        console.warn('SJ Wheels: la guardia de compra no pudo arrancar, se bloquea la compra.', e);
+      }
+      this.dataset.status = 'error';
+      this.dataset.detener = 'true';
+      var form = this.form || document.querySelector('form[action*="/cart/add"]');
+      if (form) {
+        Array.prototype.forEach.call(form.querySelectorAll(VIAS_DE_COMPRA), function (el) {
+          if ('disabled' in el) el.disabled = true;
+          el.setAttribute('aria-disabled', 'true');
+          el.setAttribute('inert', '');
+          el.style.pointerEvents = 'none';
+          el.style.opacity = '.5';
+        });
+        form.addEventListener('submit', function (ev) { ev.preventDefault(); }, true);
+      }
+      if (this.messageEl) {
+        this.messageEl.textContent = t('guard_no_vehicle',
+          'Indica tu vehículo para poder comprobar que estas llantas le encajan.');
+        this.messageEl.hidden = false;
+      }
+    }
+
+    arrancar() {
       this.mode = this.dataset.pendingMode || 'allow';   // 'allow' | 'inquire'
 
       /* El formulario de ESTA ficha, no el primero de la página: en una página

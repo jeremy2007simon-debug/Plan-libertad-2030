@@ -21,7 +21,11 @@
   <div class="sjw-container sjw-req">
     <div class="sjw-req__intro">
       <p class="sjw-eyebrow">{{ 'sjw.request.eyebrow' | t }}</p>
-      <h2 class="sjw-h2">{{ titulo }}</h2>
+      {%- if section.settings.usar_h1 -%}
+        <h1 class="sjw-h2">{{ titulo }}</h1>
+      {%- else -%}
+        <h2 class="sjw-h2">{{ titulo }}</h2>
+      {%- endif -%}
       {% if intro != blank %}<p class="sjw-lead">{{ intro }}</p>{% endif %}
 
       <div class="sjw-note sjw-note--info">
@@ -69,15 +73,29 @@
           <input class="sjw-input" id="sjw-req-email" type="email" name="contact[email]"
                  autocomplete="email" required value="{{ form.email }}">
         </p>
+        {%- if section.settings.mostrar_motivo -%}
+          <p class="sjw-field sjw-req__wide">
+            <label class="sjw-label" for="sjw-req-motivo">{{ 'sjw.request.reason' | t }}</label>
+            <select class="sjw-select" id="sjw-req-motivo" name="contact[Motivo de la consulta]" required>
+              <option value="">{{ 'sjw.request.reason_pick' | t }}</option>
+              <option>{{ 'sjw.request.reason_fitment' | t }}</option>
+              <option>{{ 'sjw.request.reason_order' | t }}</option>
+              <option>{{ 'sjw.request.reason_shipping' | t }}</option>
+              <option>{{ 'sjw.request.reason_return' | t }}</option>
+              <option>{{ 'sjw.request.reason_other' | t }}</option>
+            </select>
+          </p>
+        {%- endif -%}
+
         <p class="sjw-field">
           <label class="sjw-label" for="sjw-req-marca">{{ 'sjw.request.make_model' | t }}</label>
-          <input class="sjw-input" id="sjw-req-marca" type="text" required
+          <input class="sjw-input" id="sjw-req-marca" type="text"{% unless section.settings.mostrar_motivo %} required{% endunless %}
                  name="contact[Marca, modelo y generación]"
                  placeholder="{{ 'sjw.request.make_model_ph' | t }}">
         </p>
         <p class="sjw-field">
           <label class="sjw-label" for="sjw-req-anio">{{ 'sjw.request.year' | t }}</label>
-          <input class="sjw-input" id="sjw-req-anio" type="text" inputmode="numeric" required
+          <input class="sjw-input" id="sjw-req-anio" type="text" inputmode="numeric"{% unless section.settings.mostrar_motivo %} required{% endunless %}
                  name="contact[Año de matriculación]" placeholder="2019">
         </p>
         <p class="sjw-field">
@@ -158,6 +176,9 @@
     { "type": "text", "id": "heading", "label": "Título", "default": "Cuéntanos tu vehículo y lo comprobamos" },
     { "type": "textarea", "id": "intro", "label": "Introducción",
       "default": "Si tu coche no está en el buscador, o una llanta aparece como «Necesita confirmación técnica», escríbenos con estos datos y te respondemos." },
+    { "type": "checkbox", "id": "usar_h1", "label": "El título es el H1 de la página", "default": true },
+    { "type": "checkbox", "id": "mostrar_motivo", "label": "Mostrar «Motivo de la consulta»", "default": false,
+      "info": "Actívalo en la página de contacto general. En la de compatibilidad sobra." },
     { "type": "color", "id": "background_color", "label": "Color de fondo", "default": "#090A0C" }
   ],
   "presets": [{ "name": "Solicitud compatibilidad" }]

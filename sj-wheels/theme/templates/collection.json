@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "section": {
       "type": "section",
@@ -233,11 +234,18 @@
     "sjw_compare": {
       "type": "sjw-compare",
       "settings": {}
+    },
+    "sjw_catalog_state": {
+      "type": "sjw-catalog-state",
+      "settings": {
+        "background_color": "#090A0C"
+      }
     }
   },
   "order": [
     "sjw_vehicle_bar",
     "section",
+    "sjw_catalog_state",
     "main",
     "sjw_compare"
   ]

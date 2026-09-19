@@ -3,6 +3,15 @@
   Ningún texto importante vive dentro del JS: todo sale de locales/*.json.
 {%- endcomment -%}
 <script>
+  /* Cola de analítica. Los scripts de sección se cargan antes que los del pie,
+     así que sin esto el selector llamaba a SJWAnalytics.track cuando todavía no
+     existía y se rompía en la portada. La cola se vacía cuando carga el
+     archivo real. */
+  window.SJWAnalytics = window.SJWAnalytics || {
+    _cola: [],
+    track: function (nombre, datos) { this._cola.push([nombre, datos]); }
+  };
+
   window.SJWStrings = {
     fitment_ok:      {{ 'sjw.fitment.ok'      | t | json }},
     fitment_pending: {{ 'sjw.fitment.pending' | t | json }},

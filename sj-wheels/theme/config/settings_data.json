@@ -9,10 +9,10 @@
  */
 {
   "current": {
-    "logo_height": 36,
-    "logo_height_mobile": 28,
+    "logo_height": 30,
+    "logo_height_mobile": 24,
     "page_background_color": "{{ settings.color_palette.background }}",
-    "page_width": "full",
+    "page_width": "wide",
     "page_text_color": "{{ settings.color_palette.foreground }}",
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
@@ -114,7 +114,10 @@
     "sjw_show_finish_facet": false,
     "sjw_enable_compare": true,
     "sjw_compare_max": 3,
-    "sjw_whatsapp_number": ""
+    "sjw_whatsapp_number": "",
+    "logo": "shopify://shop_images/sj-wheels-wordmark.png",
+    "favicon": "shopify://shop_images/sj-wheels-favicon.png",
+    "sjw_brand_name": "SJ Wheels"
   },
   "presets": {
     "Horizon": {

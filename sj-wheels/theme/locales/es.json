@@ -137,7 +137,7 @@
     "localization_region_and_language": "Región e idioma",
     "no_results_found": "No se han encontrado resultados",
     "cart_total": "Total del carrito",
-    "your_cart_is_empty": "Tu carrito esta vacío",
+    "your_cart_is_empty": "Tu carrito está vacío",
     "product_image": "Imagen del producto",
     "product_information": "Información del producto",
     "quantity": "Cantidad",
@@ -362,6 +362,7 @@
   },
   "sjw": {
     "selector": {
+      "empty_form": "Consultar compatibilidad",
       "make": "Marca",
       "model": "Modelo",
       "generation": "Generación",
@@ -379,6 +380,13 @@
       "open": "Seleccionar mi coche"
     },
     "request": {
+      "reason": "Motivo de la consulta",
+      "reason_pick": "Elige un motivo",
+      "reason_fitment": "Compatibilidad de una llanta con mi coche",
+      "reason_order": "Un pedido que ya he hecho",
+      "reason_shipping": "Envíos y plazos",
+      "reason_return": "Cambios y devoluciones",
+      "reason_other": "Otra cosa",
       "eyebrow": "Compatibilidad",
       "what_we_check": "Qué revisamos, y qué no damos por hecho",
       "what_we_check_body": "Una persona compara las medidas de tu vehículo con las de la llanta: PCD, diámetro, ET y buje central, y además anchura, carga soportada, espacio para la pinza de freno, neumático previsto, si el eje delantero y el trasero llevan medidas distintas y las condiciones de montaje. Ninguna de esas comprobaciones basta por sí sola, y si algún dato se contradice no confirmamos nada.",
@@ -401,6 +409,10 @@
       "sent_title": "Solicitud recibida",
       "sent_body": "Te responderemos al correo que nos has dejado. Si el vehículo encaja, lo añadiremos a la base para que el buscador lo reconozca en adelante.",
       "error_title": "Revisa estos campos"
+    },
+    "hero": {
+      "diagram_alt": "Esquema de una llanta: diámetro exterior, círculo de tornillos, buje central y radios.",
+      "diagram_caption": "Esquema técnico. Las fotografías reales del catálogo están en preparación."
     },
     "fitment": {
       "ok": "Compatible con tu vehículo",
@@ -460,6 +472,16 @@
       "remove_short": "Quitar"
     },
     "collection": {
+      "catalog_pending_title": "El catálogo todavía no está publicado",
+      "catalog_pending_body": "Estamos preparando las fichas: medidas, fotografías y revisión técnica. Mientras tanto podemos comprobar a mano qué llantas encajan en tu coche.",
+      "catalog_pending_cta": "Consultar compatibilidad",
+      "guide_cta": "Cómo elegir la medida",
+      "empty_title": "Esta colección todavía no tiene llantas",
+      "empty_body": "Puede que estemos moviendo referencias entre colecciones. Prueba con el catálogo completo.",
+      "see_all": "Ver todo el catálogo",
+      "filters_title": "Ninguna llanta encaja con estos filtros",
+      "filters_body": "Prueba a quitar alguno, o cuéntanos tu vehículo y te decimos qué medidas le sirven.",
+      "filters_clear": "Quitar los filtros",
       "results": "resultados",
       "filters": "Filtros",
       "clear_filters": "Limpiar filtros",

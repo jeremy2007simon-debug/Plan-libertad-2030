@@ -2129,6 +2129,13 @@
         "content": "El archivo se sirve tal cual: si es PNG o JPG no se convierte a vectorial. La altura manda y el ancho se calcula con la proporción real, así que el logotipo nunca se deforma."
       },
       {
+        "type": "text",
+        "id": "sjw_brand_name",
+        "label": "Nombre de marca visible",
+        "default": "SJ Wheels",
+        "info": "Lo usa el tema para el nombre accesible de la cabecera. Es independiente del nombre administrativo de la tienda, que se cambia en Configuración → Detalles de la tienda."
+      },
+      {
         "type": "image_picker",
         "id": "sjw_logo",
         "label": "Logotipo (archivo original)",

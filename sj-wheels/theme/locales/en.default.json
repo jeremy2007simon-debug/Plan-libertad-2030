@@ -374,6 +374,7 @@
   },
   "sjw": {
     "selector": {
+      "empty_form": "Ask about fitment",
       "make": "Make",
       "model": "Model",
       "generation": "Generation",
@@ -391,6 +392,13 @@
       "open": "Select my car"
     },
     "request": {
+      "reason": "Reason for your enquiry",
+      "reason_pick": "Choose a reason",
+      "reason_fitment": "Whether a wheel fits my car",
+      "reason_order": "An order I have already placed",
+      "reason_shipping": "Shipping and delivery times",
+      "reason_return": "Returns and exchanges",
+      "reason_other": "Something else",
       "eyebrow": "Fitment",
       "what_we_check": "What we check, and what we never assume",
       "what_we_check_body": "A person compares your vehicle's measurements against the wheel: bolt pattern, diameter, offset and centre bore, and also width, load rating, brake caliper clearance, the intended tyre, whether the front and rear axles take different sizes, and the fitting conditions. None of those checks is enough on its own, and if any figure contradicts another we confirm nothing.",
@@ -413,6 +421,10 @@
       "sent_title": "Request received",
       "sent_body": "We will reply to the email you gave us. If the vehicle fits, we will add it to the database so the finder recognises it from now on.",
       "error_title": "Please check these fields"
+    },
+    "hero": {
+      "diagram_alt": "Diagram of a wheel: outer diameter, bolt circle, centre bore and spokes.",
+      "diagram_caption": "Technical diagram. Real catalogue photography is in preparation."
     },
     "fitment": {
       "ok": "Fits your vehicle",
@@ -472,6 +484,16 @@
   "remove_short": "Remove"
 },
     "collection": {
+      "catalog_pending_title": "The catalogue is not published yet",
+      "catalog_pending_body": "We are preparing the listings: measurements, photography and technical review. In the meantime we can check by hand which wheels fit your car.",
+      "catalog_pending_cta": "Ask about fitment",
+      "guide_cta": "How to choose the size",
+      "empty_title": "This collection has no wheels yet",
+      "empty_body": "We may be moving references between collections. Try the full catalogue.",
+      "see_all": "See the whole catalogue",
+      "filters_title": "No wheel matches these filters",
+      "filters_body": "Try removing one, or tell us your vehicle and we will say which sizes fit.",
+      "filters_clear": "Clear the filters",
       "results": "results",
       "filters": "Filters",
       "clear_filters": "Clear filters",

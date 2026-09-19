@@ -41,5 +41,8 @@
     }
   }
 
+  /* Se vacía la cola que dejó el arranque temprano del <head>. */
+  var pendientes = (window.SJWAnalytics && window.SJWAnalytics._cola) || [];
   window.SJWAnalytics = { track: track, events: ALLOWED };
+  pendientes.forEach(function (e) { track(e[0], e[1]); });
 })();

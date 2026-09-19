@@ -7,7 +7,13 @@
 
 {%- assign wa_label = 'sjw.selector.empty_cta' | t -%}
 
+{%- comment -%}
+  El id es el destino de los enlaces "#sjw-vehicle-picker" que hay en la barra
+  de vehículo y en la ficha de producto. Sin él, esos enlaces no llevaban a
+  ninguna parte.
+{%- endcomment -%}
 <section
+  id="sjw-vehicle-picker"
   class="sjw-root sjw-section"
   style="background: {{ section.settings.background_color }};"
   aria-labelledby="sjw-selector-title-{{ section.id }}"
@@ -69,10 +75,19 @@
           <p class="sjw-empty__title">{{ 'sjw.selector.empty_title' | t }}</p>
           <p class="sjw-body">{{ 'sjw.selector.empty_body' | t }}</p>
           <div class="sjw-empty__actions">
-            {% render 'sjw-whatsapp', context: 'no_results', label: wa_label %}
-            <a class="sjw-btn sjw-btn--secondary" href="{{ routes.all_products_collection_url }}">
-              {{ 'sjw.selector.empty_browse' | t }}
+            {%- comment -%}
+              Sin vehículos verificados, la vía real es el formulario, no un
+              WhatsApp que puede no estar configurado ni un catálogo vacío.
+            {%- endcomment -%}
+            <a class="sjw-btn sjw-btn--primary" href="{{ routes.root_url }}pages/solicitud-de-compatibilidad">
+              {{ 'sjw.selector.empty_form' | t }}
             </a>
+            {% render 'sjw-whatsapp', context: 'no_results', label: wa_label %}
+            {%- if collections.all.products_count > 0 -%}
+              <a class="sjw-btn sjw-btn--secondary" href="{{ routes.all_products_collection_url }}">
+                {{ 'sjw.selector.empty_browse' | t }}
+              </a>
+            {%- endif -%}
           </div>
         </div>
       </sjw-vehicle-selector>
