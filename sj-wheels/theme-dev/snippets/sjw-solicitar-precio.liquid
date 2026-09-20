@@ -65,13 +65,9 @@
     href="{{ destino }}"
     data-sjw-solicitar-precio
     data-sjw-sku="{{ sku | escape }}"
-  >Solicitar precio y compatibilidad</a>
+  >{{ 'sjw.disponibilidad.cta' | t }}</a>
 
-  <p class="sjw-precio-cta__aviso">
-    Esta referencia no se puede pedir todavía: el precio está pendiente de
-    validación comercial y la compatibilidad necesita confirmación técnica de
-    SJ Wheels. Una confirmación del cliente no sustituye a esa comprobación.
-  </p>
+  <p class="sjw-precio-cta__aviso">{{ 'sjw.disponibilidad.aviso_compra' | t }}</p>
 </div>
 
 <script>

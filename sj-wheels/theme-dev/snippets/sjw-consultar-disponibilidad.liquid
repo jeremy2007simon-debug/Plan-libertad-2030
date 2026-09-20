@@ -31,22 +31,22 @@
   </style>
 
   <div class="sjw-root sjw-consulta" role="status">
-    <p class="sjw-consulta__estado"><strong>Consultar disponibilidad y compatibilidad</strong></p>
+    <p class="sjw-consulta__estado"><strong>{{ 'sjw.disponibilidad.estado' | t }}</strong></p>
 
     <ul class="sjw-consulta__motivos">
       {%- if precio_estado != '' -%}
-        <li>Precio: {{ precio_estado }}. La ficha no muestra ninguna cifra hasta que SJ Wheels la valide.</li>
+        <li>{{ 'sjw.disponibilidad.motivo_precio' | t }} <em>{{ precio_estado }}</em></li>
       {%- endif -%}
       {%- if estado != '' -%}
-        <li>Disponibilidad: {{ estado }}</li>
+        <li>{{ 'sjw.disponibilidad.motivo_disponibilidad' | t }}: {{ estado }}</li>
       {%- endif -%}
       {%- if verificar -%}
-        <li>Compatibilidad: SJ Wheels debe verificar la medida y la configuración del vehículo antes del montaje.</li>
+        <li>{{ 'sjw.disponibilidad.motivo_compatibilidad' | t }}</li>
       {%- endif -%}
       {%- if mf.set_contents_status.value != blank -%}
-        <li>Contenido del pedido: {{ mf.set_contents_status.value }}</li>
+        <li>{{ 'sjw.disponibilidad.motivo_contenido' | t }}: {{ mf.set_contents_status.value }}</li>
       {%- endif -%}
-      <li>Peso: pendiente de confirmación del proveedor (cifra, unidad y alcance).</li>
+      <li>{{ 'sjw.disponibilidad.motivo_peso' | t }}</li>
     </ul>
   </div>
 {%- endif -%}

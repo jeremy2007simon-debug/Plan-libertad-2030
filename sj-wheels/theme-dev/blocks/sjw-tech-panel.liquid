@@ -75,11 +75,11 @@
       nombre comercial ni se deduce de una fotografía.
     {%- endcomment -%}
     <div class="sjw-spec">
-      <dt class="sjw-spec__k">Código de acabado del proveedor</dt>
+      <dt class="sjw-spec__k">{{ 'sjw.disponibilidad.acabado_titulo' | t }}</dt>
       <dd class="sjw-spec__v{% if mf.supplier_finish_code.value == blank %} sjw-spec__v--empty{% endif %}">
         {%- if mf.supplier_finish_code.value != blank -%}
           {{ mf.supplier_finish_code.value }}
-          <span class="sjw-spec__nota">Sin carta de colores: el código no se traduce a un nombre comercial.</span>
+          <span class="sjw-spec__nota">{{ 'sjw.disponibilidad.acabado_nota' | t }}</span>
         {%- else -%}
           {{ pending }}
         {%- endif -%}
@@ -88,41 +88,36 @@
 
     {%- if variant.sku != blank -%}
       <div class="sjw-spec">
-        <dt class="sjw-spec__k">Referencia (SKU)</dt>
+        <dt class="sjw-spec__k">{{ 'sjw.disponibilidad.sku' | t }}</dt>
         <dd class="sjw-spec__v">{{ variant.sku }}</dd>
       </div>
     {%- endif -%}
 
     <div class="sjw-spec">
-      <dt class="sjw-spec__k">Peso</dt>
+      <dt class="sjw-spec__k">{{ 'sjw.spec.weight' | t }}</dt>
       <dd class="sjw-spec__v{% if mf.weight_confirmed.value == blank %} sjw-spec__v--empty{% endif %}">
         {%- if mf.weight_confirmed.value != blank -%}
           {{ mf.weight_confirmed.value }}
         {%- else -%}
-          Peso pendiente de confirmación
-          <span class="sjw-spec__nota">
-            El proveedor no ha confirmado la cifra, la unidad ni el alcance
-            (por llanta, por juego o por bulto). La estimación interna de
-            SJ Wheels no se publica como dato del fabricante.
-          </span>
+          {{ 'sjw.disponibilidad.peso_pendiente' | t }}
+          <span class="sjw-spec__nota">{{ 'sjw.disponibilidad.peso_nota' | t }}</span>
         {%- endif -%}
       </dd>
     </div>
 
     <div class="sjw-spec">
-      <dt class="sjw-spec__k">Contenido del pedido</dt>
+      <dt class="sjw-spec__k">{{ 'sjw.disponibilidad.contenido_titulo' | t }}</dt>
       <dd class="sjw-spec__v sjw-spec__v--empty">
-        {{- mf.set_contents_status.value | default: 'Pendiente de documentar: unidades incluidas en el precio, neumáticos, tornillería y centradores' -}}
+        {%- assign sjw_contenido = 'sjw.disponibilidad.contenido_pendiente' | t -%}
+        {{- mf.set_contents_status.value | default: sjw_contenido -}}
       </dd>
     </div>
   </dl>
 
   <div class="sjw-note sjw-note--info">
     <span>
-      <strong>Necesita confirmación técnica.</strong>
-      SJ Wheels comprueba la medida y la configuración del vehículo antes de
-      aceptar cualquier pedido. Una confirmación del cliente no sustituye a
-      esa comprobación.
+      <strong>{{ 'sjw.disponibilidad.confirmacion_titulo' | t }}</strong>
+      {{ 'sjw.disponibilidad.confirmacion_cuerpo' | t }}
     </span>
   </div>
 </div>
