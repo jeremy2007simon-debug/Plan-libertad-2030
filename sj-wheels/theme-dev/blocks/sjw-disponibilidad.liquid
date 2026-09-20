@@ -1,0 +1,16 @@
+{%- comment -%}
+  SJ Wheels — Bloque de la plantilla de producto que pinta el estado
+  «Consultar disponibilidad y compatibilidad». Existe para que el snippet
+  esté realmente conectado con la plantilla y no solo subido al tema.
+{%- endcomment -%}
+<div {{ block.shopify_attributes }}>
+  {% render 'sjw-consultar-disponibilidad', product: closest.product %}
+</div>
+
+{% schema %}
+{
+  "name": "Estado de disponibilidad",
+  "settings": [],
+  "presets": [{ "name": "Estado de disponibilidad" }]
+}
+{% endschema %}

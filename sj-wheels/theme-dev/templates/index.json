@@ -1,0 +1,335 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "sjw_topbar": {
+      "type": "sjw-topbar",
+      "blocks": {
+        "m1": {
+          "type": "message",
+          "settings": {
+            "text": "Compatibilidad verificada antes de aceptar el pedido",
+            "icon": "dot"
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "Precio y disponibilidad bajo consulta",
+            "icon": "dot"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "Envío a España, con condiciones según el destino",
+            "icon": "dot"
+          }
+        },
+        "m4": {
+          "type": "message",
+          "settings": {
+            "text": "Atención por WhatsApp",
+            "icon": "dot",
+            "requiere": "whatsapp"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
+      "settings": {
+        "background_color": "#121418"
+      }
+    },
+    "sjw_selector": {
+      "type": "sjw-vehicle-selector",
+      "settings": {
+        "eyebrow": "Tu vehículo",
+        "heading": "¿Qué coche tienes?",
+        "subheading": "Selecciona tu vehículo y verás el estado de compatibilidad de cada diseño.",
+        "cta_label": "Buscar llantas compatibles",
+        "redirect_url": "",
+        "compact": false,
+        "background_color": "#121418"
+      }
+    },
+    "sjw_benefits": {
+      "type": "sjw-benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Compatibilidad verificada",
+            "text": "Comprobamos marca, modelo, año, PCD, ET y buje antes de aceptar ningún pedido. Hasta entonces cada ficha lo dice: necesita confirmación técnica."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Precio bajo consulta",
+            "text": "La tarifa de la carga inicial está pendiente de validación comercial. Te damos el precio en firme al responder a tu solicitud, con el transporte a tu destino."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Entrega a domicilio",
+            "text": "Recibes las llantas en la dirección que indiques. El coste y el plazo dependen del territorio, así que te los confirmamos con el precio."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Asesoramiento personalizado",
+            "text": "Si dudas con la medida, la revisamos contigo antes de que compres."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "",
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_designs": {
+      "type": "sjw-categories",
+      "blocks": {
+        "d038": { "type": "category", "settings": { "collection": "diseno-sjw-038", "title": "SJW-038" } },
+        "d040": { "type": "category", "settings": { "collection": "diseno-sjw-040", "title": "SJW-040" } },
+        "d041": { "type": "category", "settings": { "collection": "diseno-sjw-041", "title": "SJW-041" } },
+        "d043": { "type": "category", "settings": { "collection": "diseno-sjw-043", "title": "SJW-043" } },
+        "d044": { "type": "category", "settings": { "collection": "diseno-sjw-044", "title": "SJW-044" } },
+        "d048": { "type": "category", "settings": { "collection": "diseno-sjw-048", "title": "SJW-048" } },
+        "d049": { "type": "category", "settings": { "collection": "diseno-sjw-049", "title": "SJW-049" } },
+        "d059": { "type": "category", "settings": { "collection": "diseno-sjw-059", "title": "SJW-059" } },
+        "d074": { "type": "category", "settings": { "collection": "diseno-sjw-074", "title": "SJW-074" } },
+        "d124": { "type": "category", "settings": { "collection": "diseno-sjw-124", "title": "SJW-124" } }
+      },
+      "block_order": [
+        "d038",
+        "d040",
+        "d041",
+        "d043",
+        "d044",
+        "d048",
+        "d049",
+        "d059",
+        "d074",
+        "d124"
+      ],
+      "settings": {
+        "eyebrow": "Selección",
+        "heading": "Diez diseños, 83 referencias",
+        "link_label": "Ver las 83 referencias",
+        "link_url": "shopify://collections/seleccion-sj-wheels",
+        "ocultar_si_vacio": true,
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_categories": {
+      "type": "sjw-categories",
+      "blocks": {
+        "c1": { "type": "category", "settings": { "collection": "llantas-17-pulgadas", "title": "17 pulgadas" } },
+        "c2": { "type": "category", "settings": { "collection": "llantas-18-pulgadas", "title": "18 pulgadas" } },
+        "c3": { "type": "category", "settings": { "collection": "llantas-19-pulgadas", "title": "19 pulgadas" } },
+        "c4": { "type": "category", "settings": { "collection": "llantas-20-pulgadas", "title": "20 pulgadas" } },
+        "c5": { "type": "category", "settings": { "collection": "llantas-21-pulgadas", "title": "21 pulgadas" } },
+        "c6": { "type": "category", "settings": { "collection": "llantas-22-pulgadas", "title": "22 pulgadas" } }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "eyebrow": "Catálogo",
+        "heading": "Comprar por diámetro",
+        "link_label": "Ver todo el catálogo",
+        "link_url": "shopify://collections/seleccion-sj-wheels",
+        "ocultar_si_vacio": true,
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_guide": {
+      "type": "sjw-tech-guide",
+      "blocks": {
+        "t1": {
+          "type": "term",
+          "settings": {
+            "term": "Diámetro",
+            "definition": "El tamaño de la llanta en pulgadas. Debe estar entre los que admite tu coche."
+          }
+        },
+        "t2": {
+          "type": "term",
+          "settings": {
+            "term": "Anchura",
+            "definition": "Lo ancha que es la llanta, también en pulgadas. Condiciona qué neumático puedes montar."
+          }
+        },
+        "t3": {
+          "type": "term",
+          "settings": {
+            "term": "PCD",
+            "definition": "El número de tornillos y la distancia entre ellos, por ejemplo 5x112. Tiene que coincidir exactamente."
+          }
+        },
+        "t4": {
+          "type": "term",
+          "settings": {
+            "term": "ET",
+            "definition": "El desplazamiento en milímetros. Decide cuánto entra o sale la rueda respecto al paso de rueda."
+          }
+        },
+        "t5": {
+          "type": "term",
+          "settings": {
+            "term": "Buje central",
+            "definition": "El agujero central en milímetros. Si es mayor que el de tu coche, hacen falta centradores."
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "settings": {
+        "eyebrow": "Guía técnica",
+        "heading": "Qué significa cada medida",
+        "text": "Cinco datos deciden si una llanta encaja en tu coche. Estos son, en lenguaje claro.",
+        "diagram_alt": "Esquema de una llanta con el diámetro, el círculo de tornillos (PCD) y el buje central señalados.",
+        "link_label": "",
+        "link_url": "",
+        "background_color": "#121418"
+      }
+    },
+    "sjw_faq": {
+      "type": "sjw-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Por qué no veo el precio?",
+            "answer": "<p>Porque todavía no está validado. La tarifa que trae la carga inicial del catálogo está pendiente de revisión comercial y el transporte no está cerrado, así que publicar una cifra sería anunciar un precio que no podemos sostener. Al responder a tu solicitud te damos el precio en firme, con el transporte a tu destino.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿El precio es por llanta o por juego? ¿Incluye neumáticos o tornillería?",
+            "answer": "<p>El proveedor todavía no ha documentado cuántas unidades cubre cada referencia ni qué accesorios acompañan al pedido. Por eso la ficha no afirma ni que se incluyan ni que no: lo confirmamos por escrito, con el precio, antes de aceptar ningún pedido.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo sé que las llantas encajan en mi coche?",
+            "answer": "<p>Selecciona tu vehículo y verás el estado de compatibilidad de cada llanta. Comparamos PCD, diámetro, ET y buje central, y una persona revisa la combinación completa antes de aceptar el pedido.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué significa «Necesita confirmación técnica»?",
+            "answer": "<p>Que todavía no tenemos verificada esa combinación concreta de llanta y vehículo. Escríbenos y lo comprobamos contigo. Una confirmación tuya no sustituye a esa comprobación: es SJ Wheels quien tiene que darla por escrito.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "eyebrow": "Dudas frecuentes",
+        "heading": "Preguntas frecuentes",
+        "text": "",
+        "background_color": "#090A0C"
+      }
+    },
+    "sjw_cta": {
+      "type": "sjw-cta",
+      "settings": {
+        "eyebrow": "¿Necesitas ayuda?",
+        "heading": "Te ayudamos a acertar con la medida",
+        "text": "Dinos marca, modelo y año de tu coche y te confirmamos qué llantas le encajan, con precio y transporte a tu destino.",
+        "primary_label": "Solicitar precio y compatibilidad",
+        "primary_url": "/pages/solicitud-de-compatibilidad",
+        "background_color": "#121418"
+      }
+    },
+    "sjw_hero": {
+      "type": "sjw-hero",
+      "blocks": {
+        "p1": {
+          "type": "punto",
+          "settings": {
+            "text": "Diez diseños, 83 referencias de 17\" a 22\""
+          }
+        },
+        "p2": {
+          "type": "punto",
+          "settings": {
+            "text": "Revisión técnica antes de aceptar el pedido"
+          }
+        },
+        "p3": {
+          "type": "punto",
+          "settings": {
+            "text": "Precio y disponibilidad bajo consulta"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "eyebrow": "SJ Wheels · España",
+        "heading": "Llantas para darle otro carácter a tu coche.",
+        "text": "Consulta medidas, descubre diseños y pide precio y confirmación de compatibilidad para tu vehículo.",
+        "primary_label": "Ver los diez diseños",
+        "primary_url": "shopify://collections/seleccion-sj-wheels",
+        "secondary_label": "Cómo elegir la medida",
+        "secondary_url": "/pages/guia-de-medidas",
+        "image_alt": "",
+        "background_color": "#090A0C"
+      }
+    }
+  },
+  "order": [
+    "sjw_topbar",
+    "sjw_hero",
+    "sjw_designs",
+    "sjw_selector",
+    "sjw_benefits",
+    "sjw_categories",
+    "sjw_guide",
+    "sjw_faq",
+    "sjw_cta"
+  ]
+}

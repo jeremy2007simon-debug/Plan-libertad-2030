@@ -1,0 +1,21 @@
+{%- comment -%}
+  SJ Wheels — Interruptor único del modo de precio.
+
+  Devuelve 'consulta' o 'visible'. Todo el tema lo consulta desde aquí, así
+  que pasar a precios visibles es cambiar UNA línea de este archivo.
+
+  · consulta : las fichas, las tarjetas y el buscador muestran
+               «Precio bajo consulta». No se pinta ninguna cifra y los datos
+               estructurados no declaran ninguna oferta.
+  · visible  : el tema vuelve al comportamiento estándar de Horizon y pinta
+               el precio guardado en cada variante.
+
+  Los precios de Shopify NO se tocan en ningún caso: siguen guardados tal
+  cual en cada variante. Este interruptor solo decide si se enseñan.
+
+  Motivo del estado actual: la escalera de precios de la carga inicial está
+  pendiente de validación comercial y el transporte no está cerrado, así que
+  publicar una cifra sería anunciar un precio que SJ Wheels no ha confirmado.
+{%- endcomment -%}
+{%- assign sjw_precios_visibles = false -%}
+{%- if sjw_precios_visibles -%}visible{%- else -%}consulta{%- endif -%}

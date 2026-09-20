@@ -1,0 +1,52 @@
+{%- comment -%}
+  sjw-consultar-disponibilidad.liquid — SJ Wheels
+
+  Estado «Consultar disponibilidad y compatibilidad» de una referencia.
+  Explica por qué no se puede pedir todavía. El bloqueo de compra real NO
+  está aquí: está en los datos del producto (inventario seguido, 0 unidades
+  y política «dejar de vender»), que es lo que hace que Shopify devuelva
+  available = false. Este panel solo lo cuenta.
+
+  Se pinta desde blocks/sjw-disponibilidad.liquid, que es un bloque de la
+  plantilla de producto, y enlaza con el formulario real de
+  /pages/solicitud-de-compatibilidad con la referencia ya cargada.
+
+  Uso:
+    {%- render 'sjw-consultar-disponibilidad', product: product -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign mf = product.metafields.custom
+  assign estado = mf.availability_status.value | default: ''
+  assign verificar = mf.requires_manual_verification.value
+  assign precio_estado = mf.price_status.value | default: ''
+-%}
+
+{%- if estado != '' or verificar or precio_estado != '' -%}
+  <style>
+    .sjw-consulta { display: grid; gap: .5rem; }
+    .sjw-consulta__estado { margin: 0; }
+    .sjw-consulta__motivos { margin: 0; padding-inline-start: 1.1rem; display: grid; gap: .35rem; }
+    .sjw-consulta__motivos li { font-size: .875rem; line-height: 1.45; }
+  </style>
+
+  <div class="sjw-root sjw-consulta" role="status">
+    <p class="sjw-consulta__estado"><strong>Consultar disponibilidad y compatibilidad</strong></p>
+
+    <ul class="sjw-consulta__motivos">
+      {%- if precio_estado != '' -%}
+        <li>Precio: {{ precio_estado }}. La ficha no muestra ninguna cifra hasta que SJ Wheels la valide.</li>
+      {%- endif -%}
+      {%- if estado != '' -%}
+        <li>Disponibilidad: {{ estado }}</li>
+      {%- endif -%}
+      {%- if verificar -%}
+        <li>Compatibilidad: SJ Wheels debe verificar la medida y la configuración del vehículo antes del montaje.</li>
+      {%- endif -%}
+      {%- if mf.set_contents_status.value != blank -%}
+        <li>Contenido del pedido: {{ mf.set_contents_status.value }}</li>
+      {%- endif -%}
+      <li>Peso: pendiente de confirmación del proveedor (cifra, unidad y alcance).</li>
+    </ul>
+  </div>
+{%- endif -%}

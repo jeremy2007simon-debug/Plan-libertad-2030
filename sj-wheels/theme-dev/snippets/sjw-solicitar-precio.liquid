@@ -1,0 +1,97 @@
+{%- comment -%}
+  SJ Wheels — Botón «Solicitar precio y compatibilidad».
+
+  Sustituye al botón de compra mientras la referencia no tenga precio
+  validado ni compatibilidad confirmada. No es un botón oculto ni un adorno:
+  la compra está bloqueada en los datos (inventario seguido, 0 unidades y
+  política «dejar de vender»), y esto es solo la vía que sí existe para el
+  cliente.
+
+  Lleva la referencia ya cargada al formulario de
+  /pages/solicitud-de-compatibilidad. El vehículo, si el cliente lo ha
+  guardado, lo añade el propio formulario; el destino y el código postal los
+  rellena allí.
+
+  Parámetros:
+    product : el producto (obligatorio)
+    class   : clases extra para el enlace
+{%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign v = p.selected_or_first_available_variant
+  assign mf = p.metafields.custom
+
+  assign sku = v.sku | default: p.variants.first.sku
+
+  assign medida = ''
+  if mf.wheel_diameter.value != blank and mf.wheel_width.value != blank
+    assign medida = mf.wheel_diameter.value | append: 'x' | append: mf.wheel_width.value
+  endif
+
+  # Cada valor se codifica por separado. Codificar la cadena entera convertía
+  # tambien los «?» y los «&», y el formulario recibia un unico parametro.
+  assign q_producto = p.title | url_encode
+  assign q_ref = sku | url_encode
+  assign q_medida = medida | url_encode
+  assign q_anclaje = mf.bolt_pattern.value | url_encode
+  assign q_et = mf.offset_et.value | url_encode
+  assign q_acabado = mf.supplier_finish_code.value | url_encode
+
+  assign destino = '/pages/solicitud-de-compatibilidad?producto=' | append: q_producto
+  if sku != blank
+    assign destino = destino | append: '&ref=' | append: q_ref
+  endif
+  if medida != blank
+    assign destino = destino | append: '&medida=' | append: q_medida
+  endif
+  if mf.bolt_pattern.value != blank
+    assign destino = destino | append: '&anclaje=' | append: q_anclaje
+  endif
+  if mf.offset_et.value != blank
+    assign destino = destino | append: '&et=' | append: q_et
+  endif
+  if mf.supplier_finish_code.value != blank
+    assign destino = destino | append: '&acabado=' | append: q_acabado
+  endif
+-%}
+<style>
+  .sjw-precio-cta { display: grid; gap: .5rem; }
+  .sjw-precio-cta__aviso { font-size: .8125rem; line-height: 1.45; opacity: .75; margin: 0; }
+</style>
+
+<div class="sjw-precio-cta">
+  <a
+    class="button {{ class }}"
+    href="{{ destino }}"
+    data-sjw-solicitar-precio
+    data-sjw-sku="{{ sku | escape }}"
+  >Solicitar precio y compatibilidad</a>
+
+  <p class="sjw-precio-cta__aviso">
+    Esta referencia no se puede pedir todavía: el precio está pendiente de
+    validación comercial y la compatibilidad necesita confirmación técnica de
+    SJ Wheels. Una confirmación del cliente no sustituye a esa comprobación.
+  </p>
+</div>
+
+<script>
+  /* Añade al enlace la cantidad y el vehículo guardado si existen, para que
+     el formulario llegue con lo que el cliente ya ha elegido. Sin esto, el
+     enlace sigue funcionando: los datos se piden en el propio formulario. */
+  (function () {
+    var enlaces = document.querySelectorAll('[data-sjw-solicitar-precio]');
+    if (!enlaces.length) return;
+    Array.prototype.forEach.call(enlaces, function (a) {
+      a.addEventListener('click', function () {
+        var url = new URL(a.href, location.origin);
+        var qty = document.querySelector('input[name="quantity"]');
+        if (qty && qty.value) url.searchParams.set('cantidad', qty.value);
+        if (window.SJWGarage && window.SJWGarage.get) {
+          var v = window.SJWGarage.get();
+          if (v && window.SJWGarage.label) url.searchParams.set('vehiculo', window.SJWGarage.label(v));
+        }
+        a.href = url.pathname + url.search;
+      });
+    });
+  })();
+</script>
