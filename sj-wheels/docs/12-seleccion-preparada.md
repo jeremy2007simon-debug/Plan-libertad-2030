@@ -307,3 +307,85 @@ confirmado como precio final y el transporte no está resuelto para un bulto de
 40–64 kg. Además, ninguna de las 131 familias tiene disponibilidad documentada:
 el inventario no se sigue y la política es «seguir vendiendo sin stock», así que
 hoy la tienda aceptaría un pedido de algo que no sabemos si existe.
+
+---
+
+# Revisión del 20-09-2026
+
+Esta revisión corrige y amplía lo anterior. Los 439 productos **siguen en
+borrador** y no se ha tocado ninguna tarifa.
+
+## Lo que se ha corregido
+
+1. **El rango de precios.** Dije «599–1.399 €» y era un error mío de
+   transcripción, no una diferencia de exportación ni un producto excluido:
+   ningún SKU tiene 599 €. El catálogo va de **649,00 €** (una sola referencia,
+   `OYL260416005`, de 16") a **1.399,00 €**; la selección, de **699,00 €** a
+   **1.249,00 €**. Corregido también en `data/tabla-decision-comercial.csv`.
+   Detalle en `17-precio-y-transporte-alternativas.md`.
+2. **«Precio final» ya no significa «transporte incluido».** Son dos decisiones
+   separadas y están planteadas como tales, con tres alternativas preparadas y
+   ninguna aplicada.
+3. **El contenido del pedido ya no se afirma.** `units_per_set = 4`,
+   `tires_included = false` y `bolts_included = false` **se han borrado de las 83
+   referencias** y sus definiciones se han eliminado del esquema. Auditado su
+   origen: el «juego de 4» venía del texto que generó la carga inicial del
+   catálogo —aparecía idéntico en los 439 títulos y descripciones— y **ninguna
+   nota, metafield ni campo del proveedor menciona unidades**. En su lugar,
+   `custom.set_contents_status` = «Pendiente de documentar: unidades incluidas en
+   el precio, neumáticos, tornillería y centradores».
+4. **Las descripciones ya no son un texto genérico repetido.** Las 83
+   seleccionadas tienen descripción propia con su medida, su ET, su buje, su
+   referencia de proveedor, su código de acabado, en cuántas medidas está el
+   diseño y qué vehículo de referencia cita el proveedor. Las 356 restantes
+   llevan un texto neutro, sin afirmar unidades ni inclusiones, y se marcan
+   como «todavía no preparada para publicación».
+5. **Los códigos de acabado no se traducen.** El título dice «Cód. acabado
+   proveedor MB», no «negro mate». El proveedor usa «MB» y «MATTE BLACK» como
+   códigos distintos en el mismo catálogo: deducir el color sería inventarlo.
+6. **SJW-NNN es una denominación interna de SJ Wheels**, no una marca ni una
+   certificación del fabricante. Ahora lo dice cada ficha, en su texto.
+7. **Territorios.** Canarias, Ceuta, Melilla y Baleares no comparten régimen.
+   Corregido en `16-destinos-fiscalidad-y-aduanas.md`, con fuentes oficiales.
+
+## Lo que ha cambiado en el inventario de imágenes
+
+Ver `14-calidad-imagenes.md`: tres de las diez son renders 3D, y 23 de las 83
+referencias muestran la imagen de un acabado que no es el suyo. Ninguna de las
+dos cosas la detectaba el umbral de píxeles.
+
+## Volkswagen, con la comparación delante
+
+No sustituyo ninguna familia sin enseñar la comparación. Esta es:
+
+| | SJW-127 (VW) | SJW-129 (VW) | SJW-124 (la décima actual) |
+|---|---|---|---|
+| Puntuación | 74/100 | 63/100 | 86/100 |
+| Referencias publicables | 1 | 2 | 4 |
+| Diámetros | 18" | 18", 19" | 19", 20" |
+| Anchuras | 8.0 | 8.0 | 8.5, 9.5 |
+| Anclajes | 5x112 | 5x112 | 5x112 |
+| Imagen | 625 px, render | 513 px, render | 634 px, render |
+
+**Una sola medida no impide publicar una ficha correcta** —eso es cierto y lo
+acepto—, pero sí impide construir una página de familia: SJW-127 daría una
+colección con un producto. Con SJW-129 serían dos.
+
+**No la sustituyo por mi cuenta.** Las dos opciones son legítimas:
+
+- **Mantener SJW-124** (recomendación): más medidas, más puntuación, la décima
+  familia sigue teniendo escalera de tallas.
+- **Entrar SJW-127 en lugar de SJW-124**: se gana presencia de marca VW y se
+  pierden 3 referencias y la escalera. Si quiere esto, se hace en una sola
+  pasada.
+
+Lo que sí he hecho es **pedir al proveedor las medidas que faltan** de los
+diseños 127, 128 y 129 (documento 19). Si las envía, VW entra por mérito propio.
+
+## Títulos de las 356 referencias no seleccionadas
+
+Su descripción y su SEO ya están limpios, pero **su título sigue siendo el de la
+carga inicial** («Juego de 4 llantas 18 pulgadas Mercedes-Benz – OYL2604160xx»),
+que afirma unidades y sugiere una marca. Son borradores que no forman parte de
+la selección y no los ve nadie, pero **queda pendiente reescribirlos** cuando se
+prepare cada familia. Lo dejo dicho para que no se me olvide ni se le olvide.

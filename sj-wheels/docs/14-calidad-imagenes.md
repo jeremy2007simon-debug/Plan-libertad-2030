@@ -71,3 +71,59 @@ Las diez superan el tramo alto. **Ninguna necesita reemplazo para publicar**:
 
 **Ninguna imagen se ha agrandado artificialmente.** Los archivos son los que
 envió el proveedor.
+
+---
+
+## Revisión del 20-09-2026 · mirando las fotos, no solo los píxeles
+
+El corte de 560 px dice si una imagen **se ve nítida**. No dice si **sirve**. Al
+abrir las diez y compararlas en una rejilla aparecen tres cosas que el número no
+detectaba, y que corrigen mi conclusión anterior de que «ninguna necesita
+sustitución».
+
+### 1. Tres de las diez no son fotografías: son renders 3D
+
+| Familia | Qué es | Vista | Fondo |
+|---|---|---|---|
+| SJW-038, 040, 041, 043, 044, 048, 049 | Fotografía de estudio | Frontal | Gris claro |
+| **SJW-059, 074, 124** | **Render 3D** | Tres cuartos | Blanco recortado |
+
+Los renders son limpios y están bien resueltos, pero **no prueban cómo es la
+pieza real**, y mezclados con siete fotografías frontales en la misma rejilla de
+colección se nota: cambia la perspectiva, la luz y el fondo de una tarjeta a la
+siguiente.
+
+### 2. Una sola imagen no puede representar dos acabados
+
+Seis de las diez familias tienen más de un código de acabado, y todas las
+referencias de la familia comparten la **misma** imagen:
+
+| Familia | Códigos de acabado | Referencias que muestran una imagen que no les corresponde |
+|---|---|---|
+| SJW-038 | MB+L, YBZ | 1 de 6 |
+| SJW-040 | MB, MG | 4 de 9 |
+| SJW-041 | MBI, MB, MIB | 8 de 13 |
+| SJW-044 | MB, MG | 1 de 9 |
+| SJW-059 | B, MB | 2 de 8 |
+| SJW-074 | MB, B | 7 de 12 |
+
+En total, **23 de las 83 referencias enseñan una imagen que no es la de su
+acabado**. Esto no se arregla con más resolución: hace falta una foto por
+acabado. Es el motivo por el que la ficha dice «código de acabado del proveedor»
+y no un nombre de color.
+
+### 3. El margen sobre la galería de escritorio es mínimo en dos familias
+
+La galería de escritorio ocupa unos 660 px. SJW-059 (624 px) y SJW-124 (634 px)
+están **por debajo**: el navegador las estira un 5–6 %. Se ve bien, pero sin
+margen, y en una pantalla de alta densidad se queda blando.
+
+### Veredicto corregido
+
+- **Publicables tal cual:** las siete fotografías de estudio (038, 040, 041, 043,
+  044, 048, 049), con la salvedad del acabado.
+- **Publicables pero conviene reemplazar:** 059, 074 y 124 — por ser renders y
+  por quedarse justas de tamaño.
+- **Hace falta pedir al proveedor**, y está en el mensaje del documento 19:
+  originales de al menos 2000 px, una segunda vista por diseño y **una imagen por
+  acabado**.
