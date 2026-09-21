@@ -12,6 +12,13 @@
   guardado, lo añade el propio formulario; el destino y el código postal los
   rellena allí.
 
+  Revisión 21-09-2026 — catálogo agrupado por diseño: los datos que viajan
+  al formulario son los de la variante elegida, no los de la familia. En
+  SJW-048, por ejemplo, conviven 5x112 con buje 66,5 mm y 5x120 con buje
+  72,6 mm: enviar «el anclaje del producto» sería enviar un dato falso. Se
+  añade también el identificador de variante, para que la solicitud se
+  pueda reconstruir exactamente.
+
   Parámetros:
     product : el producto (obligatorio)
     class   : clases extra para el enlace
@@ -20,12 +27,20 @@
   assign p = product
   assign v = p.selected_or_first_available_variant
   assign mf = p.metafields.custom
+  assign vmf = v.metafields.custom
 
   assign sku = v.sku | default: p.variants.first.sku
 
+  assign d = vmf.wheel_diameter.value | default: mf.wheel_diameter.value
+  assign w = vmf.wheel_width.value | default: mf.wheel_width.value
+  assign pcd = vmf.bolt_pattern.value | default: mf.bolt_pattern.value
+  assign et = vmf.offset_et.value | default: mf.offset_et.value
+  assign buje = vmf.center_bore.value | default: mf.center_bore.value
+  assign acabado = vmf.supplier_finish_code.value | default: mf.supplier_finish_code.value
+
   assign medida = ''
-  if mf.wheel_diameter.value != blank and mf.wheel_width.value != blank
-    assign medida = mf.wheel_diameter.value | append: 'x' | append: mf.wheel_width.value
+  if d != blank and w != blank
+    assign medida = d | append: 'x' | append: w
   endif
 
   # Cada valor se codifica por separado. Codificar la cadena entera convertía
@@ -33,30 +48,38 @@
   assign q_producto = p.title | url_encode
   assign q_ref = sku | url_encode
   assign q_medida = medida | url_encode
-  assign q_anclaje = mf.bolt_pattern.value | url_encode
-  assign q_et = mf.offset_et.value | url_encode
-  assign q_acabado = mf.supplier_finish_code.value | url_encode
+  assign q_anclaje = pcd | url_encode
+  assign q_et = et | url_encode
+  assign q_buje = buje | url_encode
+  assign q_acabado = acabado | url_encode
 
   assign destino = '/pages/solicitud-de-compatibilidad?producto=' | append: q_producto
   if sku != blank
     assign destino = destino | append: '&ref=' | append: q_ref
   endif
+  if v.id != blank
+    assign destino = destino | append: '&variante=' | append: v.id
+  endif
   if medida != blank
     assign destino = destino | append: '&medida=' | append: q_medida
   endif
-  if mf.bolt_pattern.value != blank
+  if pcd != blank
     assign destino = destino | append: '&anclaje=' | append: q_anclaje
   endif
-  if mf.offset_et.value != blank
+  if et != blank
     assign destino = destino | append: '&et=' | append: q_et
   endif
-  if mf.supplier_finish_code.value != blank
+  if buje != blank
+    assign destino = destino | append: '&buje=' | append: q_buje
+  endif
+  if acabado != blank
     assign destino = destino | append: '&acabado=' | append: q_acabado
   endif
 -%}
 <style>
   .sjw-precio-cta { display: grid; gap: .5rem; }
   .sjw-precio-cta__aviso { font-size: .8125rem; line-height: 1.45; opacity: .75; margin: 0; }
+  .sjw-precio-cta__ref { font-size: .8125rem; line-height: 1.45; opacity: .75; margin: 0; }
 </style>
 
 <div class="sjw-precio-cta">
@@ -65,7 +88,15 @@
     href="{{ destino }}"
     data-sjw-solicitar-precio
     data-sjw-sku="{{ sku | escape }}"
+    data-sjw-variante="{{ v.id }}"
   >{{ 'sjw.disponibilidad.cta' | t }}</a>
+
+  {%- if sku != blank -%}
+    <p class="sjw-precio-cta__ref">
+      {{ 'sjw.variantes.envia_referencia' | t }} <strong>{{ sku }}</strong>
+      {%- if v.title != blank and p.has_only_default_variant == false %} · {{ v.title }}{% endif -%}
+    </p>
+  {%- endif -%}
 
   <p class="sjw-precio-cta__aviso">{{ 'sjw.disponibilidad.aviso_compra' | t }}</p>
 </div>

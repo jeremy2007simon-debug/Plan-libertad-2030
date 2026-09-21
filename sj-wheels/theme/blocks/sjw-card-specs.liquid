@@ -1,13 +1,74 @@
 {%- comment -%}
   SJ Wheels — Medidas, estado de compatibilidad y comparador en la tarjeta.
   Se añade dentro de la tarjeta de producto de Horizon.
+
+  Revisión 21-09-2026 — catálogo agrupado por diseño:
+
+  · La tarjeta ya no representa una medida, representa un diseño con varias
+    configuraciones. Enseñar el diámetro, la anchura o el ET del producto
+    sería enseñar un dato que no existe a ese nivel, así que se recorren las
+    variantes y se muestra el rango real: diámetros de tal a cual, anchuras
+    de tal a cual, los anclajes que existen y cuántas configuraciones hay.
+
+  · Fuera el distintivo «Juego de 4». Salía del ajuste por defecto del tema
+    (sjw_default_units_per_set = 4) porque el metafield units_per_set ya no
+    existe, de modo que la tarjeta afirmaba un contenido del pedido que el
+    proveedor no ha documentado. Mientras esa decisión siga pendiente, la
+    tarjeta no dice cuántas unidades cubre el precio.
+
+  · La referencia solo se imprime cuando el diseño tiene una sola variante.
+    Con varias, la de la primera variante induciría a error; en su lugar se
+    dice cuántas referencias hay.
 {%- endcomment -%}
 {%- liquid
   assign p = closest.product | default: product
   assign mf = p.metafields.custom
+  assign n = p.variants.size
   assign sku = p.selected_or_first_available_variant.sku
-  assign units = mf.units_per_set.value | default: settings.sjw_default_units_per_set | default: 4
-  assign set_label = settings.sjw_set_label | default: 'Juego de 4'
+
+  assign d_min = 999
+  assign d_max = 0
+  assign w_min = 999
+  assign w_max = 0
+  assign pcd_lista = ''
+  assign acabados = ''
+
+  for var in p.variants
+    assign vm = var.metafields.custom
+
+    assign d = vm.wheel_diameter.value | default: mf.wheel_diameter.value
+    if d != blank
+      if d < d_min
+        assign d_min = d
+      endif
+      if d > d_max
+        assign d_max = d
+      endif
+    endif
+
+    assign w = vm.wheel_width.value | default: mf.wheel_width.value
+    if w != blank
+      if w < w_min
+        assign w_min = w
+      endif
+      if w > w_max
+        assign w_max = w
+      endif
+    endif
+
+    assign pcd = vm.bolt_pattern.value | default: mf.bolt_pattern.value
+    if pcd != blank
+      assign pcd_lista = pcd_lista | append: pcd | append: ','
+    endif
+
+    assign ac = vm.supplier_finish_code.value
+    if ac != blank
+      assign acabados = acabados | append: ac | append: ','
+    endif
+  endfor
+
+  assign pcds = pcd_lista | split: ',' | uniq | sort | join: ' · '
+  assign acabados_txt = acabados | split: ',' | uniq | sort | join: ' · '
 -%}
 
 {%- if p != blank -%}
@@ -34,33 +95,42 @@
 
   <div class="sjw-cardspecs__badges">
     {% render 'sjw-fitment-badge', product: p, size: 'sm' %}
-    {%- if units > 1 -%}
-      <span class="sjw-badge sjw-badge--set">{{ set_label }}</span>
-    {%- endif -%}
   </div>
 
   {%- if block.settings.show_specs -%}
     <ul class="sjw-cardspecs__list" role="list">
-      {%- if mf.wheel_diameter.value != blank -%}
-        <li><abbr title="{{ 'sjw.spec.diameter' | t }}">Ø</abbr> {{ mf.wheel_diameter.value }}"</li>
+      {%- if d_max > 0 -%}
+        <li>
+          <abbr title="{{ 'sjw.spec.diameter' | t }}">Ø</abbr>
+          {%- if d_min == d_max %} {{ d_min }}"
+          {%- else %} {{ d_min }}"–{{ d_max }}"
+          {%- endif -%}
+        </li>
       {%- endif -%}
-      {%- if mf.wheel_width.value != blank -%}
-        <li>{{ mf.wheel_width.value }}"</li>
+      {%- if w_max > 0 -%}
+        <li>
+          {%- if w_min == w_max -%}
+            {{ w_min | replace: '.', ',' }}"
+          {%- else -%}
+            {{ w_min | replace: '.', ',' }}"–{{ w_max | replace: '.', ',' }}"
+          {%- endif -%}
+        </li>
       {%- endif -%}
-      {%- if mf.bolt_pattern.value != blank -%}
-        <li>{{ mf.bolt_pattern.value }}</li>
+      {%- if pcds != blank -%}
+        <li>{{ pcds }}</li>
       {%- endif -%}
-      {%- if mf.offset_et.value != blank -%}
-        <li>ET {{ mf.offset_et.value }}</li>
-      {%- endif -%}
-      {%- if mf.finish.value != blank -%}
-        <li>{{ mf.finish.value }}</li>
+      {%- if acabados_txt != blank -%}
+        <li>{{ acabados_txt }}</li>
       {%- endif -%}
     </ul>
   {%- endif -%}
 
-  {%- if block.settings.show_sku and sku != blank -%}
-    <p class="sjw-small sjw-mono">{{ 'sjw.product.sku' | t }}: {{ sku }}</p>
+  {%- if block.settings.show_sku -%}
+    {%- if n > 1 -%}
+      <p class="sjw-small">{{ n }} {{ 'sjw.variantes.referencias' | t }}</p>
+    {%- elsif sku != blank -%}
+      <p class="sjw-small sjw-mono">{{ 'sjw.product.sku' | t }}: {{ sku }}</p>
+    {%- endif -%}
   {%- endif -%}
 
   {%- if settings.sjw_enable_compare and block.settings.show_compare -%}

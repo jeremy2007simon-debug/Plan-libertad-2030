@@ -11,15 +11,27 @@
   plantilla de producto, y enlaza con el formulario real de
   /pages/solicitud-de-compatibilidad con la referencia ya cargada.
 
+  Revisión 21-09-2026: con el catálogo agrupado por diseño, la comprobación
+  de compatibilidad es de la variante elegida, no de la familia. Si no se
+  pasa una variante, se toma la seleccionada.
+
   Uso:
     {%- render 'sjw-consultar-disponibilidad', product: product -%}
+    {%- render 'sjw-consultar-disponibilidad', product: product, variant: variant -%}
 {%- endcomment -%}
 
 {%- liquid
   assign mf = product.metafields.custom
+  assign v = variant | default: product.selected_or_first_available_variant
+  assign vmf = v.metafields.custom
+
   assign estado = mf.availability_status.value | default: ''
-  assign verificar = mf.requires_manual_verification.value
   assign precio_estado = mf.price_status.value | default: ''
+
+  assign verificar = mf.requires_manual_verification.value
+  if vmf.requires_manual_verification != blank
+    assign verificar = vmf.requires_manual_verification.value
+  endif
 -%}
 
 {%- if estado != '' or verificar or precio_estado != '' -%}
@@ -30,7 +42,7 @@
     .sjw-consulta__motivos li { font-size: .875rem; line-height: 1.45; }
   </style>
 
-  <div class="sjw-root sjw-consulta" role="status">
+  <div class="sjw-root sjw-consulta" role="status" data-sjw-variante="{{ v.id }}">
     <p class="sjw-consulta__estado"><strong>{{ 'sjw.disponibilidad.estado' | t }}</strong></p>
 
     <ul class="sjw-consulta__motivos">
@@ -41,7 +53,10 @@
         <li>{{ 'sjw.disponibilidad.motivo_disponibilidad' | t }}: {{ estado }}</li>
       {%- endif -%}
       {%- if verificar -%}
-        <li>{{ 'sjw.disponibilidad.motivo_compatibilidad' | t }}</li>
+        <li>
+          {{ 'sjw.disponibilidad.motivo_compatibilidad' | t }}
+          {%- if v.sku != blank %} ({{ 'sjw.disponibilidad.sku' | t }} {{ v.sku }}){% endif -%}
+        </li>
       {%- endif -%}
       {%- if mf.set_contents_status.value != blank -%}
         <li>{{ 'sjw.disponibilidad.motivo_contenido' | t }}: {{ mf.set_contents_status.value }}</li>

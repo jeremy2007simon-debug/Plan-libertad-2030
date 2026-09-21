@@ -14,8 +14,23 @@ Regla que el importador no deja saltarse:
     Una fila solo puede marcar verificacion=verified si trae evidencia,
     quien la verifico y la fecha. Sin esas tres cosas la fila entra como
     pending. Una pista del proveedor nunca es evidencia.
+
+Catalogo agrupado por diseno (21-09-2026):
+
+    sku_producto ya no identifica un producto, identifica una VARIANTE. Cada
+    diseno es un unico producto con varias variantes, y el anclaje, el
+    diametro, la anchura, el ET y el buje cambian de una a otra. Vincular un
+    vehiculo al producto afirmaria la compatibilidad de todas sus medidas a
+    la vez, que es justo lo que no se puede afirmar: en SJW-048 conviven
+    5x112 con buje 66,5 mm y 5x120 con buje 72,6 mm.
+
+    Por eso el enlace se aplica sobre custom.compatible_vehicles de la
+    VARIANTE. El SKU se resuelve a su identificador de variante con
+    --mapa (por defecto data/mapa-migracion-83.csv). Los SKU que el mapa no
+    conozca se listan aparte junto con la consulta que los resuelve; el
+    importador no adivina a que variante corresponden.
 """
-import argparse, csv, json, re, sys, datetime
+import argparse, csv, json, os, re, sys, datetime
 
 COLUMNAS = ['accion','vehiculo_id','marca','modelo','generacion','anio_desde','anio_hasta',
             'pcd','buje_mm','et_min','et_max','diametros','anchura_min','anchura_max',
@@ -183,6 +198,72 @@ def valida(path, inf):
                              'debe existir ya en Shopify o la fila fallara')
 
 
+def carga_mapa(ruta):
+    """Lee el mapa de migracion y devuelve {SKU: (id_variante, handle)}.
+
+    El mapa lo escribe la reorganizacion del catalogo y es la unica fuente
+    que relaciona un SKU del proveedor con la variante que lo lleva ahora.
+    Si no existe, el importador sigue funcionando: deja los enlaces sin
+    resolver y escribe la consulta que los resuelve.
+    """
+    if not ruta or not os.path.exists(ruta):
+        return {}
+    mapa = {}
+    with open(ruta, newline='', encoding='utf-8-sig') as f:
+        for fila in csv.DictReader(f):
+            sku = (fila.get('sku') or '').strip().upper()
+            vid = (fila.get('variante_nueva_id') or '').strip()
+            if sku and vid:
+                mapa[sku] = (vid, (fila.get('producto_nuevo_handle') or '').strip())
+    return mapa
+
+
+def resuelve_variantes(inf, mapa):
+    """Anota cada enlace con su variante. Los que no se resuelven se avisan."""
+    sin_resolver = []
+    for e in inf.enlaces + inf.desenlaces:
+        destino = mapa.get(e['sku'])
+        if destino:
+            e['variante_id'], e['producto_handle'] = destino
+        else:
+            e['variante_id'] = e['producto_handle'] = None
+            sin_resolver.append(e['sku'])
+    for sku in sorted(set(sin_resolver)):
+        inf.avisos.append((None, f'SKU {sku}: el mapa no dice en que variante esta; '
+                                 'se deja sin resolver y se incluye en la consulta de busqueda'))
+    return sorted(set(sin_resolver))
+
+
+def consulta_skus(skus):
+    """Consulta GraphQL que devuelve el id de variante de cada SKU pendiente."""
+    if not skus:
+        return ''
+    partes = ['s%d:productVariants(first:1,query:%s){nodes{id sku product{id handle title}}}'
+              % (n, json.dumps('sku:' + sku)) for n, sku in enumerate(skus)]
+    return 'query{' + ' '.join(partes) + '}'
+
+
+def plan_enlaces(inf):
+    """Plan de enlaces por variante, en JSON y legible.
+
+    No se genera la mutacion final porque custom.compatible_vehicles es una
+    lista: escribirla sin leer antes su valor actual borraria los vehiculos
+    que ya estuvieran vinculados a esa variante. El plan dice exactamente
+    que anadir y que quitar en cada variante; la lectura y la fusion las
+    hace quien ejecuta --apply con sus credenciales.
+    """
+    por_variante = {}
+    for e in inf.enlaces:
+        clave = e['variante_id'] or ('SKU:' + e['sku'])
+        por_variante.setdefault(clave, {'sku': e['sku'], 'anadir': [], 'quitar': []})
+        por_variante[clave]['anadir'].append(e['vehiculo_id'])
+    for e in inf.desenlaces:
+        clave = e['variante_id'] or ('SKU:' + e['sku'])
+        por_variante.setdefault(clave, {'sku': e['sku'], 'anadir': [], 'quitar': []})
+        por_variante[clave]['quitar'].append(e['vehiculo_id'])
+    return por_variante
+
+
 def mutaciones(inf):
     """Genera las mutaciones GraphQL. No se envian: se escriben en un archivo.
 
@@ -232,7 +313,7 @@ def imprime(inf, filas_totales):
     print('=' * 68)
     print(f'Filas leidas ................. {filas_totales}')
     print(f'Vehiculos a crear/actualizar . {len(inf.vehiculos)}')
-    print(f'Enlaces producto<->vehiculo .. {len(inf.enlaces)}')
+    print(f'Enlaces vehiculo<->variante .. {len(inf.enlaces)}')
     print(f'Desenlaces ................... {len(inf.desenlaces)}')
     print(f'Filas degradadas a pending ... {inf.degradadas}')
     print(f'Errores ...................... {len(inf.errores)}')
@@ -257,6 +338,9 @@ def main():
     p = argparse.ArgumentParser(description='Importa compatibilidad vehiculo-producto (simulacion por defecto)')
     p.add_argument('csv')
     p.add_argument('--out', help='archivo donde escribir las mutaciones GraphQL')
+    p.add_argument('--mapa', default=os.path.join('data', 'mapa-migracion-83.csv'),
+                   help='CSV que relaciona cada SKU con su variante (mapa de migracion)')
+    p.add_argument('--plan', help='archivo donde escribir el plan de enlaces por variante')
     p.add_argument('--apply', action='store_true', help='escribir de verdad en Shopify')
     p.add_argument('--shop', help='midominio.myshopify.com')
     p.add_argument('--token', help='token de Admin API')
@@ -266,6 +350,7 @@ def main():
     with open(a.csv, newline='', encoding='utf-8-sig') as f:
         total = max(sum(1 for _ in f) - 1, 0)
     valida(a.csv, inf)
+    pendientes = resuelve_variantes(inf, carga_mapa(a.mapa))
     imprime(inf, total)
 
     if inf.errores:
@@ -277,8 +362,19 @@ def main():
             f.write(mut)
         print(f'Mutaciones escritas en {a.out} ({len(mut)} caracteres).')
     if inf.enlaces or inf.desenlaces:
-        print('Los enlaces producto<->vehiculo se aplican sobre el metafield '
-              'custom.compatible_vehicles de cada producto, leyendo antes su valor actual.')
+        print('Los enlaces vehiculo<->llanta se aplican sobre el metafield '
+              'custom.compatible_vehicles de la VARIANTE, no del producto: dentro de un '
+              'mismo diseno el anclaje, el ET y el buje cambian de una variante a otra.')
+        plan = plan_enlaces(inf)
+        resueltos = sum(1 for k in plan if not k.startswith('SKU:'))
+        print(f'Variantes afectadas .......... {len(plan)} ({resueltos} resueltas por el mapa)')
+        if a.plan:
+            with open(a.plan, 'w', encoding='utf-8') as f:
+                json.dump(plan, f, ensure_ascii=False, indent=1)
+            print(f'Plan de enlaces escrito en {a.plan}.')
+        if pendientes:
+            print('\nSKU sin resolver. Esta consulta devuelve su variante:\n')
+            print(consulta_skus(pendientes))
 
     if not a.apply:
         print('\nSimulacion terminada. Nada se ha escrito en Shopify.')

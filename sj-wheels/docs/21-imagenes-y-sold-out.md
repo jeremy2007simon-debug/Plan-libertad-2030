@@ -1,5 +1,11 @@
 # 21 · «Sold out» y las fotografías repetidas
 
+> **Actualizado el 21-09-2026.** El catálogo se reorganizó en diez productos,
+> uno por diseño, con las 83 referencias como variantes. Lo que este documento
+> cuenta sobre las 83 fichas independientes describe el estado anterior; el
+> actual está en [22-catalogo-por-diseno.md](22-catalogo-por-diseno.md).
+
+
 **Fecha:** 21-09-2026 · **Tema corregido:** «SJ Wheels — DEV (no publicar)» (`196061626701`).
 Tema publicado (Horizon, `196025975117`): **sin tocar**. Contraseña: **activada**.
 Precios: **bajo consulta**. Compra: **bloqueada**.

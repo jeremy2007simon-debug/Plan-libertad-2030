@@ -8,6 +8,14 @@
 
   El texto no promete una comprobación que no se hace: la revisión técnica es
   de una persona y no se limita a PCD, diámetro, ET y buje.
+
+  Revisión 20-09-2026: el formulario recoge ahora lo que hace falta para
+  responder a una solicitud de precio desde una ficha: producto, referencia
+  (SKU), medida, acabado solicitado, unidades, destino y código postal,
+  además del vehículo. Lo que llega en la URL desde la ficha se rellena solo;
+  lo demás lo escribe el cliente. El destino y el código postal se piden
+  porque el transporte todavía no está cerrado y la respuesta depende del
+  territorio.
 {%- endcomment -%}
 
 {% render 'sjw-strings' %}
@@ -39,6 +47,7 @@
     text-transform: lowercase; color: var(--sjw-orange);
   }
   .sjw-req__marca--opcional { color: var(--sjw-text-faint); }
+  .sjw-req__sep { grid-column: 1 / -1; margin: var(--sjw-s2) 0 0; font-size: .8125rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; opacity: .7; }
 </style>
 
 <section class="sjw-root sjw-section" style="background: {{ section.settings.background_color }};">
@@ -138,6 +147,8 @@
           </p>
         {%- endif -%}
 
+        <p class="sjw-req__sep">Tu vehículo</p>
+
         <p class="sjw-field">
           <label class="sjw-label" for="sjw-req-marca">{{ 'sjw.request.make_model' | t }}</label>
           <input class="sjw-input" id="sjw-req-marca" type="text"{% unless section.settings.mostrar_motivo %} required{% endunless %}
@@ -159,14 +170,87 @@
           <input class="sjw-input" id="sjw-req-actual" type="text"
                  name="contact[Medida montada actualmente]" placeholder="{{ 'sjw.request.current_size_ph' | t }}">
         </p>
+
+        {%- comment -%}
+          Bloque de la referencia. Todo lo que viene de la ficha se rellena
+          solo desde la URL, pero los campos quedan a la vista y editables:
+          el cliente tiene que poder corregir lo que se ha cargado.
+        {%- endcomment -%}
+        <p class="sjw-req__sep">La llanta que te interesa</p>
+
+        <p class="sjw-field sjw-req__wide">
+          <label class="sjw-label" for="sjw-req-producto">Producto</label>
+          <input class="sjw-input" id="sjw-req-producto" type="text"
+                 name="contact[Producto]" data-sjw-req-param="producto"
+                 placeholder="Nombre del diseño, por ejemplo SJW-074">
+        </p>
         <p class="sjw-field sjw-req__wide">
           <label class="sjw-label" for="sjw-req-ref">{{ 'sjw.request.reference' | t }}</label>
           <input class="sjw-input" id="sjw-req-ref" type="text"
-                 name="contact[Referencia de la llanta]" data-sjw-req-reference
+                 name="contact[Referencia de la llanta]" data-sjw-req-reference data-sjw-req-param="ref"
                  aria-describedby="sjw-req-ref-ayuda"
                  placeholder="{{ 'sjw.request.reference_ph' | t }}">
           <span class="sjw-small" id="sjw-req-ref-ayuda">{{ 'sjw.request.reference_help' | t }}</span>
         </p>
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-medida">Medida solicitada</label>
+          <input class="sjw-input" id="sjw-req-medida" type="text"
+                 name="contact[Medida solicitada]" data-sjw-req-param="medida"
+                 placeholder="20x9.5">
+        </p>
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-anclaje">Anclaje (PCD)</label>
+          <input class="sjw-input" id="sjw-req-anclaje" type="text"
+                 name="contact[Anclaje solicitado]" data-sjw-req-param="anclaje"
+                 placeholder="5x112">
+        </p>
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-acabado">Acabado solicitado</label>
+          <input class="sjw-input" id="sjw-req-acabado" type="text"
+                 name="contact[Acabado solicitado]" data-sjw-req-param="acabado"
+                 aria-describedby="sjw-req-acabado-ayuda"
+                 placeholder="Código del proveedor, por ejemplo MB">
+          <span class="sjw-small" id="sjw-req-acabado-ayuda">SJ Wheels todavía no tiene la carta de colores: el acabado se identifica por el código del proveedor.</span>
+        </p>
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-cantidad">Unidades</label>
+          <input class="sjw-input" id="sjw-req-cantidad" type="number" min="1" step="1" inputmode="numeric"
+                 name="contact[Unidades solicitadas]" data-sjw-req-param="cantidad"
+                 aria-describedby="sjw-req-cantidad-ayuda"
+                 placeholder="4">
+          <span class="sjw-small" id="sjw-req-cantidad-ayuda">Dinos cuántas llantas necesitas. El contenido del pedido todavía no está documentado por el proveedor.</span>
+        </p>
+
+        <p class="sjw-req__sep">Dónde lo quieres recibir</p>
+
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-destino">
+            Destino del envío
+            <span class="sjw-req__marca">{{ 'sjw.request.required' | t }}</span>
+          </label>
+          <select class="sjw-select" id="sjw-req-destino" name="contact[Destino del envío]"
+                  data-sjw-req-param="destino" required aria-required="true">
+            <option value="">Selecciona el destino</option>
+            <option>Península</option>
+            <option>Baleares</option>
+            <option>Canarias</option>
+            <option>Ceuta</option>
+            <option>Melilla</option>
+            <option>Otro país</option>
+          </select>
+        </p>
+        <p class="sjw-field">
+          <label class="sjw-label" for="sjw-req-cp">
+            Código postal
+            <span class="sjw-req__marca">{{ 'sjw.request.required' | t }}</span>
+          </label>
+          <input class="sjw-input" id="sjw-req-cp" type="text" inputmode="numeric"
+                 autocomplete="postal-code" name="contact[Código postal]"
+                 data-sjw-req-param="cp" required aria-required="true"
+                 aria-describedby="sjw-req-cp-ayuda" placeholder="28001">
+          <span class="sjw-small" id="sjw-req-cp-ayuda">El transporte y los impuestos dependen del territorio, así que el código postal es necesario para darte un precio.</span>
+        </p>
+
         <p class="sjw-field sjw-req__wide">
           <label class="sjw-label" for="sjw-req-msg">{{ 'sjw.request.message' | t }}</label>
           <textarea class="sjw-input sjw-req__area" id="sjw-req-msg" rows="4"
@@ -198,7 +282,8 @@
 
 <script>
   /* Tres cosas, todas del lado del cliente:
-     1) rellena la referencia desde ?ref= y el vehículo guardado en el garaje;
+     1) rellena lo que llega en la URL desde la ficha (producto, referencia,
+        medida, anclaje, acabado, unidades) y el vehículo guardado en el garaje;
      2) guarda lo escrito mientras se escribe;
      3) si el envío vuelve con error, devuelve el texto a su sitio.
 
@@ -253,18 +338,27 @@
       return repuesto;
     }
 
-    /* Referencia desde la ficha de producto. */
-    var ref = new URLSearchParams(location.search).get('ref');
-    if (ref) {
-      var campoRef = form.querySelector('[data-sjw-req-reference]');
-      if (campoRef && !campoRef.value) campoRef.value = ref;
-    }
+    /* Lo que llega desde la ficha de producto. Cada campo declara en
+       data-sjw-req-param el parámetro de la URL que le corresponde, así que
+       añadir uno nuevo no obliga a tocar este script. Lo cargado NO se
+       bloquea: el cliente puede corregirlo. */
+    var params = new URLSearchParams(location.search);
+    Array.prototype.forEach.call(form.querySelectorAll('[data-sjw-req-param]'), function (el) {
+      var valor = params.get(el.getAttribute('data-sjw-req-param'));
+      if (valor && !el.value) el.value = valor;
+    });
 
-    /* Vehículo indicado por el cliente, como dato de apoyo. */
+    /* Vehículo indicado por el cliente, como dato de apoyo. Si la ficha lo
+       ha pasado por la URL, gana ese; si no, el guardado en el garaje. */
     var oculto = form.querySelector('[data-sjw-req-vehicle]');
-    if (oculto && window.SJWGarage) {
-      var v = window.SJWGarage.get();
-      if (v) oculto.value = window.SJWGarage.label(v);
+    if (oculto) {
+      var vehiculoUrl = params.get('vehiculo');
+      if (vehiculoUrl) {
+        oculto.value = vehiculoUrl;
+      } else if (window.SJWGarage) {
+        var v = window.SJWGarage.get();
+        if (v) oculto.value = window.SJWGarage.label(v);
+      }
     }
 
     if (enviado) {

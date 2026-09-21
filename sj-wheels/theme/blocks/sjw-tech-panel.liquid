@@ -2,29 +2,64 @@
   SJ Wheels — Panel técnico del producto.
   Todos los valores salen de metafields. Si un dato falta, se dice que falta:
   nunca se rellena con una suposición.
+
+  Revisión 21-09-2026 — catálogo reorganizado por diseño:
+
+  · Los datos técnicos ya no son del producto, son de la variante. Al
+    agrupar las referencias de un mismo diseño en una sola ficha, el
+    diámetro, la anchura, el anclaje, el ET, el buje y el código de acabado
+    dejan de ser comunes: cambian de una variante a otra. El panel lee
+    p.selected_or_first_available_variant.metafields.custom y solo cae al
+    metafield del producto cuando la variante no trae ese dato. Usar la
+    medida de la familia cuando sus variantes difieren daría una ficha
+    técnica falsa.
+
+  · Se añaden la configuración elegida (las tres opciones) y el estado de
+    la fotografía de esa variante concreta, que no siempre corresponde a su
+    acabado.
+
+  Revisión 20-09-2026:
+
+  · Fuera las filas «Unidades», «Neumáticos» y «Tornillería». Los metafields
+    units_per_set, tires_included y bolts_included venían de la plantilla de
+    carga del catálogo, no de un dato del proveedor, y se eliminaron. El
+    panel los seguía pintando con el valor por defecto 4 / no incluido, que
+    es exactamente la cantidad no confirmada que no debe aparecer. Ahora hay
+    una sola fila, «Contenido del pedido», que dice lo que se sabe: que está
+    pendiente de documentar.
+
+  · El peso deja de calcularse. variant.weight guarda una estimación de
+    SJ Wheels derivada del diámetro, no una medición del fabricante, y
+    dividirla entre un número de unidades que tampoco está confirmado daba
+    un «peso por llanta» inventado dos veces. La estimación sigue guardada
+    como dato interno trazable (set_weight_estimate_kg y weight_source) y la
+    ficha dice «Peso pendiente de confirmación». Cuando el proveedor
+    confirme la cifra, su unidad y su alcance, se guarda en
+    custom.weight_confirmed y esta fila la muestra sola.
+
+  · No se pinta supplier_note: es la nota del proveedor en su idioma
+    original y es información interna.
 {%- endcomment -%}
 {%- liquid
   assign p = closest.product | default: product
   assign mf = p.metafields.custom
   assign pending = 'sjw.product.pending_data' | t
-  assign units = mf.units_per_set.value | default: settings.sjw_default_units_per_set | default: 4
   assign variant = p.selected_or_first_available_variant
+  assign vmf = variant.metafields.custom
+
+  assign v_diameter = vmf.wheel_diameter.value | default: mf.wheel_diameter.value
+  assign v_width = vmf.wheel_width.value | default: mf.wheel_width.value
+  assign v_pcd = vmf.bolt_pattern.value | default: mf.bolt_pattern.value
+  assign v_et = vmf.offset_et.value | default: mf.offset_et.value
+  assign v_bore = vmf.center_bore.value | default: mf.center_bore.value
+  assign v_finish = vmf.supplier_finish_code.value | default: mf.supplier_finish_code.value
+  assign v_imagen = vmf.imagen_estado.value
 
   assign l_diameter = 'sjw.spec.diameter' | t
   assign l_width = 'sjw.spec.width' | t
   assign l_pcd = 'sjw.spec.pcd' | t
   assign l_et = 'sjw.spec.et' | t
   assign l_bore = 'sjw.spec.bore' | t
-  assign l_finish = 'sjw.spec.finish' | t
-  assign l_load = 'sjw.spec.load' | t
-  assign l_weight = 'sjw.spec.weight' | t
-  assign l_weight_each = 'sjw.spec.weight_each' | t
-  assign l_units = 'sjw.spec.units' | t
-  assign l_tires = 'sjw.spec.tires' | t
-  assign l_bolts = 'sjw.spec.bolts' | t
-  assign l_delivery = 'sjw.spec.delivery' | t
-  assign yes = 'sjw.common.included' | t
-  assign no = 'sjw.common.not_included' | t
 -%}
 
 {%- comment -%}
@@ -35,71 +70,116 @@
 <style>
   .sjw-tech { display: grid; gap: var(--sjw-s3); }
   .sjw-spec__nota { display: block; font-weight: 400; font-size: .8125rem; color: var(--sjw-text-muted); }
+  .sjw-tech__config {
+    margin: 0;
+    font-size: .875rem;
+    line-height: 1.5;
+  }
+  .sjw-tech__config strong { font-weight: 600; }
 </style>
 
-<div class="sjw-root sjw-tech" {{ block.shopify_attributes }}>
+<div
+  class="sjw-root sjw-tech"
+  data-sjw-variante="{{ variant.id }}"
+  data-sjw-sku="{{ variant.sku | escape }}"
+  {{ block.shopify_attributes }}
+>
   {%- if block.settings.heading != blank -%}
     <h3 class="sjw-h3">{{ block.settings.heading }}</h3>
   {%- endif -%}
 
+  {%- comment -%}
+    El estado «Consultar disponibilidad y compatibilidad» se pinta desde aquí
+    para que el snippet esté conectado con la plantilla de producto sin tocar
+    templates/product.json, que Shopify regenera desde el editor de temas.
+    También existe blocks/sjw-disponibilidad.liquid por si se prefiere
+    colocarlo en otro punto de la ficha desde el editor.
+  {%- endcomment -%}
+  {% render 'sjw-consultar-disponibilidad', product: p, variant: variant %}
+
+  {%- comment -%}
+    La configuración elegida se repite aquí en texto plano. En el selector se
+    ve como tres botones marcados; en la ficha técnica conviene leerla de un
+    vistazo y poder copiarla al escribir a SJ Wheels.
+  {%- endcomment -%}
+  {%- if variant.title != blank and p.has_only_default_variant == false -%}
+    <p class="sjw-tech__config">
+      <strong>{{ 'sjw.variantes.seleccion' | t }}:</strong>
+      {{ variant.title }}
+    </p>
+  {%- endif -%}
+
   <dl class="sjw-specs">
-    {% render 'sjw-spec', k: l_diameter, v: mf.wheel_diameter.value, suffix: '"' %}
-    {% render 'sjw-spec', k: l_width, v: mf.wheel_width.value, suffix: '"' %}
-    {% render 'sjw-spec', k: l_pcd, v: mf.bolt_pattern.value %}
-    {% render 'sjw-spec', k: l_et, v: mf.offset_et.value, prefix: 'ET ' %}
-    {% render 'sjw-spec', k: l_bore, v: mf.center_bore.value, suffix: ' mm' %}
-    {% render 'sjw-spec', k: l_finish, v: mf.finish.value %}
-    {% render 'sjw-spec', k: l_load, v: mf.load_rating.value, suffix: ' kg' %}
+    {% render 'sjw-spec', k: l_diameter, v: v_diameter, suffix: '"' %}
+    {% render 'sjw-spec', k: l_width, v: v_width, suffix: '"' %}
+    {% render 'sjw-spec', k: l_pcd, v: v_pcd %}
+    {% render 'sjw-spec', k: l_et, v: v_et, prefix: 'ET ' %}
+    {% render 'sjw-spec', k: l_bore, v: v_bore, suffix: ' mm' %}
 
     {%- comment -%}
-      `variant.weight` viene siempre en gramos, pase lo que pase en el
-      `weight_unit`: imprimirlo tal cual daba cifras absurdas. El filtro
-      `weight_with_unit` hace la conversión. Y como estos productos son juegos
-      completos, el peso del envío se acompaña del peso por llanta, que es el
-      dato que el cliente busca. La división sale del peso real guardado; no
-      se inventa ninguna cifra.
+      El código de acabado se muestra tal cual lo envía el proveedor. SJ
+      Wheels todavía no tiene la carta de colores, así que no se traduce a un
+      nombre comercial ni se deduce de una fotografía.
     {%- endcomment -%}
     <div class="sjw-spec">
-      <dt class="sjw-spec__k">{{ l_weight }}</dt>
-      <dd class="sjw-spec__v{% if variant.weight == 0 %} sjw-spec__v--empty{% endif %}">
-        {%- if variant.weight > 0 -%}
-          {{ variant.weight | weight_with_unit: variant.weight_unit }}
-          {%- if units > 1 -%}
-            {%- assign peso_unidad = variant.weight | divided_by: units -%}
-            <span class="sjw-spec__nota">
-              ({{ peso_unidad | weight_with_unit: variant.weight_unit }} {{ l_weight_each }})
-            </span>
-          {%- endif -%}
+      <dt class="sjw-spec__k">{{ 'sjw.disponibilidad.acabado_titulo' | t }}</dt>
+      <dd class="sjw-spec__v{% if v_finish == blank %} sjw-spec__v--empty{% endif %}">
+        {%- if v_finish != blank -%}
+          {{ v_finish }}
+          <span class="sjw-spec__nota">{{ 'sjw.disponibilidad.acabado_nota' | t }}</span>
         {%- else -%}
           {{ pending }}
         {%- endif -%}
       </dd>
     </div>
 
+    {%- if variant.sku != blank -%}
+      <div class="sjw-spec">
+        <dt class="sjw-spec__k">{{ 'sjw.disponibilidad.sku' | t }}</dt>
+        <dd class="sjw-spec__v">{{ variant.sku }}</dd>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%}
+      El proveedor entregó una sola imagen por diseño. Cuando la variante
+      elegida tiene otro código de acabado, la fotografía enseña la forma
+      pero no el color, y eso se dice aquí en lugar de dejar que el cliente
+      lo suponga.
+    {%- endcomment -%}
+    {%- if v_imagen != blank -%}
+      <div class="sjw-spec">
+        <dt class="sjw-spec__k">{{ 'sjw.variantes.imagen_titulo' | t }}</dt>
+        <dd class="sjw-spec__v">{{ v_imagen }}</dd>
+      </div>
+    {%- endif -%}
+
     <div class="sjw-spec">
-      <dt class="sjw-spec__k">{{ l_units }}</dt>
-      <dd class="sjw-spec__v">{{ units }}</dd>
+      <dt class="sjw-spec__k">{{ 'sjw.spec.weight' | t }}</dt>
+      <dd class="sjw-spec__v{% if mf.weight_confirmed.value == blank %} sjw-spec__v--empty{% endif %}">
+        {%- if mf.weight_confirmed.value != blank -%}
+          {{ mf.weight_confirmed.value }}
+        {%- else -%}
+          {{ 'sjw.disponibilidad.peso_pendiente' | t }}
+          <span class="sjw-spec__nota">{{ 'sjw.disponibilidad.peso_nota' | t }}</span>
+        {%- endif -%}
+      </dd>
     </div>
 
     <div class="sjw-spec">
-      <dt class="sjw-spec__k">{{ l_tires }}</dt>
-      <dd class="sjw-spec__v">{% if mf.tires_included.value == true %}{{ yes }}{% else %}{{ no }}{% endif %}</dd>
-    </div>
-
-    <div class="sjw-spec">
-      <dt class="sjw-spec__k">{{ l_bolts }}</dt>
-      <dd class="sjw-spec__v">{% if mf.bolts_included.value == true %}{{ yes }}{% else %}{{ no }}{% endif %}</dd>
+      <dt class="sjw-spec__k">{{ 'sjw.disponibilidad.contenido_titulo' | t }}</dt>
+      <dd class="sjw-spec__v sjw-spec__v--empty">
+        {%- assign sjw_contenido = 'sjw.disponibilidad.contenido_pendiente' | t -%}
+        {{- mf.set_contents_status.value | default: sjw_contenido -}}
+      </dd>
     </div>
   </dl>
 
-  {%- assign delivery = mf.estimated_delivery.value | default: settings.sjw_default_delivery -%}
-  {%- if delivery != blank -%}
-    <p class="sjw-small">{{ l_delivery }}: {{ delivery }}</p>
-  {%- endif -%}
-
-  {%- if mf.compatibility_notes.value != blank -%}
-    <div class="sjw-note sjw-note--info"><span>{{ mf.compatibility_notes.value }}</span></div>
-  {%- endif -%}
+  <div class="sjw-note sjw-note--info">
+    <span>
+      <strong>{{ 'sjw.disponibilidad.confirmacion_titulo' | t }}</strong>
+      {{ 'sjw.disponibilidad.confirmacion_cuerpo' | t }}
+    </span>
+  </div>
 </div>
 
 

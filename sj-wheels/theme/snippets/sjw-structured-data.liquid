@@ -8,12 +8,21 @@
     AggregateRating, sin reseñas y sin disponibilidad inventada: si el
     producto no está publicado, no se declara oferta.
 
+  Revisión 20-09-2026: la oferta pide ahora DOS condiciones. Además de que
+  el producto esté disponible, el tema tiene que estar mostrando precios
+  (snippets/sjw-precio-modo.liquid). Con la escalera de precios pendiente de
+  validación comercial, declarar un Offer con esa cifra sería publicar en
+  Google un precio que SJ Wheels no ha confirmado, aunque la página diga
+  «Precio bajo consulta».
+
   La Organization la emite la cabecera del tema, para no duplicarla.
 {%- endcomment -%}
 {%- liquid
   assign sjw_marca = settings.sjw_brand_name | default: shop.name
   assign inicio = request.origin | append: routes.root_url
 -%}
+{%- capture sjw_modo -%}{% render 'sjw-precio-modo' %}{%- endcapture -%}
+{%- assign sjw_modo = sjw_modo | strip -%}
 
 <script type="application/ld+json">
 {
@@ -82,6 +91,11 @@
     assign sku = product.selected_or_first_available_variant.sku | default: product.variants.first.sku
     assign diametro = product.metafields.custom.wheel_diameter.value
     assign pcd = product.metafields.custom.bolt_pattern.value
+
+    assign declarar_oferta = false
+    if product.available and sjw_modo == 'visible'
+      assign declarar_oferta = true
+    endif
   -%}
   <script type="application/ld+json">
   {
@@ -95,9 +109,10 @@
     "brand": { "@type": "Brand", "name": {{ sjw_marca | json }} }
     {%- comment -%}
       La oferta solo se declara si el producto está realmente disponible en la
-      tienda. Un producto en borrador no se anuncia como comprable.
+      tienda Y el tema muestra precios. Un producto que no se puede comprar, o
+      cuyo precio está pendiente de validación, no se anuncia como comprable.
     {%- endcomment -%}
-    {%- if product.available -%}
+    {%- if declarar_oferta -%}
     ,"offers": {
       "@type": "Offer",
       "price": {{ product.price | divided_by: 100.0 | json }},

@@ -34,7 +34,7 @@
     "inventory_status": "Inventory status",
     "localization_region_and_language": "Region and language selector",
     "menu": "Menu",
-    // This is the label for the header navigation menu when using screen readers, it will read "Primary navigation"
+    // This is the label for the header navigation menu when using screen readers, it will read \"Primary navigation\"
     "header_navigation_label": "Primary",
     "nested_product": "{{ product_title }} for {{ parent_title }}",
     "new_window": "Opens in a new window.",
@@ -373,6 +373,36 @@
     }
   },
   "sjw": {
+    "variantes": {
+      "referencias": "references",
+      "ayuda": "Choose size, fitment and finish. Only the combinations that exist in the catalogue are offered: the crossed-out ones are not available with the rest of your selection.",
+      "no_disponible": "Not this combination",
+      "seleccion": "Chosen configuration",
+      "imagen_titulo": "Photograph of this variant",
+      "envia_referencia": "The request is sent with reference"
+    },
+    "disponibilidad": {
+      "badge": "Check availability",
+      "estado": "Check availability and fitment",
+      "cta": "Request price and fitment",
+      "precio_consulta": "Price on request",
+      "aviso_compra": "This reference cannot be ordered yet: the price is pending commercial validation and fitment needs technical confirmation from SJ Wheels. A confirmation from the customer does not replace that check.",
+      "motivo_precio": "Price pending commercial validation. The product page shows no figure until SJ Wheels validates it.",
+      "motivo_disponibilidad": "Availability",
+      "motivo_compatibilidad": "Fitment: SJ Wheels must verify the size and the vehicle setup before fitting.",
+      "motivo_contenido": "Order contents",
+      "motivo_peso": "Weight: pending confirmation from the supplier (figure, unit and scope).",
+      "peso_pendiente": "Weight pending confirmation",
+      "peso_nota": "The supplier has not confirmed the figure, the unit or the scope (per wheel, per set or per package). SJ Wheels' internal estimate is not published as manufacturer data.",
+      "acabado_titulo": "Supplier finish code",
+      "acabado_nota": "No colour chart yet: the code is not translated into a commercial name.",
+      "sku": "Reference (SKU)",
+      "contenido_titulo": "Order contents",
+      "contenido_pendiente": "Pending documentation: units covered by the price, tyres, bolts and centring rings",
+      "confirmacion_titulo": "Needs technical confirmation.",
+      "confirmacion_cuerpo": "SJ Wheels checks the size and the vehicle setup before accepting any order. A confirmation from the customer does not replace that check.",
+      "imagen_referencia": "Reference image"
+    },
     "selector": {
       "empty_form": "Ask about fitment",
       "make": "Make",
@@ -484,17 +514,17 @@
     },
     "compare": {
       "close": "Close the comparison",
-  "add": "Compare",
-  "remove": "Remove from comparison",
-  "open": "Compare wheels",
-  "title": "Wheel comparison",
-  "empty": "Add up to 3 wheels to compare them.",
-  "full": "You have reached the maximum number of wheels to compare.",
-  "clear": "Clear comparison",
-  "differences": "Differences only",
-  "fit": "Fitment",
-  "remove_short": "Remove"
-},
+      "add": "Compare",
+      "remove": "Remove from comparison",
+      "open": "Compare wheels",
+      "title": "Wheel comparison",
+      "empty": "Add up to 3 wheels to compare them.",
+      "full": "You have reached the maximum number of wheels to compare.",
+      "clear": "Clear comparison",
+      "differences": "Differences only",
+      "fit": "Fitment",
+      "remove_short": "Remove"
+    },
     "brands": {
       "empty_title": "No brands ready yet",
       "empty_body": "We are organising the catalogue by vehicle brand. In the meantime we can check by hand.",

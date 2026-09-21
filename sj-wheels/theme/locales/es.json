@@ -361,6 +361,36 @@
     }
   },
   "sjw": {
+    "variantes": {
+      "referencias": "referencias",
+      "ayuda": "Elige medida, montaje y acabado. Solo se ofrecen las combinaciones que existen en el catálogo: las tachadas no están disponibles con el resto de tu selección.",
+      "no_disponible": "Sin esta combinación",
+      "seleccion": "Configuración elegida",
+      "imagen_titulo": "Fotografía de esta variante",
+      "envia_referencia": "La solicitud se envía con la referencia"
+    },
+    "disponibilidad": {
+      "badge": "Consultar disponibilidad",
+      "estado": "Consultar disponibilidad y compatibilidad",
+      "cta": "Solicitar precio y compatibilidad",
+      "precio_consulta": "Precio bajo consulta",
+      "aviso_compra": "Esta referencia no se puede pedir todavía: el precio está pendiente de validación comercial y la compatibilidad necesita confirmación técnica de SJ Wheels. Una confirmación del cliente no sustituye a esa comprobación.",
+      "motivo_precio": "Precio pendiente de validación comercial. La ficha no muestra ninguna cifra hasta que SJ Wheels la valide.",
+      "motivo_disponibilidad": "Disponibilidad",
+      "motivo_compatibilidad": "Compatibilidad: SJ Wheels debe verificar la medida y la configuración del vehículo antes del montaje.",
+      "motivo_contenido": "Contenido del pedido",
+      "motivo_peso": "Peso: pendiente de confirmación del proveedor (cifra, unidad y alcance).",
+      "peso_pendiente": "Peso pendiente de confirmación",
+      "peso_nota": "El proveedor no ha confirmado la cifra, la unidad ni el alcance (por llanta, por juego o por bulto). La estimación interna de SJ Wheels no se publica como dato del fabricante.",
+      "acabado_titulo": "Código de acabado del proveedor",
+      "acabado_nota": "Sin carta de colores: el código no se traduce a un nombre comercial.",
+      "sku": "Referencia (SKU)",
+      "contenido_titulo": "Contenido del pedido",
+      "contenido_pendiente": "Pendiente de documentar: unidades incluidas en el precio, neumáticos, tornillería y centradores",
+      "confirmacion_titulo": "Necesita confirmación técnica.",
+      "confirmacion_cuerpo": "SJ Wheels comprueba la medida y la configuración del vehículo antes de aceptar cualquier pedido. Una confirmación del cliente no sustituye a esa comprobación.",
+      "imagen_referencia": "Imagen de referencia"
+    },
     "selector": {
       "empty_form": "Consultar compatibilidad",
       "make": "Marca",
