@@ -8,7 +8,6 @@ se ha eliminado ni una sola referencia y las 83 siguen ahí, ahora como variante
 
 **Tema:** SJ Wheels — DEV (no publicar) · `196061626701` · sigue sin publicar.
 **Vista previa:** `https://5y82gi-yt.myshopify.com/?preview_theme_id=196061626701`
-(la tienda mantiene su contraseña; hay que introducirla antes de ver nada).
 
 ---
 
@@ -237,7 +236,8 @@ adivinarlos.
   `availableForSale: false` en todas. Comprobado producto a producto.
 - **Precios guardados sin alterar** y presentados como «Precio bajo consulta».
 - **Compatibilidad pendiente** en las 83 variantes, salvo evidencia verificada.
-- **La contraseña de la tienda sigue puesta.**
+- **La contraseña de la tienda:** no la he tocado, pero el 23-09-2026 ya no
+  está puesta. Ver el apartado 11.
 - **El tema DEV sigue sin publicar** y no se ha tocado ningún archivo de
   Horizon MAIN.
 
@@ -283,11 +283,7 @@ el tema DEV. No se ha hecho: la instrucción es no publicarlo.
 | Motor de compatibilidad | 66 pruebas, sin fallos |
 | Guardia de compra | 40 pruebas, sin fallos |
 
-La comprobación visual en móvil y escritorio sigue pendiente y no la puedo
-hacer desde aquí: la tienda está protegida por contraseña y la API de
-administración no la expone, así que cualquier petición a la vista previa
-termina en `/password`. Hace falta abrir el enlace de la vista previa con la
-contraseña de la tienda.
+La comprobación visual en móvil y escritorio está hecha: ver el apartado 11.
 
 ## 10. Lo que sigue pendiente
 
@@ -299,4 +295,83 @@ contraseña de la tienda.
 4. **Carta de colores**: mientras no llegue, el acabado se identifica por el
    código del proveedor y no se traduce a un nombre comercial.
 5. **Validación comercial de los precios** antes de mostrarlos.
-6. **Comprobación visual** en móvil y escritorio con la contraseña.
+6. **Los dos archivos de textos** del repositorio, pendientes de traerse
+   desde el tema antes del próximo despliegue (apartado 11).
+
+---
+
+## 11 · Comprobación visual y una divergencia con el tema
+
+**La tienda ya no tiene contraseña.** El 23-09-2026 `/` responde 200 y no
+redirige a `/password`; la API lo confirma (`passwordProtection.enabled:
+false`). Yo no la he quitado. Conviene saberlo porque el tema publicado sigue
+siendo Horizon MAIN, que no lleva los ajustes de SJ Wheels: lo que hoy ve
+cualquiera sin contraseña es el catálogo con «Sold out» y con los precios a la
+vista. La decisión de publicar el tema DEV o volver a poner la contraseña es
+comercial y no la he tomado.
+
+Como el escaparate es accesible, sí se ha podido hacer la comprobación visual
+que faltaba, con Chromium sobre la vista previa del tema DEV, en 390×844
+(móvil) y 1440×900 (escritorio), sobre portada, colección, ficha y ficha con
+una variante concreta en la URL:
+
+| Comprobación | Resultado |
+|---|---|
+| «Sold out» / «Agotado» en tarjetas o ficha | Ninguna aparición |
+| «Juego de 4» / «Set of 4» | Ninguna aparición |
+| Desbordamiento horizontal | Ninguno, en las dos resoluciones |
+| Textos sin traducir | Ninguno |
+| Símbolo de moneda visible | Ninguno |
+| Datos estructurados con precio | No hay `Offer`; solo `Product` |
+| Objetivos táctiles por debajo de 24 px | Dos, en el pie: el enlace «Política de privacidad» (19 px) y el selector de idioma (23 px). Son anteriores a esta reorganización y salen en todas las páginas |
+
+En la ficha se leyó: «Precio bajo consulta», «Consultar disponibilidad»,
+«Solicitar precio y compatibilidad», «La solicitud se envía con la referencia
+**OYL260416157** · 19 × 8,5" / 5×112 · ET30 · Buje 66,5 mm / Cód. proveedor MB»
+y una ficha técnica con esos mismos valores. Al pedir `?variant=…` de otra
+configuración, todo eso cambia con ella.
+
+El filtro de disponibilidad de la colección sí ofrece una casilla «Agotado».
+Es la faceta de Shopify (`filter.v.availability`), no un distintivo de
+producto, y en un catálogo donde todo está bajo consulta no aporta nada:
+conviene quitarla desde los filtros de la colección en el panel.
+
+### Otra sesión editó el tema después de este trabajo
+
+El 23-09-2026 a las 15:59 UTC, después de mi despliegue del día 21, otra
+sesión reescribió cinco archivos directamente en el tema, sin pasar por el
+repositorio:
+
+| Archivo | Qué cambió |
+|---|---|
+| `snippets/sjw-variant-picker.liquid` | El selector de tres columnas pasa a ser **un solo desplegable** con las configuraciones reales («19 × 8,5" / 5×112 · ET30 · Buje 66,5 mm / Cód. proveedor MB»), con botón de envío para que funcione sin JavaScript y 48 px de alto |
+| `blocks/sjw-tech-panel.liquid` | Deja de pintar el panel de disponibilidad, que ya se pinta una vez desde su propio bloque |
+| `snippets/sjw-solicitar-precio.liquid` | El enlace pasa por `sjw-url`, que respeta la ruta del idioma |
+| `locales/es.json` · `locales/en.default.json` | Añaden `sjw.variantes.elegir` y `sjw.variantes.aplicar`, reescriben `ayuda`, y acortan `aviso_compra`, `peso_nota` y `acabado_nota` |
+
+**El cambio es bueno y no lo he pisado.** Un desplegable que solo lista
+variantes reales cumple mejor el encargo que mis tres columnas con tachaduras:
+las combinaciones inexistentes no es que se tachen, es que no existen como
+opción, y en móvil es un control en lugar de tres. Funciona sin JavaScript.
+
+Los tres archivos Liquid están ya sincronizados en el repositorio y verificados
+por MD5 contra el tema. **Los dos archivos de textos no**: el repositorio
+conserva mis versiones, que difieren de las del tema en los textos de la tabla
+de arriba. Están señalados aquí en lugar de darse por sincronizados porque no
+he podido reproducirlos byte a byte y prefiero decirlo a aparentarlo.
+
+Para que eso no acabe en un borrado, `deploy.py` anota ahora en
+`.desplegado.json` el MD5 de cada archivo que sube y avisa cuando el
+repositorio se ha movido desde el último despliegue. Antes de volver a subir
+`locales/es.json` o `locales/en.default.json` hay que traerse la versión del
+tema; si se suben tal cual están en el repositorio, se pierde ese trabajo.
+
+Checksums del tema el 23-09-2026 16:00 UTC:
+
+```
+37a3ad8c718b273282b8116185f70051  locales/es.json            (29 337 B)
+c072e974447de92286a86dee77bf428e  locales/en.default.json    (26 399 B)
+2e491e89f0878e8e9db903816689d684  snippets/sjw-variant-picker.liquid
+a1816541ace1fa9991ea038dd5018be3  blocks/sjw-tech-panel.liquid
+bdad5ba8660b44dcdd125ec73aaa1767  snippets/sjw-solicitar-precio.liquid
+```

@@ -13,3 +13,4 @@ sj-wheels/deploy-vars.json
 
 # Capturas por resolución: se regeneran con capturar.js
 sj-wheels/tests/responsive/capturas/
+sj-wheels/.desplegado.json

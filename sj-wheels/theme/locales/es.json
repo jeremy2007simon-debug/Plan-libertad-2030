@@ -363,11 +363,13 @@
   "sjw": {
     "variantes": {
       "referencias": "referencias",
-      "ayuda": "Elige medida, montaje y acabado. Solo se ofrecen las combinaciones que existen en el catálogo: las tachadas no están disponibles con el resto de tu selección.",
+      "ayuda": "Elige una configuración completa. La medida, el montaje y el acabado corresponden a una referencia concreta.",
       "no_disponible": "Sin esta combinación",
       "seleccion": "Configuración elegida",
       "imagen_titulo": "Fotografía de esta variante",
-      "envia_referencia": "La solicitud se envía con la referencia"
+      "envia_referencia": "La solicitud se envía con la referencia",
+      "elegir": "Medida, montaje y acabado",
+      "aplicar": "Ver configuración"
     },
     "disponibilidad": {
       "badge": "Consultar disponibilidad",

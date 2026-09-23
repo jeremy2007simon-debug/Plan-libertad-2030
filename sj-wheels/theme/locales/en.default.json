@@ -375,11 +375,13 @@
   "sjw": {
     "variantes": {
       "referencias": "references",
-      "ayuda": "Choose size, fitment and finish. Only the combinations that exist in the catalogue are offered: the crossed-out ones are not available with the rest of your selection.",
+      "ayuda": "Choose a complete configuration. The size, the fitment and the finish correspond to one specific reference.",
       "no_disponible": "Not this combination",
       "seleccion": "Chosen configuration",
       "imagen_titulo": "Photograph of this variant",
-      "envia_referencia": "The request is sent with reference"
+      "envia_referencia": "The request is sent with reference",
+      "elegir": "Size, fitment and finish",
+      "aplicar": "View configuration"
     },
     "disponibilidad": {
       "badge": "Check availability",

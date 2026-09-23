@@ -85,7 +85,7 @@
 <div class="sjw-precio-cta">
   <a
     class="button {{ class }}"
-    href="{{ destino }}"
+    href="{% render 'sjw-url', ruta: destino %}"
     data-sjw-solicitar-precio
     data-sjw-sku="{{ sku | escape }}"
     data-sjw-variante="{{ v.id }}"
