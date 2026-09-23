@@ -101,6 +101,11 @@ export default async function handler(
   let abortada = false;
   res.on('close', () => { abortada = true; });
 
+  // El modelo suele anunciar lo que va a consultar antes de pedir la herramienta
+  // y seguir escribiendo después. Son dos respuestas distintas y se pegarían una
+  // a otra —«…por el comprobador.He pasado tus datos…»—, así que se separan.
+  let yaHaEscrito = false;
+
   try {
     for (let vuelta = 0; vuelta < MAX_VUELTAS && !abortada; vuelta++) {
       const stream = cliente.beta.messages.stream({
@@ -121,7 +126,11 @@ export default async function handler(
         fallbacks: 'default',
       });
 
-      stream.on('text', (delta) => enviar('texto', delta));
+      stream.on('text', (delta) => {
+        if (!yaHaEscrito && vuelta > 0) enviar('texto', '\n\n');
+        yaHaEscrito = true;
+        enviar('texto', delta);
+      });
 
       const respuesta = await stream.finalMessage();
 
@@ -156,6 +165,7 @@ export default async function handler(
       // Todos los tool_result van en UN solo mensaje: repartirlos entre varios le enseña
       // al modelo a dejar de pedir herramientas en paralelo.
       mensajes.push({ role: 'user', content: resultados });
+      yaHaEscrito = false;
     }
   } catch (error) {
     // Los tipos del SDK distinguen lo que se reintenta de lo que no.
