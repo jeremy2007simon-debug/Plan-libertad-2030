@@ -22,6 +22,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { HERRAMIENTAS, ejecutar } from '../src/herramientas.js';
 import { SISTEMA } from '../src/sistema.js';
 import { dentroDelLimite, ipDe } from '../src/limite.js';
+import { paraReenviar } from '../src/mensajes.js';
 
 const MODELO = 'claude-opus-5';
 const MAX_VUELTAS = 6;
@@ -129,7 +130,7 @@ export default async function handler(
         break;
       }
       if (respuesta.stop_reason === 'pause_turn') {
-        mensajes.push({ role: 'assistant', content: respuesta.content });
+        mensajes.push({ role: 'assistant', content: paraReenviar(respuesta.content) });
         continue;
       }
       if (respuesta.stop_reason !== 'tool_use') break;
@@ -137,7 +138,7 @@ export default async function handler(
       const llamadas = respuesta.content.filter(
         (b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use',
       );
-      mensajes.push({ role: 'assistant', content: respuesta.content });
+      mensajes.push({ role: 'assistant', content: paraReenviar(respuesta.content) });
 
       const resultados: Anthropic.Beta.BetaToolResultBlockParam[] = [];
       for (const llamada of llamadas) {

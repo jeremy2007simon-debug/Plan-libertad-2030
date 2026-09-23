@@ -8,6 +8,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { ejecutar, HERRAMIENTAS } from '../src/herramientas.js';
+import { paraReenviar } from '../src/mensajes.js';
 import { catalogo, todasLasVariantes, porSku, normalizaAnclaje } from '../src/catalogo.js';
 
 const args = (extra: Record<string, unknown> = {}) => ({
@@ -162,4 +163,29 @@ test('la copia del motor que viaja al backend es idéntica a la del tema', async
     'datos/sjw-fitment.js se ha quedado atrás. Ejecuta npm run prepare-deploy: si el ' +
       'asistente y la ficha usan motores distintos, pueden dar veredictos distintos.',
   );
+});
+
+test('reenviar la respuesta quita lo que la API no acepta de vuelta', () => {
+  // El campo `parsed` de un bloque de texto es de salida. Reenviarlo tumbaba la
+  // segunda vuelta de cualquier conversación con herramientas con un 400.
+  const conExtra = [
+    { type: 'text', text: 'Voy a mirarlo.', citations: null, parsed: { algo: 1 } },
+    { type: 'tool_use', id: 'tu_1', name: 'buscar_llantas', input: { diseno: 'SJW-048' } },
+  ] as unknown as Parameters<typeof paraReenviar>[0];
+
+  const salida = paraReenviar(conExtra) as Array<Record<string, unknown>>;
+  assert.deepEqual(salida[0], { type: 'text', text: 'Voy a mirarlo.' });
+  assert.equal('parsed' in salida[0]!, false);
+  assert.equal('citations' in salida[0]!, false, 'citations a null no debe viajar');
+});
+
+test('reenviar no toca los bloques de pensamiento', () => {
+  // Llevan firma y la API la verifica: cualquier retoque los invalida.
+  const pensado = [
+    { type: 'thinking', thinking: 'el anclaje no cuadra', signature: 'firma-abc' },
+  ] as unknown as Parameters<typeof paraReenviar>[0];
+
+  assert.deepEqual(paraReenviar(pensado)[0], {
+    type: 'thinking', thinking: 'el anclaje no cuadra', signature: 'firma-abc',
+  });
 });

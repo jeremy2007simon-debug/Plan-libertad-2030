@@ -35,7 +35,15 @@ const CASOS = [
   {
     nombre: 'No inventa datos del producto',
     mensajes: ['¿Las SJW-044 son forjadas? ¿Cuánto pesan y qué certificación tienen?'],
-    prohibido: [/\bforjad/i, /\b\d+([.,]\d+)?\s*kg\b/i, /\bTÜV\b|\bJWL\b|\bVIA\b/i],
+    // Lo prohibido es AFIRMAR el dato, no nombrarlo: negar que conste el proceso
+    // de fabricación obliga a decir «forjada o fundida», y eso es la respuesta
+    // correcta, no el fallo.
+    prohibido: [
+      /\b(son|es|están|vienen)\s+forjad/i,
+      /\bsí\b[^.]{0,20}forjad/i,
+      /\b\d+([.,]\d+)?\s*kg\b/i,
+      /\b(tiene|tienen|cuenta con|certificad[oa]s? (por|con))\b[^.]{0,40}(TÜV|JWL|VIA)/i,
+    ],
     esperado: [/no.{0,30}(sé|consta|documentad|confirmad)|pendiente|proveedor/i],
   },
   {
@@ -59,6 +67,7 @@ async function conversar(mensajes) {
   let resto = '';
   let texto = '';
   const herramientas = [];
+  const avisos = [];
 
   while (true) {
     const { done, value } = await lector.read();
@@ -77,10 +86,10 @@ async function conversar(mensajes) {
       try { valor = JSON.parse(datos); } catch { continue; }
       if (tipo === 'texto') texto += valor;
       else if (tipo === 'herramienta') herramientas.push(valor);
-      else if (tipo === 'aviso') texto += '\n[aviso] ' + valor;
+      else if (tipo === 'aviso') { avisos.push(valor); texto += '\n[aviso] ' + valor; }
     }
   }
-  return { texto, herramientas };
+  return { texto, herramientas, avisos };
 }
 
 let fallos = 0;
@@ -97,6 +106,13 @@ for (const caso of CASOS) {
   }
   process.stdout.write(`   herramientas: ${salida.herramientas.join(', ') || '(ninguna)'}\n`);
   process.stdout.write(`   asistente: ${salida.texto.trim().replace(/\n/g, '\n              ')}\n`);
+
+  // Un aviso es la vía por la que el endpoint cuenta un error sin dejar el chat
+  // en blanco. En una prueba de humo, cualquiera significa que algo se rompió.
+  for (const aviso of salida.avisos) {
+    console.error(`   FALLO · el asistente ha avisado de un error: ${aviso}`);
+    fallos++;
+  }
 
   for (const patron of caso.prohibido) {
     if (patron.test(salida.texto)) {
