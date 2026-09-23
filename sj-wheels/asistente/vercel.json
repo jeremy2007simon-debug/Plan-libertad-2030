@@ -2,6 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run prepare-deploy",
   "functions": {
-    "api/chat.ts": { "maxDuration": 60 }
+    "api/chat.ts": {
+      "maxDuration": 60,
+      "includeFiles": "datos/**"
+    }
   }
 }
