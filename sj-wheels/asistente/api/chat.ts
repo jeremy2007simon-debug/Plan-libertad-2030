@@ -16,6 +16,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { HERRAMIENTAS, ejecutar } from '../src/herramientas.ts';
 import { SISTEMA } from '../src/sistema.ts';
+import { dentroDelLimite, ipDe } from '../src/limite.ts';
 
 const MODELO = 'claude-opus-5';
 const MAX_VUELTAS = 6;
@@ -34,6 +35,14 @@ export default async function handler(req: Request): Promise<Response> {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors() });
   if (req.method !== 'POST') {
     return new Response('Usa POST.', { status: 405, headers: cors() });
+  }
+
+  // El endpoint es publico por necesidad y cada conversacion cuesta dinero.
+  if (!dentroDelLimite(ipDe(req))) {
+    return new Response('Demasiadas peticiones. Espera un minuto.', {
+      status: 429,
+      headers: { ...cors(), 'Retry-After': '60' },
+    });
   }
 
   let cuerpo: Peticion;
