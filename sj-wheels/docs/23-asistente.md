@@ -83,11 +83,43 @@ cuatro pasos están en el README. Mientras el campo «Dirección del asistente»
 esté vacío en el editor del tema, el asistente no aparece y la tienda funciona
 exactamente igual que ahora.
 
+### Dónde está desplegado
+
+| Qué | Valor |
+|---|---|
+| Proyecto | `sjw-asistente` en Vercel |
+| Endpoint | `https://sjw-asistente.vercel.app/api/chat` |
+| Rama | `claude/focused-tesla-q9yurp`, carpeta `sj-wheels/asistente` |
+| Variables | `ANTHROPIC_API_KEY` (cifrada), `SJW_TIENDA`, `SJW_ORIGEN`, `SJW_WORKSPACE` (opcional) |
+
+La clave no está en el repositorio ni en ningún archivo del proyecto: vive
+únicamente en el almacén cifrado de Vercel, que es donde le corresponde.
+
+### La clave tiene que pertenecer a un workspace
+
+Una clave creada a nivel de organización, sin asignar a ningún workspace, es
+válida pero la API la rechaza con un 400:
+
+> *This API key is not scoped to a workspace, so this request must include the
+> `anthropic-workspace-id` header.*
+
+El motivo es que la API no sabe a qué presupuesto cargar la conversación. Dos
+salidas, y la primera es la buena:
+
+1. **Crear la clave dentro de un workspace** en
+   [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys):
+   al crearla hay un desplegable de workspace; basta con elegir uno en lugar de
+   dejar «Default». Esa clave ya no necesita cabecera, y el workspace permite
+   además ponerle un límite de gasto propio al asistente, separado del resto.
+2. Poner el identificador del workspace en la variable `SJW_WORKSPACE`. El
+   endpoint lo manda entonces en la cabecera `anthropic-workspace-id`. Sirve
+   igual, pero deja el límite de gasto fuera de la vista.
+
 ## Comprobaciones
 
 | Qué | Resultado |
 |---|---|
-| Pruebas del asistente | 16, sin fallos, sin red |
+| Pruebas del asistente | 22, sin fallos, sin red |
 | El motor nunca devuelve «compatible» | Probado con un vehículo fabricado para encajar |
 | Un anclaje distinto descarta sin ambigüedad | Probado |
 | `buscar_llantas` no devuelve cifras | Probado |
@@ -98,8 +130,19 @@ exactamente igual que ahora.
 | Motor de compatibilidad | 66 pruebas, sin fallos |
 | Guardia de compra | 40 pruebas, sin fallos |
 
-Lo que no está probado es la conversación en sí: sin clave no he podido lanzar
-una sola petición a la API. El bucle, el streaming y las herramientas están
-verificados por tipos y por pruebas; que el modelo se comporte como dicen sus
-instrucciones habrá que verlo con conversaciones reales, y conviene hacerlo
-antes de abrirlo al público.
+Lo que no está probado es la conversación en sí. El endpoint ya está desplegado
+y responde —las peticiones entran, el bucle arranca y el error se comunica en
+castellano en lugar de dejar el chat en blanco—, pero la llamada al modelo
+devuelve el 400 del workspace descrito arriba, así que ninguna de las cinco
+conversaciones de `tests/conversacion.mjs` ha llegado a ejercitar al modelo.
+
+En cuanto la clave pertenezca a un workspace hay que lanzar:
+
+```
+node tests/conversacion.mjs https://sjw-asistente.vercel.app/api/chat
+```
+
+Son cinco casos con lo que el asistente **no** puede decir: que una llanta es
+compatible, un precio, un dato de producto inventado, nada sobre un pedido
+concreto. Hasta que esas cinco pasen, el campo «Dirección del asistente» del
+editor del tema debe seguir vacío.
