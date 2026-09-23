@@ -29,7 +29,17 @@ const MAX_MENSAJES = 40;
 const MAX_CARACTERES = 4000;
 const MAX_CUERPO = 256 * 1024;
 
-const cliente = new Anthropic();
+/**
+ * Una clave de organización que no está asignada a un workspace no sabe a qué
+ * presupuesto cargar la conversación y la API la rechaza con un 400. Se
+ * resuelve de dos maneras: con una clave creada dentro de un workspace, o
+ * diciéndole cuál en una cabecera. SJW_WORKSPACE cubre la segunda; si no está
+ * puesta no se manda nada y la clave decide por sí sola.
+ */
+const espacio = process.env.SJW_WORKSPACE?.trim();
+const cliente = new Anthropic(
+  espacio ? { defaultHeaders: { 'anthropic-workspace-id': espacio } } : {},
+);
 
 interface Peticion {
   mensajes?: Array<{ rol: 'user' | 'assistant'; texto: string }>;
