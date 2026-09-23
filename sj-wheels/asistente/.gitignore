@@ -1,0 +1,4 @@
+node_modules/
+datos/sjw-fitment.js
+.vercel/
+.env

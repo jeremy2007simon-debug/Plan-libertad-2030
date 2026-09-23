@@ -1,0 +1,19 @@
+{
+  "name": "sjw-asistente",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Asistente de compatibilidad de SJ Wheels. Claude conversa; el motor del tema decide.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.ts tests/*.test.js",
+    "prepare-deploy": "cp ../theme/assets/sjw-fitment.js datos/sjw-fitment.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

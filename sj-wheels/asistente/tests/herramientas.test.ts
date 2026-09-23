@@ -1,0 +1,131 @@
+/**
+ * Pruebas del asistente. Ejecutar: npm test
+ *
+ * Lo que se comprueba aquí no es que el bot conteste bonito: es que no pueda
+ * afirmar una compatibilidad. Esa es la única promesa que en este negocio
+ * sale cara si se rompe.
+ */
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { ejecutar, HERRAMIENTAS } from '../src/herramientas.ts';
+import { catalogo, todasLasVariantes, porSku, normalizaAnclaje } from '../src/catalogo.ts';
+
+const args = (extra: Record<string, unknown> = {}) => ({
+  anclaje: null, diametro: null, diametroMin: null, diametroMax: null,
+  anchuraMin: null, anchuraMax: null, etMin: null, etMax: null,
+  buje: null, acabado: null, diseno: null, skus: null, ...extra,
+});
+
+test('el catálogo tiene las 83 referencias, en diez diseños', () => {
+  assert.equal(catalogo.disenos.length, 10);
+  assert.equal(todasLasVariantes.length, 83);
+});
+
+test('ninguna variante trae precio: no se puede filtrar ni decir por lo que no está', () => {
+  for (const v of todasLasVariantes) {
+    assert.equal('precio' in v, false, `${v.sku} lleva un precio en el catálogo del asistente`);
+  }
+});
+
+test('ninguna variante tiene compatibilidad verificada', () => {
+  for (const v of todasLasVariantes) {
+    assert.deepEqual(v.vehiculosVerificados, [], `${v.sku} dice tener vehículos verificados`);
+    assert.equal(v.requiereVerificacion, true, `${v.sku} no pide verificación manual`);
+  }
+});
+
+test('comprobar_compatibilidad NUNCA devuelve una llanta como compatible', async () => {
+  // Un vehículo hecho a medida para encajar: mismo anclaje, buje y ET que una variante real.
+  const v = porSku('OYL260416157')!;
+  const salida = JSON.parse(await ejecutar('comprobar_compatibilidad', args({
+    anclaje: v.anclaje, buje: v.buje, diametros: [v.diametro],
+    etMin: v.et - 5, etMax: v.et + 5, skus: [v.sku],
+  })));
+  assert.equal(salida.descartadas.total, 0, 'una medida que encaja no debería descartarse');
+  assert.equal(salida.candidatas.total, 1);
+  const texto = JSON.stringify(salida);
+  assert.equal(/"status"\s*:\s*"ok"/.test(texto), false, 'ha salido un veredicto "ok"');
+  assert.match(salida.lectura, /nunca como|no están confirmadas/i);
+});
+
+test('un anclaje que no es el del coche descarta la llanta sin ambigüedad', async () => {
+  const salida = JSON.parse(await ejecutar('comprobar_compatibilidad', args({
+    anclaje: '5x120', diametros: [19], skus: ['OYL260416157'], // esa referencia es 5x112
+  })));
+  assert.equal(salida.descartadas.total, 1);
+  assert.equal(salida.candidatas.total, 0);
+});
+
+test('sin anclaje no se comprueba nada: se pide el dato', async () => {
+  const salida = JSON.parse(await ejecutar('comprobar_compatibilidad', args({ anclaje: '' })));
+  assert.match(salida.error, /anclaje/i);
+});
+
+test('un anclaje mal escrito no se adivina', async () => {
+  const salida = JSON.parse(await ejecutar('comprobar_compatibilidad', args({ anclaje: '5 tornillos' })));
+  assert.match(salida.error, /no entiendo/i);
+});
+
+test('comprobar todo el catálogo separa descartadas de candidatas', async () => {
+  const salida = JSON.parse(await ejecutar('comprobar_compatibilidad', args({
+    anclaje: '5x120', diametros: [19, 20],
+  })));
+  assert.equal(salida.comprobadas, 83);
+  assert.ok(salida.descartadas.total > 0, 'con un 5x120 tienen que caer las 5x112');
+  assert.equal(salida.descartadas.total + salida.candidatas.total, 83);
+});
+
+test('buscar_llantas no devuelve cifras de precio', async () => {
+  const salida = JSON.parse(await ejecutar('buscar_llantas', args({ anclaje: '5x112', diametro: 19 })));
+  assert.ok(salida.total > 0);
+  for (const v of salida.variantes) {
+    assert.equal(v.precio, 'bajo consulta');
+    assert.equal(/\d{3}/.test(String(v.precio)), false);
+  }
+});
+
+test('el anclaje se normaliza igual que en el tema', () => {
+  assert.equal(normalizaAnclaje('5X112'), '5x112');
+  assert.equal(normalizaAnclaje(' 5*112 '), '5x112');
+  assert.equal(normalizaAnclaje('5x112.0'), '5x112');
+  assert.equal(normalizaAnclaje('cinco por ciento doce'), null);
+});
+
+test('preparar_consulta rellena el formulario con los datos de la variante', async () => {
+  const salida = JSON.parse(await ejecutar('preparar_consulta', {
+    motivo: 'compatibilidad', sku: 'OYL260416157', vehiculo: 'BMW Serie 5 G30 2019', nota: null,
+  }));
+  assert.match(salida.url, /^\/pages\/solicitud-de-compatibilidad\?/);
+  assert.match(salida.url, /ref=OYL260416157/);
+  assert.match(salida.url, /anclaje=5x112/);
+  assert.match(salida.url, /vehiculo=BMW\+Serie\+5\+G30\+2019/);
+});
+
+test('todas las herramientas van con strict y esquema cerrado', () => {
+  for (const h of HERRAMIENTAS) {
+    assert.equal(h.strict, true, `${h.name} sin strict`);
+    const esquema = h.input_schema as { additionalProperties?: boolean; required?: string[]; properties?: object };
+    assert.equal(esquema.additionalProperties, false, `${h.name} admite propiedades extra`);
+    assert.deepEqual(
+      new Set(esquema.required), new Set(Object.keys(esquema.properties ?? {})),
+      `${h.name}: strict exige que required liste todas las propiedades`,
+    );
+  }
+});
+
+test('una herramienta desconocida no rompe el bucle', async () => {
+  const salida = JSON.parse(await ejecutar('formatear_disco', {}));
+  assert.match(salida.error, /desconocida/i);
+});
+
+test('la copia del motor que viaja al backend es idéntica a la del tema', async () => {
+  const fs = await import('node:fs');
+  const crypto = await import('node:crypto');
+  const md5 = (p: string) => crypto.createHash('md5').update(fs.readFileSync(p)).digest('hex');
+  assert.equal(
+    md5('datos/sjw-fitment.js'),
+    md5('../theme/assets/sjw-fitment.js'),
+    'datos/sjw-fitment.js se ha quedado atrás. Ejecuta npm run prepare-deploy: si el ' +
+      'asistente y la ficha usan motores distintos, pueden dar veredictos distintos.',
+  );
+});
