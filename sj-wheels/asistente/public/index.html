@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Asistente SJ Wheels</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    padding: 2rem; background: #14161b; color: #f5f5f2;
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 38rem; }
+  h1 { font-size: 1.25rem; margin: 0 0 1rem; }
+  p { margin: 0 0 1rem; opacity: .85; }
+  code { background: #1c1f26; border: 1px solid #2a2f39; border-radius: 6px; padding: .1rem .35rem; font-size: .9em; }
+  .estado { display: inline-block; margin-bottom: 1rem; padding: .2rem .6rem; border-radius: 999px; background: #1c1f26; border: 1px solid #2a2f39; font-size: .8rem; }
+</style>
+</head>
+<body>
+  <main>
+    <span class="estado">Servicio en marcha</span>
+    <h1>Asistente de compatibilidad de SJ Wheels</h1>
+    <p>
+      Esto no es una página para visitar: es el servicio que responde al chat de la
+      tienda. La única ruta útil es <code>POST /api/chat</code>, y la llama el
+      escaparate desde el navegador del cliente.
+    </p>
+    <p>
+      El asistente conversa, pero no decide si una llanta encaja en un coche. Esa
+      decisión la toma el motor de compatibilidad de SJ Wheels, que solo puede
+      descartar o dejar pendiente. Ninguna referencia tiene la compatibilidad
+      verificada todavía, así que el asistente no puede afirmar que una llanta valga:
+      SJ Wheels lo comprueba a mano antes de aceptar cualquier pedido.
+    </p>
+    <p>
+      Los precios están bajo consulta y no llegan a este servicio.
+    </p>
+  </main>
+</body>
+</html>

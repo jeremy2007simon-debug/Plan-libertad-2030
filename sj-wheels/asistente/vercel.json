@@ -6,5 +6,6 @@
       "maxDuration": 60,
       "includeFiles": "datos/**"
     }
-  }
+  },
+  "outputDirectory": "public"
 }
