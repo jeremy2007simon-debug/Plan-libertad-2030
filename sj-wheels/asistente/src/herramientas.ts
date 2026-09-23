@@ -8,16 +8,26 @@
  * el modelo solo las cuenta. Un modelo no puede alucinar una compatibilidad
  * que nunca calcula.
  *
- * Todas las herramientas van con strict: true, así que los argumentos llegan
- * validados contra el esquema.
+ * Las herramientas cuyo argumento decide algo van con strict: true, así que
+ * llegan validadas contra el esquema. `buscar_llantas` no: strict obliga a
+ * listar TODAS las propiedades en `required` y a expresar lo opcional como
+ * union con null, y la API limita a 16 el total de parámetros con unión entre
+ * todas las herramientas. Sus once filtros opcionales se comían la cuota
+ * entera. El intercambio es aceptable porque un argumento mal formado en una
+ * búsqueda devuelve resultados pobres, no un veredicto equivocado, y porque
+ * `ejecutar` comprueba el tipo de cada campo antes de usarlo.
  */
 import type Anthropic from '@anthropic-ai/sdk';
 import { buscar, comoLlanta, porSku, todasLasVariantes, catalogo, normalizaAnclaje } from './catalogo.js';
 import { motor, vehiculoDelCliente } from './motor.js';
 import { leerPagina, PAGINAS, type Tema } from './paginas.js';
 
+// Con strict, lo opcional se expresa como unión con null y se lista en `required`.
 const numeroOpcional = { type: ['number', 'null'] } as const;
 const textoOpcional = { type: ['string', 'null'] } as const;
+// Sin strict basta con dejarlo fuera de `required`, y no gasta cuota de uniones.
+const numero = { type: 'number' } as const;
+const texto = { type: 'string' } as const;
 
 export const HERRAMIENTAS: Anthropic.Beta.BetaTool[] = [
   {
@@ -26,24 +36,24 @@ export const HERRAMIENTAS: Anthropic.Beta.BetaTool[] = [
       'Busca referencias del catálogo por sus medidas. Devuelve SKU, diseño, medida, anclaje, ET, ' +
       'buje, acabado y enlace. No devuelve precios: todas están bajo consulta. Úsala cuando el ' +
       'cliente pida llantas de una medida, un anclaje o un diseño concretos.',
-    strict: true,
+    // Sin strict: ver la nota de cabecera. Todos los filtros son opcionales y
+    // combinables; omitir uno significa «no filtres por eso».
     input_schema: {
       type: 'object',
       properties: {
-        anclaje: { ...textoOpcional, description: 'PCD, por ejemplo "5x112".' },
-        diametro: { ...numeroOpcional, description: 'Diámetro exacto en pulgadas.' },
-        diametroMin: numeroOpcional,
-        diametroMax: numeroOpcional,
-        anchuraMin: numeroOpcional,
-        anchuraMax: numeroOpcional,
-        etMin: numeroOpcional,
-        etMax: numeroOpcional,
-        buje: { ...numeroOpcional, description: 'Buje central en mm.' },
-        acabado: { ...textoOpcional, description: 'Código de acabado del proveedor, por ejemplo "MB".' },
-        diseno: { ...textoOpcional, description: 'Código de diseño, por ejemplo "SJW-048".' },
+        anclaje: { ...texto, description: 'PCD, por ejemplo "5x112".' },
+        diametro: { ...numero, description: 'Diámetro exacto en pulgadas.' },
+        diametroMin: numero,
+        diametroMax: numero,
+        anchuraMin: numero,
+        anchuraMax: numero,
+        etMin: numero,
+        etMax: numero,
+        buje: { ...numero, description: 'Buje central en mm.' },
+        acabado: { ...texto, description: 'Código de acabado del proveedor, por ejemplo "MB".' },
+        diseno: { ...texto, description: 'Código de diseño, por ejemplo "SJW-048".' },
       },
-      required: ['anclaje', 'diametro', 'diametroMin', 'diametroMax', 'anchuraMin', 'anchuraMax',
-                 'etMin', 'etMax', 'buje', 'acabado', 'diseno'],
+      required: [],
       additionalProperties: false,
     },
   },

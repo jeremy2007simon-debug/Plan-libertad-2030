@@ -101,16 +101,50 @@ test('preparar_consulta rellena el formulario con los datos de la variante', asy
   assert.match(salida.url, /vehiculo=BMW\+Serie\+5\+G30\+2019/);
 });
 
-test('todas las herramientas van con strict y esquema cerrado', () => {
+type Esquema = {
+  additionalProperties?: boolean;
+  required?: string[];
+  properties?: Record<string, { type?: unknown; anyOf?: unknown }>;
+};
+
+test('ningún esquema admite propiedades que no declara', () => {
   for (const h of HERRAMIENTAS) {
-    assert.equal(h.strict, true, `${h.name} sin strict`);
-    const esquema = h.input_schema as { additionalProperties?: boolean; required?: string[]; properties?: object };
+    const esquema = h.input_schema as Esquema;
     assert.equal(esquema.additionalProperties, false, `${h.name} admite propiedades extra`);
+  }
+});
+
+test('la herramienta que alimenta al motor va con strict', () => {
+  // Es la única cuyo argumento decide algo: si llega mal formado, el veredicto
+  // sale mal. Las demás, como mucho, buscan peor.
+  const motor = HERRAMIENTAS.find((h) => h.name === 'comprobar_compatibilidad');
+  assert.ok(motor, 'falta comprobar_compatibilidad');
+  assert.equal(motor.strict, true);
+});
+
+test('las herramientas con strict listan todas sus propiedades en required', () => {
+  for (const h of HERRAMIENTAS.filter((h) => h.strict)) {
+    const esquema = h.input_schema as Esquema;
     assert.deepEqual(
       new Set(esquema.required), new Set(Object.keys(esquema.properties ?? {})),
       `${h.name}: strict exige que required liste todas las propiedades`,
     );
   }
+});
+
+test('los parámetros con unión caben en el límite de la API', () => {
+  // La API rechaza la petición entera —no la herramienta culpable— si entre
+  // todas suman más de 16 parámetros con `anyOf` o con `type` en array. Se
+  // descubrió en producción; esta prueba lo descubre antes.
+  const LIMITE = 16;
+  let uniones = 0;
+  for (const h of HERRAMIENTAS) {
+    const esquema = h.input_schema as Esquema;
+    for (const prop of Object.values(esquema.properties ?? {})) {
+      if (Array.isArray(prop.type) || prop.anyOf) uniones++;
+    }
+  }
+  assert.ok(uniones <= LIMITE, `${uniones} parámetros con unión, el límite es ${LIMITE}`);
 });
 
 test('una herramienta desconocida no rompe el bucle', async () => {
