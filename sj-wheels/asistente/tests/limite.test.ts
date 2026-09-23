@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { dentroDelLimite, ipDe } from '../src/limite.ts';
+import { dentroDelLimite, ipDe } from '../src/limite.js';
 
 test('deja pasar hasta el tope y luego corta', () => {
   const ip = 'prueba-' + Math.random();

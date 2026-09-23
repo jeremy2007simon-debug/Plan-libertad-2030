@@ -7,8 +7,8 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ejecutar, HERRAMIENTAS } from '../src/herramientas.ts';
-import { catalogo, todasLasVariantes, porSku, normalizaAnclaje } from '../src/catalogo.ts';
+import { ejecutar, HERRAMIENTAS } from '../src/herramientas.js';
+import { catalogo, todasLasVariantes, porSku, normalizaAnclaje } from '../src/catalogo.js';
 
 const args = (extra: Record<string, unknown> = {}) => ({
   anclaje: null, diametro: null, diametroMin: null, diametroMax: null,

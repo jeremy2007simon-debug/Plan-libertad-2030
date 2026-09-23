@@ -14,9 +14,9 @@
  * petición, como en cualquier chat sin sesión.
  */
 import Anthropic from '@anthropic-ai/sdk';
-import { HERRAMIENTAS, ejecutar } from '../src/herramientas.ts';
-import { SISTEMA } from '../src/sistema.ts';
-import { dentroDelLimite, ipDe } from '../src/limite.ts';
+import { HERRAMIENTAS, ejecutar } from '../src/herramientas.js';
+import { SISTEMA } from '../src/sistema.js';
+import { dentroDelLimite, ipDe } from '../src/limite.js';
 
 const MODELO = 'claude-opus-5';
 const MAX_VUELTAS = 6;

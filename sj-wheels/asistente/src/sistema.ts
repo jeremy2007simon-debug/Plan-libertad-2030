@@ -5,7 +5,7 @@
  * cache_control, así que cambiarlo invalida la caché de todas las
  * conversaciones en curso. No metas aquí nada que varíe por mensaje.
  */
-import { catalogo } from './catalogo.ts';
+import { catalogo } from './catalogo.js';
 
 const disenos = catalogo.disenos
   .map((d) => {

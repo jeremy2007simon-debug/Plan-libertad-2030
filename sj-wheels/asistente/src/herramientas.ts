@@ -12,9 +12,9 @@
  * validados contra el esquema.
  */
 import type Anthropic from '@anthropic-ai/sdk';
-import { buscar, comoLlanta, porSku, todasLasVariantes, catalogo, normalizaAnclaje } from './catalogo.ts';
-import { motor, vehiculoDelCliente } from './motor.ts';
-import { leerPagina, PAGINAS, type Tema } from './paginas.ts';
+import { buscar, comoLlanta, porSku, todasLasVariantes, catalogo, normalizaAnclaje } from './catalogo.js';
+import { motor, vehiculoDelCliente } from './motor.js';
+import { leerPagina, PAGINAS, type Tema } from './paginas.js';
 
 const numeroOpcional = { type: ['number', 'null'] } as const;
 const textoOpcional = { type: ['string', 'null'] } as const;

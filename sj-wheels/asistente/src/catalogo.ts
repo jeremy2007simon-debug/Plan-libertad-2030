@@ -11,7 +11,7 @@
  * pidan. Si el dato no está, no se puede filtrar.
  */
 import catalogoJson from '../datos/catalogo.json' with { type: 'json' };
-import type { Llanta } from './motor.ts';
+import type { Llanta } from './motor.js';
 
 export interface Variante {
   sku: string;
