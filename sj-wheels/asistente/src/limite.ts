@@ -42,12 +42,19 @@ export function dentroDelLimite(ip: string): boolean {
   return true;
 }
 
-/** La IP del cliente según las cabeceras que pone Vercel por delante. */
-export function ipDe(req: Request): string {
-  const reenviada = req.headers.get('x-forwarded-for');
-  if (reenviada) {
-    const primera = reenviada.split(',')[0];
-    if (primera) return primera.trim();
-  }
-  return req.headers.get('x-real-ip') ?? 'desconocida';
+/**
+ * La IP del cliente según las cabeceras que pone Vercel por delante.
+ *
+ * Recibe las cabeceras y no la petición entera porque la firma de la función
+ * cambia según el entorno —Node da un objeto plano, la API web da un Headers—
+ * y esto tiene que funcionar con las dos.
+ */
+type Cabeceras = Record<string, string | string[] | undefined>;
+
+export function ipDe(cabeceras: Cabeceras): string {
+  const bruto = cabeceras['x-forwarded-for'] ?? cabeceras['x-real-ip'];
+  const valor = Array.isArray(bruto) ? bruto[0] : bruto;
+  if (!valor) return 'desconocida';
+  const primera = valor.split(',')[0];
+  return primera ? primera.trim() : 'desconocida';
 }

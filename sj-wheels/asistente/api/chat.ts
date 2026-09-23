@@ -9,10 +9,15 @@
  * vuelta y vuelta se emiten avisos de «estoy mirando el catálogo» para que la
  * espera no parezca un cuelgue.
  *
+ * La firma es la de Node (IncomingMessage/ServerResponse) y no la de la API
+ * web, porque es la que entrega este entorno: `req.headers` es un objeto
+ * plano, no hay `req.json()` y la respuesta se escribe, no se devuelve.
+ *
  * El modelo no ve ningún dato del cliente más allá de lo que él mismo
  * escribe, y no hay estado en el servidor: el historial viaja en cada
  * petición, como en cualquier chat sin sesión.
  */
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import Anthropic from '@anthropic-ai/sdk';
 import { HERRAMIENTAS, ejecutar } from '../src/herramientas.js';
 import { SISTEMA } from '../src/sistema.js';
@@ -22,6 +27,7 @@ const MODELO = 'claude-opus-5';
 const MAX_VUELTAS = 6;
 const MAX_MENSAJES = 40;
 const MAX_CARACTERES = 4000;
+const MAX_CUERPO = 256 * 1024;
 
 const cliente = new Anthropic();
 
@@ -29,134 +35,164 @@ interface Peticion {
   mensajes?: Array<{ rol: 'user' | 'assistant'; texto: string }>;
 }
 
+/** Lo que añade el puente de Vercel por encima del IncomingMessage pelado. */
+type PeticionEntrante = IncomingMessage & { body?: unknown };
+
 export const config = { runtime: 'nodejs' };
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors() });
-  if (req.method !== 'POST') {
-    return new Response('Usa POST.', { status: 405, headers: cors() });
-  }
+export default async function handler(
+  req: PeticionEntrante,
+  res: ServerResponse,
+): Promise<void> {
+  if (req.method === 'OPTIONS') return corta(res, 204, '');
+  if (req.method !== 'POST') return corta(res, 405, 'Usa POST.');
 
   // El endpoint es publico por necesidad y cada conversacion cuesta dinero.
-  if (!dentroDelLimite(ipDe(req))) {
-    return new Response('Demasiadas peticiones. Espera un minuto.', {
-      status: 429,
-      headers: { ...cors(), 'Retry-After': '60' },
-    });
+  if (!dentroDelLimite(ipDe(req.headers))) {
+    return corta(res, 429, 'Demasiadas peticiones. Espera un minuto.', { 'Retry-After': '60' });
   }
 
   let cuerpo: Peticion;
   try {
-    cuerpo = (await req.json()) as Peticion;
-  } catch {
-    return new Response('JSON no válido.', { status: 400, headers: cors() });
+    cuerpo = await leeCuerpo(req);
+  } catch (error) {
+    const mensaje = error instanceof Error && error.message === 'cuerpo-largo'
+      ? 'La petición es demasiado grande.'
+      : 'JSON no válido.';
+    return corta(res, 400, mensaje);
   }
 
   const entrada = (cuerpo.mensajes ?? []).slice(-MAX_MENSAJES);
-  if (!entrada.length) return new Response('Sin mensajes.', { status: 400, headers: cors() });
+  if (!entrada.length) return corta(res, 400, 'Sin mensajes.');
 
   const mensajes: Anthropic.Beta.BetaMessageParam[] = entrada.map((m) => ({
     role: m.rol === 'assistant' ? 'assistant' : 'user',
     content: String(m.texto ?? '').slice(0, MAX_CARACTERES),
   }));
   if (mensajes[0]?.role !== 'user') {
-    return new Response('La conversación tiene que empezar por el cliente.', {
-      status: 400, headers: cors(),
-    });
+    return corta(res, 400, 'La conversación tiene que empezar por el cliente.');
   }
 
-  const codificador = new TextEncoder();
-  const flujo = new ReadableStream({
-    async start(control) {
-      const enviar = (tipo: string, datos: unknown) => {
-        control.enqueue(codificador.encode(`event: ${tipo}\ndata: ${JSON.stringify(datos)}\n\n`));
-      };
+  res.writeHead(200, {
+    ...cors(),
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+    // Sin esto algunos proxys acumulan la respuesta entera y el streaming se pierde.
+    'X-Accel-Buffering': 'no',
+  });
 
-      try {
-        for (let vuelta = 0; vuelta < MAX_VUELTAS; vuelta++) {
-          const stream = cliente.beta.messages.stream({
-            model: MODELO,
-            max_tokens: 4096,
-            // La conversación de un cliente no necesita razonamiento profundo: el trabajo
-            // difícil lo hace el motor determinista. Effort medio mantiene el cuidado en cómo
-            // se redacta —que aquí es lo que puede salir caro— sin pagar de más.
-            output_config: { effort: 'medium' },
-            // El sistema es estable y largo; se cachea para no pagarlo en cada mensaje.
-            system: [{ type: 'text', text: SISTEMA, cache_control: { type: 'ephemeral' } }],
-            tools: HERRAMIENTAS,
-            messages: mensajes,
-            // Opus 5 puede declinar una petición con stop_reason "refusal". Con los fallbacks
-            // del servidor la respuesta la atiende otro modelo en lugar de dejar al cliente
-            // mirando un chat en blanco.
-            betas: ['server-side-fallback-2026-07-01'],
-            fallbacks: 'default',
-          });
+  const enviar = (tipo: string, datos: unknown) => {
+    res.write(`event: ${tipo}\ndata: ${JSON.stringify(datos)}\n\n`);
+  };
 
-          stream.on('text', (delta) => enviar('texto', delta));
+  // Si el cliente cierra la pestaña a mitad, no tiene sentido seguir pagando vueltas.
+  let abortada = false;
+  res.on('close', () => { abortada = true; });
 
-          const respuesta = await stream.finalMessage();
+  try {
+    for (let vuelta = 0; vuelta < MAX_VUELTAS && !abortada; vuelta++) {
+      const stream = cliente.beta.messages.stream({
+        model: MODELO,
+        max_tokens: 4096,
+        // La conversación de un cliente no necesita razonamiento profundo: el trabajo
+        // difícil lo hace el motor determinista. Effort medio mantiene el cuidado en cómo
+        // se redacta —que aquí es lo que puede salir caro— sin pagar de más.
+        output_config: { effort: 'medium' },
+        // El sistema es estable y largo; se cachea para no pagarlo en cada mensaje.
+        system: [{ type: 'text', text: SISTEMA, cache_control: { type: 'ephemeral' } }],
+        tools: HERRAMIENTAS,
+        messages: mensajes,
+        // Opus 5 puede declinar una petición con stop_reason "refusal". Con los fallbacks
+        // del servidor la respuesta la atiende otro modelo en lugar de dejar al cliente
+        // mirando un chat en blanco.
+        betas: ['server-side-fallback-2026-07-01'],
+        fallbacks: 'default',
+      });
 
-          if (respuesta.stop_reason === 'refusal') {
-            enviar('aviso', 'No puedo ayudarte con eso. Escríbenos por el formulario.');
-            break;
-          }
-          if (respuesta.stop_reason === 'pause_turn') {
-            mensajes.push({ role: 'assistant', content: respuesta.content });
-            continue;
-          }
-          if (respuesta.stop_reason !== 'tool_use') break;
+      stream.on('text', (delta) => enviar('texto', delta));
 
-          const llamadas = respuesta.content.filter(
-            (b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use',
-          );
-          mensajes.push({ role: 'assistant', content: respuesta.content });
+      const respuesta = await stream.finalMessage();
 
-          const resultados: Anthropic.Beta.BetaToolResultBlockParam[] = [];
-          for (const llamada of llamadas) {
-            enviar('herramienta', llamada.name);
-            let salida: string;
-            try {
-              salida = await ejecutar(llamada.name, llamada.input);
-            } catch (error) {
-              salida = JSON.stringify({
-                error: error instanceof Error ? error.message : 'fallo de la herramienta',
-              });
-            }
-            resultados.push({ type: 'tool_result', tool_use_id: llamada.id, content: salida });
-          }
-          // Todos los tool_result van en UN solo mensaje: repartirlos entre varios le enseña
-          // al modelo a dejar de pedir herramientas en paralelo.
-          mensajes.push({ role: 'user', content: resultados });
-        }
-      } catch (error) {
-        // Los tipos del SDK distinguen lo que se reintenta de lo que no.
-        if (error instanceof Anthropic.RateLimitError) {
-          enviar('aviso', 'Hay mucha gente preguntando ahora mismo. Inténtalo en un momento.');
-        } else if (error instanceof Anthropic.AuthenticationError) {
-          console.error('Credencial de Anthropic no válida:', error.message);
-          enviar('aviso', 'El asistente no está disponible. Escríbenos por el formulario.');
-        } else if (error instanceof Anthropic.APIError) {
-          console.error(`Error de la API (${error.status}):`, error.message);
-          enviar('aviso', 'Se me ha cortado la respuesta. ¿Lo intentamos otra vez?');
-        } else {
-          console.error('Fallo inesperado del asistente:', error);
-          enviar('aviso', 'Algo ha fallado por mi parte. Escríbenos por el formulario.');
-        }
-      } finally {
-        enviar('fin', true);
-        control.close();
+      if (respuesta.stop_reason === 'refusal') {
+        enviar('aviso', 'No puedo ayudarte con eso. Escríbenos por el formulario.');
+        break;
       }
-    },
-  });
+      if (respuesta.stop_reason === 'pause_turn') {
+        mensajes.push({ role: 'assistant', content: respuesta.content });
+        continue;
+      }
+      if (respuesta.stop_reason !== 'tool_use') break;
 
-  return new Response(flujo, {
-    headers: {
-      ...cors(),
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      'Cache-Control': 'no-cache, no-transform',
-      Connection: 'keep-alive',
-    },
-  });
+      const llamadas = respuesta.content.filter(
+        (b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use',
+      );
+      mensajes.push({ role: 'assistant', content: respuesta.content });
+
+      const resultados: Anthropic.Beta.BetaToolResultBlockParam[] = [];
+      for (const llamada of llamadas) {
+        enviar('herramienta', llamada.name);
+        let salida: string;
+        try {
+          salida = await ejecutar(llamada.name, llamada.input);
+        } catch (error) {
+          salida = JSON.stringify({
+            error: error instanceof Error ? error.message : 'fallo de la herramienta',
+          });
+        }
+        resultados.push({ type: 'tool_result', tool_use_id: llamada.id, content: salida });
+      }
+      // Todos los tool_result van en UN solo mensaje: repartirlos entre varios le enseña
+      // al modelo a dejar de pedir herramientas en paralelo.
+      mensajes.push({ role: 'user', content: resultados });
+    }
+  } catch (error) {
+    // Los tipos del SDK distinguen lo que se reintenta de lo que no.
+    if (error instanceof Anthropic.RateLimitError) {
+      enviar('aviso', 'Hay mucha gente preguntando ahora mismo. Inténtalo en un momento.');
+    } else if (error instanceof Anthropic.AuthenticationError) {
+      console.error('Credencial de Anthropic no válida:', error.message);
+      enviar('aviso', 'El asistente no está disponible. Escríbenos por el formulario.');
+    } else if (error instanceof Anthropic.APIError) {
+      console.error(`Error de la API (${error.status}):`, error.message);
+      enviar('aviso', 'Se me ha cortado la respuesta. ¿Lo intentamos otra vez?');
+    } else {
+      console.error('Fallo inesperado del asistente:', error);
+      enviar('aviso', 'Algo ha fallado por mi parte. Escríbenos por el formulario.');
+    }
+  } finally {
+    enviar('fin', true);
+    res.end();
+  }
+}
+
+/**
+ * El cuerpo de la petición.
+ *
+ * El puente de Vercel suele dejarlo ya parseado en `req.body`, pero no siempre
+ * —depende del content-type que mande el navegador—, así que si no está se lee
+ * del flujo. Con tope: el endpoint es público.
+ */
+async function leeCuerpo(req: PeticionEntrante): Promise<Peticion> {
+  if (req.body && typeof req.body === 'object') return req.body as Peticion;
+  if (typeof req.body === 'string') return JSON.parse(req.body) as Peticion;
+
+  let crudo = '';
+  for await (const trozo of req) {
+    crudo += trozo;
+    if (crudo.length > MAX_CUERPO) throw new Error('cuerpo-largo');
+  }
+  return JSON.parse(crudo) as Peticion;
+}
+
+function corta(
+  res: ServerResponse,
+  estado: number,
+  texto: string,
+  extra: Record<string, string> = {},
+): void {
+  res.writeHead(estado, { ...cors(), 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+  res.end(texto);
 }
 
 function cors(): Record<string, string> {
