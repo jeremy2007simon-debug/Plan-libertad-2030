@@ -18,7 +18,26 @@
 
 {%- if section.settings.endpoint != blank -%}
   <style>
-    .sjw-chat { position: fixed; inset-block-end: 16px; inset-inline-end: 16px; z-index: 60; }
+    /* --sjw-chat-hueco lo pone el script cuando algo pegado abajo —el banner de
+       cookies de Shopify— taparía el botón. Sin script vale 0 y no cambia nada. */
+    .sjw-chat {
+      position: fixed; inset-inline-end: 16px; z-index: 60;
+      inset-block-end: calc(16px + var(--sjw-chat-hueco, 0px));
+      transition: inset-block-end .2s ease;
+      /* En móvil el contenedor se estira de lado a lado para que el panel quepa
+         entero. Sin esto el botón se quedaría pegado a la izquierda en vez de
+         en su esquina.
+
+         column-reverse invierte solo lo que se ve, no el orden del documento:
+         el botón se queda clavado en su esquina y el panel crece hacia arriba.
+         Al derecho, abrir el chat despegaba el botón de la esquina y lo subía
+         a media pantalla. */
+      display: flex; flex-direction: column-reverse; align-items: flex-end;
+      gap: 10px;
+    }
+    @media (prefers-reduced-motion: reduce) { .sjw-chat { transition: none; } }
+    /* Mientras el aviso de cookies ocupa la pantalla no hay sitio para el botón. */
+    .sjw-chat--aparcado { display: none; }
     .sjw-chat__lanzador {
       display: inline-flex; align-items: center; gap: .5rem;
       min-height: 48px; padding: 0 1.1rem; border-radius: 999px;
@@ -66,7 +85,12 @@
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
     }
     @media (max-width: 480px) {
-      .sjw-chat { inset-block-end: 12px; inset-inline: 12px; }
+      /* inset-inline estira el contenedor para el panel; el hueco del aviso de
+         cookies tiene que seguir sumando, que es justo donde más falta hace. */
+      .sjw-chat {
+        inset-inline: 12px;
+        inset-block-end: calc(12px + var(--sjw-chat-hueco, 0px));
+      }
       .sjw-chat__panel { width: 100%; }
     }
   </style>

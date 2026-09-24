@@ -78,10 +78,55 @@ Ese es hoy el trabajo pendiente que más valor desbloquea.
 
 ## Para encenderlo
 
-Hace falta una clave de Anthropic de la tienda y su coste por conversación. Los
-cuatro pasos están en el README. Mientras el campo «Dirección del asistente»
-esté vacío en el editor del tema, el asistente no aparece y la tienda funciona
-exactamente igual que ahora.
+Ya está encendido en el tema DEV: el endpoint está puesto en los ajustes de la
+sección y el botón sale en todas las páginas. Para apagarlo basta con vaciar el
+campo «Dirección del asistente» en el editor del tema; sin endpoint la sección
+no pinta nada y la tienda funciona exactamente igual que antes.
+
+Aviso al mirar la vista previa: la barra de vista previa de Shopify se coloca
+en esa misma esquina y puede tapar el botón. No existe para el cliente.
+
+### El botón flotante
+
+Vive en el grupo del pie (`sections/footer-group.json`), que Horizon renderiza
+en **todas** las páginas: portada, colecciones, fichas, páginas de contenido y
+carrito. No es una sección que haya que añadir template a template.
+
+No ocupa sitio en el pie: su único elemento va en `position: fixed`, así que no
+entra en el flujo y no deja hueco.
+
+Tres cosas que se descubrieron mirándolo en el navegador, no leyendo el código:
+
+1. **El aviso de cookies de Shopify va por delante de todo** (z-index dos
+   millones) y en móvil ocupa la franja de abajo, justo donde está el botón: el
+   cliente no podía abrir el asistente hasta responder a las cookies. Subir el
+   z-index del asistente habría sido la salida fácil y la equivocada —el aviso
+   legal tiene que quedar delante—, así que el asistente se aparta: se sube por
+   encima del aviso si cabe, y si el aviso ocupa más de media pantalla se
+   esconde hasta que el cliente responde. En escritorio el aviso va centrado y
+   no llega al botón, así que ahí no se mueve nada.
+2. **`offsetParent` no sirve para saber si algo `position: fixed` está
+   visible**: vale `null` siempre. El primer intento de detectar el aviso no
+   detectaba nada por eso. Se mide por caja y por estilo calculado.
+3. **`inset-inline: 12px` en móvil** estiraba el contenedor de lado a lado y
+   dejaba el botón pegado a la izquierda en vez de en su esquina; y reescribía
+   `inset-block-end`, anulando el apartado del punto 1 justo donde hacía falta.
+
+El panel se abre **hacia arriba** desde el botón (`column-reverse`), que invierte
+lo que se ve sin tocar el orden del documento. Al derecho, abrir el chat
+despegaba el botón de la esquina y lo subía a media pantalla.
+
+| Pantalla | Margen del botón | Comprobado en |
+|---|---|---|
+| 360 y 390 (móvil) | 12 px derecha e inferior | portada, colección, ficha, carrito |
+| 768 (tablet) | 16 px | ídem |
+| 1440 y 1920 | 16 px | ídem |
+
+Sin desbordes horizontales en ninguna, y el botón mide 48 px de alto en todas
+—por encima del mínimo táctil de 44.
+
+![El botón en móvil](img/asistente-boton-movil.png)
+![El asistente abierto en móvil](img/asistente-abierto-movil.png)
 
 ### Dónde está desplegado
 
@@ -135,6 +180,9 @@ salidas, y la primera es la buena:
 |---|---|
 | Pruebas del asistente | 27, sin fallos, sin red |
 | **Conversación real contra el endpoint** | **5 de 5, sin fallos** |
+| **Conversación real dentro de la tienda** | **Probada en móvil, de punta a punta** |
+| Botón presente y en su esquina | 5 anchos × 4 páginas, sin fallos |
+| Revisión estática del tema | 20 comprobaciones, sin errores |
 | El motor nunca devuelve «compatible» | Probado con un vehículo fabricado para encajar |
 | Un anclaje distinto descarta sin ambigüedad | Probado |
 | `buscar_llantas` no devuelve cifras | Probado |

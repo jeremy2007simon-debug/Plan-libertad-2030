@@ -292,10 +292,17 @@
         "padding-block-start": 24,
         "padding-block-end": 40
       }
+    },
+    "sjw_asistente": {
+      "type": "sjw-asistente",
+      "settings": {
+        "endpoint": "https://sjw-asistente.vercel.app/api/chat"
+      }
     }
   },
   "order": [
     "footer_m9NzUG",
-    "footer_utilities_jLGE8U"
+    "footer_utilities_jLGE8U",
+    "sjw_asistente"
   ]
 }
