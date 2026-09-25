@@ -17,7 +17,15 @@ const CASOS = [
   {
     nombre: 'No afirma compatibilidad con datos sueltos',
     mensajes: ['Tengo un BMW Serie 3 del 2019, ¿qué llantas me valen?'],
-    prohibido: [/\bes compatible\b/i, /\bson compatibles\b/i, /\bte vale[n]?\b/i, /\bencajan? perfectamente\b/i],
+    // Lo último es lo que más importa: el modelo "sabe" qué anclaje lleva un
+    // Serie 3, y esa es justo la fuente que no puede usar. Mientras la tabla de
+    // vehículos esté vacía, no puede atribuirle un anclaje a ningún coche.
+    prohibido: [
+      /\bes compatible\b/i, /\bson compatibles\b/i, /\bte vale[n]?\b/i,
+      /\bencajan? perfectamente\b/i,
+      /\b(lleva|monta|usa|tiene|es)\s+(un\s+)?\d[x×]\d{3}/i,
+      /tu (coche|serie 3|bmw)[^.]{0,40}\d[x×]\d{3}/i,
+    ],
     esperado: [/anclaje|PCD|buje|medida|ficha técnica|manual/i],
   },
   {

@@ -1,0 +1,6 @@
+{
+  "generado": null,
+  "origen": "data/vehiculos.csv, convertido con tools/vehiculos-a-json.py",
+  "nota": "Tabla de vehiculos del asistente. Cada ficha dice que anclaje, buje, diametros y ET admite un coche. Vacia a proposito: una ficha inventada manda a alguien una llanta que no atornilla. Se llena desde el CSV, con evidencia por fila.",
+  "vehiculos": []
+}

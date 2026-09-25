@@ -20,6 +20,7 @@
 import type Anthropic from '@anthropic-ai/sdk';
 import { buscar, comoLlanta, porSku, todasLasVariantes, catalogo, normalizaAnclaje } from './catalogo.js';
 import { motor, vehiculoDelCliente } from './motor.js';
+import { busca, marcasCubiertas, anios, vehiculos, type Vehiculo } from './vehiculos.js';
 import { leerPagina, PAGINAS, type Tema } from './paginas.js';
 
 // Con strict, lo opcional se expresa como unión con null y se lista en `required`.
@@ -54,6 +55,26 @@ export const HERRAMIENTAS: Anthropic.Beta.BetaTool[] = [
         diseno: { ...texto, description: 'Código de diseño, por ejemplo "SJW-048".' },
       },
       required: [],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: 'buscar_vehiculo',
+    description:
+      'Dado marca, modelo y año, devuelve las medidas que admite ese coche: anclaje (PCD), buje ' +
+      'central, diámetros y rango de ET. Úsala SIEMPRE que el cliente nombre un coche, ANTES de ' +
+      'pedirle ninguna medida: para eso está. Si el coche no está en la tabla lo dice; en ese ' +
+      'caso hay que pedirle las medidas, nunca deducirlas.',
+    // Sin strict para no gastar cuota de uniones: el año es opcional y `ejecutar`
+    // comprueba el tipo de cada campo antes de usarlo.
+    input_schema: {
+      type: 'object',
+      properties: {
+        marca: { ...texto, description: 'Marca, por ejemplo "BMW".' },
+        modelo: { ...texto, description: 'Modelo o generación, por ejemplo "Serie 3", "320i" o "F30".' },
+        anio: { ...numero, description: 'Año del coche. Si el cliente no lo dice, omítelo.' },
+      },
+      required: ['marca', 'modelo'],
       additionalProperties: false,
     },
   },
@@ -128,6 +149,25 @@ export const HERRAMIENTAS: Anthropic.Beta.BetaTool[] = [
   },
 ];
 
+function fichaVehiculo(v: Vehiculo) {
+  return {
+    id: v.id,
+    coche: `${v.marca} ${v.modelo} ${v.generacion}`.trim(),
+    anios: anios(v),
+    anclaje: v.anclaje,
+    buje: v.buje,
+    diametros: v.diametros,
+    etMin: v.etMin,
+    etMax: v.etMax,
+    anchuraMin: v.anchuraMin,
+    anchuraMax: v.anchuraMax,
+    verificacion: v.verificacion,
+    aviso: v.verificacion === 'verified'
+      ? 'Ficha verificada por SJ Wheels con evidencia.'
+      : 'Ficha sin verificar: sirve para descartar, no para confirmar.',
+  };
+}
+
 function resumen(v: (typeof todasLasVariantes)[number]) {
   return {
     sku: v.sku,
@@ -162,6 +202,51 @@ export async function ejecutar(nombre: string, entrada: unknown): Promise<string
         mostradas: variantes.length,
         variantes: variantes.map(resumen),
         aviso: catalogo.nota,
+      });
+    }
+
+    case 'buscar_vehiculo': {
+      const marca = txt('marca');
+      const modelo = txt('modelo');
+      if (!marca || !modelo) {
+        return JSON.stringify({ error: 'Necesito al menos la marca y el modelo.' });
+      }
+      if (!vehiculos.length) {
+        return JSON.stringify({
+          encontrado: false,
+          tablaVacia: true,
+          lectura:
+            'La tabla de vehículos todavía no tiene fichas: SJ Wheels aún no la ha cargado. ' +
+            'No tienes forma de saber el anclaje ni el buje de este coche. Dilo con naturalidad ' +
+            'y pídele al cliente esas medidas, o mándalo al formulario. NO las deduzcas ni las ' +
+            'saques de lo que creas recordar sobre esa marca: una equivocada le manda una llanta ' +
+            'que no atornilla.',
+        });
+      }
+
+      const r = busca(marca, modelo, num('anio'));
+      if (!r.coincidencias.length) {
+        return JSON.stringify({
+          encontrado: false,
+          tablaVacia: false,
+          fueraDeAnio: r.fueraDeAnio.map(fichaVehiculo),
+          marcasCubiertas: marcasCubiertas(),
+          lectura:
+            'Ese coche no está en la tabla. No es que no exista: es que SJ Wheels no lo ha ' +
+            'documentado todavía. NO rellenes tú el anclaje ni el buje de memoria. Pídeselos al ' +
+            'cliente —vienen en la ficha técnica, en el manual o grabados en la llanta que lleva— ' +
+            'o prepárale la consulta.',
+        });
+      }
+      return JSON.stringify({
+        encontrado: true,
+        coincidencias: r.coincidencias.map(fichaVehiculo),
+        lectura:
+          r.coincidencias.length > 1
+            ? 'Hay más de una ficha que encaja. Pregunta al cliente cuál es la suya antes de ' +
+              'comprobar nada: el anclaje puede cambiar entre generaciones.'
+            : 'Usa estas medidas con comprobar_compatibilidad. No se las pidas al cliente: ya las ' +
+              'tienes. Que el coche esté documentado no convierte a ninguna llanta en compatible.',
       });
     }
 

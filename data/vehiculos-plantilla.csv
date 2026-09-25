@@ -1,0 +1,2 @@
+accion,vehiculo_id,marca,modelo,generacion,anio_desde,anio_hasta,pcd,buje_mm,et_min,et_max,diametros,anchura_min,anchura_max,alias,sku_producto,verificacion,evidencia,verificado_por,fecha_verificacion
+crear_vehiculo,EJEMPLO-BORRAR,MarcaEjemplo,ModeloEjemplo,GenEjemplo,2015,2021,5x112,66.5,25,45,18;19;20,8,9.5,alias1|alias2,,pending,,,
