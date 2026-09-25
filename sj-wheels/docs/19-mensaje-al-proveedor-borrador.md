@@ -2,10 +2,18 @@
 
 **Fecha:** 20 de septiembre de 2026
 **Estado: no enviado.** Revísalo, pon el nombre del contacto y el tuyo, y
-adjunta `data/solicitud-proveedor-83-skus.csv` antes de mandarlo.
+adjunta **dos** archivos antes de mandarlo:
 
-La tabla adjunta lleva las 83 referencias seleccionadas con sus medidas ya
-rellenas y las columnas que debe completar el proveedor vacías.
+| Adjunto | Qué es |
+|---|---|
+| `data/solicitud-proveedor-83-skus.csv` | Las 83 referencias con sus medidas ya rellenas y las columnas del proveedor vacías |
+| `data/vehiculos-plantilla.csv` | La tabla de vehículos vacía, con las columnas que pide el punto 12 |
+
+**Actualizado el 25 de septiembre de 2026** con el punto 12: la tabla de
+aplicaciones por vehículo. Es lo que necesita el asistente de la tienda para
+que un cliente diga «BMW Serie 3 de 2019» y salgan solas las medidas, en vez
+de tener que preguntarle el anclaje. Sin esos datos el asistente funciona, pero
+tiene que pedírselos al cliente uno por uno.
 
 ---
 
@@ -91,6 +99,43 @@ Three of your Volkswagen designs reached us with only one or two references:
 Please tell us every diameter, width, offset and bolt pattern available in these
 three designs. With a single size per design we cannot build a proper product
 page for them.
+
+**12. Vehicle application data — this is the one we most need**
+
+We are building a compatibility checker for our website. To use it we need to
+know, for each car, what the car itself accepts — not which of your wheels you
+believe fits it. For every vehicle you cover, please give us:
+
+| Field | Example | Notes |
+|---|---|---|
+| Make | BMW | |
+| Model | 3 Series | |
+| Generation / chassis code | F30 | Essential: the bolt pattern can change between generations |
+| Year from / year to | 2012 / 2019 | Leave the end year blank if still in production |
+| Bolt pattern (PCD) | 5x120 | |
+| Centre bore | 72.6 mm | The vehicle's hub diameter, not the wheel's |
+| Diameters accepted | 17, 18, 19 | |
+| Offset (ET) range accepted | 20 to 40 | Minimum and maximum, not a single figure |
+| Width range accepted | 7.5 to 9.0 | |
+
+The attached `vehiculos-plantilla.csv` has exactly these columns. Any format you
+already hold this in is fine — a spreadsheet, a PDF application list, or an
+export from your system — as long as the generation and the year range are
+included. We will convert it ourselves.
+
+Two things we specifically need you to tell us:
+
+- **The source of each figure.** Is it the vehicle manufacturer's specification,
+  your own measurement, or an inference? We will only publish a figure as
+  confirmed if we can say where it came from. Anything unattributed we will
+  treat as provisional.
+- **Which of these you cannot certify.** We would rather have thirty vehicles
+  you stand behind than three thousand you do not. If you only hold application
+  data for the platforms your own designs target, send us that.
+
+We are aware that a wrong bolt pattern or centre bore sends a customer a wheel
+that will not bolt onto their car. That is why we are asking you rather than
+compiling it ourselves.
 
 We are not placing an order with this message. We need the data above to decide
 the retail price, configure shipping correctly and publish accurate product

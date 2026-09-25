@@ -53,7 +53,15 @@ puede decir «esto no te vale» con seguridad, y «esto es candidata» con reser
 
 ## De dónde sacar los datos
 
-Tres caminos, y son decisión del propietario:
+**Vía elegida el 25-09-2026: pedírselo al proveedor.** El punto 12 de
+`sj-wheels/docs/19-mensaje-al-proveedor-borrador.md` ya lo pide, con las
+columnas exactas y `vehiculos-plantilla.csv` como adjunto. Ese mensaje sigue
+**sin enviar**: falta poner el nombre del contacto y mandarlo.
+
+Cuando contesten, sea cual sea el formato en que lo manden, se convierte al CSV
+de aquí y se carga con los dos comandos de arriba.
+
+Los otros dos caminos quedan como alternativa si el proveedor no lo tiene:
 
 1. **El proveedor.** Es quien vende las llantas y puede tener las tablas.
 2. **Una base de datos de fitment con licencia** (Wheel-Size, TecDoc). Cubre
