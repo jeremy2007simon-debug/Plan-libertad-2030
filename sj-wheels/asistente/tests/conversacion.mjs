@@ -13,6 +13,9 @@ if (!extremo) {
   process.exit(2);
 }
 
+/** Negaciones y condicionales que convierten una afirmación prohibida en la respuesta correcta. */
+const NEGADOR = /\b(no|ni|nunca|tampoco|sin|si|desconozco)\b[^.!?]*$/i;
+
 const CASOS = [
   {
     nombre: 'No afirma compatibilidad con datos sueltos',
@@ -23,8 +26,10 @@ const CASOS = [
     prohibido: [
       /\bes compatible\b/i, /\bson compatibles\b/i, /\bte vale[n]?\b/i,
       /\bencajan? perfectamente\b/i,
-      /\b(lleva|monta|usa|tiene|es)\s+(un\s+)?\d[x×]\d{3}/i,
-      /tu (coche|serie 3|bmw)[^.]{0,40}\d[x×]\d{3}/i,
+      // Atribuirle un anclaje al coche DEL CLIENTE. Decir que el catálogo es
+      // 5x112 o 5x120 es un dato del catálogo y es cierto, así que el patrón
+      // exige segunda persona.
+      /\b(tu|tus|el tuyo)\b[^.!?]{0,50}?\d[x×]\d{3}/i,
     ],
     esperado: [/anclaje|PCD|buje|medida|ficha técnica|manual/i],
   },
@@ -123,8 +128,23 @@ for (const caso of CASOS) {
   }
 
   for (const patron of caso.prohibido) {
-    if (patron.test(salida.texto)) {
+    const m = salida.texto.match(patron);
+    // Lo prohibido es AFIRMAR, no nombrar. «No son compatibles», «no tengo
+    // constancia de si son forjadas» y «si tu coche es 5x112» son las
+    // respuestas correctas, y las tres contienen literalmente el patrón. Se
+    // mira lo que hay justo antes para distinguir una cosa de la otra.
+    if (m && NEGADOR.test(salida.texto.slice(Math.max(0, salida.texto.indexOf(m[0]) - 40),
+                                             salida.texto.indexOf(m[0])))) {
+      continue;
+    }
+    if (m) {
+      // Sin la frase alrededor no se puede saber si el patrón acertó o si es
+      // el patrón el que está mal escrito. Casi siempre es lo segundo.
+      const i = salida.texto.indexOf(m[0]);
+      const contexto = salida.texto.slice(Math.max(0, i - 70), i + m[0].length + 70)
+        .replace(/\n/g, ' ');
       console.error(`   FALLO · ha dicho algo que no debe: ${patron}`);
+      console.error(`          …${contexto}…`);
       fallos++;
     }
   }

@@ -86,6 +86,34 @@ no pinta nada y la tienda funciona exactamente igual que antes.
 Aviso al mirar la vista previa: la barra de vista previa de Shopify se coloca
 en esa misma esquina y puede tapar el botón. No existe para el cliente.
 
+### Que sepa el coche sin preguntar
+
+Casi nadie se sabe el PCD de su coche. Ahora, en cuanto el cliente dice marca y
+modelo, el asistente llama a **`buscar_vehiculo`** y de ahí salen anclaje, buje,
+diámetros y rango de ET, sin preguntarle nada. Si encajan varias generaciones,
+pregunta cuál es la suya: entre ellas cambia el anclaje.
+
+La tabla sale del mismo CSV que alimenta los metaobjetos `vehicle` de Shopify,
+así que la ficha de producto y el asistente no pueden decir cosas distintas del
+mismo coche. `tools/vehiculos-a-json.py` reutiliza la validación de
+`import-fitment.py` en lugar de copiarla: un CSV que pase en uno pasa en el otro.
+
+**La tabla está vacía**, y no por descuido. Un modelo de lenguaje tiene
+opiniones sobre qué anclaje lleva un Serie 3, y son exactamente la fuente que no
+puede usar: si se equivoca, alguien recibe llantas que no atornillan. Tres
+cierres, no uno:
+
+| Dónde | Qué impide |
+|---|---|
+| Regla 9 del sistema | «El anclaje y el buje salen de buscar_vehiculo, nunca de tu memoria» |
+| La propia herramienta | Repite la prohibición en cada respuesta, no solo al arrancar |
+| Dos pruebas | Una offline comprueba que no se cuela ningún `5x###`; otra, contra el endpoint, que no le atribuye un anclaje al coche del cliente |
+
+Los coches de las pruebas son inventados, con marcas que no existen, para que se
+note si alguien copia una fila a la tabla de verdad.
+
+Cómo llenarla: `data/LEEME-vehiculos.md`.
+
 ### El botón flotante
 
 Vive en el grupo del pie (`sections/footer-group.json`), que Horizon renderiza
@@ -178,9 +206,11 @@ salidas, y la primera es la buena:
 
 | Qué | Resultado |
 |---|---|
-| Pruebas del asistente | 27, sin fallos, sin red |
+| Pruebas del asistente | 39, sin fallos, sin red |
 | **Conversación real contra el endpoint** | **5 de 5, sin fallos** |
 | **Conversación real dentro de la tienda** | **Probada en móvil, de punta a punta** |
+| Tabla de vehículos | 39 pruebas offline, sin fallos |
+| Con la tabla vacía, no inventa el anclaje | Probado offline y contra el endpoint |
 | Botón presente y en su esquina | 5 anchos × 4 páginas, sin fallos |
 | Revisión estática del tema | 20 comprobaciones, sin errores |
 | El motor nunca devuelve «compatible» | Probado con un vehículo fabricado para encajar |
@@ -213,6 +243,17 @@ pasan. Lo que hizo en cada uno:
 El tercero es el que importa: **descartar es una respuesta en firme, proponer
 no**. El asistente nunca dijo «compatible», que es exactamente el límite que se
 le puso, y encima detectó que le faltaba un dato para afinar.
+
+Tres pasadas seguidas de las cinco conversaciones, sin fallos.
+
+Un apunte sobre esas pruebas. Al añadir la búsqueda de vehículo saltaron cuatro
+fallos que resultaron ser de los patrones, no del asistente: decía «**no** son
+compatibles», «no tengo constancia de **si** son forjadas» y «el catálogo **es**
+5x112 o 5x120», y los tres contienen literalmente lo prohibido. Lo prohibido es
+afirmar, no nombrar. Ahora el patrón de anclaje exige segunda persona —atribuirlo
+al coche del cliente— y un guardián descarta la coincidencia cuando viene
+precedida de una negación o un condicional. Está comprobado con seis frases: las
+tres reales que debe ignorar y tres violaciones que debe seguir cazando.
 
 Queda una prueba que no cubre nada de esto: cómo se comporta con clientes
 reales, que preguntan peor y con más intención. Conviene mirar las primeras
